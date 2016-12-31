@@ -1,12 +1,12 @@
-package com.example
+package com.jos.dem.vetlog
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
 @SpringBootApplication
-class DemoApplication {
+class VetlogApplication {
 
 	static void main(String[] args) {
-		SpringApplication.run DemoApplication, args
+		SpringApplication.run VetlogApplication, args
 	}
 }
