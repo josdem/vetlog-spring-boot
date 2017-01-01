@@ -1,34 +1,47 @@
 buildscript {
-	ext {
-		springBootVersion = '1.4.3.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+  ext {
+    springBootVersion = '1.4.3.RELEASE'
+  }
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+}
+
+plugins {
+  id 'com.craigburke.bower-installer' version '2.5.1'
+}
+
+bower {
+  installBase = 'src/main/resources/static/assets/third-party'
+  'bootstrap'('3.3.7'){
+    source '**'
+  }
 }
 
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 
 jar {
-	baseName = 'vetlog-spring-boot'
-	version = '0.0.1-SNAPSHOT'
+  baseName = 'vetlog-spring-boot'
+  version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+  mavenCentral()
 }
 
 
 dependencies {
-	compile 'org.springframework.boot:spring-boot-starter-web'
-	compile 'org.codehaus.groovy:groovy'
+  compile 'org.springframework.boot:spring-boot-starter-web'
+  compile 'org.codehaus.groovy:groovy'
   compile 'org.springframework.boot:spring-boot-starter-aop'
   compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
+bootRun.dependsOn rootProject.tasks['bowerInstall']
