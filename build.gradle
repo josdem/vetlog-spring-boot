@@ -19,6 +19,9 @@ bower {
   'bootstrap'('3.3.7'){
     source '**'
   }
+  'vetlog-theme'('https://github.com/josdem/vetlog-theme.git'){
+    source '**'
+  }
 }
 
 apply plugin: 'groovy'
