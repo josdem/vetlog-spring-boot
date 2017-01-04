@@ -30,6 +30,7 @@
               </g:if>
               <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
                 <fieldset>
+                  <h1 th:text="#{login.username}">FooBar</h1>
                   <label for="username">${message(code:'login.username')}</label>
                   <input type="text" name='username' class="form-control" placeholder="${message(code:'login.username')}" id='username' value="${flash.username ?: session.username}"/>
                   <label for="password">${message(code:'login.password')}</label>
