@@ -22,4 +22,10 @@ class VetlogController {
   	log.info "message is: ${message}"
     'index'
   }
+
+  @RequestMapping("login")
+  String login(){
+  	log.info "Calling login"
+    'login'
+  }
 }
