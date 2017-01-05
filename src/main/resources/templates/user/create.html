@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/assets/third-party/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/third-party/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/style.css" />
+    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />
+    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />
+    <title><g:message code="default.create.label" args="[entityName]" /></title>
+  </head>
+  <body class="login">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="login-banner text-center">
+            <h1><asset:image src="third-party/vetlog-theme/img/flex-admin-logo.png" class="shadow" /></h1>
+          </div>
+          <div class="portlet portlet-green">
+            <div class="portlet-heading login-heading">
+              <div class="portlet-title">
+                <h4><strong><g:message code="user.view.create.label" args="[entityName]" /></strong></h4>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+               <form id="register" action="#" th:action="@{/Users/save}" th:object="${userCommand}" method="post"  class="form-horizontal">
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
