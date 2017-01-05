@@ -13,11 +13,11 @@ import com.jos.dem.vetlog.command.UserCommand
 class UserController {
 
   @RequestMapping(method = GET, value = "/create")
-  String create(){
-    def modelAndView = new ModelAndView('create')
+  def create(){
+    def modelAndView = new ModelAndView('user/create')
     def userCommand = new UserCommand()
     modelAndView.addObject('userCommand', userCommand)
-    'user/create'
+    modelAndView
   }
   
 }
