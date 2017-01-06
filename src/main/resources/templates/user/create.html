@@ -23,12 +23,34 @@
             <div class="clearfix"></div>
           </div>          
           <div class="portlet-body">
-            <form id="register" action="#" th:action="@{/Users/save}" th:object="${userCommand}" method="post"  class="form-horizontal">
-              <div class="control-group">
-                <label><h2>Usuario*</h2></label>
-                <input type="text" th:field="*{username}" class="span9 search-query"/>
+            <form id="register" action="#" th:action="@{/users/save}" th:object="${userCommand}" method="post"  class="form-horizontal">
+              <fieldset>                
+                <label for="username"><h4 th:text="#{login.username}"/></label>
+                <input type="text" name='username' class="form-control" placeholder="username" id='username'/>                                  
                 <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
-              </div>
+                <br/>  
+                <label for="password"><h4 th:text="#{login.password}"/></label>
+                <input type="password" name='password' class="form-control" placeholder="password" id='password'/>
+                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
+                <br/>  
+                <label for="passwordConfirmation"><h4 th:text="#{login.passwordConfirmation}"/></label>
+                <input type="password" name='passwordConfirmation' class="form-control" placeholder="password confirmation" id='passwordConfirmation'/>
+                <label th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></label>
+                <br/>  
+                <label for="name"><h4 th:text="#{user.name}"/></label>
+                <input type="text" name='name' class="form-control" placeholder="name" id='name'/>
+                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                <br/>  
+                <label for="lastname"><h4 th:text="#{user.lastname}"/></label>
+                <input type="text" name='lastname' class="form-control" placeholder="lastname" id='lastname'/>
+                <label th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></label>
+                <br/>  
+                <label for="email"><h4 th:text="#{user.email}"/></label>
+                <input type="text" name='email' class="form-control" placeholder="email" id='email'/>
+                <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
+                <br/>
+                <input type="submit" class="btn btn-primary btn-block" />
+              </fieldset>
             </form>
           </div>
         </div>
