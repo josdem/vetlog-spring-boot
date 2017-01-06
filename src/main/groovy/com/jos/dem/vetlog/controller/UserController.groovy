@@ -5,9 +5,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.InitBinder
+import org.springframework.web.bind.annotation.ModelAttribute
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.validation.BindingResult
+import org.springframework.validation.Errors
 import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
@@ -20,7 +22,7 @@ class UserController {
 	
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.setValidator(new UserValidator());
+		binder.setValidator(new UserValidator())
 	}
 
 	@RequestMapping(method = GET, value = "/create")
@@ -32,17 +34,13 @@ class UserController {
 	}
 
 	@RequestMapping(method = POST, value = "/save")
-	def save(@Valid UserCommand command, BindingResult result) {
-    if (bindingResult.hasErrors()) {
+	def save(@Valid UserCommand command, Errors errors) {
+    if (errors.hasErrors()) {
       def modelAndView =  new ModelAndView("user/create","userCommand", command)
-      def mapErrors = []
-      bindingResult.getFieldErrors().each{ error ->
-        mapErrors.add("${error.field} ${ error.defaultMessage}")
-      }
-      modelAndView.addObject("error", mapErrors.flatten())
       return modelAndView
-    }
-    new ModelAndView("redirect:/")
+    } else {
+      new ModelAndView("redirect:/")  
+    }    
   }
 
 }
