@@ -39,8 +39,8 @@ class UserController {
 	}
 
 	@RequestMapping(method = POST, value = "/save")
-	String save(@Valid UserCommand command, Errors errors, ModelMap model) {
-    if (errors.hasErrors()) {
+	String save(@Valid UserCommand command, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
       return 'user/create'
     }
     'redirect:/'
