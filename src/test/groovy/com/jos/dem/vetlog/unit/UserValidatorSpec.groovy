@@ -1,0 +1,26 @@
+package com.jos.dem.vetlog
+
+import org.springframework.validation.Errors
+
+import spock.lang.Specification
+
+import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.command.UserCommand
+import com.jos.dem.vetlog.validator.UserValidator
+
+class UserValidatorSpec extends Specification {
+
+  UserValidator validator = new UserValidator()
+  Errors errors = Mock(Errors)
+
+  void "should send a message from a form"(){
+    given:"A user command"
+      Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+    when:"We validate passwords"
+      validator.validatePasswords(errors, command)
+    then:"We expect message sent"
+    1 * errors.reject('password', 'The passwords are not equals')
+  }
+
+
+}
