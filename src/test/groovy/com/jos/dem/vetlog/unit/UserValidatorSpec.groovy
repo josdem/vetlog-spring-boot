@@ -40,7 +40,7 @@ class UserValidatorSpec extends Specification {
     0 * errors.reject('password', 'Passwords are bad formed')
   }
 
-  void "should accept special characters and numbers in password"(){
+  void "should accept dash character in password"(){
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'pa-4ssword', passwordConfirmation:'pa-4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
@@ -49,5 +49,13 @@ class UserValidatorSpec extends Specification {
     0 * errors.reject('password', 'Passwords are bad formed')
   }
 
+  void "should accept special dot character in password"(){
+    given:"A user command"
+      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+    when:"We validate passwords"
+      validator.validatePasswords(errors, command)
+    then:"We expect everything is going to be all right"
+    0 * errors.reject('password', 'Passwords are bad formed')
+  }
 
 }
