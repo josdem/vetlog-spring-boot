@@ -18,6 +18,7 @@ class UserValidator implements Validator {
   void validate(Object target, Errors errors) {
     UserCommand UserCommand = (UserCommand) target
     validatePasswords(errors, UserCommand)
+    validatePasswordConstraints(errors, UserCommand)
   }
 
   def validatePasswords(Errors errors, UserCommand command) {

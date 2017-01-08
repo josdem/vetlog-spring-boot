@@ -17,7 +17,7 @@ class UserValidatorSpec extends Specification {
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      validator.validatePasswords(errors, command)
+      validator.validate(command, errors)
     then:"We expect valiation failed"
     1 * errors.reject('password', 'The passwords are not equals')
   }
@@ -26,7 +26,7 @@ class UserValidatorSpec extends Specification {
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      validator.validatePasswords(errors, command)
+      validator.validate(command, errors)
     then:"We expect everything is going to be all right"
     0 * errors.reject('password', 'The passwords are not equals')
   }
@@ -35,7 +35,7 @@ class UserValidatorSpec extends Specification {
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'pa4ssword', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      validator.validatePasswords(errors, command)
+      validator.validate(command, errors)
     then:"We expect everything is going to be all right"
     0 * errors.reject('password', 'Passwords are bad formed')
   }
@@ -44,7 +44,7 @@ class UserValidatorSpec extends Specification {
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'pa-4ssword', passwordConfirmation:'pa-4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      validator.validatePasswords(errors, command)
+      validator.validate(command, errors)
     then:"We expect everything is going to be all right"
     0 * errors.reject('password', 'Passwords are bad formed')
   }
@@ -53,9 +53,19 @@ class UserValidatorSpec extends Specification {
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      validator.validatePasswords(errors, command)
+      validator.validate(command, errors)
     then:"We expect everything is going to be all right"
     0 * errors.reject('password', 'Passwords are bad formed')
   }
+
+  void "should not validate an user command since passwords are too short"(){
+    given:"A user command"
+      Command command = new UserCommand(username:'josdem',password:'pass', passwordConfirmation:'pass', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+    when:"We validate passwords"
+      validator.validate(command, errors)
+    then:"We expect valiation failed"
+    1 * errors.reject('password', 'Password are bad formed')
+  }
+
 
 }
