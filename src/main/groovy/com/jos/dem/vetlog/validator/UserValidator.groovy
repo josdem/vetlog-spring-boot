@@ -26,4 +26,11 @@ class UserValidator implements Validator {
     }
   }
 
+  def validatePasswordConstraints(Errors errors, UserCommand command) {
+    def regex = ~/^[0-9a-zA-Z]{8,}$+/
+    if(!command.password.matches(regex)){
+      errors.reject('password', 'Password are bad formed')
+    }
+  }
+
 }
