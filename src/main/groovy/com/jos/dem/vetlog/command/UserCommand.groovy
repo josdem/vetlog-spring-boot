@@ -1,25 +1,32 @@
 package com.jos.dem.vetlog.command
 
-import org.hibernate.validator.constraints.NotEmpty
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 import org.hibernate.validator.constraints.Email
 
 class UserCommand implements Command {
 
-  @NotEmpty("Username can not be empty")
+  @NotNull
+  @Size(min=6, max=50)
   String username
 
-  @NotEmpty("Password can not be empty")
+  @NotNull
+  @Size(min=8, max=50)
   String password
 
-  @NotEmpty("Password confirmation can not be empty")
+  @NotNull
+  @Size(min=8, max=50)
   String passwordConfirmation
 
-  @NotEmpty("Name can not be empty")
+  @NotNull
+  @Size(min=1, max=50)
   String name
 
-  @NotEmpty("Lastname can not be empty")
+  @NotNull
+  @Size(min=1, max=100)
   String lastname
 
   @Email
   String email
+
 }
