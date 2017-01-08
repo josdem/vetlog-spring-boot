@@ -13,14 +13,22 @@ class UserValidatorSpec extends Specification {
   UserValidator validator = new UserValidator()
   Errors errors = Mock(Errors)
 
-  void "should send a message from a form"(){
+  void "should not validate an user command since passwords are not equals"(){
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       validator.validatePasswords(errors, command)
-    then:"We expect message sent"
+    then:"We expect valiation failed"
     1 * errors.reject('password', 'The passwords are not equals')
   }
 
+  void "should vaidat an user command"(){
+    given:"A user command"
+      Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+    when:"We validate passwords"
+      validator.validatePasswords(errors, command)
+    then:"We expect everything is going to be all right"
+    0 * errors.reject('password', 'The passwords are not equals')
+  }
 
 }
