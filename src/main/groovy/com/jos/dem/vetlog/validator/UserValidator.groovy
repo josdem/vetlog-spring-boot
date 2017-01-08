@@ -17,6 +17,13 @@ class UserValidator implements Validator {
   @Override
   void validate(Object target, Errors errors) {
     UserCommand UserCommand = (UserCommand) target
+    validatePasswords(errors, UserCommand)
+  }
+
+  def validatePasswords(Errors errors, UserCommand command) {
+    if (!command.password.equals(command.passwordConfirmation)){
+      errors.reject('password', 'The passwords are not equals')
+    }
   }
 
 }
