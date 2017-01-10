@@ -11,16 +11,12 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 @Controller
-class VetlogController {
+class LoginController {
   Logger log = LoggerFactory.getLogger(this.class)
 
-  @Value('${message}')
-  String message;
-
-  @RequestMapping("/")
-  String index(){
-  	log.info "message is: ${message}"
-    'home/home'
+  @RequestMapping("/login")
+  String login(){
+  	log.info "Calling login"
+    'login/login'
   }
-
 }

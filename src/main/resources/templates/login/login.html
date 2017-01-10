@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <head>    
-    <link rel="stylesheet" href="/assets/third-party/bootstrap/dist/css/bootstrap.min.css" />    
+  <head>
+    <link rel="stylesheet" href="/assets/third-party/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/assets/third-party/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/style.css" />
-    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />    
-    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />        
+    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />
+    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />
   </head>
   <body class="login">
 
@@ -13,27 +13,27 @@
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
           <div class="login-banner text-center">
-            <h1>              
+            <h1>
               <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
             </h1>
           </div>
           <div class="portlet portlet-green">
             <div class="portlet-heading login-heading">
-              <div class="portlet-title">                
+              <div class="portlet-title">
                 <h4 th:text="#{login.welcome}"/>
               </div>
               <div class="clearfix"></div>
             </div>
-            <div class="portlet-body">              
-              <form action='${postUrl}' method='POST' id='loginForm' class='cssform' autocomplete='off'>
+            <div class="portlet-body">
+              <form th:action="@{/login}" method='POST' id='loginForm' class='cssform' autocomplete='off'>
                 <fieldset>
                   <label for="username"><h4 th:text="#{login.username}"/></label>
-                  <input type="text" name='username' class="form-control" placeholder="username" id='username'/>                  
+                  <input type="text" name='username' class="form-control" placeholder="username" id='username'/>
                   <label for="password"><h4 th:text="#{login.password}"/></label>
                   <input type="password" name='password' class="form-control" placeholder="password" id='password'/>
                   <br/>
                   <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><h5 th:text="#{login.action}"/></button>
-                  <hr/>                  
+                  <hr/>
                   <a th:href="@{'/users/create'}" class="btn btn-primary btn-block"><h5 th:text="#{login.register}"/></a>
                 </fieldset>
                 <br/>
