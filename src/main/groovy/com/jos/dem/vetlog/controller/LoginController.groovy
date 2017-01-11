@@ -14,15 +14,20 @@ import org.slf4j.LoggerFactory
 
 @Controller
 class LoginController {
+
+  @Autowired
+  LocaleService localeService
+
   Logger log = LoggerFactory.getLogger(this.class)
 
   @RequestMapping("/login")
   ModelAndView login(@RequestParam Optional<String> error){
-  	log.info "iCalling login"
+  	log.info "Calling login"
     ModelAndView modelAndView = new ModelAndView('login/login')
     if(error.isPresent()){
-      modelAndView.addObject('error', 'Invalid username or password!')
+      modelAndView.addObject('error', localeService.getMessage('user.validation.password.equals'))
     }
     modelAndView
   }
+
 }
