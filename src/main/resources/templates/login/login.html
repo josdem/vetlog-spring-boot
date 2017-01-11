@@ -25,6 +25,11 @@
               <div class="clearfix"></div>
             </div>
             <div class="portlet-body">
+              <div th:if="${error}">
+                <div align="center">
+                  <p th:text="${error}"/>
+                </div>
+              </div>
               <form th:action="@{/login}" method='POST' id='loginForm' class='cssform' autocomplete='off'>
                 <fieldset>
                   <label for="username"><h4 th:text="#{login.username}"/></label>
