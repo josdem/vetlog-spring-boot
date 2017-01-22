@@ -23,7 +23,7 @@ class CurrentUserDetailService implements UserDetailsService {
     User user = userService.getUserByUsername(username)
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>()
     grantedAuthorities.add(new SimpleGrantedAuthority(user.role.toString()))
-    new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities)
+    new org.springframework.security.core.userdetails.User(user.username, user.password, grantedAuthorities)
   }
 
 }
