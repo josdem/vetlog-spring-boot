@@ -1,13 +1,14 @@
 package com.jos.dem.vetlog.service.impl
 
-import com.jos.dem.vetlog.User
-import com.jos.dem.vetlog.CurrentUser
-import com.jos.dem.vetlog.UserService
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 import  com.jos.dem.vetlog.model.User
+import  com.jos.dem.vetlog.model.Role
 import  com.jos.dem.vetlog.model.CurrentUser
 import  com.jos.dem.vetlog.service.UserService
 
@@ -18,11 +19,11 @@ class CurrentUserDetailService implements UserDetailsService {
   UserService userService
 
   @Override
-  CurrentUser loadUserByUsername(String username) {
-    User user = userService.getUserByUsername(username).orElseThrow{ ->
-      throw new RuntimeException(String.format("User with username : ${username} was not found"))
-    }
-    new CurrentUser(user)
+  org.springframework.security.core.userdetails.User loadUserByUsername(String username) throws UsernameNotFoundException {
+    User user = userService.getUserByUsername(username)
+    Set<GrantedAuthority> grantedAuthorities = new HashSet<>()
+    grantedAuthorities.add(new SimpleGrantedAuthority(user.role.toString()))
+    new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities)
   }
 
 }
