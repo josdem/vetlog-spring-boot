@@ -17,7 +17,7 @@ import com.jos.dem.vetlog.validator.UserValidator
 import com.jos.dem.vetlog.service.UserService
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/user")
 class UserController {
 
   @Autowired
