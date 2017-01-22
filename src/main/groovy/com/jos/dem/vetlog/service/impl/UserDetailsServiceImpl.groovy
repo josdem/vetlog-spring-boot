@@ -9,11 +9,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 import  com.jos.dem.vetlog.model.User
 import  com.jos.dem.vetlog.model.Role
-import  com.jos.dem.vetlog.model.CurrentUser
 import  com.jos.dem.vetlog.service.UserService
 
 @Service
-class CurrentUserDetailService implements UserDetailsService {
+class UserDetailServiceImpl implements UserDetailsService {
 
   @Autowired
   UserService userService
