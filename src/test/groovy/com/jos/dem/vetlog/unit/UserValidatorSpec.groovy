@@ -79,14 +79,4 @@ class UserValidatorSpec extends Specification {
     0 * errors.reject('password', _ as String)
   }
 
-  void "should not validate an user command since passwords are too short"(){
-    given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'pass', passwordConfirmation:'pass', name:'josdem',lastname:'lastname',email:'josdem@email.com')
-    when:"We validate passwords"
-      localeService.getMessage(_ as String) >> 'Passwords are bad formed'
-      validator.validate(command, errors)
-    then:"We expect valiation failed"
-    1 * errors.reject('password', _ as String)
-  }
-
 }
