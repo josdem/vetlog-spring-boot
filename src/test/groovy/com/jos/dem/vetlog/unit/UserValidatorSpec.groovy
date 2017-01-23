@@ -33,19 +33,20 @@ class UserValidatorSpec extends Specification {
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
+      localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
     0 * errors.reject('password', _ as String)
   }
 
-  void "should accept only characters and numbers in password"(){
+  void "should accept characters and numbers in password"(){
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'pa4ssword', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      localeService.getMessage('user.validation.password.equals') >> 'Passwords are bad formed'
+      localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', null)
+    0 * errors.reject('password', _ as String)
   }
 
   void "should accept dash character in password"(){
