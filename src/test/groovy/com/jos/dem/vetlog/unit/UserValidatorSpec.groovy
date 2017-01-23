@@ -33,10 +33,9 @@ class UserValidatorSpec extends Specification {
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      localeService.getMessage('user.validation.password.equals') >> 'The passwords are not equals'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', 'The passwords are not equals')
+    0 * errors.reject('password', _ as String)
   }
 
   void "should accept only characters and numbers in password"(){
