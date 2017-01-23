@@ -33,7 +33,7 @@ class UserValidator implements Validator {
   }
 
   def validatePasswordConstraints(Errors errors, UserCommand command) {
-    def regex = ~/^[0-9a-zA-Z]{8,}$+/
+    def regex = ~/^[0-9a-zA-Z\-\_\.]{8,}$+/
     if(!command.password.matches(regex)){
       errors.reject('password', localeService.getMessage('user.validation.password.constraints'))
     }

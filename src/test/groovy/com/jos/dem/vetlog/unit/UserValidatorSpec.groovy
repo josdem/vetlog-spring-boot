@@ -41,7 +41,7 @@ class UserValidatorSpec extends Specification {
 
   void "should accept characters and numbers in password"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'pa4ssword', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'p4ssword', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
@@ -53,30 +53,40 @@ class UserValidatorSpec extends Specification {
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'pa-4ssword', passwordConfirmation:'pa-4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      localeService.getMessage('user.validation.password.equals') >> 'Passwords are bad formed'
+      localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', 'Passwords are bad formed')
+    0 * errors.reject('password', _ as String)
   }
 
-  void "should accept special dot character in password"(){
+  void "should accept underscore character in password"(){
+    given:"A user command"
+      Command command = new UserCommand(username:'josdem',password:'pa_4ssword', passwordConfirmation:'pa_4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+    when:"We validate passwords"
+      localeService.getMessage(_ as String) >> 'Passwords are bad formed'
+      validator.validate(command, errors)
+    then:"We expect everything is going to be all right"
+    0 * errors.reject('password', _ as String)
+  }
+
+  void "should accept dot character in password"(){
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
-      localeService.getMessage('user.validation.password.equals') >> 'Passwords are bad formed'
+      localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', 'Passwords are bad formed')
+    0 * errors.reject('password', _ as String)
   }
 
   void "should not validate an user command since passwords are too short"(){
     given:"A user command"
       Command command = new UserCommand(username:'josdem',password:'pass', passwordConfirmation:'pass', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
+      localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect valiation failed"
-    1 * errors.reject('password', null)
+    1 * errors.reject('password', _ as String)
   }
-
 
 }
