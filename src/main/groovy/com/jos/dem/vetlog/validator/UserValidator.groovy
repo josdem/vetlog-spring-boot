@@ -37,13 +37,13 @@ class UserValidator implements Validator {
   }
 
   def validateUsername(Errors errors, UserCommand command) {
-    if (userService.getUserByUsername(command.username)){
+    if (userService.getByUsername(command.username)){
        errors.reject("username", localeService.getMessage('user.validation.duplicated.username'))
     }
   }
 
   def validateEmail(Errors errors, UserCommand command) {
-    if (userService.getUserByEmail(command.email)){
+    if (userService.getByEmail(command.email)){
        errors.reject("email", localeService.getMessage('user.validation.duplicated.email'))
     }
   }

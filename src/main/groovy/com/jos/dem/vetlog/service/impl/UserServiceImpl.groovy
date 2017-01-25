@@ -17,11 +17,11 @@ class UserServiceImpl implements UserService {
   @Autowired
   UserRepository userRepository
 
-  User getUserByUsername(String username){
+  User getByUsername(String username){
     userRepository.findByUsername(username)
   }
 
-  User getUserByEmail(String email){
+  User getByEmail(String email){
     userRepository.findByEmail(email)
   }
 
