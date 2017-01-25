@@ -4,9 +4,11 @@ import org.springframework.validation.Errors
 
 import spock.lang.Specification
 
+import  com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.UserCommand
 import com.jos.dem.vetlog.service.LocaleService
+import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.validator.UserValidator
 
 class UserValidatorSpec extends Specification {
@@ -14,9 +16,11 @@ class UserValidatorSpec extends Specification {
   UserValidator validator = new UserValidator()
   Errors errors = Mock(Errors)
   LocaleService localeService = Mock(LocaleService)
+  UserService userService = Mock(UserService)
 
   def setup(){
     validator.localeService = localeService
+    validator.userService = userService
   }
 
   void "should not validate an user command since passwords are not equals"(){
@@ -77,6 +81,19 @@ class UserValidatorSpec extends Specification {
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
     0 * errors.reject('password', _ as String)
+  }
+
+  void "should not duplicate an username"(){
+    given:"A user command"
+      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+    and:"User"
+      User user = new User()
+    when:"We validate user and user already exist"
+      localeService.getMessage('user.validation.duplicated.username') >> 'This user is already taken'
+      userService.getUserByUsername('josdem') >> user
+      validator.validate(command, errors)
+    then:"We expected an error"
+    1 * errors.reject('username', 'This user is already taken')
   }
 
 }
