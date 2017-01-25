@@ -27,6 +27,7 @@ class UserValidator implements Validator {
     UserCommand userCommand = (UserCommand) target
     validatePasswords(errors, userCommand)
     validateUsername(errors, userCommand)
+    validateEmail(errors, userCommand)
   }
 
   def validatePasswords(Errors errors, UserCommand command) {
@@ -38,6 +39,12 @@ class UserValidator implements Validator {
   def validateUsername(Errors errors, UserCommand command) {
     if (userService.getUserByUsername(command.username)){
        errors.reject("username", localeService.getMessage('user.validation.duplicated.username'))
+    }
+  }
+
+  def validateEmail(Errors errors, UserCommand command) {
+    if (userService.getUserByEmail(command.email)){
+       errors.reject("email", localeService.getMessage('user.validation.duplicated.email'))
     }
   }
 

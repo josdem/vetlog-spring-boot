@@ -88,12 +88,25 @@ class UserValidatorSpec extends Specification {
       Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     and:"User"
       User user = new User()
-    when:"We validate user and user already exist"
+    when:"We validate user and user already exist by username"
       localeService.getMessage('user.validation.duplicated.username') >> 'This user is already taken'
       userService.getUserByUsername('josdem') >> user
       validator.validate(command, errors)
     then:"We expected an error"
     1 * errors.reject('username', 'This user is already taken')
+  }
+
+  void "should not duplicate an email"(){
+    given:"A user command"
+      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+    and:"User"
+      User user = new User()
+    when:"We validate user and user already exist by email"
+      localeService.getMessage('user.validation.duplicated.email') >> 'This email is already taken'
+      userService.getUserByEmail('josdem@email.com') >> user
+      validator.validate(command, errors)
+    then:"We expected an error"
+    1 * errors.reject('email', 'This email is already taken')
   }
 
 }
