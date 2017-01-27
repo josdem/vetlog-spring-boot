@@ -25,9 +25,10 @@ class UserServiceImpl implements UserService {
     userRepository.findByEmail(email)
   }
 
-  void save(Command command){
+  User save(Command command){
     User user = userBinder.bindUser(command)
     userRepository.save(user)
+    user
   }
 
 }

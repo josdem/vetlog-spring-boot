@@ -6,5 +6,5 @@ import  com.jos.dem.vetlog.command.Command
 interface UserService {
   User getByUsername(String username)
   User getByEmail(String email)
-  void save(Command command)
+  User save(Command command)
 }

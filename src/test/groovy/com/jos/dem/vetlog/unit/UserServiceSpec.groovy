@@ -7,6 +7,7 @@ import com.jos.dem.vetlog.service.impl.UserServiceImpl
 import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.binder.UserBinder
 import com.jos.dem.vetlog.model.User
+import com.jos.dem.vetlog.model.Role
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.UserCommand
 
@@ -44,9 +45,15 @@ class UserServiceSpec extends Specification {
     given:"A command"
       Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password', name:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We save an user"
-      userService.save(command)
+      User user = userService.save(command)
     then:"We expect repository delegation"
     1 * userRepository.save(_ as User)
+    user.username == 'josdem'
+    user.password.size() == 60
+    user.firstName == 'josdem'
+    user.lastName == 'lastname'
+    user.email == 'josdem@email.com'
+    user.role == Role.USER
   }
 
 }
