@@ -24,4 +24,14 @@ class UserServiceSpec extends Specification {
     then:"We expect repository delegation"
     1 * userRepository.findByUsername(username)
   }
+
+  void "should find an user by email"(){
+    given:"An email"
+      String email = 'email'
+    when:"We find by email"
+      userService.getByEmail(email)
+    then:"We expect repository delegation"
+    1 * userRepository.findByEmail(email)
+  }
+
 }
