@@ -1,4 +1,4 @@
-package com.jos.dem.vetlog
+package com.jos.dem.vetlog.unit
 
 import org.springframework.validation.Errors
 
