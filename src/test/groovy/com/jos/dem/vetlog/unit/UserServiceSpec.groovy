@@ -43,8 +43,6 @@ class UserServiceSpec extends Specification {
   void "should save an user"(){
     given:"A command"
       Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password', name:'josdem',lastname:'lastname',email:'josdem@email.com')
-    and:"A user"
-      User user = new User()
     when:"We save an user"
       userService.save(command)
     then:"We expect repository delegation"
