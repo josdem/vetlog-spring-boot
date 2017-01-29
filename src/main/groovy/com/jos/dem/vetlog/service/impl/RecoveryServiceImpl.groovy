@@ -19,7 +19,7 @@ class RecoveryServiceImpl implements RecoveryService {
   RegistrationCodeRepository repository
 
   void sendConfirmationAccountToken(String email){
-    RegistrationCode registrationCode = new RegistrationCode(email)
+    RegistrationCode registrationCode = new RegistrationCode(email:email)
     repository.save(registrationCode)
     Command message = new MessageCommand(email:email, template:'register.ftl', url:'http://localhost:8081/emailer/message')
     restService.sendCommand(command)
