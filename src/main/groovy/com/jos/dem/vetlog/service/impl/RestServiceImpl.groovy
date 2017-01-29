@@ -17,9 +17,9 @@ class RestServiceImpl implements RestService {
 
   Logger log = LoggerFactory.getLogger(this.class)
 
-  @Value('${emailerUrl}')
+  @Value('${emailer.url}')
   String emailerUrl
-  @Value('${emailerPath}')
+  @Value('${emailer.path}')
   String emailerPath
 
   void sendCommand(Command message){
