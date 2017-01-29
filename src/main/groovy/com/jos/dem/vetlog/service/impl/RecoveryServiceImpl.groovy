@@ -2,6 +2,7 @@ package com.jos.dem.vetlog.service.impl
 
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 
 import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.service.RestService
@@ -18,10 +19,16 @@ class RecoveryServiceImpl implements RecoveryService {
   @Autowired
   RegistrationCodeRepository repository
 
+  @Value('${serverName}')
+  String serverName
+  @Value('${template.register}')
+  String template
+
+
   void sendConfirmationAccountToken(String email){
     RegistrationCode registrationCode = new RegistrationCode(email:email)
     repository.save(registrationCode)
-    Command command = new MessageCommand(email:email, template:'register.ftl', url:'http://localhost:8081/emailer/')
+    Command command = new MessageCommand(email:email, template:template, url:"${serverName}${registrationCode.token}")
     restService.sendCommand(command)
   }
 
