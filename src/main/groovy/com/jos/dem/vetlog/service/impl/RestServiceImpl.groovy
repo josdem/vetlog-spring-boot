@@ -20,7 +20,7 @@ class RestServiceImpl implements RestService {
     try{
       def rest = new RESTClient(message.url)
       def response = rest.post(
-        path: message.template,
+        path: 'message',
         body: message,
         requestContentType: 'application/json' )
       response.responseData
