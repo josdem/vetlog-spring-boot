@@ -1,3 +1,5 @@
 package com.jos.dem.vetlog.command
 
-interface Command {}
+import java.io.Serializable
+
+interface Command extends Serializable {}
