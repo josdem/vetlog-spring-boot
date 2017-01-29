@@ -3,6 +3,8 @@ package com.jos.dem.vetlog.model
 import javax.persistence.Entity
 import javax.persistence.Column
 
+import com.jos.dem.vetlog.enums.RegistrationCodeStatus
+
 @Entity
 class RegistrationCode {
 
