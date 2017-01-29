@@ -41,7 +41,7 @@ repositories {
 
 dependencies {
   compile 'org.springframework.boot:spring-boot-starter-web'
-  compile 'org.codehaus.groovy:groovy'
+  compile 'org.codehaus.groovy:groovy-all'
   compile 'org.springframework.boot:spring-boot-starter-aop'
   compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
   compile 'org.springframework.boot:spring-boot-starter-security'

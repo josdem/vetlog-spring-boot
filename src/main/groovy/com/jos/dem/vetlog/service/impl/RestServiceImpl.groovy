@@ -8,8 +8,13 @@ import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.service.RestService
 import com.jos.dem.vetlog.exception.RestException
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 @Service
 class RestServiceImpl implements RestService {
+
+  Logger log = LoggerFactory.getLogger(this.class)
 
   void sendCommand(Command message){
     try{
