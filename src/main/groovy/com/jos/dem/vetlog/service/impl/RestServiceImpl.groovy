@@ -2,6 +2,7 @@ package com.jos.dem.vetlog.service.impl
 
 import groovyx.net.http.RESTClient
 import org.springframework.stereotype.Service
+import org.springframework.beans.factory.annotation.Value
 import groovyx.net.http.HttpResponseException
 
 import com.jos.dem.vetlog.command.Command
@@ -16,11 +17,16 @@ class RestServiceImpl implements RestService {
 
   Logger log = LoggerFactory.getLogger(this.class)
 
+  @Value('${emailerUrl}')
+  String emailerUrl
+  @Value('${emailerPath}')
+  String emailerPath
+
   void sendCommand(Command message){
     try{
-      def rest = new RESTClient(message.url)
+      def rest = new RESTClient(emailerUrl)
       def response = rest.post(
-        path: 'message',
+        path: emailerPath,
         body: message,
         requestContentType: 'application/json' )
       response.responseData
