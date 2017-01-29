@@ -9,13 +9,11 @@ import com.jos.dem.vetlog.exception.RestException
 
 class RestServiceImpl implements RestService {
 
-  String url = 'put an valid url here!'
-
-  void sendCommand(Command message, String template){
+  void sendCommand(Command message){
     try{
-      def rest = new RESTClient(url)
+      def rest = new RESTClient(message.url)
       def response = rest.post(
-        path: template,
+        path: message.template,
         body: message,
         requestContentType: 'application/json' )
       response.responseData
