@@ -13,6 +13,7 @@ class RegistrationCodeSpec extends Specification {
       Date now = new Date()
     expect:"Date is not null and in the past"
       registrationCode.dateCreated.getTime() - now.getTime() < 10000
+      registrationCode.token.size() == 32
   }
 	
 }
