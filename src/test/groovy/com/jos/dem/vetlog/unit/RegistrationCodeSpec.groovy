@@ -3,6 +3,7 @@ package com.jos.dem.vetlog.unit
 import spock.lang.Specification
 
 import com.jos.dem.vetlog.model.RegistrationCode
+import com.jos.dem.vetlog.enums.RegistrationCodeStatus
 
 class RegistrationCodeSpec extends Specification {
 
@@ -15,6 +16,13 @@ class RegistrationCodeSpec extends Specification {
       registrationCode.dateCreated.getTime() - now.getTime() < 10000
       registrationCode.token.size() == 32
       registrationCode.isValid()
+  }
+
+  void "should invalidate a token"(){
+    when:"We invalidate token"
+      registrationCode.status = RegistrationCodeStatus.INVALID   
+    then:"Is not valid"
+      registrationCode.isValid() == false  
   }
 	
 }
