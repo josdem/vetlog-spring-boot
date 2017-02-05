@@ -11,12 +11,15 @@ import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.MessageCommand
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository
+import com.jos.dem.vetlog.repository.UserRepository
 
 @Service
 class RecoveryServiceImpl implements RecoveryService {
 
   @Autowired
   RestService restService
+  @Autowired
+  UserRepository userRepository
   @Autowired
   RegistrationCodeRepository repository
 
