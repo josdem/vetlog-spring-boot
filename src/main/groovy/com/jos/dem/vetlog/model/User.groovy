@@ -29,10 +29,16 @@ class User implements Serializable {
   @Column(nullable = false)
   @Enumerated(STRING)
   Role role
+
   @Column(nullable = false)
   Boolean enabled = false
   @Column(nullable = false)
+  Boolean accountNonExpired = false
+  @Column(nullable = false)
+  Boolean credentialsNonExpired = false
+  @Column(nullable = false)
+  Boolean accountNonLocked = false
+  @Column(nullable = false)
   Date dateCreate = new Date()
-
 }
 
