@@ -33,11 +33,11 @@ class User implements Serializable {
   @Column(nullable = false)
   Boolean enabled = false
   @Column(nullable = false)
-  Boolean accountNonExpired = false
+  Boolean accountNonExpired = true
   @Column(nullable = false)
-  Boolean credentialsNonExpired = false
+  Boolean credentialsNonExpired = true
   @Column(nullable = false)
-  Boolean accountNonLocked = false
+  Boolean accountNonLocked = true
   @Column(nullable = false)
   Date dateCreate = new Date()
 }
