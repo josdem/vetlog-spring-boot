@@ -15,6 +15,7 @@ import com.jos.dem.vetlog.command.MessageCommand
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository
 import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.exception.UserNotFoundException
+import com.jos.dem.vetlog.exception.VetlogException
 
 @Service
 class RecoveryServiceImpl implements RecoveryService {
