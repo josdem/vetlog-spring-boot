@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Value
 import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.service.RegistrationService
 import com.jos.dem.vetlog.service.RestService
+import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.model.RegistrationCode
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.MessageCommand
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository
 import com.jos.dem.vetlog.repository.UserRepository
+import com.jos.dem.vetlog.exception.UserNotFoundException
 
 @Service
 class RecoveryServiceImpl implements RecoveryService {
@@ -25,6 +27,9 @@ class RecoveryServiceImpl implements RecoveryService {
   UserRepository userRepository
   @Autowired
   RegistrationCodeRepository repository
+  @Autowired
+  LocaleService localeService
+
 
   @Value('${serverName}')
   String serverName
@@ -43,6 +48,7 @@ class RecoveryServiceImpl implements RecoveryService {
 
   User confirmAccountForToken(String token){
     User user = getUserByToken(token)
+    if(!user) throw new UserNotFoundException(localeService.getMessage('exception.user.not.found'))
     user.enabled = true
     userRepository.save(user)
     user
