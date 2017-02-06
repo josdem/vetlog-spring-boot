@@ -4,9 +4,8 @@ import java.lang.RuntimeException
 
 class VetlogException extends RuntimeException {
 
-  @Override
-  String getMessage() {
-    "Vetlog exception"
+  VetlogException(String message){
+    super(message)
   }
 
 }

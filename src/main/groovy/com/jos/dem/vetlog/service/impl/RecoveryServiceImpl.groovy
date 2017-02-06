@@ -30,14 +30,12 @@ class RecoveryServiceImpl implements RecoveryService {
   @Autowired
   LocaleService localeService
 
-
   @Value('${serverName}')
   String serverName
   @Value('${template.register.name}')
   String template
   @Value('${template.register.path}')
   String path
-
 
   void sendConfirmationAccountToken(String email){
     RegistrationCode registrationCode = new RegistrationCode(email:email)
@@ -56,6 +54,7 @@ class RecoveryServiceImpl implements RecoveryService {
 
   User getUserByToken(String token){
     String email = registrationService.findEmailByToken(token)
+    if(!email) throw new VetlogException(localeService.getMessage('exception.token.not.found'))
     User user = userRepository.findByEmail(email)
     user
   }
