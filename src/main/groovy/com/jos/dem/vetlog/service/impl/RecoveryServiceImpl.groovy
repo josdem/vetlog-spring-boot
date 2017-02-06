@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 
 import com.jos.dem.vetlog.service.RecoveryService
+import com.jos.dem.vetlog.service.RegistrationService
 import com.jos.dem.vetlog.service.RestService
 import com.jos.dem.vetlog.model.RegistrationCode
 import com.jos.dem.vetlog.model.User
@@ -18,6 +19,8 @@ class RecoveryServiceImpl implements RecoveryService {
 
   @Autowired
   RestService restService
+  @Autowired
+  RegistrationService registrationService
   @Autowired
   UserRepository userRepository
   @Autowired
@@ -34,7 +37,7 @@ class RecoveryServiceImpl implements RecoveryService {
   void sendConfirmationAccountToken(String email){
     RegistrationCode registrationCode = new RegistrationCode(email:email)
     repository.save(registrationCode)
-    Command command = new MessageCommand(email:email, template:template, url:"${serverName}${registrationCode.token}")
+    Command command = new MessageCommand(email:email, template:template, url:"${serverName}${path}${registrationCode.token}")
     restService.sendCommand(command)
   }
 
