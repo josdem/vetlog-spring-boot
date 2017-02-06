@@ -5,24 +5,28 @@ import spock.lang.Specification
 import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.service.impl.RecoveryServiceImpl
 import com.jos.dem.vetlog.service.RestService
+import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.service.RegistrationService
 import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.RegistrationCode
 import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.exception.UserNotFoundException
 
 class RecoveryServiceSpec extends Specification {
 
   RecoveryService recoveryService = new RecoveryServiceImpl()
 
   RestService restService = Mock(RestService)
+  LocaleService localeService = Mock(LocaleService)
   RegistrationService registrationService = Mock(RegistrationService)
   RegistrationCodeRepository repository = Mock(RegistrationCodeRepository)
   UserRepository userRepository = Mock(UserRepository)
 
   def setup(){
     recoveryService.restService = restService
+    recoveryService.localeService = localeService
     recoveryService.repository = repository
     recoveryService.userRepository = userRepository
     recoveryService.registrationService = registrationService
@@ -52,6 +56,19 @@ class RecoveryServiceSpec extends Specification {
   then:"We expect user enabled"
     user.enabled
     1 * userRepository.save(user)
+  }
+
+  void "should not confirm account for token since user not found"(){
+  given:"A token"
+    String token = 'token'
+  and:"An email"
+    String email = 'josdem@email.com'
+  when:"We confirm account for token"
+    localeService.getMessage('exception.user.not.found') >> 'User not found'
+    registrationService.findEmailByToken(token) >> email
+    recoveryService.confirmAccountForToken(token)
+  then:"We expect user enabled"
+    thrown UserNotFoundException
   }
 
 }
