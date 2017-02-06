@@ -25,7 +25,7 @@ class RecoveryController {
 	String create(@PathVariable String token){
   	log.info "Calling activate token"
     recoveryService.confirmAccountForToken(token)
-    'login'
+    'login/login'
 	}
 
 }
