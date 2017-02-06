@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller
 
 import com.jos.dem.vetlog.service.RecoveryService
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 @Controller
 @RequestMapping("/recovery")
 class RecoveryController {
@@ -16,8 +19,11 @@ class RecoveryController {
   @Autowired
   RecoveryService recoveryService
 
+  Logger log = LoggerFactory.getLogger(this.class)
+
 	@RequestMapping(method = GET, value = "/activate/{token}")
 	String create(@PathVariable String token){
+  	log.info "Calling activate token"
     recoveryService.confirmAccountForToken(token)
     'login'
 	}
