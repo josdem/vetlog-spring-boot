@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
+import javax.validation.Valid
 
 import com.jos.dem.vetlog.service.RecoveryService
+import com.jos.dem.vetlog.command.RecoveryPasswordCommand
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
