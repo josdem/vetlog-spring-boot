@@ -60,4 +60,7 @@ class RecoveryServiceImpl implements RecoveryService {
     user
   }
 
+  void generateRegistrationCodeForEmail(String email){
+  }
+
 }
