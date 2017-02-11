@@ -32,7 +32,10 @@ class RecoveryController {
 	}
 
   @RequestMapping(method = POST, value = "/password")
-  String recoveryPassword(UserCommand command){
+  String recoveryPassword(@Valid RecoveryPasswordCommand command, BindingResult bindingResult){
+    if(bindingResult.hasErrors()){
+      return 'recovery/recoveryPassword'
+    }
     recoveryService.generateRegistrationCodeForEmail(command.email)
     'login/login'
   }
