@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/style.css" />
     <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />
     <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />
+    <title th:text="#{recovery.password.title}"></title>
   </head>
   <body class="login">
 
@@ -17,6 +18,7 @@
               <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
             </h1>
           </div>
+
           <div class="portlet portlet-green">
             <div class="portlet-heading login-heading">
               <div class="portlet-title">
@@ -24,6 +26,7 @@
               </div>
               <div class="clearfix"></div>
             </div>
+
             <div class="portlet-body">
               <div th:if="${error}">
                 <div align="center">
