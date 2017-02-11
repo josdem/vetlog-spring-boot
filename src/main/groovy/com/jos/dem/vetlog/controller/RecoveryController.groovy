@@ -1,6 +1,7 @@
 package com.jos.dem.vetlog.controller
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET
+import static org.springframework.web.bind.annotation.RequestMethod.POST
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -29,6 +30,12 @@ class RecoveryController {
     recoveryService.confirmAccountForToken(token)
     'login/login'
 	}
+
+  @RequestMapping(method = POST, value = "/password")
+  String recoveryPassword(UserCommand command){
+    recoveryService.generateRegistrationCodeForEmail(command.email)
+    'login/login'
+  }
 
   @RequestMapping("/password")
   ModelAndView login(@RequestParam Optional<String> error){
