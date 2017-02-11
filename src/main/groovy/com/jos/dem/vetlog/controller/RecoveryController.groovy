@@ -60,7 +60,7 @@ class RecoveryController {
   	log.info "Calling recovery password"
     def modelAndView = new ModelAndView('recovery/recoveryPassword')
 		def recoveryPasswordCommand = new RecoveryPasswordCommand()
-		modelAndView.addObject('recoveryPasswordCommand', RecoveryPasswordCommand)
+		modelAndView.addObject('recoveryPasswordCommand', recoveryPasswordCommand)
 		modelAndView
   }
 
