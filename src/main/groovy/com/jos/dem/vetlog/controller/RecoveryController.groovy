@@ -64,4 +64,13 @@ class RecoveryController {
 		modelAndView
   }
 
+  @RequestMapping(method = GET, value = "/forgot")
+    ModelAndView changePassword(){
+    log.info "Calling change password"
+    def modelAndView = new ModelAndView('recovery/changePassword')
+    def changePasswordCommand = new ChangePasswordCommand()
+    modelAndView.addObject('changePasswordCommand', changePasswordCommand)
+    modelAndView
+  }
+
 }
