@@ -29,8 +29,4 @@ class RegistrationServiceImpl implements RegistrationService {
     registrationCode.token
   }
 
-  Boolean validateToken(String token){
-    true
-  }
-
 }

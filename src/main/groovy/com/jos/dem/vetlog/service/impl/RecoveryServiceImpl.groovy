@@ -73,4 +73,8 @@ class RecoveryServiceImpl implements RecoveryService {
     restService.sendCommand(command)
   }
 
+  Boolean validateToken(String token){
+    true
+  }
+
 }
