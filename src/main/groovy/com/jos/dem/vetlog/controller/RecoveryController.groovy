@@ -37,6 +37,7 @@ class RecoveryController {
   @InitBinder
 	private void initBinder(WebDataBinder binder) {
 		binder.addValidators(recoveryPasswordValidator)
+		binder.addValidators(changePasswordValidator)
 	}
 
 	@RequestMapping(method = GET, value = "/activate/{token}")
