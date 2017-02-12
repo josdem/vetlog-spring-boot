@@ -78,4 +78,10 @@ class RecoveryServiceImpl implements RecoveryService {
     registrationCode == null ? false : true
   }
 
+  User changePassword(Command command){
+    User user = getUserByToken(command.token)
+    user.password = new BCryptPasswordEncoder().encode(command.password)
+    user
+  }
+
 }
