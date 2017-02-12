@@ -85,4 +85,14 @@ class RecoveryServiceSpec extends Specification {
       result
   }
 
+  void "should not validate token"(){
+    given:"A token"
+      String token = 'token'
+    when:"We validate token"
+      Boolean result = recoveryService.validateToken(token)
+    then:"We expect true"
+      result == false
+  }
+
+
 }
