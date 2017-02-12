@@ -37,9 +37,13 @@ class RecoveryController {
 
   Logger log = LoggerFactory.getLogger(this.class)
 
-  @InitBinder
-	private void initBinder(WebDataBinder binder) {
+  @InitBinder('recoveryPassword')
+	private void initPasswordBinder(WebDataBinder binder) {
 		binder.addValidators(recoveryPasswordValidator)
+	}
+
+  @InitBinder('changePassword')
+	private void initChangeBinder(WebDataBinder binder) {
 		binder.addValidators(changePasswordValidator)
 	}
 
