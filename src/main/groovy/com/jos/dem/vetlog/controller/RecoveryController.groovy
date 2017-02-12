@@ -19,6 +19,7 @@ import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.command.RecoveryPasswordCommand
 import com.jos.dem.vetlog.command.ChangePasswordCommand
 import com.jos.dem.vetlog.validator.RecoveryPasswordValidator
+import com.jos.dem.vetlog.validator.ChangePasswordValidator
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -31,6 +32,8 @@ class RecoveryController {
   RecoveryService recoveryService
   @Autowired
   RecoveryPasswordValidator recoveryPasswordValidator
+  @Autowired
+  ChangePasswordValidator changePasswordValidator
 
   Logger log = LoggerFactory.getLogger(this.class)
 
