@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.service.RecoveryService
+import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.command.RecoveryPasswordCommand
 import com.jos.dem.vetlog.command.ChangePasswordCommand
 import com.jos.dem.vetlog.validator.RecoveryPasswordValidator
@@ -34,6 +35,8 @@ class RecoveryController {
   RecoveryPasswordValidator recoveryPasswordValidator
   @Autowired
   ChangePasswordValidator changePasswordValidator
+  @Autowired
+  LocaleService localeService
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -76,11 +79,11 @@ class RecoveryController {
   @RequestMapping(method = GET, value = "/forgot/{token}")
     ModelAndView changePassword(@PathVariable String token){
     log.info "Calling change password"
+    def modelAndView = new ModelAndView('recovery/changePassword')
     Boolean valid = recoveryService.validateToken(token)
     if(!valid){
       modelAndView.addObject('error', localeService.getMessage('recovery.token.error'))
     }
-    def modelAndView = new ModelAndView('recovery/changePassword')
     def changePasswordCommand = new ChangePasswordCommand()
     modelAndView.addObject('changePasswordCommand', changePasswordCommand)
     modelAndView
