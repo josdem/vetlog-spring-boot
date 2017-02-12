@@ -17,6 +17,7 @@ import javax.validation.Valid
 
 import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.command.RecoveryPasswordCommand
+import com.jos.dem.vetlog.command.ChangePasswordCommand
 import com.jos.dem.vetlog.validator.RecoveryPasswordValidator
 
 import org.slf4j.Logger
@@ -64,9 +65,10 @@ class RecoveryController {
 		modelAndView
   }
 
-  @RequestMapping(method = GET, value = "/forgot")
-    ModelAndView changePassword(){
+  @RequestMapping(method = GET, value = "/forgot/{token}")
+    ModelAndView changePassword(@PathVariable String token){
     log.info "Calling change password"
+    recoveryService.validateToken(token)
     def modelAndView = new ModelAndView('recovery/changePassword')
     def changePasswordCommand = new ChangePasswordCommand()
     modelAndView.addObject('changePasswordCommand', changePasswordCommand)
