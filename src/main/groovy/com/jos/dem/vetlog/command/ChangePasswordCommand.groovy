@@ -7,6 +7,10 @@ import org.hibernate.validator.constraints.Email
 class ChangePasswordCommand implements Command {
 
   @NotNull
+  @Size(min=32, max=32)
+  String token
+
+  @NotNull
   @Size(min=8, max=50)
   String password
 
