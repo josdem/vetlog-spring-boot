@@ -23,7 +23,7 @@ class RegistrationServiceImpl implements RegistrationService {
     registrationCode.email
   }
 
-  String generateToken(){
+  String generateToken(String email){
     RegistrationCode registrationCode = new RegistrationCode(email:email)
     repository.save(registrationCode)
     registrationCode.token
