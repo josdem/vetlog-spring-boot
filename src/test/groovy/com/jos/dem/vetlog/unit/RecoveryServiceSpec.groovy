@@ -34,11 +34,13 @@ class RecoveryServiceSpec extends Specification {
 
   void "should send confirmation account token"(){
   given:"An email"
-  String email = 'josdem@email.com'
+    String email = 'josdem@email.com'
+  and:"A token"
+    String token = 'token'
   when:"We call to  send confirmation token"
-  recoveryService.sendConfirmationAccountToken(email)
+    registrationService.generateToken(email) >> token
+    recoveryService.sendConfirmationAccountToken(email)
   then:"We expect to persiste and send token"
-  1 * repository.save(_ as RegistrationCode)
   1 * restService.sendCommand(_ as Command)
   }
 
@@ -69,6 +71,18 @@ class RecoveryServiceSpec extends Specification {
     recoveryService.confirmAccountForToken(token)
   then:"We expect user enabled"
     thrown UserNotFoundException
+  }
+
+  void "should validate token"(){
+    given:"An email"
+      String email = 'josdem@email.com'
+    and:"A token"
+      String token = 'token'
+    when:"We validate token"
+      registrationService.findEmailByToken(token) >> email
+      Boolean result = recoveryService.validateToken(token)
+    then:"We expect true"
+      result
   }
 
 }
