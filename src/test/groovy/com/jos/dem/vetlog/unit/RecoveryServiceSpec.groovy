@@ -74,12 +74,12 @@ class RecoveryServiceSpec extends Specification {
   }
 
   void "should validate token"(){
-    given:"An email"
-      String email = 'josdem@email.com'
+    given:"A Registration code"
+      RegistrationCode registrationCode = new RegistrationCode()
     and:"A token"
       String token = 'token'
     when:"We validate token"
-      registrationService.findEmailByToken(token) >> email
+      repository.findByToken(token) >> registrationCode
       Boolean result = recoveryService.validateToken(token)
     then:"We expect true"
       result

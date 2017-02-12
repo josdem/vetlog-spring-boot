@@ -74,8 +74,8 @@ class RecoveryServiceImpl implements RecoveryService {
   }
 
   Boolean validateToken(String token){
-    String email = registrationService.findEmailByToken(token)
-    email == null ? false : true
+    RegistrationCode registrationCode = repository.findByToken(token)
+    registrationCode == null ? false : true
   }
 
 }
