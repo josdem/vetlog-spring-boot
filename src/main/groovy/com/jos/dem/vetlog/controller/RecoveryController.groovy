@@ -76,7 +76,10 @@ class RecoveryController {
   @RequestMapping(method = GET, value = "/forgot/{token}")
     ModelAndView changePassword(@PathVariable String token){
     log.info "Calling change password"
-    recoveryService.validateToken(token)
+    Boolean valid = recoveryService.validateToken(token)
+    if(!valid){
+      modelAndView.addObject('error', localeService.getMessage('recovery.token.error'))
+    }
     def modelAndView = new ModelAndView('recovery/changePassword')
     def changePasswordCommand = new ChangePasswordCommand()
     modelAndView.addObject('changePasswordCommand', changePasswordCommand)
