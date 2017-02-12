@@ -6,9 +6,9 @@ import org.hibernate.validator.constraints.Email
 
 class RecoveryPasswordCommand implements Command {
 
+  @Email
   @NotNull
   @Size(min=6, max=200)
-  @Email
   String email
 
 }

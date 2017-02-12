@@ -34,33 +34,43 @@ class RecoveryServiceImpl implements RecoveryService {
   @Value('${serverName}')
   String serverName
   @Value('${template.register.name}')
-  String template
+  String registerTemplate
   @Value('${template.register.path}')
-  String path
+  String registerPath
+  @Value('${template.forgot.name}')
+  String forgotTemplate
+  @Value('${template.forgot.path}')
+  String forgotPath
+
 
   void sendConfirmationAccountToken(String email){
-    RegistrationCode registrationCode = new RegistrationCode(email:email)
-    repository.save(registrationCode)
-    Command command = new MessageCommand(email:email, template:template, url:"${serverName}${path}${registrationCode.token}")
+    String token = registrationService.generateToken()
+    Command command = new MessageCommand(email:email, template:registerTemplate, url:"${serverName}${registerPath}${token}")
     restService.sendCommand(command)
   }
 
   User confirmAccountForToken(String token){
     User user = getUserByToken(token)
     if(!user) throw new UserNotFoundException(localeService.getMessage('exception.user.not.found'))
-    user.enabled = true
-    userRepository.save(user)
-    user
+      user.enabled = true
+      userRepository.save(user)
+      user
   }
 
   User getUserByToken(String token){
     String email = registrationService.findEmailByToken(token)
     if(!email) throw new VetlogException(localeService.getMessage('exception.token.not.found'))
-    User user = userRepository.findByEmail(email)
-    user
+      User user = userRepository.findByEmail(email)
+      user
   }
 
   void generateRegistrationCodeForEmail(String email){
+    User user = userRepository.findByEmail(email)
+    if(!user) throw new UserNotFoundException(localeService.getMessage('exception.user.not.found'))
+    if(!user.enabled) throw new VetlogException(localeService.getMessage('exception.account.not.activated'))
+    String token = registrationService.generateToken()
+    Command command = new MessageCommand(email:email, template:forgotTemplate, url:"${serverName}${forgotPath}${token}")
+    restService.sendCommand(command)
   }
 
 }
