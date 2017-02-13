@@ -92,6 +92,7 @@ class RecoveryController {
   @RequestMapping(method = POST, value = "/change")
   String generateTokenToChangePassword(@Valid ChangePasswordCommand command, BindingResult bindingResult){
   	log.info "Calling save and changing password"
+    log.info "command: ${command.dump()}"
     if(bindingResult.hasErrors()){
       log.info "errors: ${bindingResult.dump()}"
       return 'recovery/changePassword'
