@@ -93,6 +93,7 @@ class RecoveryController {
   String generateTokenToChangePassword(@Valid ChangePasswordCommand command, BindingResult bindingResult){
   	log.info "Calling save and changing password"
     if(bindingResult.hasErrors()){
+      log.info "errors: ${bindingResult.dump()}"
       return 'recovery/changePassword'
     }
     recoveryService.changePassword(command)
