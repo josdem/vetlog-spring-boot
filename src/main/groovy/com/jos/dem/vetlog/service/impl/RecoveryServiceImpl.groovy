@@ -82,6 +82,7 @@ class RecoveryServiceImpl implements RecoveryService {
   User changePassword(Command command){
     User user = getUserByToken(command.token)
     user.password = new BCryptPasswordEncoder().encode(command.password)
+    userRepository.update(user)
     user
   }
 
