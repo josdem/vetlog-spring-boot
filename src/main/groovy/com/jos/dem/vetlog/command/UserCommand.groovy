@@ -20,7 +20,7 @@ class UserCommand implements Command {
 
   @NotNull
   @Size(min=1, max=50)
-  String name
+  String firstname
 
   @NotNull
   @Size(min=1, max=100)
