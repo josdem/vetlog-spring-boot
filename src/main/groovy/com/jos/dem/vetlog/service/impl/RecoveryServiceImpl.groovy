@@ -32,7 +32,7 @@ class RecoveryServiceImpl implements RecoveryService {
   @Autowired
   LocaleService localeService
 
-  @Value('${serverName}')
+  @Value('${server.name}')
   String serverName
   @Value('${template.register.name}')
   String registerTemplate
