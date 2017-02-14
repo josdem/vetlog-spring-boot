@@ -1,6 +1,7 @@
-- changeSet:
-    id: 20170214-1
-    author: josdem
-    changes:
-    - sql:
-        sql: insert into user (id, username, password, firstname, lastname, email, role, enabled, account_non_expired, credentials_non_expired, account_non_locked, date_created) values (1,'josdem','12345678', 'Jose Luis', 'De la Cruz Morales', 'joseluis.delacruz@gmail.com', 'USER', true, true, true, true, CURDATE())
+databaseChangeLog:
+  - changeSet:
+      id: 20170214-1
+      author: josdem
+      changes:
+      - sql:
+          sql: insert into user (id, username, password, firstname, lastname, email, role, enabled, account_non_expired, credentials_non_expired, account_non_locked, date_created) values (1,'josdem','12345678', 'Jose Luis', 'De la Cruz Morales', 'joseluis.delacruz@gmail.com', 'USER', true, true, true, true, CURDATE())

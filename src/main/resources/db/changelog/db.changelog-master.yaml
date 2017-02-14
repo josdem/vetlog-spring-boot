@@ -102,4 +102,7 @@ databaseChangeLog:
         columnNames: username
         constraintName: UK_sb8bbouer5wak8vyiiy4pf2bx
         tableName: user
+- include:
+    file: db/changelog/insert_user.yaml
+
 
