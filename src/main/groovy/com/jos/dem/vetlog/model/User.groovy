@@ -39,6 +39,6 @@ class User implements Serializable {
   @Column(nullable = false)
   Boolean accountNonLocked = true
   @Column(nullable = false)
-  Date dateCreate = new Date()
+  Date dateCreated = new Date()
 }
 

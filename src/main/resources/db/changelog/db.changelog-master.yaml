@@ -62,7 +62,7 @@ databaseChangeLog:
         - column:
             constraints:
               nullable: false
-            name: date_create
+            name: date_created
             type: datetime(6)
         - column:
             name: email
@@ -102,4 +102,6 @@ databaseChangeLog:
         columnNames: username
         constraintName: UK_sb8bbouer5wak8vyiiy4pf2bx
         tableName: user
+- include:
+      file: insert_user.yaml
 
