@@ -45,33 +45,8 @@ databaseChangeLog:
             name: id
             type: BIGINT
         - column:
-            constraints:
-              nullable: false
-            name: account_non_expired
-            type: BIT(1)
-        - column:
-            constraints:
-              nullable: false
-            name: account_non_locked
-            type: BIT(1)
-        - column:
-            constraints:
-              nullable: false
-            name: credentials_non_expired
-            type: BIT(1)
-        - column:
-            constraints:
-              nullable: false
-            name: date_created
-            type: datetime(6)
-        - column:
             name: email
             type: VARCHAR(255)
-        - column:
-            constraints:
-              nullable: false
-            name: enabled
-            type: BIT(1)
         - column:
             name: firstname
             type: VARCHAR(255)
