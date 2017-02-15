@@ -1,6 +1,6 @@
 databaseChangeLog:
 - changeSet:
-    id: 1487042397962-1
+    id: 1487128064865-1
     author: josdem (generated)
     changes:
     - createTable:
@@ -33,7 +33,7 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: registration_code
 - changeSet:
-    id: 1487042397962-2
+    id: 1487128064865-2
     author: josdem (generated)
     changes:
     - createTable:
@@ -45,8 +45,33 @@ databaseChangeLog:
             name: id
             type: BIGINT
         - column:
+            constraints:
+              nullable: false
+            name: account_non_expired
+            type: BIT(1)
+        - column:
+            constraints:
+              nullable: false
+            name: account_non_locked
+            type: BIT(1)
+        - column:
+            constraints:
+              nullable: false
+            name: credentials_non_expired
+            type: BIT(1)
+        - column:
+            constraints:
+              nullable: false
+            name: date_created
+            type: datetime(6)
+        - column:
             name: email
             type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: enabled
+            type: BIT(1)
         - column:
             name: firstname
             type: VARCHAR(255)
@@ -70,15 +95,11 @@ databaseChangeLog:
             type: VARCHAR(255)
         tableName: user
 - changeSet:
-    id: 1487042397962-3
+    id: 1487128064865-3
     author: josdem (generated)
     changes:
     - addUniqueConstraint:
         columnNames: username
         constraintName: UK_sb8bbouer5wak8vyiiy4pf2bx
         tableName: user
-- include:
-    relativeToChangelogFile: true
-    file: insert_user.yaml
-
 
