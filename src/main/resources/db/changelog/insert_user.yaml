@@ -5,4 +5,4 @@ databaseChangeLog:
       changes:
       - sql:
           dbms: mysql
-          sql: insert into user (id, username, password, firstname, lastname, email, role, enabled, account_non_expired, credentials_non_expired, account_non_locked, date_created) values (null,"josdem","12345678", "Jose Luis", "De la Cruz Morales", "joseluis.delacruz@gmail.com", "USER", true, true, true, true, CURDATE())
+          sql: insert into user (id, username, password, firstname, lastname, email, role, enabled, account_non_expired, credentials_non_expired, account_non_locked, date_created) values (null,"josdem",ENCRYPT('12345678'), "Jose Luis", "De la Cruz Morales", "joseluis.delacruz@gmail.com", "USER", true, true, true, true, CURDATE())

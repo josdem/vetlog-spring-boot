@@ -37,9 +37,9 @@
                 <input type="password" name='passwordConfirmation' class="form-control" placeholder="password confirmation" id='passwordConfirmation'/>
                 <label th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></label>
                 <br/>
-                <label for="name"><h4 th:text="#{user.name}"/></label>
-                <input type="text" name='name' class="form-control" placeholder="name" id='name'/>
-                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                <label for="name"><h4 th:text="#{user.firstname}"/></label>
+                <input type="text" name='firstname' class="form-control" placeholder="name" id='name'/>
+                <label th:if="${#fields.hasErrors('firstname')}" th:errors="*{name}"></label>
                 <br/>
                 <label for="lastname"><h4 th:text="#{user.lastname}"/></label>
                 <input type="text" name='lastname' class="form-control" placeholder="lastname" id='lastname'/>
