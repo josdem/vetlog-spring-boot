@@ -32,8 +32,8 @@ class RecoveryServiceImpl implements RecoveryService {
   @Autowired
   LocaleService localeService
 
-  @Value('${server.name}')
-  String serverName
+  @Value('${server}')
+  String server
   @Value('${template.register.name}')
   String registerTemplate
   @Value('${template.register.path}')
@@ -46,7 +46,7 @@ class RecoveryServiceImpl implements RecoveryService {
 
   void sendConfirmationAccountToken(String email){
     String token = registrationService.generateToken(email)
-    Command command = new MessageCommand(email:email, template:registerTemplate, url:"${serverName}${registerPath}${token}")
+    Command command = new MessageCommand(email:email, template:registerTemplate, url:"${server}${registerPath}${token}")
     restService.sendCommand(command)
   }
 
