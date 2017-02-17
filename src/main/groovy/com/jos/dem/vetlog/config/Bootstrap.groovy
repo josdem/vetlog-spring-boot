@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment
 
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.Role
+import com.jos.dem.vetlog.enums.CurrentEnvironment
 import com.jos.dem.vetlog.repository.UserRepository
 
 @Component
@@ -21,7 +22,7 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
   @Override
   void onApplicationEvent(final ApplicationReadyEvent event) {
-    if(environment.activeProfiles[0] == 'development'){
+    if(environment.activeProfiles[0] == CurrentEnvironment.DEVELOPMENT.getDescription()){
       println "Loading development environment"
       createDefaultUsers()
     }
