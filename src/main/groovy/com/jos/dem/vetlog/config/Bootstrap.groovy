@@ -29,7 +29,8 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
   }
 
   void createDefaultUsers(){
-    createUserWithRole('softtekian', '12345678', 'softtekian@softtek.com', Role.USER)
+    createUserWithRole('josdem', '12345678', 'joseluis.delacruz@gmail.com', Role.USER)
+    createUserWithRole('admin', '12345678', 'admin@email.com', Role.ADMIN)
   }
 
   void createUserWithRole(String username, String password, String email, Role authority) {
