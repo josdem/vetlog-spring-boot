@@ -6,6 +6,7 @@ import static javax.persistence.GenerationType.AUTO
 import javax.persistence.Id
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 
 @Entity
