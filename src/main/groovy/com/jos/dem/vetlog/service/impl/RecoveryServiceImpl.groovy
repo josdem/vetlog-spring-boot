@@ -70,7 +70,7 @@ class RecoveryServiceImpl implements RecoveryService {
     if(!user) throw new UserNotFoundException(localeService.getMessage('exception.user.not.found'))
     if(!user.enabled) throw new VetlogException(localeService.getMessage('exception.account.not.activated'))
     String token = registrationService.generateToken(email)
-    Command command = new MessageCommand(email:email, template:forgotTemplate, url:"${serverName}${forgotPath}${token}")
+    Command command = new MessageCommand(email:email, template:forgotTemplate, url:"${server}${forgotPath}${token}")
     restService.sendCommand(command)
   }
 
