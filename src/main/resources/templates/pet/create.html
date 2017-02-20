@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/style.css" />
   <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />
   <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />
-  <title th:text="#{user.view.create.title}"></title>
+  <title th:text="#{pet.view.create.title}"></title>
 </head>
 <body class="login">
   <div class="container">
@@ -18,12 +18,12 @@
         <div class="portlet portlet-green">
           <div class="portlet-heading login-heading">
             <div class="portlet-title">
-              <h4 th:text="#{user.view.create.label}"/>
+              <h4 th:text="#{pet.view.create.label}"/>
             </div>
             <div class="clearfix"></div>
           </div>
           <div class="portlet-body">
-            <form id="register" th:action="@{/user/save}" th:object="${userCommand}" method="post"  class="form-horizontal">
+            <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal">
               <fieldset>
                 <label for="username"><h4 th:text="#{login.username}"/></label>
                 <input type="text" name='username' class="form-control" placeholder="username" id='username'/>
