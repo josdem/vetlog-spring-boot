@@ -13,8 +13,7 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.command.PetCommand
-import com.jos.dem.vetlog.validator.UserValidator
-import com.jos.dem.vetlog.service.UserService
+import com.jos.dem.vetlog.validator.PetValidator
 
 @Controller
 @RequestMapping("/pet")
@@ -22,8 +21,6 @@ class PetController {
 
   @Autowired
   PetValidator petValidator
-  @Autowired
-  PetService petService
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {

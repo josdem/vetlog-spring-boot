@@ -12,8 +12,8 @@ class PetCommand implements Command {
   String name
 
   @NotNull
-  @Min(0)
-  @Max(250)
+  @Min(0L)
+  @Max(250L)
   Integer age
 
   @NotNull
