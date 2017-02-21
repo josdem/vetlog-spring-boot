@@ -9,8 +9,10 @@ import org.springframework.core.env.Environment
 
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.Role
+import com.jos.dem.vetlog.model.Breed
 import com.jos.dem.vetlog.enums.CurrentEnvironment
 import com.jos.dem.vetlog.repository.UserRepository
+import com.jos.dem.vetlog.repository.BreedRepository
 
 @Component
 class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
@@ -19,18 +21,30 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
   Environment environment
   @Autowired
   UserRepository userRepository
+  @Autowired
+  BreedRepository breedRepository
 
   @Override
   void onApplicationEvent(final ApplicationReadyEvent event) {
     if(environment.activeProfiles[0] == CurrentEnvironment.DEVELOPMENT.getDescription()){
       println "Loading development environment"
       createDefaultUsers()
+      createBreeds()
     }
   }
 
   void createDefaultUsers(){
     createUserWithRole('josdem', '12345678', 'joseluis.delacruz@gmail.com', Role.USER)
     createUserWithRole('admin', '12345678', 'admin@email.com', Role.ADMIN)
+  }
+
+  void createBreeds(){
+    def breeds = [
+      new Breed(name:'labrador', type:'DOG')
+    ]
+    breeds.each {
+      breedRepository.save(it)
+    }
   }
 
   void createUserWithRole(String username, String password, String email, Role authority) {

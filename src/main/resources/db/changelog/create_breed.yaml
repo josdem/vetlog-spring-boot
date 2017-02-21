@@ -1,8 +1,0 @@
-databaseChangeLog:
-  changeSet:
-    id: 20170220-1
-    author: josdem
-    changes:
-      sql:
-        dbms: mysql
-        sql: insert into breed (id, name, type, date_created) values (null, 'Labrador', 'DOG', CURDATE())
