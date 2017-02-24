@@ -6,3 +6,4 @@ node_modules/
 src/main/resources/static/
 gradle.properties
 application.properties
+*.log
