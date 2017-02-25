@@ -40,7 +40,7 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
   void createBreeds(){
     def breeds = [
-      new Breed(name:'labrador', type:'DOG'),
+      new Breed(name:'Labrador', type:'DOG'),
       new Breed(name:'Landrace', type:'DOG'),
       new Breed(name:'German Shepherd', type:'DOG'),
       new Breed(name:'Golden Retriever', type:'DOG'),

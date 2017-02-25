@@ -18,7 +18,7 @@ class PetServiceImpl implements PetService {
   PetRepository petRepository
 
   Pet save(Command command){
-    Pet pet = petBinder.bindUser(command)
+    Pet pet = petBinder.bindPet(command)
     petRepository.save(pet)
     pet
   }

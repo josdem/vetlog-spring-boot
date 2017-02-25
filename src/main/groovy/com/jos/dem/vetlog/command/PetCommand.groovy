@@ -26,11 +26,7 @@ class PetCommand implements Command {
   Boolean vaccinated = true
 
   @NotNull
-  @Size(min=6, max=50)
-  String breed
-
-  @NotNull
-  @Size(min=6, max=50)
-  String type
+  Min=1
+  Integer breed
 
 }

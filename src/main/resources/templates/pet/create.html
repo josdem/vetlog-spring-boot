@@ -50,11 +50,6 @@
                   <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
                 </select>
                 <br/><br/>
-                <label for="type"><h4 th:text="#{pet.type}"/></label>
-                <select name="type" class="form-control" th:field="*{type}">
-                  <option th:each=" type : ${T(com.jos.dem.vetlog.model.PetType).values()}" th:value="${type}" th:text="${type.value}"></option>
-                </select>
-                <br/><br/>
                 <input type="submit" class="btn btn-primary btn-block" />
               </fieldset>
             </form>
