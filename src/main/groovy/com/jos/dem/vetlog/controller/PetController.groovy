@@ -16,6 +16,9 @@ import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
 import com.jos.dem.vetlog.service.BreedService
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 @Controller
 @RequestMapping("/pet")
 class PetController {
@@ -24,6 +27,8 @@ class PetController {
   PetValidator petValidator
   @Autowired
   BreedService breedService
+
+  Logger log = LoggerFactory.getLogger(this.class)
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
