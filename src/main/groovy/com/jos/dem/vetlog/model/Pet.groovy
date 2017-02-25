@@ -34,4 +34,8 @@ class Pet {
   @JoinColumn(name="breed_id")
   Breed breed
 
+  @OneToOne(fetch=FetchType.LAZY)
+  @JoinColumn(name="user_id")
+  User user
+
 }

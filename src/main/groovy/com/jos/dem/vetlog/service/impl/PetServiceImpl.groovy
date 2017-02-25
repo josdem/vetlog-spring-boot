@@ -17,8 +17,9 @@ class PetServiceImpl implements PetService {
   @Autowired
   PetRepository petRepository
 
-  Pet save(Command command){
+  Pet save(Command command, User user){
     Pet pet = petBinder.bindPet(command)
+    pet.user = user
     petRepository.save(pet)
     pet
   }

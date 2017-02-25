@@ -2,6 +2,9 @@ package com.jos.dem.vetlog.service.impl
 
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
+
 
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
@@ -33,6 +36,12 @@ class UserServiceImpl implements UserService {
     userRepository.save(user)
     recoveryService.sendConfirmationAccountToken(user.email)
     user
+  }
+
+  User getCurrentUser(String user){
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication()
+    String username = auth.getName()
+    userRepository.findByUsername(username)
   }
 
 }

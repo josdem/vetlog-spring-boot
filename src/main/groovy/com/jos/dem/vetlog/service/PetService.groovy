@@ -4,5 +4,5 @@ import  com.jos.dem.vetlog.model.Pet
 import  com.jos.dem.vetlog.command.Command
 
 interface PetService {
-  Pet save(Command command)
+  Pet save(Command command, User user)
 }

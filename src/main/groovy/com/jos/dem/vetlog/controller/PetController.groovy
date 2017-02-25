@@ -56,9 +56,6 @@ class PetController {
     if (bindingResult.hasErrors()) {
       return 'pet/create'
     }
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication()
-    String username = auth.getName()
-    log.info "username: ${username}"
     petService.save(command)
     'pet/create'
   }
