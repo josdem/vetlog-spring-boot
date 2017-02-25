@@ -80,8 +80,10 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
       new Breed(name:'Weimaraner', type:'DOG'),
       new Breed(name:'Dogue de Bordeaux', type:'DOG')
     ]
-    breeds.each {
-      breedRepository.save(it)
+    if(!breedRepostory.findAll().size()){
+      breeds.each {
+        breedRepository.save(it)
+      }
     }
   }
 
