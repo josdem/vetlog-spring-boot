@@ -10,8 +10,6 @@ import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.context.SecurityContextHolder
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
@@ -33,6 +31,8 @@ class PetController {
   BreedService breedService
   @Autowired
   PetService petService
+  @Autowired
+  UserService userService
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -56,6 +56,7 @@ class PetController {
     if (bindingResult.hasErrors()) {
       return 'pet/create'
     }
+    User user = userService.getCurrentUser()
     petService.save(command)
     'pet/create'
   }

@@ -38,7 +38,7 @@ class UserServiceImpl implements UserService {
     user
   }
 
-  User getCurrentUser(String user){
+  User getCurrentUser(){
     Authentication auth = SecurityContextHolder.getContext().getAuthentication()
     String username = auth.getName()
     userRepository.findByUsername(username)
