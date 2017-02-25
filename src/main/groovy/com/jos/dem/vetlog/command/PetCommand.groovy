@@ -8,7 +8,7 @@ import javax.validation.constraints.Max
 class PetCommand implements Command {
 
   @NotNull
-  @Size(min=6, max=50)
+  @Size(min=1, max=50)
   String name
 
   @NotNull
