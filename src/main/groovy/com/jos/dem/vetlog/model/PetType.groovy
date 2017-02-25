@@ -9,7 +9,7 @@ enum PetType {
     this.value = value
   }
 
-  getValue(){
+  String getValue(){
     value
   }
 }
