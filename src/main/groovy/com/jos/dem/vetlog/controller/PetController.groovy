@@ -15,6 +15,7 @@ import javax.validation.Valid
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
 import com.jos.dem.vetlog.service.BreedService
+import com.jos.dem.vetlog.service.PetService
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -27,6 +28,8 @@ class PetController {
   PetValidator petValidator
   @Autowired
   BreedService breedService
+  @Autowired
+  PetService petService
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -50,6 +53,7 @@ class PetController {
     if (bindingResult.hasErrors()) {
       return 'pet/create'
     }
+    petService.save(pet)
     'pet/create'
   }
 
