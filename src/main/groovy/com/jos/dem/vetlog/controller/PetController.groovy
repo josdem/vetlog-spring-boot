@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
+import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
 import com.jos.dem.vetlog.service.BreedService
