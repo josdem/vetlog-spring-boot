@@ -39,4 +39,13 @@ class PetController {
 		modelAndView
 	}
 
+  @RequestMapping(method = POST, value = "/save")
+	String save(@Valid PetCommand command, BindingResult bindingResult) {
+    log.info "pet: ${command.dump()}"
+    if (bindingResult.hasErrors()) {
+      return 'pet/create'
+    }
+    'pet/create'
+  }
+
 }
