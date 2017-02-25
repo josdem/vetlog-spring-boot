@@ -27,6 +27,6 @@ class PetCommand implements Command {
 
   @NotNull
   @Min(1L)
-  Integer breed
+  Long breed
 
 }
