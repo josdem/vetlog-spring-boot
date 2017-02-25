@@ -26,7 +26,7 @@ class PetCommand implements Command {
   Boolean vaccinated = true
 
   @NotNull
-  Min=1
+  @Min(1L)
   Integer breed
 
 }
