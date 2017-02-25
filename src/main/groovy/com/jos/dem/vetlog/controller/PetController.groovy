@@ -59,7 +59,7 @@ class PetController {
       return 'pet/create'
     }
     User user = userService.getCurrentUser()
-    petService.save(command)
+    petService.save(command, user)
     'pet/create'
   }
 
