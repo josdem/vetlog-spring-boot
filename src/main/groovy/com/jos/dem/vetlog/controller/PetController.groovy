@@ -54,7 +54,7 @@ class PetController {
     if (bindingResult.hasErrors()) {
       return 'pet/create'
     }
-    petService.save(pet)
+    petService.save(command)
     'pet/create'
   }
 
