@@ -14,6 +14,7 @@ import javax.validation.Valid
 
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
+import com.jos.dem.vetlog.service.BreedService
 
 @Controller
 @RequestMapping("/pet")
@@ -21,6 +22,8 @@ class PetController {
 
   @Autowired
   PetValidator petValidator
+  @Autowired
+  BreedService breedService
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
@@ -31,6 +34,7 @@ class PetController {
 	ModelAndView create(){
 		def modelAndView = new ModelAndView('pet/create')
 		def petCommand = new PetCommand()
+		modelAndView.addObject('petList', breedService.getBreeds())
 		modelAndView.addObject('petCommand', petCommand)
 		modelAndView
 	}
