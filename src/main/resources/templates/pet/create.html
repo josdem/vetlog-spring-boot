@@ -46,9 +46,10 @@
                 <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
                 <br/>
                 <label for="breed"><h4 th:text="#{pet.breed}"/></label>
-                <select name="breed" class="form-control col-md-10 search-query" name="breeds">
+                <select name="breed" class="form-control col-md-10 search-query">
                   <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
                 </select>
+                <br/><br/>
                 <input type="submit" class="btn btn-primary btn-block" />
               </fieldset>
             </form>
