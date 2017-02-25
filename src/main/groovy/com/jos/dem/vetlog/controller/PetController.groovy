@@ -34,7 +34,7 @@ class PetController {
 	ModelAndView create(){
 		def modelAndView = new ModelAndView('pet/create')
 		def petCommand = new PetCommand()
-		modelAndView.addObject('petList', breedService.getBreeds())
+		modelAndView.addObject('breeds', breedService.getBreeds())
 		modelAndView.addObject('petCommand', petCommand)
 		modelAndView
 	}
