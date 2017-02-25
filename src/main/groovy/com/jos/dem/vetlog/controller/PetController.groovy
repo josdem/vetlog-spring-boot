@@ -53,14 +53,16 @@ class PetController {
 	}
 
   @RequestMapping(method = POST, value = "/save")
-	String save(@Valid PetCommand command, BindingResult bindingResult) {
-    log.info "pet: ${command.dump()}"
+	ModelAndView save(@Valid PetCommand command, BindingResult bindingResult) {
+    log.info "Creating pet: ${command.name}"
+    ModelAndView modelAndView = new ModelAndView('pet/create')
     if (bindingResult.hasErrors()) {
-      return 'pet/create'
+      return modelAndView
     }
     User user = userService.getCurrentUser()
     petService.save(command, user)
-    'pet/create'
+    modelAndView.addObject('message', localeService.getMessage('pet.created'))
+    modelAndView
   }
 
 }

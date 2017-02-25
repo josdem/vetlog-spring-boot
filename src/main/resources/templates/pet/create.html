@@ -1,62 +1,67 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link rel="stylesheet" href="/assets/third-party/bootstrap/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="/assets/third-party/font-awesome/css/font-awesome.css" />
-  <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/style.css" />
-  <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />
-  <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />
-  <title th:text="#{pet.view.create.title}"></title>
-</head>
-<body class="login">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <div class="login-banner text-center">
-          <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
-        </div>
-        <div class="portlet portlet-green">
-          <div class="portlet-heading login-heading">
-            <div class="portlet-title">
-              <h4 th:text="#{pet.view.create.label}"/>
-            </div>
-            <div class="clearfix"></div>
+  <head>
+    <link rel="stylesheet" href="/assets/third-party/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/third-party/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/style.css" />
+    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />
+    <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />
+    <title th:text="#{pet.view.create.title}"></title>
+  </head>
+  <body class="login">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <div class="login-banner text-center">
+            <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
           </div>
-          <div class="portlet-body">
-            <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal">
-              <fieldset>
-                <label for="name"><h4 th:text="#{pet.name}"/></label>
-                <input type="text" name='name' class="form-control" placeholder="name" id='name'/>
-                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
-                <br/>
-                <label for="age"><h4 th:text="#{pet.age}"/></label>
-                <input type="number" name='age' min="0" max="250" class="form-control" placeholder="age" id='age'/>
-                <label th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></label>
-                <br/>
-                <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
-                <input type="checkbox" name='dewormed' class="form-control" placeholder="dewormed" id='dewormed'/>
-                <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
-                <br/>
-                <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
-                <input type="checkbox" name='sterilized' class="form-control" placeholder="sterilized" id='sterilized'/>
-                <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
-                <br/>
-                <label for="vaccinated"><h4 th:text="#{pet.vaccinated}"/></label>
-                <input type="checkbox" name='vaccinated' class="form-control" placeholder="vaccinated" id='vaccinated'/>
-                <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
-                <br/>
-                <label for="breed"><h4 th:text="#{pet.breed}"/></label>
-                <select name="breed" class="form-control">
-                  <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
-                </select>
-                <br/><br/>
-                <input type="submit" class="btn btn-primary btn-block" />
-              </fieldset>
-            </form>
+          <div class="portlet portlet-green">
+            <div class="portlet-heading login-heading">
+              <div class="portlet-title">
+                <h4 th:text="#{pet.view.create.label}"/>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+              <div th:if="${message}">
+                <div align="center">
+                  <p th:text="${message}"/>
+                </div>
+              </div>
+              <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal">
+                <fieldset>
+                  <label for="name"><h4 th:text="#{pet.name}"/></label>
+                  <input type="text" name='name' class="form-control" placeholder="name" id='name'/>
+                  <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                  <br/>
+                  <label for="age"><h4 th:text="#{pet.age}"/></label>
+                  <input type="number" name='age' min="0" max="250" class="form-control" placeholder="age" id='age'/>
+                  <label th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></label>
+                  <br/>
+                  <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
+                  <input type="checkbox" name='dewormed' class="form-control" placeholder="dewormed" id='dewormed'/>
+                  <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
+                  <br/>
+                  <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
+                  <input type="checkbox" name='sterilized' class="form-control" placeholder="sterilized" id='sterilized'/>
+                  <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
+                  <br/>
+                  <label for="vaccinated"><h4 th:text="#{pet.vaccinated}"/></label>
+                  <input type="checkbox" name='vaccinated' class="form-control" placeholder="vaccinated" id='vaccinated'/>
+                  <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
+                  <br/>
+                  <label for="breed"><h4 th:text="#{pet.breed}"/></label>
+                  <select name="breed" class="form-control">
+                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
+                  </select>
+                  <br/><br/>
+                  <input type="submit" class="btn btn-primary btn-block" />
+                </fieldset>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>
