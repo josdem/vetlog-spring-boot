@@ -46,11 +46,12 @@
                 <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
                 <br/>
                 <label for="breed"><h4 th:text="#{pet.breed}"/></label>
-                <select name="breed" class="form-control col-md-10 search-query">
+                <select name="breed" class="form-control">
                   <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
                 </select>
-                <br/>
-                <select name="type" class="form-control col-md-10 search-query" th:field="*{type}">
+                <br/><br/>
+                <label for="type"><h4 th:text="#{pet.type}"/></label>
+                <select name="type" class="form-control" th:field="*{type}">
                   <option th:each=" type : ${T(com.jos.dem.vetlog.model.PetType).values()}" th:value="${type}" th:text="${type.value}"></option>
                 </select>
                 <br/><br/>
