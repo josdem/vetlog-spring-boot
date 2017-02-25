@@ -13,10 +13,12 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
+import  com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
 import com.jos.dem.vetlog.service.BreedService
 import com.jos.dem.vetlog.service.PetService
+import com.jos.dem.vetlog.service.UserService
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
