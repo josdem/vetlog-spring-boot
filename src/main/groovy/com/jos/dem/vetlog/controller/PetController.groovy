@@ -10,6 +10,8 @@ import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
@@ -54,6 +56,9 @@ class PetController {
     if (bindingResult.hasErrors()) {
       return 'pet/create'
     }
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication()
+    String username = auth.getName()
+    log.info "username: ${username}"
     petService.save(command)
     'pet/create'
   }
