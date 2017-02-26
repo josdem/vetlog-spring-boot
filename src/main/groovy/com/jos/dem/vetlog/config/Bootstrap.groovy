@@ -40,6 +40,20 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
   void createBreeds(){
     def breeds = [
+      new Breed(name:'Siamese', type:'CAT'),
+      new Breed(name:'Landrace', type:'CAT'),
+      new Breed(name:'British Shorthair', type:'CAT'),
+      new Breed(name:'Persian', type:'CAT'),
+      new Breed(name:'Maine Coon', type:'CAT'),
+      new Breed(name:'Ragdoll', type:'CAT'),
+      new Breed(name:'American Shorthair', type:'CAT'),
+      new Breed(name:'Abyssinian', type:'CAT'),
+      new Breed(name:'Burmese', type:'CAT'),
+      new Breed(name:'Bengal', type:'CAT'),
+      new Breed(name:'Sphynx', type:'CAT'),
+      new Breed(name:'Birman', type:'CAT'),
+      new Breed(name:'Scottish Fold', type:'CAT'),
+      new Breed(name:'American Bobtail', type:'CAT'),
       new Breed(name:'Labrador', type:'DOG'),
       new Breed(name:'Landrace', type:'DOG'),
       new Breed(name:'German Shepherd', type:'DOG'),
@@ -79,6 +93,21 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
       new Breed(name:'Pit bull', type:'DOG'),
       new Breed(name:'Weimaraner', type:'DOG'),
       new Breed(name:'Dogue de Bordeaux', type:'DOG')
+      new Breed(name:'Chicken', type:'BIRD')
+      new Breed(name:'Canary', type:'BIRD')
+      new Breed(name:'Duck', type:'BIRD')
+      new Breed(name:'Dove', type:'BIRD')
+      new Breed(name:'Goose', type:'BIRD')
+      new Breed(name:'Swan', type:'BIRD')
+      new Breed(name:'Guinea pig', type:'RODENT')
+      new Breed(name:'Hamster', type:'RODENT')
+      new Breed(name:'Chinchillas', type:'RODENT')
+      new Breed(name:'Corn Snake', type:'SNAKE')
+      new Breed(name:'Kingsnake', type:'SNAKE')
+      new Breed(name:'Rosy Boa', type:'SNAKE')
+      new Breed(name:'Gopher', type:'SNAKE')
+      new Breed(name:'Ball Python', type:'SNAKE')
+      new Breed(name:'Tarantula', type:'SPIDER')
     ]
     if(!breedRepository.findAll().size()){
       breeds.each {
