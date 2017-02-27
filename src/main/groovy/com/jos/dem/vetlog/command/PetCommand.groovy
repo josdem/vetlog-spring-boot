@@ -5,7 +5,7 @@ import javax.validation.constraints.Size
 import javax.validation.constraints.Min
 import javax.validation.constraints.Max
 
-import com.jos.dem.vetlog.command.PetType
+import com.jos.dem.vetlog.model.PetType
 
 class PetCommand implements Command {
 

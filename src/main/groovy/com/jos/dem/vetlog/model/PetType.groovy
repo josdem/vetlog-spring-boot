@@ -1,7 +1,7 @@
 package com.jos.dem.vetlog.model
 
 enum PetType {
-  CAT('Cat'), DOG('Dog'), BIRD('Bird'), RODENT('Rodent'), SPIDER('Spider'), SNAKE('Snake')
+  DOG('Dog'), CAT('Cat'), BIRD('Bird'), RODENT('Rodent'), SPIDER('Spider'), SNAKE('Snake')
 
   private final String value
 
