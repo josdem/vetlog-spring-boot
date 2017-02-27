@@ -12,4 +12,10 @@ enum PetType {
   String getValue(){
     value
   }
+
+  static PetType getPetTypeByValue(String value){
+    for(PetType type : PetType.values()){
+      if(value == type.value) return type
+    }
+  }
 }

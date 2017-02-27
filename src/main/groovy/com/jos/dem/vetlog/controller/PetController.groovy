@@ -85,7 +85,7 @@ class PetController {
 
     response.addHeader("Allow-Control-Allow-Methods", "GET")
     response.addHeader("Access-Control-Allow-Origin", "*")
-    breedService.getBreedsByType(PetType.valueOf(type))
+    breedService.getBreedsByType(PetType.getPetTypeByValue(type))
   }
 
 }
