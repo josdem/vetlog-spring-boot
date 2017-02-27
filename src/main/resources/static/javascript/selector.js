@@ -1,14 +1,14 @@
 $("#typeSelector").change(function () {
   var str = $("#typeSelector option:selected").text()
     console.log(str)
-    $.ajax($("#findClientUrl").val(), {
+    $.ajax($("#breedsByTypeUrl").val(), {
       method: 'GET',
       dataType: 'json',
       data: {
-        rfc: $('#rfc').val()
+        type: str
       }
     }).done(function(data) {
-      console.log(data)
+      console.log()
     }).fail(function(data, status){
       console.log(data, status)
     });
