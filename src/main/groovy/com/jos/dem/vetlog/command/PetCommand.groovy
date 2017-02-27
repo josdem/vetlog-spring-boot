@@ -5,6 +5,8 @@ import javax.validation.constraints.Size
 import javax.validation.constraints.Min
 import javax.validation.constraints.Max
 
+import com.jos.dem.vetlog.command.PetType
+
 class PetCommand implements Command {
 
   @NotNull
@@ -28,5 +30,8 @@ class PetCommand implements Command {
   @NotNull
   @Min(1L)
   Long breed
+
+  @NotNull
+  PetType type
 
 }
