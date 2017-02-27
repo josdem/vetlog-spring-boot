@@ -78,7 +78,7 @@ class PetController {
     modelAndView
   }
 
-  @RequestMapping(method=RequestMethod.GET, value='list')
+  @RequestMapping(method=RequestMethod.GET, value="/list")
   @ResponseBody
   def listByType(@RequestParam String type, HttpServletResponse response){
     log.info "Listing Pets by type: $type"

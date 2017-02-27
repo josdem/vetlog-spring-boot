@@ -8,7 +8,7 @@ $("#typeSelector").change(function () {
         type: str
       }
     }).done(function(data) {
-      console.log()
+      console.log(data)
     }).fail(function(data, status){
       console.log(data, status)
     });

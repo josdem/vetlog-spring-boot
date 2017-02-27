@@ -62,6 +62,7 @@
                     <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
                   </select>
                   <br/><br/>
+                  <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
                   <input type="submit" class="btn btn-primary btn-block" />
                 </fieldset>
               </form>
