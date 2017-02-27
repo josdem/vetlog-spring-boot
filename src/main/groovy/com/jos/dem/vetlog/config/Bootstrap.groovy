@@ -92,21 +92,21 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
       new Breed(name:'St. Bernard', type:'DOG'),
       new Breed(name:'Pit bull', type:'DOG'),
       new Breed(name:'Weimaraner', type:'DOG'),
-      new Breed(name:'Dogue de Bordeaux', type:'DOG')
-      new Breed(name:'Chicken', type:'BIRD')
-      new Breed(name:'Canary', type:'BIRD')
-      new Breed(name:'Duck', type:'BIRD')
-      new Breed(name:'Dove', type:'BIRD')
-      new Breed(name:'Goose', type:'BIRD')
-      new Breed(name:'Swan', type:'BIRD')
-      new Breed(name:'Guinea pig', type:'RODENT')
-      new Breed(name:'Hamster', type:'RODENT')
-      new Breed(name:'Chinchillas', type:'RODENT')
-      new Breed(name:'Corn Snake', type:'SNAKE')
-      new Breed(name:'Kingsnake', type:'SNAKE')
-      new Breed(name:'Rosy Boa', type:'SNAKE')
-      new Breed(name:'Gopher', type:'SNAKE')
-      new Breed(name:'Ball Python', type:'SNAKE')
+      new Breed(name:'Dogue de Bordeaux', type:'DOG'),
+      new Breed(name:'Chicken', type:'BIRD'),
+      new Breed(name:'Canary', type:'BIRD'),
+      new Breed(name:'Duck', type:'BIRD'),
+      new Breed(name:'Dove', type:'BIRD'),
+      new Breed(name:'Goose', type:'BIRD'),
+      new Breed(name:'Swan', type:'BIRD'),
+      new Breed(name:'Guinea pig', type:'RODENT'),
+      new Breed(name:'Hamster', type:'RODENT'),
+      new Breed(name:'Chinchillas', type:'RODENT'),
+      new Breed(name:'Corn Snake', type:'SNAKE'),
+      new Breed(name:'Kingsnake', type:'SNAKE'),
+      new Breed(name:'Rosy Boa', type:'SNAKE'),
+      new Breed(name:'Gopher', type:'SNAKE'),
+      new Breed(name:'Ball Python', type:'SNAKE'),
       new Breed(name:'Tarantula', type:'SPIDER')
     ]
     if(!breedRepository.findAll().size()){
