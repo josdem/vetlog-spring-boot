@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/style.css" />
     <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />
     <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />
+    <script th:src="@{/assets/third-party/jquery/jquery.js}"/>
     <title th:text="#{pet.view.create.title}"></title>
   </head>
   <body class="login">
@@ -52,12 +53,12 @@
                   <br/>
                   <br/>
                   <label for="type"><h4 th:text="#{pet.type}"/></label>
-                    <select name="type" class="form-control" th:field="*{type}">
-                      <option th:each=" type : ${T(com.jos.dem.vetlog.model.PetType).values()}" th:value="${type}" th:text="${type.value}"></option>
+                  <select id="typeSelector" name="type" class="form-control" th:field="*{type}">
+                    <option th:each=" type : ${T(com.jos.dem.vetlog.model.PetType).values()}" th:value="${type}" th:text="${type.value}"></option>
                   </select>
                   <br/>
                   <label for="breed"><h4 th:text="#{pet.breed}"/></label>
-                  <select name="breed" class="form-control">
+                  <select id="breedSelector" name="breed" class="form-control">
                     <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
                   </select>
                   <br/><br/>
@@ -69,5 +70,6 @@
         </div>
       </div>
     </div>
+    <script th:src="@{/javascript/selector.js}"/>
   </body>
 </html>
