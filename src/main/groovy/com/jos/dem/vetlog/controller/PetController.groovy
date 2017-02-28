@@ -20,6 +20,7 @@ import javax.validation.Valid
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.PetType
 import  com.jos.dem.vetlog.model.User
+import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
 import com.jos.dem.vetlog.service.BreedService
@@ -57,8 +58,7 @@ class PetController {
 
   @RequestMapping(method = GET, value = "/create")
   ModelAndView create(){
-    def modelAndView = new ModelAndView('pet/create')
-    def petCommand = new PetCommand()
+    ModelAndView modelAndView = new ModelAndView('pet/create')
     fillModelAndView(modelAndView)
   }
 
@@ -76,6 +76,7 @@ class PetController {
   }
 
   ModelAndView fillModelAndView(ModelAndView modelAndView){
+    Command petCommand = new PetCommand()
     modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
     modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
     modelAndView.addObject('petCommand', petCommand)
