@@ -8,7 +8,10 @@ $("#typeSelector").change(function () {
         type: str
       }
     }).done(function(data) {
-      console.log(data)
+      data.forEach(function(it){
+        console.log("id: " + it.id + " value: " + it.name)
+      })
+      $("#breedSelector").empty()
     }).fail(function(data, status){
       console.log(data, status)
     });
