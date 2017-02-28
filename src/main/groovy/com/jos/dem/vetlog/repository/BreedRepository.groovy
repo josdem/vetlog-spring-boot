@@ -8,7 +8,6 @@ interface BreedRepository extends JpaRepository<Breed,Long> {
 
   Breed findOne(Long breed)
   Breed save(Breed breed)
-  List<Breed> findAll()
   List<Breed> findByType(PetType type)
 
 }

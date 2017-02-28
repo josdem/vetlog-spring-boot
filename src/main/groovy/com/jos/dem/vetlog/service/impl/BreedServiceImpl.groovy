@@ -14,10 +14,6 @@ class BreedServiceImpl implements BreedService {
   @Autowired
   BreedRepository breedRepository
 
-  List<Breed> getBreeds(){
-    breedRepository.findAll()
-  }
-
   List<Breed> getBreedsByType(PetType type){
     breedRepository.findByType(type)
   }
