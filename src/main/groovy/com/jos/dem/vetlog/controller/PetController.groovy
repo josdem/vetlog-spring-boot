@@ -59,10 +59,7 @@ class PetController {
   ModelAndView create(){
     def modelAndView = new ModelAndView('pet/create')
     def petCommand = new PetCommand()
-    modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
-    modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
-    modelAndView.addObject('petCommand', petCommand)
-    modelAndView
+    fillModelAndView(modelAndView)
   }
 
   @RequestMapping(method = POST, value = "/save")
@@ -75,6 +72,13 @@ class PetController {
     User user = userService.getCurrentUser()
     petService.save(command, user)
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
+    fillModelAndView
+  }
+
+  ModelAndView fillModelAndView(ModelAndView modelAndView){
+    modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
+    modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
+    modelAndView.addObject('petCommand', petCommand)
     modelAndView
   }
 
