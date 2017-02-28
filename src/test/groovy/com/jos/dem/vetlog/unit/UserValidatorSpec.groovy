@@ -25,7 +25,7 @@ class UserValidatorSpec extends Specification {
 
   void "should not validate an user command since passwords are not equals"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'p4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       localeService.getMessage('user.validation.password.equals') >> 'The passwords are not equals'
       validator.validate(command, errors)
@@ -35,7 +35,7 @@ class UserValidatorSpec extends Specification {
 
   void "should vaidate an user command"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
@@ -45,7 +45,7 @@ class UserValidatorSpec extends Specification {
 
   void "should accept characters and numbers in password"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'p4ssword', passwordConfirmation:'p4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'p4ssword', passwordConfirmation:'p4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
@@ -55,7 +55,7 @@ class UserValidatorSpec extends Specification {
 
   void "should accept dash character in password"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'pa-4ssword', passwordConfirmation:'pa-4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'pa-4ssword', passwordConfirmation:'pa-4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
@@ -65,7 +65,7 @@ class UserValidatorSpec extends Specification {
 
   void "should accept underscore character in password"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'pa_4ssword', passwordConfirmation:'pa_4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'pa_4ssword', passwordConfirmation:'pa_4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
@@ -75,7 +75,7 @@ class UserValidatorSpec extends Specification {
 
   void "should accept dot character in password"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
@@ -85,7 +85,7 @@ class UserValidatorSpec extends Specification {
 
   void "should not duplicate an username"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     and:"User"
       User user = new User()
     when:"We validate user and user already exist by username"
@@ -98,7 +98,7 @@ class UserValidatorSpec extends Specification {
 
   void "should not duplicate an email"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', name:'josdem',lastname:'lastname',email:'josdem@email.com')
+      Command command = new UserCommand(username:'josdem',password:'pa.4ssword', passwordConfirmation:'pa.4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     and:"User"
       User user = new User()
     when:"We validate user and user already exist by email"
