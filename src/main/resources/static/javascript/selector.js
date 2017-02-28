@@ -8,10 +8,10 @@ $("#typeSelector").change(function () {
         type: str
       }
     }).done(function(data) {
-      data.forEach(function(it){
-        console.log("id: " + it.id + " value: " + it.name)
-      })
       $("#breedSelector").empty()
+      data.forEach(function(it){
+        $("#breedSelector").append($("<option></option>").attr("value", it.id).text(it.name))
+      })
     }).fail(function(data, status){
       console.log(data, status)
     });
