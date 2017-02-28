@@ -7,7 +7,7 @@ import static ch.qos.logback.classic.Level.INFO
 
 appender("STDOUT", ConsoleAppender) {
   encoder(PatternLayoutEncoder) {
-    pattern = "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} Groovy - %msg%n"
+    pattern = "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{5} Groovy - %msg%n"
   }
 }
 
