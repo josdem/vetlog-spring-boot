@@ -43,4 +43,16 @@ class RegistrationServiceSpec extends Specification {
      thrown VetlogException
   }
 
+  void "should generate token"(){
+    given:"An email"
+      String email = 'josdem@email.com'
+    and:"A registration code"
+      RegistrationCode registrationCode = new RegistrationCode()
+    when:"We generate token"
+      repository.save(_ as RegistrationCode) >> registrationCode
+      String result = registrationService.generateToken(email)
+    then:"We expect token generated"
+      result.size() == 32
+  }
+
 }
