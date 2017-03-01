@@ -58,7 +58,7 @@ class RecoveryServiceImpl implements RecoveryService {
       user
   }
 
-  User getUserByToken(String token){
+  private User getUserByToken(String token){
     String email = registrationService.findEmailByToken(token)
     if(!email) throw new VetlogException(localeService.getMessage('exception.token.not.found'))
       User user = userRepository.findByEmail(email)

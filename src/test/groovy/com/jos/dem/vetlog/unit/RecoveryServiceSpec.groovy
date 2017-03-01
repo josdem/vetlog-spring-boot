@@ -94,5 +94,20 @@ class RecoveryServiceSpec extends Specification {
       result == false
   }
 
+  void "should generate registration token for email"(){
+    given:"An user"
+      User user = new User(enabled:true)
+    and:"An email"
+      String email = 'josdem@email.com'
+    and:"A token"
+      String token = 'token'
+    when:"We generate registration token for email"
+      userRepository.findByEmail(email) >> user
+      registrationService.generateToken(email) >> token
+      recoveryService.generateRegistrationCodeForEmail(email)
+    then:"We expect send command"
+    1 * restService.sendCommand(_ as Command)
+  }
+
 
 }
