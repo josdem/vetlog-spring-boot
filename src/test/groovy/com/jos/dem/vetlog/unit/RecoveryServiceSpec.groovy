@@ -12,6 +12,7 @@ import com.jos.dem.vetlog.repository.RegistrationCodeRepository
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.RegistrationCode
 import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.command.ChangePasswordCommand
 import com.jos.dem.vetlog.exception.UserNotFoundException
 import com.jos.dem.vetlog.exception.VetlogException
 
@@ -133,5 +134,22 @@ class RecoveryServiceSpec extends Specification {
     thrown VetlogException
   }
 
+  void "should change password"(){
+    given:"A token"
+      String token = 'token'
+    and:"A command"
+      Command command = new ChangePasswordCommand(token:token,password:'password', passwordConfirmation:'password')
+    and:"An user"
+      User user = new User()
+    and:"A email"
+      String email = 'josdem@email.com'
+    when:"We change password"
+      registrationService.findEmailByToken(token) >> email
+      userRepository.findByEmail(email) >> user
+      recoveryService.changePassword(command)
+    then:"We expect password changed"
+      user.password.size() == 60
+      1 * userRepository.save(user)
+  }
 
 }
