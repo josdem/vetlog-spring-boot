@@ -109,5 +109,14 @@ class RecoveryServiceSpec extends Specification {
     1 * restService.sendCommand(_ as Command)
   }
 
+  void "should not generate registration token for email since user not found"(){
+    given:"An email"
+      String email = 'josdem@email.com'
+    when:"We generate registration token for email"
+      localeService.getMessage('exception.user.not.found') >> 'User not found'
+      recoveryService.generateRegistrationCodeForEmail(email)
+    then:"We expect user not found exception"
+    thrown UserNotFoundException
+  }
 
 }
