@@ -1,13 +1,18 @@
 package com.jos.dem.vetlog.validator
 
+import org.springframework.beans.factory.annotation.Autowired
+
 import org.springframework.validation.Validator
 import org.springframework.validation.Errors
 import org.springframework.stereotype.Component
-
+import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.command.ChangePasswordCommand
 
 @Component
 class ChangePasswordValidator implements Validator {
+
+  @Autowired
+  LocaleService localeService
 
   @Override
   boolean supports(Class<?> clazz) {
@@ -17,7 +22,7 @@ class ChangePasswordValidator implements Validator {
   @Override
   void validate(Object target, Errors errors) {
     ChangePasswordCommand command = (ChangePasswordCommand) target
-    validatePasswords(errors, ChangePasswordCommand)
+    validatePasswords(errors, command)
   }
 
   def validatePasswords(Errors errors, ChangePasswordCommand command) {
