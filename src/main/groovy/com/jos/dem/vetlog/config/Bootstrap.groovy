@@ -35,6 +35,7 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
   void createDefaultUsers(){
     createUserWithRole('josdem', '12345678', 'joseluis.delacruz@gmail.com', Role.USER)
+    createUserWithRole('estrella', '12345678', 'estrella@gmail.com', Role.USER)
     createUserWithRole('admin', '12345678', 'admin@email.com', Role.ADMIN)
   }
 
@@ -102,6 +103,7 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
       new Breed(name:'Guinea pig', type:'RODENT'),
       new Breed(name:'Hamster', type:'RODENT'),
       new Breed(name:'Chinchillas', type:'RODENT'),
+      new Breed(name:'Rabbit', type:'RODENT'),
       new Breed(name:'Corn Snake', type:'SNAKE'),
       new Breed(name:'Kingsnake', type:'SNAKE'),
       new Breed(name:'Rosy Boa', type:'SNAKE'),
