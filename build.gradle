@@ -24,6 +24,9 @@ bower {
   'vetlog-theme'('https://github.com/josdem/vetlog-theme.git'){
     source '**'
   }
+  'bootstrap-datetimepicker'('https://github.com/Eonasdan/bootstrap-datetimepicker.git'){
+     source '**' 
+  }
 }
 
 apply plugin: 'groovy'
