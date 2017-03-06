@@ -17,7 +17,7 @@ class PetBinder {
   Pet bindPet(Command command){
     Pet pet = new Pet()
     pet.name = command.name
-    pet.age = command.age
+    pet.birthDate = command.birthDate
     pet.dewormed = command.dewormed
     pet.sterilized = command.sterilized
     pet.vaccinated = command.vaccinated

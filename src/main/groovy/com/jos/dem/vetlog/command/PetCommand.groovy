@@ -14,9 +14,7 @@ class PetCommand implements Command {
   String name
 
   @NotNull
-  @Min(0L)
-  @Max(250L)
-  Integer age
+  Date birthDate
 
   @NotNull
   Boolean dewormed = true
