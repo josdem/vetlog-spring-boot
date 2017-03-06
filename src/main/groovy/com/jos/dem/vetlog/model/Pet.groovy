@@ -20,7 +20,7 @@ class Pet {
   @Column(nullable = false)
   String name
   @Column(nullable = false)
-  Integer age
+  Date birthDate
   @Column(nullable = false)
   Boolean dewormed = false
   @Column(nullable = false)
