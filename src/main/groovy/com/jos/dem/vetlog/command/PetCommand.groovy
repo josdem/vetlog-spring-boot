@@ -19,13 +19,13 @@ class PetCommand implements Command {
   Date birthDate
 
   @NotNull
-  Boolean dewormed = true
+  Boolean dewormed = false
 
   @NotNull
-  Boolean sterilized = true
+  Boolean sterilized = false
 
   @NotNull
-  Boolean vaccinated = true
+  Boolean vaccinated = false
 
   @NotNull
   @Min(1L)

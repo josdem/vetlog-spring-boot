@@ -36,7 +36,7 @@
             <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal">
               <fieldset>
                 <label for="name"><h4 th:text="#{pet.name}"/></label>
-                <input type="text" name='name' class="form-control" placeholder="name" id='name'/>
+                <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name" id='name'/>
                 <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
                 <br/>
                 <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
@@ -49,7 +49,7 @@
                 <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
                 <br/>
                 <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
-                <input type="checkbox" name='dewormed' class="form-control" placeholder="dewormed" id='dewormed'/>
+                <input type="checkbox" name='dewormed' th:field="*{dewormed}" class="form-control" placeholder="dewormed" id='dewormed'/>
                 <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
                 <br/>
                 <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
