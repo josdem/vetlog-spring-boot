@@ -1,25 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-  <th:block layout:include="fragments/header"/>
+<th:block layout:include="fragments/include"/>
 </head>
 <body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <a class="navbar-brand" href="/">
-      <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
-    </a>
-  </nav>
-  <nav class="navbar-top" role="navigation">
-    <div class="navbar-brand">
-    </div>
-  </nav>
-  <div class="jumbotron">
-    <div class="container">
-      <h1>Welcome!</h1>
-      <p>Maintain your pet history organized</p>
-      <p><a class="btn btn-primary btn-lg" href="login" role="button">Login Here</a></p>
-    </div>
-  </div>
+  <th:block layout:include="fragments/header"/>
   <div class="container">
     <div class="row">
       <div class="col-md-4">
