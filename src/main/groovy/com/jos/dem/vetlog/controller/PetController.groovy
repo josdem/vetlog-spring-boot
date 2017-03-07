@@ -73,7 +73,7 @@ class PetController {
       return fillModelAndView(modelAndView)
     }
     User user = userService.getCurrentUser()
-    petService.save(command, user)
+    petService.save(petCommand, user)
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
     petCommand = new PetCommand()
     modelAndView.addObject('petCommand', petCommand)
