@@ -2,8 +2,9 @@
 <html>
 <head>
   <link rel="stylesheet" href="/assets/third-party/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/third-party/bootstrap/less/dropdowns.less" />
   <link rel="stylesheet" href="/assets/third-party/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
-  <link rel="stylesheet" href="/assets/third-party/font-awesome/css/font-awesome.css" />
+  <link rel="stylesheet" href="/assets/third-party/font-awesome/font-awesome.less" />
   <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/style.css" />
   <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/plugins.css" />
   <link rel="stylesheet" href="/assets/third-party/vetlog-theme/css/demo.css" />
@@ -15,7 +16,9 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="login-banner text-center">
-          <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
+          <a href="/">
+            <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
+          </a>
         </div>
         <div class="portlet portlet-green">
           <div class="portlet-heading login-heading">
@@ -78,11 +81,10 @@
     </div>
   </div>
   <script th:src="@{/javascript/selector.js}"/>
-  <script th:src="@{/assets/third-party/jquery/jquery.js}"/>
-  <script th:src="@{/assets/third-party/bootstrap-datepicker/dist/bootstrap-datepicker.js}"/>
+  <script th:src="@{/assets/third-party/bootstrap/js/dropdown.js}"/>
+  <script th:src="@{/assets/third-party/bootstrap-datepicker/dist/js/bootstrap-datepicker.js}"/>
   <script type="text/javascript">
-    $(function () {
-      $('#datepicker').datepicker();
+    $('#datepicker').datepicker({
     });
   </script>
 </body>
