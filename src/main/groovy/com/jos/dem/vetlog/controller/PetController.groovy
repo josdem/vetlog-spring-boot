@@ -59,27 +59,30 @@ class PetController {
   @RequestMapping(method = GET, value = "/create")
   ModelAndView create(){
     ModelAndView modelAndView = new ModelAndView('pet/create')
+    Command petCommand = new PetCommand()
+    modelAndView.addObject('petCommand', petCommand)
     fillModelAndView(modelAndView)
   }
 
   @RequestMapping(method = POST, value = "/save")
-  ModelAndView save(@Valid PetCommand command, BindingResult bindingResult) {
-    log.info "Creating pet: ${command.name}"
+  ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult) {
+    log.info "Creating pet: ${petCommand.name}"
     ModelAndView modelAndView = new ModelAndView('pet/create')
     if (bindingResult.hasErrors()) {
-      return modelAndView
+      modelAndView.addObject('petCommand', petCommand)
+      return fillModelAndView(modelAndView)
     }
     User user = userService.getCurrentUser()
     petService.save(command, user)
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
+    petCommand = new PetCommand()
+    modelAndView.addObject('petCommand', petCommand)
     fillModelAndView(modelAndView)
   }
 
   ModelAndView fillModelAndView(ModelAndView modelAndView){
-    Command petCommand = new PetCommand()
     modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
     modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
-    modelAndView.addObject('petCommand', petCommand)
     modelAndView
   }
 
