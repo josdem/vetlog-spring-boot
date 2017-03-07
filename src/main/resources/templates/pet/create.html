@@ -53,16 +53,16 @@
                 <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
                 <br/>
                 <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
-                <input type="checkbox" name='sterilized' class="form-control" placeholder="sterilized" id='sterilized'/>
+                <input type="checkbox" name='sterilized' th:field="*{sterilized}" class="form-control" placeholder="sterilized" id='sterilized'/>
                 <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
                 <br/>
                 <label for="vaccinated"><h4 th:text="#{pet.vaccinated}"/></label>
-                <input type="checkbox" name='vaccinated' class="form-control" placeholder="vaccinated" id='vaccinated'/>
+                <input type="checkbox" name='vaccinated' th:field="*{vaccinated}" class="form-control" placeholder="vaccinated" id='vaccinated'/>
                 <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
                 <br/>
                 <br/>
                 <label for="type"><h4 th:text="#{pet.type}"/></label>
-                <select id="typeSelector" name="type" class="form-control" th:field="*{type}">
+                <select id="typeSelector" name="type" th:field="*{type}" class="form-control">
                   <option th:each=" type : ${T(com.jos.dem.vetlog.model.PetType).values()}" th:value="${type}" th:text="${type.value}"></option>
                 </select>
                 <br/>
