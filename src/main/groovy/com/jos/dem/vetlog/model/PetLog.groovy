@@ -1,5 +1,7 @@
 package com.jos.dem.vetlog.model
 
+import static javax.persistence.GenerationType.AUTO
+
 import javax.persistence.Id
 import javax.persistence.Column
 import javax.persistence.Entity
