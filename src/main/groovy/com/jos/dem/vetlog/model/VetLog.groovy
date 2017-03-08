@@ -1,7 +1,5 @@
 package com.jos.dem.vetlog.model
 
-import static javax.persistence.GenerationType.AUTO
-
 import javax.persistence.Id
 import javax.persistence.Column
 import javax.persistence.Entity
@@ -11,33 +9,26 @@ import javax.persistence.JoinColumn
 import javax.persistence.FetchType
 
 @Entity
-class Pet {
+class VetLog {
 
   @Id
   @GeneratedValue(strategy=AUTO)
   Long id
 
-  @Column(nullable = false)
-  String name
+  @Column(nullable = true)
+  String vetName
 
   @Column(nullable = false)
-  Date birthDate
+  String symptoms
 
   @Column(nullable = false)
-  Boolean dewormed = false
+  String diagnosis
 
-  @Column(nullable = false)
-  Boolean sterilized = false
-
-  @Column(nullable = false)
-  Boolean vaccinated = false
+  @Column(nullable = true)
+  String medicine
 
   @Column(nullable = false)
   Date dateCreated = new Date()
-
-  @OneToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name="breed_id")
-  Breed breed
 
   @OneToOne(fetch=FetchType.LAZY)
   @JoinColumn(name="user_id")
