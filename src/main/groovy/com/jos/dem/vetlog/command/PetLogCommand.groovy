@@ -7,18 +7,18 @@ import javax.validation.constraints.Max
 
 class PetLogCommand implements Command {
 
-  @Size(max=100)
+  @Size(max=200)
   String vetName
 
   @NotNull
-  @Size(min=1, max=250)
+  @Size(min=1, max=1000)
   String symptoms
 
   @NotNull
-  @Size(min=1, max=250)
+  @Size(min=1, max=1000)
   String diagnosis
 
-  @Size(min=1, max=250)
+  @Size(min=1, max=500)
   String medicine
 
 }
