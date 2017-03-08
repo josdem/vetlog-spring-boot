@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.FetchType
 
 @Entity
-class VetLog {
+class PetLog {
 
   @Id
   @GeneratedValue(strategy=AUTO)
