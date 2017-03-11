@@ -21,4 +21,8 @@ class PetLogCommand implements Command {
   @Size(min=1, max=500)
   String medicine
 
+  @NotNull
+  @Min(1L)
+  Long pet
+
 }

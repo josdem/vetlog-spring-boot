@@ -61,8 +61,8 @@ class PetLogController {
   ModelAndView save(@Valid PetLogCommand petLogCommand, BindingResult bindingResult) {
     log.info "Creating pet: ${petLogCommand.pet}"
     ModelAndView modelAndView = new ModelAndView('petlog/create')
-    List<Pet> pets = petService.getPetsByUser(user)
     User user = userService.getCurrentUser()
+    List<Pet> pets = petService.getPetsByUser(user)
     if (bindingResult.hasErrors()) {
       modelAndView.addObject('petLogCommand', petLogCommand)
       return fillModelAndView(modelAndView, pets)
