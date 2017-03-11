@@ -1,0 +1,9 @@
+package com.jos.dem.vetlog.service
+
+import  com.jos.dem.vetlog.model.PetLog
+import  com.jos.dem.vetlog.model.User
+import  com.jos.dem.vetlog.command.Command
+
+interface PetLogService {
+  PetLog save(Command command, User user)
+}
