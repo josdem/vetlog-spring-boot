@@ -21,6 +21,11 @@
               <div class="clearfix"></div>
             </div>
             <div class="portlet-body">
+              <div th:if="${error}">
+                <div align="center">
+                  <p th:text="${error}"/>
+                </div>
+              </div>
               <div th:if="${message}">
                 <div align="center">
                   <p th:text="${message}"/>

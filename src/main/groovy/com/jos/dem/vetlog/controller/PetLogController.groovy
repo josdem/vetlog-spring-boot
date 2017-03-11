@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult
 import org.springframework.web.bind.WebDataBinder
 import javax.validation.Valid
 
+import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetLogCommand
@@ -52,20 +53,24 @@ class PetLogController {
   ModelAndView save(@Valid PetLogCommand petLogCommand, BindingResult bindingResult) {
     log.info "Creating pet: ${petLogCommand.pet}"
     ModelAndView modelAndView = new ModelAndView('petlog/create')
+    List<Pet> pets = petService.getPetsByUser(user)
     User user = userService.getCurrentUser()
     if (bindingResult.hasErrors()) {
       modelAndView.addObject('petLogCommand', petLogCommand)
-      return fillModelAndView(modelAndView, user)
+      return fillModelAndView(modelAndView, pets)
     }
     petLogService.save(petLogCommand, user)
     modelAndView.addObject('message', localeService.getMessage('petLog.created'))
     petLogCommand = new PetLogCommand()
     modelAndView.addObject('petLogCommand', petLogCommand)
-    fillModelAndView(modelAndView, user)
+    fillModelAndView(modelAndView, pets)
   }
 
-  ModelAndView fillModelAndView(ModelAndView modelAndView){
-    modelAndView.addObject('pets', petService.getPetsByUser(user))
+  ModelAndView fillModelAndView(ModelAndView modelAndView, List<Pet> pets){
+    modelAndView.addObject('pets', pets)
+    if(!pets){
+      modelAndView.addObject('error', localeService.getMessage('pet.error'))
+    }
     modelAndView
   }
 
