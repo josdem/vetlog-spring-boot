@@ -6,7 +6,7 @@ import com.jos.dem.vetlog.model.PetLog
 import com.jos.dem.vetlog.command.Command
 
 @Component
-class PetBinder {
+class PetLogBinder {
 
   PetLog bind(Command command){
     PetLog petLog = new PetLog()
