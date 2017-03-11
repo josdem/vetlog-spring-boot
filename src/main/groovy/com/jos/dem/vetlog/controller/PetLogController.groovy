@@ -21,4 +21,27 @@ class PetLogController {
     modelAndView
   }
 
+  @RequestMapping(method = POST, value = "/save")
+  ModelAndView save(@Valid PetLogCommand petLogCommand, BindingResult bindingResult) {
+    log.info "Creating pet: ${petLogCommand.pet}"
+    ModelAndView modelAndView = new ModelAndView('petlog/create')
+    User user = userService.getCurrentUser()
+    if (bindingResult.hasErrors()) {
+      modelAndView.addObject('petLogCommand', petLogCommand)
+      return fillModelAndView(modelAndView, user)
+    }
+    petLogService.save(petLogCommand, user)
+    modelAndView.addObject('message', localeService.getMessage('petLog.created'))
+    petLogCommand = new PetLogCommand()
+    modelAndView.addObject('petLogCommand', petLogCommand)
+    fillModelAndView(modelAndView, user)
+  }
+
+  ModelAndView fillModelAndView(ModelAndView modelAndView){
+    modelAndView.addObject('pets', petService.getPetsByUser(user))
+    modelAndView
+  }
+
+
+
 }
