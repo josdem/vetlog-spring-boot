@@ -1,6 +1,7 @@
 package com.jos.dem.vetlog.controller
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET
+import static org.springframework.web.bind.annotation.RequestMethod.POST
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.InitBinder
@@ -14,6 +15,7 @@ import javax.validation.Valid
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetLogCommand
+import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.PetLogService
 import com.jos.dem.vetlog.validator.PetLogValidator
 
@@ -28,6 +30,8 @@ class PetLogController {
   PetLogValidator petLogValidator
   @Autowired
   PetService petService
+  @Autowired
+  PetLogService petLogService
 
   Logger log = LoggerFactory.getLogger(this.class)
 
