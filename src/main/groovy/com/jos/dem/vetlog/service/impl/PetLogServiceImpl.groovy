@@ -9,6 +9,7 @@ import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.binder.PetLogBinder
 import com.jos.dem.vetlog.service.PetLogService
+import com.jos.dem.vetlog.repository.PetRepository
 import com.jos.dem.vetlog.repository.PetLogRepository
 
 @Service
@@ -18,9 +19,13 @@ class PetLogServiceImpl implements PetLogService {
   PetLogBinder petLogBinder
   @Autowired
   PetLogRepository petLogRepository
+  @Autowired
+  PetRepository petRepository
 
-  PetLog save(Command command, Pet pet){
+
+  PetLog save(Command command){
     PetLog petLog = petLogBinder.bind(command)
+    Pet pet = petRepository.findOne(command.pet)
     petLog.pet = pet
     petLogRepository.save(petLog)
     petLog
