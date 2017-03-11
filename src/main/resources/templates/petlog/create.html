@@ -33,15 +33,15 @@
                 <label th:if="${#fields.hasErrors('vetName')}" th:errors="*{vetName}"></label>
                 <br/>
                 <label for="symptoms"><h4 th:text="#{petlog.symptoms}"/></label>
-                <textarea name="symptoms" th:field="*{symptoms}" rows="12" class="form-control" placeholder="Symptoms"  id='symptoms' />
+                <textarea name="symptoms" th:field="*{symptoms}" rows="8" class="form-control" placeholder="Symptoms"  id='symptoms' />
                 <label th:if="${#fields.hasErrors('symptoms')}" th:errors="*{symptoms}"></label>
                 <br/>
                 <label for="diagnosis"><h4 th:text="#{petlog.diagnosis}"/></label>
-                <textarea name="diagnosis" th:field="*{diagnosis}" rows="12" class="form-control" placeholder="Diagnosis"  id='diagnosis' />
+                <textarea name="diagnosis" th:field="*{diagnosis}" rows="8" class="form-control" placeholder="Diagnosis"  id='diagnosis' />
                 <label th:if="${#fields.hasErrors('diagnosis')}" th:errors="*{diagnosis}"></label>
                 <br/>
                 <label for="medicine"><h4 th:text="#{petlog.medicine}"/></label>
-                <textarea name="medicine" th:field="*{medicine}" rows="12" class="form-control" placeholder="Medicine"  id='medicine' />
+                <textarea name="medicine" th:field="*{medicine}" rows="8" class="form-control" placeholder="Medicine"  id='medicine' />
                 <label th:if="${#fields.hasErrors('medicine')}" th:errors="*{medicine}"></label>
                 <br/><br/>
                 <input type="submit" class="btn btn-primary btn-block" />
