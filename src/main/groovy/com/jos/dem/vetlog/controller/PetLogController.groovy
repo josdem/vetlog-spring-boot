@@ -17,6 +17,7 @@ import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetLogCommand
 import com.jos.dem.vetlog.service.PetService
+import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.PetLogService
 import com.jos.dem.vetlog.validator.PetLogValidator
 
@@ -33,6 +34,8 @@ class PetLogController {
   PetService petService
   @Autowired
   PetLogService petLogService
+  @Autowired
+  UserService userService
 
   Logger log = LoggerFactory.getLogger(this.class)
 
