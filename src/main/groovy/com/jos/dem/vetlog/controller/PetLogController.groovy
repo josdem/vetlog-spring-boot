@@ -19,6 +19,7 @@ import com.jos.dem.vetlog.command.PetLogCommand
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.PetLogService
+import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.validator.PetLogValidator
 
 import org.slf4j.Logger
@@ -36,6 +37,8 @@ class PetLogController {
   PetLogService petLogService
   @Autowired
   UserService userService
+  @Autowired
+  LocaleService localeService
 
   Logger log = LoggerFactory.getLogger(this.class)
 
