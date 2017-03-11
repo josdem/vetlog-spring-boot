@@ -46,6 +46,7 @@ class PetLogController {
     ModelAndView modelAndView = new ModelAndView('petlog/create')
     Command petLogCommand = new PetLogCommand()
     modelAndView.addObject('petLogCommand', petLogCommand)
+    User user = userService.getCurrentUser()
     List<Pet> pets = petService.getPetsByUser(user)
     fillModelAndView(modelAndView, pets)
   }
