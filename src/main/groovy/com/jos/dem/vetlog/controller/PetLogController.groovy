@@ -3,15 +3,33 @@ package com.jos.dem.vetlog.controller
 import static org.springframework.web.bind.annotation.RequestMethod.GET
 
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.servlet.ModelAndView
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.web.bind.WebDataBinder
 
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetLogCommand
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 @Controller
 @RequestMapping("/petlog")
 class PetLogController {
+
+  @Autowired
+  PetLogValidator petLogValidator
+  @Autowired
+  PetService petService
+
+  Logger log = LoggerFactory.getLogger(this.class)
+
+  @InitBinder
+  private void initBinder(WebDataBinder binder) {
+    binder.addValidators(petLogValidator)
+  }
 
   @RequestMapping(method = GET, value = "/create")
   ModelAndView create(){
