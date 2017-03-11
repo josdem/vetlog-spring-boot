@@ -2,7 +2,6 @@
 <html>
 <head>
   <th:block layout:include="fragments/include-form"/>
-  <script th:src="@{/assets/third-party/jquery/jquery.js}"/>
   <title th:text="#{petlog.view.create.title}"></title>
 </head>
 <body class="login">
@@ -27,7 +26,7 @@
                 <p th:text="${message}"/>
               </div>
             </div>
-            <form id="register" th:action="@{/petlog/save}" th:object="${petlogCommand}" method="post"  class="form-horizontal">
+            <form id="register" th:action="@{/petlog/save}" th:object="${petLogCommand}" method="post"  class="form-horizontal">
               <fieldset>
                 <label for="vetName"><h4 th:text="#{petlog.vetName}"/></label>
                 <input type="text" name='vetName' th:field="*{vetName}" class="form-control" placeholder="Vet name" id='vetName'/>

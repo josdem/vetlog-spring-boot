@@ -10,6 +10,7 @@ import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetLogCommand
 
 @Controller
+@RequestMapping("/petlog")
 class PetLogController {
 
   @RequestMapping(method = GET, value = "/create")
