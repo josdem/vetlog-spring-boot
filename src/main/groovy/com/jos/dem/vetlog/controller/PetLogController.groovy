@@ -68,7 +68,7 @@ class PetLogController {
       return fillModelAndView(modelAndView, pets)
     }
     petLogService.save(petLogCommand)
-    modelAndView.addObject('message', localeService.getMessage('petLog.created'))
+    modelAndView.addObject('message', localeService.getMessage('petlog.created'))
     petLogCommand = new PetLogCommand()
     modelAndView.addObject('petLogCommand', petLogCommand)
     fillModelAndView(modelAndView, pets)
