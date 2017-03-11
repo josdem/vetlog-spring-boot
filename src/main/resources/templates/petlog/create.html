@@ -43,6 +43,11 @@
                 <label for="medicine"><h4 th:text="#{petlog.medicine}"/></label>
                 <textarea name="medicine" th:field="*{medicine}" rows="8" class="form-control" placeholder="Medicine"  id='medicine' />
                 <label th:if="${#fields.hasErrors('medicine')}" th:errors="*{medicine}"></label>
+                <br/>
+                <label for="pet"><h4 th:text="#{petlog.pet}"/></label>
+                <select id="petSelector" name="pet" class="form-control">
+                  <option th:each="pet : ${pets}" th:value="${pet.id}" th:text="${pet.name}"></option>
+                </select>
                 <br/><br/>
                 <input type="submit" class="btn btn-primary btn-block" />
               </fieldset>
