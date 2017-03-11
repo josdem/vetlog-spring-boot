@@ -42,6 +42,4 @@ class PetLogController {
     modelAndView
   }
 
-
-
 }

@@ -25,4 +25,8 @@ class PetServiceImpl implements PetService {
     pet
   }
 
+  List<Pet> getPetsByUser(User user){
+    petRepository.findAllByUser(user)
+  }
+
 }
