@@ -33,7 +33,7 @@ class PetLog {
   Date dateCreated = new Date()
 
   @OneToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name="user_id")
-  User user
+  @JoinColumn(name="pet_id")
+  Pet pet
 
 }
