@@ -22,7 +22,6 @@ class PetLogServiceImpl implements PetLogService {
   @Autowired
   PetRepository petRepository
 
-
   PetLog save(Command command){
     PetLog petLog = petLogBinder.bind(command)
     Pet pet = petRepository.findOne(command.pet)
