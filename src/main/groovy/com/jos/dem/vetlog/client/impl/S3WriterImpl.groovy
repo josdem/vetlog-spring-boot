@@ -18,9 +18,9 @@ class S3CopierImpl implements S3Copier {
   @Autowired
   AWSClient awsClient
 
-  void uploadToBucket(String bucketDestination, String keyName, File file){
+  void uploadToBucket(String bucketDestination, File file){
     try{
-      awsClient.getS3Client().putObject(new PutObjectRequest(bucketDestination, keyName, file))
+      awsClient.getS3Client().putObject(new PutObjectRequest(bucketDestination, file.getFileName(), file))
     } catch (AmazonServiceException ase) {
       throw new BusinessException(ase.message, ase)
     } catch (AmazonClientException ace) {

@@ -48,6 +48,8 @@ class PetController {
 
   @Value('${breedsByTypeUrl}')
   String breedsByTypeUrl
+  @Value('${bucketDestination}')
+  String bucketDestination
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -74,6 +76,8 @@ class PetController {
     }
     User user = userService.getCurrentUser()
     petService.save(petCommand, user)
+    File imageFile = petCommand.image.getOriginalFilename()
+    s3Copier.uploadToBucket(bucketDestination, imageFile)
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
     petCommand = new PetCommand()
     modelAndView.addObject('petCommand', petCommand)
