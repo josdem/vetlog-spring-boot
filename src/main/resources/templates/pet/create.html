@@ -34,7 +34,7 @@
                 <label for="name"><h4 th:text="#{pet.name}"/></label>
                 <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name" id='name'/>
                 <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
-                </br>
+                <br/>
                 <label for="image"><h4 th:text="#{pet.image}"/></label>
                 <input type="file" name="image"/>
                 <br/>

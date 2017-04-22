@@ -6,6 +6,8 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.Max
 import javax.validation.constraints.Past
 
+import org.springframework.web.multipart.MultipartFile
+
 import com.jos.dem.vetlog.model.PetType
 
 class PetCommand implements Command {
