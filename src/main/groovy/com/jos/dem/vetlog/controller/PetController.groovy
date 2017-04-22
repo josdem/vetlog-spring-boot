@@ -27,6 +27,7 @@ import com.jos.dem.vetlog.service.BreedService
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.LocaleService
+import com.jos.dem.vetlog.client.S3Writer
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -45,6 +46,8 @@ class PetController {
   UserService userService
   @Autowired
   LocaleService localeService
+  @Autowired
+  S3Writer s3Writer
 
   @Value('${breedsByTypeUrl}')
   String breedsByTypeUrl
@@ -77,7 +80,7 @@ class PetController {
     User user = userService.getCurrentUser()
     petService.save(petCommand, user)
     File imageFile = petCommand.image.getOriginalFilename()
-    s3Copier.uploadToBucket(bucketDestination, imageFile)
+    s3Writer.uploadToBucket(bucketDestination, imageFile)
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
     petCommand = new PetCommand()
     modelAndView.addObject('petCommand', petCommand)
