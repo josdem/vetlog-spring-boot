@@ -8,19 +8,20 @@ import com.amazonaws.services.s3.model.ObjectMetadata
 import com.amazonaws.AmazonServiceException
 import com.amazonaws.AmazonClientException
 
-import com.hp.gl.validator.client.S3Copier
-import com.hp.gl.validator.client.AWSClient
-import com.hp.gl.validator.exception.BusinessException
+import com.jos.dem.vetlog.client.S3Writer
+import com.jos.dem.vetlog.client.AWSClient
+import com.jos.dem.vetlog.exception.BusinessException
 
 @Service
-class S3CopierImpl implements S3Copier {
+class S3WriterImpl implements S3Writer {
 
   @Autowired
   AWSClient awsClient
 
-  void uploadToBucket(String bucketDestination, File file){
+  void uploadToBucket(String bucketDestination, String fileName, InputStream inputStream){
     try{
-      awsClient.getS3Client().putObject(new PutObjectRequest(bucketDestination, file.getFileName(), file))
+      ObjectMetadata metadata = new ObjectMetadata()
+      awsClient.getS3Client().putObject(new PutObjectRequest(bucketDestination, fileName, inputStream, metadata))
     } catch (AmazonServiceException ase) {
       throw new BusinessException(ase.message, ase)
     } catch (AmazonClientException ace) {

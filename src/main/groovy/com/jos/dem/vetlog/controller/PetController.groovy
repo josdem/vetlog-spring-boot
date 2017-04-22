@@ -79,8 +79,7 @@ class PetController {
     }
     User user = userService.getCurrentUser()
     petService.save(petCommand, user)
-    File imageFile = petCommand.image.getOriginalFilename()
-    s3Writer.uploadToBucket(bucketDestination, imageFile)
+    s3Writer.uploadToBucket(bucketDestination, 'petImage', petCommand.image.getInputStream())
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
     petCommand = new PetCommand()
     modelAndView.addObject('petCommand', petCommand)

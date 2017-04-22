@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import javax.annotation.PostConstruct
 
-import com.hp.s3.reader.client.AWSClient
+import com.jos.dem.vetlog.client.AWSClient
 
 @Service
 class AWSClientImpl implements AWSClient {
@@ -21,6 +21,8 @@ class AWSClientImpl implements AWSClient {
   String keyId
   @Value('${aws.secret}')
   String keySecret
+
+  AmazonS3 s3Client
 
   @PostConstruct
   void setup(){
