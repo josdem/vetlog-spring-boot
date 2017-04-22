@@ -2,7 +2,7 @@
 <html>
 <head>
   <th:block layout:include="fragments/include-form"/>
-  <link rel="stylesheet" href="/assets/third-party/bootstrap/less/dropdowns.less" />  
+  <link rel="stylesheet" href="/assets/third-party/bootstrap/less/dropdowns.less" />
   <link rel="stylesheet" href="/assets/third-party/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
   <script th:src="@{/assets/third-party/jquery/jquery.js}"/>
   <title th:text="#{pet.view.create.title}"></title>
@@ -29,11 +29,14 @@
                 <p th:text="${message}"/>
               </div>
             </div>
-            <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal">
+            <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal" enctype="multipart/form-data">
               <fieldset>
                 <label for="name"><h4 th:text="#{pet.name}"/></label>
                 <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name" id='name'/>
                 <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                </br>
+                <label for="image"><h4 th:text="#{pet.image}"/></label>
+                <input type="file" name="image"/>
                 <br/>
                 <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
                 <div class='input-group date' id='datepicker'>
