@@ -34,4 +34,6 @@ class PetCommand implements Command {
   @NotNull
   PetType type
 
+  MultipartFile image
+
 }
