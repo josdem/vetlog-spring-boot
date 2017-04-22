@@ -17,9 +17,9 @@ import com.hp.s3.reader.client.AWSClient
 @Service
 class AWSClientImpl implements AWSClient {
 
-  @Value('${key.id}')
+  @Value('${aws.key}')
   String keyId
-  @Value('${key.secret}')
+  @Value('${aws.secret}')
   String keySecret
 
   @PostConstruct
