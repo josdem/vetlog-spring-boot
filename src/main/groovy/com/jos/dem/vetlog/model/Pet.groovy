@@ -45,6 +45,10 @@ class Pet {
   User user
 
   @OneToMany(fetch=FetchType.LAZY)
+  @JoinColumn(name="log_id")
+  List<PetLog> logs
+
+  @OneToMany(fetch=FetchType.LAZY)
   @JoinColumn(name="image_id")
   List<PetImage> images
 

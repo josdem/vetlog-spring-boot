@@ -6,7 +6,7 @@ import javax.persistence.Id
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
-import javax.persistence.OneToOne
+import javax.persistence.ManyToOne
 import javax.persistence.JoinColumn
 import javax.persistence.FetchType
 
@@ -32,7 +32,7 @@ class PetLog {
   @Column(nullable = false)
   Date dateCreated = new Date()
 
-  @OneToOne(fetch=FetchType.LAZY)
+  @ManyToOne(fetch=FetchType.LAZY)
   @JoinColumn(name="pet_id")
   Pet pet
 
