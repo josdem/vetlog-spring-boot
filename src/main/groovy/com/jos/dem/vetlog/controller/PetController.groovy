@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
+import com.jos.dem.vetlog.model.PetImage
 import com.jos.dem.vetlog.model.PetType
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
@@ -25,6 +26,7 @@ import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
 import com.jos.dem.vetlog.service.BreedService
 import com.jos.dem.vetlog.service.PetService
+import com.jos.dem.vetlog.service.PetImageService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.client.S3Writer
@@ -42,6 +44,8 @@ class PetController {
   BreedService breedService
   @Autowired
   PetService petService
+  @Autowired
+  PetImageService petImageService
   @Autowired
   UserService userService
   @Autowired
@@ -78,8 +82,9 @@ class PetController {
       return fillModelAndView(modelAndView)
     }
     User user = userService.getCurrentUser()
-    petService.save(petCommand, user)
-    s3Writer.uploadToBucket(bucketDestination, 'petImage', petCommand.image.getInputStream())
+    Pet pet = petService.save(petCommand, user)
+    PetImage petImage = petImageService.save(pet)
+    s3Writer.uploadToBucket(bucketDestination, petImage.uuid, petCommand.image.getInputStream())
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
     petCommand = new PetCommand()
     modelAndView.addObject('petCommand', petCommand)
