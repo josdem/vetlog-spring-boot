@@ -7,7 +7,6 @@ import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.OneToOne
-import javax.persistence.OneToMany
 import javax.persistence.JoinColumn
 import javax.persistence.FetchType
 
@@ -43,13 +42,5 @@ class Pet {
   @OneToOne(fetch=FetchType.LAZY)
   @JoinColumn(name="user_id")
   User user
-
-  @OneToMany(fetch=FetchType.LAZY)
-  @JoinColumn(name="log_id")
-  List<PetLog> logs
-
-  @OneToMany(fetch=FetchType.LAZY)
-  @JoinColumn(name="image_id")
-  List<PetImage> images
 
 }
