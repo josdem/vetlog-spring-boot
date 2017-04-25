@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.InitBinder
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.WebDataBinder
@@ -39,8 +40,6 @@ import org.slf4j.LoggerFactory
 class PetController {
 
   @Autowired
-  PetValidator petValidator
-  @Autowired
   BreedService breedService
   @Autowired
   PetService petService
@@ -62,7 +61,7 @@ class PetController {
 
   @InitBinder
   private void initBinder(WebDataBinder binder) {
-    binder.addValidators(petValidator)
+    binder.addValidators(new PetValidator())
   }
 
   @RequestMapping(method = GET, value = "/create")
@@ -73,6 +72,7 @@ class PetController {
     fillModelAndView(modelAndView)
   }
 
+  @Transactional
   @RequestMapping(method = POST, value = "/save")
   ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult) {
     log.info "Creating pet: ${petCommand.name}"
