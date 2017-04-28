@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
@@ -22,11 +21,13 @@ import com.jos.dem.vetlog.service.UserService
 class UserController {
 
   @Autowired
+  UserValidator userValidator
+  @Autowired
   UserService userService
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.addValidators(new UserValidator())
+		binder.addValidators(userValidator)
 	}
 
 	@RequestMapping(method = GET, value = "/create")
@@ -37,7 +38,6 @@ class UserController {
 		modelAndView
 	}
 
-  @Transactional
 	@RequestMapping(method = POST, value = "/save")
 	String save(@Valid UserCommand command, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
