@@ -3,8 +3,8 @@ package com.jos.dem.vetlog.service.impl
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.security.core.context.SecurityContextHolder
-
 
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
@@ -31,6 +31,7 @@ class UserServiceImpl implements UserService {
     userRepository.findByEmail(email)
   }
 
+  @Transactional
   User save(Command command){
     User user = userBinder.bindUser(command)
     userRepository.save(user)

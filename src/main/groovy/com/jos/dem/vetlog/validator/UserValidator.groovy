@@ -9,6 +9,9 @@ import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.command.UserCommand
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 @Component
 class UserValidator implements Validator {
 
@@ -16,6 +19,8 @@ class UserValidator implements Validator {
   LocaleService localeService
   @Autowired
   UserService userService
+
+  Logger log = LoggerFactory.getLogger(this.class)
 
   @Override
   boolean supports(Class<?> clazz) {
