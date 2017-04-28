@@ -22,13 +22,11 @@ import com.jos.dem.vetlog.service.UserService
 class UserController {
 
   @Autowired
-  UserValidator userValidator
-  @Autowired
   UserService userService
 
 	@InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.addValidators(userValidator)
+		binder.addValidators(new UserValidator())
 	}
 
 	@RequestMapping(method = GET, value = "/create")
