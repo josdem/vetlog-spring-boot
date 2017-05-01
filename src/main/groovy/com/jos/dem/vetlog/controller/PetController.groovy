@@ -94,4 +94,11 @@ class PetController {
     modelAndView
   }
 
+  @RequestMapping(method = GET, value = "/list")
+  ModelAndView list() {
+    log.info 'Listing pets'
+    ModelAndView modelAndView = new ModelAndView()
+    modelAndView
+  }
+
 }
