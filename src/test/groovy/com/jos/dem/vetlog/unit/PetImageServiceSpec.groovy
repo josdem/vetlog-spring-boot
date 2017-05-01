@@ -19,13 +19,10 @@ class PetImageServiceSpec extends Specification {
   }
 
   void "should save a pet image"(){
-    given:"A pet"
-      Pet pet = new Pet()
     when:"I save a pet image"
-      PetImage result = service.save(pet)
+      PetImage result = service.save()
     then:"I expect an image pet saved"
       result.uuid.length() == 32
-      result.pet == pet
       1 * petImageRepository.save(_ as PetImage)
   }
 }
