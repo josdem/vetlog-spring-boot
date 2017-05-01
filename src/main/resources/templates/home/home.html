@@ -23,6 +23,17 @@
         <a class="btn btn-success" href="command-line" role="button">View details</a>
       </div>
     </div>
+    <div class="row">
+      <div class="col-md-4">
+        <h4 th:text="#{home.list}" />
+        <p th:text="#{home.list.label}" />
+        <a th:href="@{pet/create}" class="btn btn-success"><p th:text="#{button.action}"/></a>
+      </div>
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
   </div>
   <th:block layout:include="fragments/footer"/>
 </body>
