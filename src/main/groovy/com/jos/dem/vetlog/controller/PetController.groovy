@@ -81,8 +81,8 @@ class PetController {
       return fillModelAndView(modelAndView)
     }
     User user = userService.getCurrentUser()
-    PetImage petImage = petImageService.save(pet)
-    pet.images.add(petImage)
+    PetImage petImage = petImageService.save()
+    petCommand.images.add(petImage)
     Pet pet = petService.save(petCommand, user)
     s3Writer.uploadToBucket(bucketDestination, petImage.uuid, petCommand.image.getInputStream())
     modelAndView.addObject('message', localeService.getMessage('pet.created'))

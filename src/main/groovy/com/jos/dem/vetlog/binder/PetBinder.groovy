@@ -21,6 +21,7 @@ class PetBinder {
     pet.dewormed = command.dewormed
     pet.sterilized = command.sterilized
     pet.vaccinated = command.vaccinated
+    pet.images = command.images
     pet.breed = breedRepository.findOne(command.breed)
     pet
   }

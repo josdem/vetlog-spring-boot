@@ -9,6 +9,7 @@ import javax.validation.constraints.Past
 import org.springframework.web.multipart.MultipartFile
 
 import com.jos.dem.vetlog.model.PetType
+import com.jos.dem.vetlog.model.PetImage
 
 class PetCommand implements Command {
 
@@ -37,5 +38,7 @@ class PetCommand implements Command {
   PetType type
 
   MultipartFile image
+
+  List<PetImage> images = []
 
 }
