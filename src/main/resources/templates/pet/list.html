@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <script th:src="@{/assets/third-party/jquery/jquery.js}"/>
-  <title th:text="#{pet.view.list.title}"></title>
-</head>
-<body>
-</body>
+  <head>
+    <title th:text="#{pet.view.list.title}"></title>
+  </head>
+  <body>
+    <div class="container">
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Birthdate</th>
+          <th>Type</th>
+          <th>Dewormed</th>
+        </tr>
+        <tr th:each="pet : ${pets}">
+          <td th:text="${pet.name}"></td>
+          <td th:text="${pet.birthDate}"></td>
+          <td th:text="${pet.breed.name}"></td>
+          <td th:text="${pet.dewormed}? #{true} : #{false}">yes</td>
+        </tr>
+      </table>
+    </div>
+  </body>
 </html>
