@@ -4,8 +4,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET
 import static org.springframework.web.bind.annotation.RequestMethod.POST
 
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.transaction.annotation.Transactional
@@ -15,7 +13,6 @@ import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
-import javax.servlet.http.HttpServletResponse
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
@@ -95,16 +92,6 @@ class PetController {
     modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
     modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
     modelAndView
-  }
-
-  @RequestMapping(method=RequestMethod.GET, value="/list")
-  @ResponseBody
-  def listByType(@RequestParam String type, HttpServletResponse response){
-    log.info "Listing Pets by type: $type"
-
-    response.addHeader("Allow-Control-Allow-Methods", "GET")
-    response.addHeader("Access-Control-Allow-Origin", "*")
-    breedService.getBreedsByType(PetType.getPetTypeByValue(type))
   }
 
 }
