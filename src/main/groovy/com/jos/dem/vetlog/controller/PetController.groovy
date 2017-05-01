@@ -53,6 +53,8 @@ class PetController {
   String breedsByTypeUrl
   @Value('${bucketDestination}')
   String bucketDestination
+  @Value('${awsImageUrl}')
+  String awsImageUrl
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -79,8 +81,9 @@ class PetController {
       return fillModelAndView(modelAndView)
     }
     User user = userService.getCurrentUser()
-    Pet pet = petService.save(petCommand, user)
     PetImage petImage = petImageService.save(pet)
+    pet.images.add(petImage)
+    Pet pet = petService.save(petCommand, user)
     s3Writer.uploadToBucket(bucketDestination, petImage.uuid, petCommand.image.getInputStream())
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
     petCommand = new PetCommand()
@@ -101,6 +104,7 @@ class PetController {
     User user = userService.getCurrentUser()
     List<Pet> pets = petService.getPetsByUser(user)
     modelAndView.addObject('pets', pets)
+    modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
   }
 

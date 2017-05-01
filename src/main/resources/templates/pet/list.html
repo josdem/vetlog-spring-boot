@@ -9,14 +9,19 @@
         <tr>
           <th>Name</th>
           <th>Birthdate</th>
-          <th>Type</th>
+          <th>Breed</th>
           <th>Dewormed</th>
+          <th>Sterilized</th>
+          <th>Vaccinated</th>
         </tr>
         <tr th:each="pet : ${pets}">
+          <td><img style=" width: 320px;height: 240px;" th:attr="src=@{${awsImageUrl}/${pet.image}}"/></td>
           <td th:text="${pet.name}"></td>
           <td th:text="${pet.birthDate}"></td>
           <td th:text="${pet.breed.name}"></td>
-          <td th:text="${pet.dewormed}? #{true} : #{false}">yes</td>
+          <td th:text="${pet.dewormed}? #{true} : #{false}"></td>
+          <td th:text="${pet.sterilized}? #{true} : #{false}"></td>
+          <td th:text="${pet.vaccinated}? #{true} : #{false}"></td>
         </tr>
       </table>
     </div>

@@ -20,8 +20,4 @@ class PetImage {
   @Column(nullable = false)
   String uuid
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name="pet_id")
-  Pet pet
-
 }
