@@ -17,9 +17,9 @@
               <li th:text="${pet.name}" />
               <li th:text="${pet.birthDate}" />
               <li th:text="${pet.breed.name}" />
-              <li th:text="${pet.dewormed}? #{true} : #{false}" />
-              <li th:text="${pet.sterilized}? #{true} : #{false}" />
-              <li th:text="${pet.vaccinated}? #{true} : #{false}" />
+              <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
+              <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
+              <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
             </ul>
           </td>
         </tr>
