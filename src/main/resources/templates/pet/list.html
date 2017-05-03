@@ -10,8 +10,29 @@
         <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
       </a>
     </nav>
+    <br/><br/><br/>
+
+    <!-- begin PAGE TITLE ROW -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3>
+            Pet and Data
+            <small style="font-size:18px">User's pet Information</small>
+          </h3>
+            <ol class="breadcrumb">
+            <li><i class="fa fa-dashboard"></i>  <a href="/">Home</a>
+            </li>
+            <li class="active">User's Pet</li>
+          </ol>
+        </div>
+      </div>
+      <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <!-- end PAGE TITLE ROW -->
+
     <div class="container">
-      <h2>Pet and Data</h2>
       <div class="row">
         <div th:each="pet : ${pets}">
           <div class="col-sm-6 col-md-4">
@@ -22,10 +43,10 @@
                 <p>
                 <ul>
                   <li th:text="${pet.birthDate}" />
-                  <li th:text="${pet.breed.name}" />
-                  <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
-                  <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
-                  <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
+                    <li th:text="${pet.breed.name}" />
+                      <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
+                        <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
+                          <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
                 </ul>
                 </p>
               </div>
