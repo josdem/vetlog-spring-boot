@@ -101,17 +101,17 @@ class PetController {
   ModelAndView list() {
     log.info 'Listing pets'
     ModelAndView modelAndView = new ModelAndView()
-    User user = userService.getCurrentUser()
-    List<Pet> pets = petService.getPetsByUser(user)
-    modelAndView.addObject('pets', pets)
-    modelAndView.addObject('awsImageUrl', awsImageUrl)
-    modelAndView
+    fillPetAndImageUrl(ModelAndView)
   }
 
   @RequestMapping(method = GET, value = "/listForAdoption")
   ModelAndView listForAdoption() {
     log.info 'Listing pets for adoption'
     ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
+    fillPetAndImageUrl(ModelAndView)
+  }
+
+  private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView){
     User user = userService.getCurrentUser()
     List<Pet> pets = petService.getPetsByUser(user)
     modelAndView.addObject('pets', pets)
