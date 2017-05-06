@@ -41,9 +41,11 @@
                 </ul>
                 </p>
                 <br/>
-                <p align="center">
-                  <a href="#" class="btn btn-success">For Adoption</a>
-                </p>
+                <center>
+                <a th:href="@{/pet/descriptionForAdoption(id=${pet.id})}" class="btn btn-success">
+                  <p th:text="#{pet.for.adoption}"/>
+                </a>
+                </center>
               </div>
             </div>
           </div>

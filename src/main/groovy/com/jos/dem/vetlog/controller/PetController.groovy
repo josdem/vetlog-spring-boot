@@ -101,14 +101,14 @@ class PetController {
   ModelAndView list() {
     log.info 'Listing pets'
     ModelAndView modelAndView = new ModelAndView()
-    fillPetAndImageUrl(ModelAndView)
+    fillPetAndImageUrl(modelAndView)
   }
 
   @RequestMapping(method = GET, value = "/listForAdoption")
   ModelAndView listForAdoption() {
     log.info 'Listing pets for adoption'
     ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
-    fillPetAndImageUrl(ModelAndView)
+    fillPetAndImageUrl(modelAndView)
   }
 
   private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView){
