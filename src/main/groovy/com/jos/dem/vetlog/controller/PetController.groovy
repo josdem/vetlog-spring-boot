@@ -111,7 +111,7 @@ class PetController {
   @RequestMapping(method = GET, value = "/listForAdoption")
   ModelAndView listForAdoption() {
     log.info 'Listing pets for adoption'
-    ModelAndView modelAndView = new ModelAndView('listForAdoption')
+    ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
     User user = userService.getCurrentUser()
     List<Pet> pets = petService.getPetsByUser(user)
     modelAndView.addObject('pets', pets)
