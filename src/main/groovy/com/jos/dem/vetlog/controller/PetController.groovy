@@ -121,6 +121,7 @@ class PetController {
   }
 
   ModelAndView descriptionForAdoption(@RequestParam("uuid") String uuid){
+    log.info "Adding description to pet with uuid: ${uuid}"
     ModelAndView modelAndView = new ModelAndView()
     Pet pet = petService.getPetByUuid(uuid)
     modelAndView.addObject('pet', pet)
