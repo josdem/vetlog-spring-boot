@@ -19,6 +19,9 @@ class Pet {
   Long id
 
   @Column(nullable = false)
+  String uuid
+
+  @Column(nullable = false)
   String name
 
   @Column(nullable = false)
