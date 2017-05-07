@@ -11,12 +11,17 @@ import org.springframework.stereotype.Controller
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.service.PetService
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
 @Controller
 @RequestMapping("/adoption")
 class AdoptionController {
 
   @Autowired
   PetService petService
+
+  Logger log = LoggerFactory.getLogger(this.class)
 
   @RequestMapping(method = GET, value = "/descriptionForAdoption")
   ModelAndView descriptionForAdoption(@RequestParam("uuid") String uuid){
