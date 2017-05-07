@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.util.UuidGenerator
 import com.jos.dem.vetlog.repository.BreedRepository
 
 @Component
@@ -14,8 +15,10 @@ class PetBinder {
   @Autowired
   BreedRepository breedRepository
 
+
   Pet bindPet(Command command){
     Pet pet = new Pet()
+    pet.uuid = UuidGenerator.generateUuid()
     pet.name = command.name
     pet.birthDate = command.birthDate
     pet.dewormed = command.dewormed
