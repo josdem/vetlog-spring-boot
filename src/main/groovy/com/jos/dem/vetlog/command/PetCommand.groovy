@@ -37,6 +37,8 @@ class PetCommand implements Command {
   @NotNull
   PetType type
 
+  String uuid
+
   MultipartFile image
 
   List<PetImage> images = []
