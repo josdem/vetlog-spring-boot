@@ -119,4 +119,11 @@ class PetController {
     modelAndView
   }
 
+  ModelAndView descriptionForAdoption(@RequestParam("uuid") String uuid){
+    ModelAndView modelAndView = new ModelAndView()
+    Pet pet = petService.getPetByUuid(uuid)
+    modelAndView.addObject('pet', pet)
+    modelAndView
+  }
+
 }
