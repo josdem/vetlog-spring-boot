@@ -7,5 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface PetRepository extends JpaRepository<Pet,Long> {
   Pet save(Pet pet)
   List<Pet> findAllByUser(User user)
+  Pet findByUuid(String uuid)
 }
 

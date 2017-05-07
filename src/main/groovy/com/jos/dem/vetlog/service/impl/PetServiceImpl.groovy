@@ -29,4 +29,8 @@ class PetServiceImpl implements PetService {
     petRepository.findAllByUser(user)
   }
 
+  Pet getPetByUuid(String uuid){
+    petRepository.findByUuid(uuid)
+  }
+
 }
