@@ -7,4 +7,5 @@ import  com.jos.dem.vetlog.command.Command
 interface PetService {
   Pet save(Command command, User user)
   List<Pet> getPetsByUser(User user)
+  Pet getPetByUuid(String uuid)
 }
