@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import com.jos.dem.vetlog.model.Pet
+import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.util.UuidGenerator
 import com.jos.dem.vetlog.repository.BreedRepository

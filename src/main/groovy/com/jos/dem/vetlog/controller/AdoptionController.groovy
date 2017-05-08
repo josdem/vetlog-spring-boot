@@ -39,4 +39,16 @@ class AdoptionController {
     modelAndView
   }
 
+  @RequestMapping(method = POST, value = "/save")
+  String save(@Valid AdoptionCommand adoptionCommand, BindingResult bindingResult) {
+    log.info "Creating adption description for pet: ${adoptionCommand.uuid}"
+    if (bindingResult.hasErrors()) {
+      return "adoption/descriptionForAdoption?uuid=${adoptionCommand.uuid}"
+    }
+    Pet pet = petService.getPetByUuid(uuid)
+    adoptionCommand.pet = pet
+    adoptionService.save(adoptionCommand)
+    'redirect:/'
+  }
+
 }
