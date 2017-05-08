@@ -3,6 +3,7 @@ package com.jos.dem.vetlog.controller
 import static org.springframework.web.bind.annotation.RequestMethod.GET
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
@@ -21,6 +22,9 @@ class AdoptionController {
   @Autowired
   PetService petService
 
+  @Value('${awsImageUrl}')
+  String awsImageUrl
+
   Logger log = LoggerFactory.getLogger(this.class)
 
   @RequestMapping(method = GET, value = "/descriptionForAdoption")
@@ -29,6 +33,7 @@ class AdoptionController {
     ModelAndView modelAndView = new ModelAndView()
     Pet pet = petService.getPetByUuid(uuid)
     modelAndView.addObject('pet', pet)
+    modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
   }
 
