@@ -10,7 +10,10 @@ import javax.persistence.GeneratedValue
 import javax.persistence.OneToOne
 import javax.persistence.OneToMany
 import javax.persistence.JoinColumn
+import javax.persistence.Enumerated
 import javax.persistence.FetchType
+
+import com.jos.dem.vetlog.enums.PetStatus
 
 @Entity
 class Pet {
