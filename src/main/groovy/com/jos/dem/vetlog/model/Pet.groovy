@@ -1,6 +1,7 @@
 package com.jos.dem.vetlog.model
 
 import static javax.persistence.GenerationType.AUTO
+import static javax.persistence.EnumType.STRING
 
 import javax.persistence.Id
 import javax.persistence.Column
@@ -38,6 +39,10 @@ class Pet {
 
   @Column(nullable = false)
   Date dateCreated = new Date()
+
+  @Column(nullable = false)
+  @Enumerated(STRING)
+  PetStatus status
 
   @OneToOne(fetch=FetchType.LAZY)
   @JoinColumn(name="breed_id")
