@@ -6,6 +6,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.WebDataBinder
@@ -31,7 +32,6 @@ class AdoptionController {
   @Autowired
   AdoptionValidator adoptionValidator
 
-
   @Value('${awsImageUrl}')
   String awsImageUrl
 
@@ -39,16 +39,16 @@ class AdoptionController {
 
   @InitBinder
 	private void initBinder(WebDataBinder binder) {
-		binder.addValidators(adoptionValidator)
+		binder.addValidators(new AdoptionValidator())
 	}
 
-  @RequestMapping(method = GET, value = "/descriptionForAdoption")
-  ModelAndView descriptionForAdoption(@RequestParam("uuid") String uuid){
+  @RequestMapping(method = GET, value = "/descriptionForAdoption/{uuid}")
+  ModelAndView descriptionForAdoption(@PathVariable("uuid") String uuid){
     log.info "Adding description to pet with uuid: ${uuid}"
     ModelAndView modelAndView = new ModelAndView()
     Pet pet = petService.getPetByUuid(uuid)
     modelAndView.addObject('pet', pet)
-    modelAndView.addObject('adoptionCommand', new AdoptionCommand(uuid:pet.uuid))
+    modelAndView.addObject('adoptionCommand', new AdoptionCommand(uuid:uuid))
     modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
   }
@@ -59,7 +59,7 @@ class AdoptionController {
     if (bindingResult.hasErrors()) {
       return "adoption/descriptionForAdoption?uuid=${adoptionCommand.uuid}"
     }
-        adoptionService.save(adoptionCommand)
+    adoptionService.save(adoptionCommand)
     'redirect:/'
   }
 
