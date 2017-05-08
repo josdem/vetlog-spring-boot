@@ -23,8 +23,10 @@ class AdoptionServiceImpl implements AdoptionService {
 
   PetAdoption save(Command command){
     Pet pet = petService.getPetByUuid(command.uuid)
-    PetAdoption petAdoption = new PetAdoption()
-    petAdoption.pet = pet
+    PetAdoption petAdoption = new PetAdoption(
+      pet:pet,
+      description:command.description
+    )
     adoptionRepository.save(petAdoption)
     petAdoption
   }

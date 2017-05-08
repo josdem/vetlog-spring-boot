@@ -36,10 +36,13 @@
                 <p th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
                 <br/>
                 <form id="description" th:action="@{/adoption/save}" th:object="${adoptionCommand}" method="post" class="form-horizontal">
+                <fieldset>
                 <label for="description"><h4 th:text="#{pet.description}"/></label>
                 <textarea name="description" th:field="*{description}" rows="8" class="form-control" placeholder="Description"  id='description' />
+                <input type="hidden" th:value="${adoptionCommand.uuid}" name="uuid" />
                 <br/><br/>
                 <input type="submit" class="btn btn-primary btn-block" />
+                </fieldset>
                 </form>
               </div>
             </div>

@@ -40,7 +40,6 @@ class AdoptionController {
   @RequestMapping(method = GET, value = "/descriptionForAdoption")
   ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand){
     log.info "Adding description to pet with uuid: ${adoptionCommand.uuid}"
-    log.info "AdoptionCommand: ${adoptionCommand.dump()}"
     ModelAndView modelAndView = new ModelAndView()
     Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
     modelAndView.addObject('pet', pet)

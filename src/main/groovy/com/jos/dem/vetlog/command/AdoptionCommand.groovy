@@ -7,6 +7,7 @@ class AdoptionCommand implements Command {
   @NotNull
   String uuid
 
+  @NotNull
   String description
 
 }
