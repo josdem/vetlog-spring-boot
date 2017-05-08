@@ -24,7 +24,7 @@
     </div>
     <div class="container">
       <div class="row">
-          <div class="col-sm-6 col-md-4">
+          <div class="col-sm-12 col-md-12">
             <div class="thumbnail">
               <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
               <div class="caption">
@@ -39,11 +39,11 @@
                 </ul>
                 </p>
                 <br/>
-                <center>
-                <a th:href="@{/adoption/descriptionForAdoption(uuid=${pet.uuid})}" class="btn btn-success">
-                  <p th:text="#{pet.adoption.interested}"/>
-                </a>
-                </center>
+                <form id="description" th:action="@{/adoption/save}" th:object="${adoptionCommand}" method="post"  class="form-horizontal">
+                <label for="description"><h4 th:text="#{pet.description}"/></label>
+                <textarea name="description" th:field="*{description}" rows="8" class="form-control" placeholder="Description"  id='description' />
+                <input type="submit" class="btn btn-primary btn-block" />
+                </form>
               </div>
             </div>
           </div>

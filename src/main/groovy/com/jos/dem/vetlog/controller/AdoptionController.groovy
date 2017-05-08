@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView
 import org.springframework.stereotype.Controller
 
 import com.jos.dem.vetlog.model.Pet
+import com.jos.dem.vetlog.command.AdoptionCommand
 import com.jos.dem.vetlog.service.PetService
 
 import org.slf4j.Logger
@@ -33,6 +34,7 @@ class AdoptionController {
     ModelAndView modelAndView = new ModelAndView()
     Pet pet = petService.getPetByUuid(uuid)
     modelAndView.addObject('pet', pet)
+    modelAndView.addObject('adoptionCommand', new AdoptionCommand(uuid:pet.uuid))
     modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
   }
