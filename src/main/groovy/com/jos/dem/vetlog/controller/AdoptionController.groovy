@@ -6,7 +6,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.WebDataBinder
@@ -29,32 +28,25 @@ class AdoptionController {
 
   @Autowired
   PetService petService
-  @Autowired
-  AdoptionValidator adoptionValidator
 
   @Value('${awsImageUrl}')
   String awsImageUrl
 
   Logger log = LoggerFactory.getLogger(this.class)
 
-  @InitBinder
-	private void initBinder(WebDataBinder binder) {
-		binder.addValidators(new AdoptionValidator())
-	}
-
-  @RequestMapping(method = GET, value = "/descriptionForAdoption/{uuid}")
-  ModelAndView descriptionForAdoption(@PathVariable("uuid") String uuid){
-    log.info "Adding description to pet with uuid: ${uuid}"
+  @RequestMapping(method = GET, value = "/descriptionForAdoption")
+  ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand){
+    log.info "Adding description to pet with uuid: ${adoptionCommand.uuid}"
     ModelAndView modelAndView = new ModelAndView()
-    Pet pet = petService.getPetByUuid(uuid)
+    Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
     modelAndView.addObject('pet', pet)
-    modelAndView.addObject('adoptionCommand', new AdoptionCommand(uuid:uuid))
+    modelAndView.addObject('adoptionCommand', adoptionCommand)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
   }
 
   @RequestMapping(method = POST, value = "/save")
-  String save(@Valid AdoptionCommand adoptionCommand, BindingResult bindingResult) {
+  String save(AdoptionCommand adoptionCommand) {
     log.info "Creating adption description for pet: ${adoptionCommand.uuid}"
     if (bindingResult.hasErrors()) {
       return "adoption/descriptionForAdoption?uuid=${adoptionCommand.uuid}"

@@ -42,7 +42,7 @@
                 </p>
                 <br/>
                 <center>
-                <a th:href="@{/adoption/descriptionForAdoption/(${pet.uuid})}" class="btn btn-success">
+                <a th:href="@{/adoption/descriptionForAdoption(uuid=${pet.uuid})}" class="btn btn-success">
                   <p th:text="#{pet.for.adoption}"/>
                 </a>
                 </center>
