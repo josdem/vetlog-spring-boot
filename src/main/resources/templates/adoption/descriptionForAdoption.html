@@ -1,3 +1,55 @@
 <html>
-  Hello World!
+  <head>
+    <th:block layout:include="fragments/include"/>
+      <title th:text="#{pet.view.list.title}"></title>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <a class="navbar-brand" href="/">
+        <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
+      </a>
+    </nav>
+    <br/><br/><br/>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 th:text="#{pet.data}" />
+            <ol class="breadcrumb">
+              <li><i class="fa fa-dashboard"></i> <a th:href="@{/}" th:text="#{home.name}" />
+            </li>
+            <li class="active" th:text="#{pet.user.data}" />
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+              <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
+              <div class="caption">
+                <h3 th:text="${pet.name}"></h3>
+                <p>
+                <ul>
+                  <li th:text="${beans.dateFormatter.format(pet.birthDate)}" />
+                  <li th:text="${pet.breed.name}" />
+                  <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
+                  <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
+                  <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
+                </ul>
+                </p>
+                <br/>
+                <center>
+                <a th:href="@{/adoption/descriptionForAdoption(uuid=${pet.uuid})}" class="btn btn-success">
+                  <p th:text="#{pet.adoption.interested}"/>
+                </a>
+                </center>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <br/><br/><br/><br/>
+    <th:block layout:include="fragments/footer"/>
+  </body>
 </html>
