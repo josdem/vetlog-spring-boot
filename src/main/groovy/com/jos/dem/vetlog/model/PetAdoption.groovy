@@ -18,7 +18,7 @@ class PetAdoption {
   Long id
 
   @Column(nullable = false, columnDefinition="text")
-  String desctiption
+  String description
 
   @ManyToOne(fetch=FetchType.LAZY)
   @JoinColumn(name="pet_id")
