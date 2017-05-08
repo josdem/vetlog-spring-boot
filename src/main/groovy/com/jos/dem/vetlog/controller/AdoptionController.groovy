@@ -17,6 +17,7 @@ import javax.validation.Valid
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.command.AdoptionCommand
 import com.jos.dem.vetlog.service.PetService
+import com.jos.dem.vetlog.service.AdoptionService
 import com.jos.dem.vetlog.validator.AdoptionValidator
 
 import org.slf4j.Logger
@@ -28,6 +29,8 @@ class AdoptionController {
 
   @Autowired
   PetService petService
+  @Autowired
+  AdoptionService adoptionService
 
   @Value('${awsImageUrl}')
   String awsImageUrl
@@ -37,6 +40,7 @@ class AdoptionController {
   @RequestMapping(method = GET, value = "/descriptionForAdoption")
   ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand){
     log.info "Adding description to pet with uuid: ${adoptionCommand.uuid}"
+    log.info "AdoptionCommand: ${adoptionCommand.dump()}"
     ModelAndView modelAndView = new ModelAndView()
     Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
     modelAndView.addObject('pet', pet)
@@ -48,9 +52,6 @@ class AdoptionController {
   @RequestMapping(method = POST, value = "/save")
   String save(AdoptionCommand adoptionCommand) {
     log.info "Creating adption description for pet: ${adoptionCommand.uuid}"
-    if (bindingResult.hasErrors()) {
-      return "adoption/descriptionForAdoption?uuid=${adoptionCommand.uuid}"
-    }
     adoptionService.save(adoptionCommand)
     'redirect:/'
   }
