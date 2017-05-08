@@ -13,11 +13,11 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="page-title">
-          <h3 th:text="#{pet.data}" />
+          <h3 th:text="#{adoption.name}" />
             <ol class="breadcrumb">
               <li><i class="fa fa-dashboard"></i> <a th:href="@{/}" th:text="#{home.name}" />
             </li>
-            <li class="active" th:text="#{pet.user.data}" />
+            <li class="active" th:text="#{adoption.description}" />
           </ol>
         </div>
       </div>
@@ -27,21 +27,18 @@
           <div class="col-sm-12 col-md-12">
             <div class="thumbnail">
               <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
-              <div class="caption">
+              <div class="caption" align="center">
                 <h3 th:text="${pet.name}"></h3>
-                <p>
-                <ul>
-                  <li th:text="${beans.dateFormatter.format(pet.birthDate)}" />
-                  <li th:text="${pet.breed.name}" />
-                  <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
-                  <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
-                  <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
-                </ul>
-                </p>
+                <p th:text="${beans.dateFormatter.format(pet.birthDate)}" />
+                <p th:text="${pet.breed.name}" />
+                <p th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
+                <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
+                <p th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
                 <br/>
                 <form id="description" th:action="@{/adoption/save}" th:object="${adoptionCommand}" method="post"  class="form-horizontal">
                 <label for="description"><h4 th:text="#{pet.description}"/></label>
                 <textarea name="description" th:field="*{description}" rows="8" class="form-control" placeholder="Description"  id='description' />
+                <br/><br/>
                 <input type="submit" class="btn btn-primary btn-block" />
                 </form>
               </div>
