@@ -30,12 +30,19 @@ class AdoptionController {
   @Autowired
   PetService petService
   @Autowired
+  AdoptionValidator adoptionValidator
+  @Autowired
   AdoptionService adoptionService
 
   @Value('${awsImageUrl}')
   String awsImageUrl
 
   Logger log = LoggerFactory.getLogger(this.class)
+
+  @InitBinder('adoptionCommand')
+	private void initBinder(WebDataBinder binder) {
+		binder.addValidators(adoptionValidator)
+	}
 
   @RequestMapping(method = GET, value = "/descriptionForAdoption")
   ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand){
@@ -49,8 +56,11 @@ class AdoptionController {
   }
 
   @RequestMapping(method = POST, value = "/save")
-  String save(AdoptionCommand adoptionCommand) {
+  String save(@Valid AdoptionCommand adoptionCommand, BindingResult bindingResult) {
     log.info "Creating adption description for pet: ${adoptionCommand.uuid}"
+    if (bindingResult.hasErrors()) {
+      return "adoption/descriptionForAdoption?uuid=${adoptionCommand.uuid}"
+    }
     adoptionService.save(adoptionCommand)
     'redirect:/'
   }
