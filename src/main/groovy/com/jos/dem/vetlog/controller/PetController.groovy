@@ -108,7 +108,7 @@ class PetController {
   @RequestMapping(method = GET, value = "/giveForAdoption")
   ModelAndView giveForAdoption() {
     log.info 'Listing pets for adoption'
-    ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
+    ModelAndView modelAndView = new ModelAndView('pet/giveForAdoption')
     fillPetAndImageUrl(modelAndView)
   }
 
