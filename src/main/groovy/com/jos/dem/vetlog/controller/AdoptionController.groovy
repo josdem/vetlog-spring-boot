@@ -56,13 +56,18 @@ class AdoptionController {
   }
 
   @RequestMapping(method = POST, value = "/save")
-  String save(@Valid AdoptionCommand adoptionCommand, BindingResult bindingResult) {
+  ModelAndView save(@Valid AdoptionCommand adoptionCommand, BindingResult bindingResult) {
     log.info "Creating adption description for pet: ${adoptionCommand.uuid}"
     if (bindingResult.hasErrors()) {
-      return "adoption/descriptionForAdoption?uuid=${adoptionCommand.uuid}"
+      ModelAndView modelAndView = new ModelAndView('adoption/descriptionForAdoption')
+      Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
+      modelAndView.addObject('pet', pet)
+      modelAndView.addObject('adoptionCommand', adoptionCommand)
+      modelAndView.addObject('awsImageUrl', awsImageUrl)
+      return modelAndView
     }
     adoptionService.save(adoptionCommand)
-    'redirect:/'
+    new ModelAndView('home/home')
   }
 
 }
