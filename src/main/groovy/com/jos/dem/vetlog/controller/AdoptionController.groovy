@@ -48,11 +48,7 @@ class AdoptionController {
   ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand){
     log.info "Adding description to pet with uuid: ${adoptionCommand.uuid}"
     ModelAndView modelAndView = new ModelAndView()
-    Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
-    modelAndView.addObject('pet', pet)
-    modelAndView.addObject('adoptionCommand', adoptionCommand)
-    modelAndView.addObject('awsImageUrl', awsImageUrl)
-    modelAndView
+    fillPetAndAdoptionCommand(modelAndView)
   }
 
   @RequestMapping(method = POST, value = "/save")
@@ -60,14 +56,19 @@ class AdoptionController {
     log.info "Creating adption description for pet: ${adoptionCommand.uuid}"
     if (bindingResult.hasErrors()) {
       ModelAndView modelAndView = new ModelAndView('adoption/descriptionForAdoption')
-      Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
-      modelAndView.addObject('pet', pet)
-      modelAndView.addObject('adoptionCommand', adoptionCommand)
-      modelAndView.addObject('awsImageUrl', awsImageUrl)
+      fillPetAndAdoptionCommand(modelAndView)
       return modelAndView
     }
     adoptionService.save(adoptionCommand)
     new ModelAndView('home/home')
+  }
+
+  private fillPetAndAdoptionCommand(ModelAndView modelAndView){
+    Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
+    modelAndView.addObject('pet', pet)
+    modelAndView.addObject('adoptionCommand', adoptionCommand)
+    modelAndView.addObject('awsImageUrl', awsImageUrl)
+    modelAndView
   }
 
 }
