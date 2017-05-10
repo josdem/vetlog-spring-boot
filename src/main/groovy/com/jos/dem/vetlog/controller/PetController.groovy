@@ -114,7 +114,7 @@ class PetController {
   }
 
   @RequestMapping(method = GET, value = "/listForAdoption")
-  ModelAndView giveForAdoption() {
+  ModelAndView listForAdoption() {
     log.info 'Listing pets for adoption'
     ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
     List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION)
