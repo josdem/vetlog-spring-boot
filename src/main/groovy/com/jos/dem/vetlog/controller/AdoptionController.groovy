@@ -60,7 +60,7 @@ class AdoptionController {
       return modelAndView
     }
     adoptionService.save(adoptionCommand)
-    new ModelAndView('home/home')
+    new ModelAndView('redirect:/')
   }
 
   private fillPetAndAdoptionCommand(ModelAndView modelAndView, AdoptionCommand adoptionCommand){
