@@ -12,6 +12,7 @@ import javax.persistence.OneToMany
 import javax.persistence.JoinColumn
 import javax.persistence.Enumerated
 import javax.persistence.FetchType
+import javax.persistence.CascadeType
 
 import com.jos.dem.vetlog.enums.PetStatus
 
@@ -51,7 +52,7 @@ class Pet {
   @JoinColumn(name="breed_id")
   Breed breed
 
-  @OneToOne(fetch=FetchType.LAZY)
+  @OneToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
   @JoinColumn(name="pet_adoption_id")
   PetAdoption adoption
 
