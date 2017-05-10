@@ -20,6 +20,7 @@ import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.PetImage
 import com.jos.dem.vetlog.model.PetType
 import com.jos.dem.vetlog.model.User
+import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
