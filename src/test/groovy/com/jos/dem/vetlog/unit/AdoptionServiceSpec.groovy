@@ -37,8 +37,8 @@ class AdoptionServiceSpec extends Specification {
       PetAdoption result = service.save(adoptionCommand)
     then:"We expect to save adoption"
     1 * petRepository.save(pet)
-    1 * adoptionRepository.save(_ as PetAdoption)
     pet.status == PetStatus.IN_ADOPTION
+    pet.adoption instanceof PetAdoption
     result.pet == pet
     result.description == 'description'
   }
