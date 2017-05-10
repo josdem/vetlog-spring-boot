@@ -29,8 +29,8 @@ class AdoptionServiceImpl implements AdoptionService {
       description:command.description
     )
     pet.status = PetStatus.IN_ADOPTION
+    pet.adoption = petAdoption
     petRepository.save(pet)
-    adoptionRepository.save(petAdoption)
     petAdoption
   }
 

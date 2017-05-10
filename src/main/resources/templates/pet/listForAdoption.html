@@ -40,6 +40,7 @@
                   <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
                 </ul>
                 </p>
+                <p th:text="${pet.adoption.description}" />
                 <br/>
                 <center>
                 <a th:href="@{/adoption/descriptionForAdoption(uuid=${pet.uuid})}" class="btn btn-success">
