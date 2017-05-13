@@ -11,9 +11,9 @@ import com.jos.dem.vetlog.command.MessageCommand
 import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.RestService
-import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.TelephoneService
 import com.jos.dem.vetlog.repository.PetRepository
+import com.jos.dem.vetlog.repository.UserRepository
 
 @Service
 class TelephoneServiceImpl implements TelephoneService {
@@ -23,7 +23,7 @@ class TelephoneServiceImpl implements TelephoneService {
   @Autowired
   RestService restService
   @Autowired
-  UserService userService
+  UserRepository userRepository
   @Autowired
   PetRepository petRepository
 
@@ -36,7 +36,7 @@ class TelephoneServiceImpl implements TelephoneService {
     adopter.mobile = command.mobile
     pet.adopter = adopter
     petRepository.save(pet)
-    userService.save(adopter)
+    userRepository.save(adopter)
     createAdoptionDataMessage(command, pet)
   }
 
