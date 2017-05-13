@@ -60,7 +60,7 @@ class AdoptionController {
       return modelAndView
     }
     adoptionService.save(adoptionCommand)
-    new ModelAndView('redirect:/')
+    new ModelAndView('pet/listForAdoption')
   }
 
   private fillPetAndAdoptionCommand(ModelAndView modelAndView, AdoptionCommand adoptionCommand){
@@ -69,6 +69,13 @@ class AdoptionController {
     modelAndView.addObject('adoptionCommand', adoptionCommand)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
+  }
+
+  @RequestMapping(method = GET, value = "/adopt")
+  ModelAndView adopt(AdoptionCommand adoptionCommand){
+    log.info "Adding description to pet with uuid: ${adoptionCommand.uuid}"
+    ModelAndView modelAndView = new ModelAndView('adoption/adopt')
+    fillPetAndAdoptionCommand(modelAndView, adoptionCommand)
   }
 
 }
