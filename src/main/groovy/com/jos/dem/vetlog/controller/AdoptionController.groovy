@@ -71,11 +71,4 @@ class AdoptionController {
     modelAndView
   }
 
-  @RequestMapping(method = GET, value = "/adopt")
-  ModelAndView adopt(AdoptionCommand adoptionCommand){
-    log.info "Adding description to pet with uuid: ${adoptionCommand.uuid}"
-    ModelAndView modelAndView = new ModelAndView('adoption/adopt')
-    fillPetAndAdoptionCommand(modelAndView, adoptionCommand)
-  }
-
 }
