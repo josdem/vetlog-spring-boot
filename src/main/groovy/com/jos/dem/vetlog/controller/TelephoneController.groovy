@@ -36,7 +36,7 @@ class TelephoneController {
 
   Logger log = LoggerFactory.getLogger(this.class)
 
-  @InitBinder()
+  @InitBinder('telephoneCommand')
 	private void initBinder(WebDataBinder binder) {
 		binder.addValidators(telephoneValidator)
 	}
@@ -54,13 +54,13 @@ class TelephoneController {
 
   @RequestMapping(method = GET, value = "/adopt")
   ModelAndView adopt(TelephoneCommand telephoneCommand){
-    log.info "Adding description to pet with uuid: ${telephoneCommand.uuid}"
-    ModelAndView modelAndView = new ModelAndView('adoption/adopt')
+    log.info "Adoption to pet with uuid: ${telephoneCommand.uuid}"
+    ModelAndView modelAndView = new ModelAndView('telephone/adopt')
     fillPetAndTelephoneCommand(modelAndView, telephoneCommand)
   }
 
   private fillPetAndTelephoneCommand(ModelAndView modelAndView, TelephoneCommand telephoneCommand){
-    Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
+    Pet pet = petService.getPetByUuid(telephoneCommand.uuid)
     modelAndView.addObject('pet', pet)
     modelAndView.addObject('telephoneCommand', telephoneCommand)
     modelAndView.addObject('awsImageUrl', awsImageUrl)

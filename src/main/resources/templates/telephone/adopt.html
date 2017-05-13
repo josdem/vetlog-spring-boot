@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <th:block layout:include="fragments/include"/>
+      <title th:text="#{pet.view.list.title}"></title>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <a class="navbar-brand" href="/">
+        <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
+      </a>
+    </nav>
+    <br/><br/><br/>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-title">
+          <h3 th:text="#{pet.data.for.adoption}" />
+            <ol class="breadcrumb">
+              <li><i class="fa fa-dashboard"></i> <a th:href="@{/}" th:text="#{home.name}" />
+              </li>
+              <li class="active" th:text="#{pet.user.data.for.adoption}" />
+            </ol>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
+            <div class="caption">
+              <p>
+              Hello, thank you for adopting <strong th:text="${pet.name}"/> it such a pleasure know that you are now family, hope you enjoy this new stage in your life together
+              </p>
+              <br/>
+                <form id="description" th:action="@{/telephone/save}" th:object="${telephoneCommand}" method="post" class="form-horizontal">
+                  <fieldset>
+                    <label for="mobile"><h4 th:text="#{adoption.mobile}"/></label>
+                    <input type="text" name="mobile" class="form-control" placeholder="Mobile"  id='mobile' />
+                    <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
+                    <input type="hidden" th:value="${telephoneCommand.uuid}" name="uuid" />
+                    <br/><br/>
+                    <input type="submit" class="btn btn-primary btn-block" />
+                  </fieldset>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br/><br/><br/><br/>
+    <th:block layout:include="fragments/footer"/>
+  </body>
+</html>
