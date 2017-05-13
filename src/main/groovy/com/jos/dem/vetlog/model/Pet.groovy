@@ -60,6 +60,10 @@ class Pet {
   @JoinColumn(name="user_id")
   User user
 
+  @OneToOne(fetch=FetchType.LAZY)
+  @JoinColumn(name="user_id")
+  User adopter
+
   @OneToMany(fetch=FetchType.LAZY)
   @JoinColumn(name="pet_image_id")
   List<PetImage> images
