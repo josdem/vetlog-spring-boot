@@ -15,10 +15,9 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
-import com.jos.dem.vetlog.command.AdoptionCommand
+import com.jos.dem.vetlog.command.TelephoneCommand
 import com.jos.dem.vetlog.service.PetService
-import com.jos.dem.vetlog.service.AdoptionService
-import com.jos.dem.vetlog.validator.AdoptionValidator
+import com.jos.dem.vetlog.validator.TelephoneValidator
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -37,7 +36,7 @@ class AdoptionController {
 
   Logger log = LoggerFactory.getLogger(this.class)
 
-  @InitBinder('telephoneCommand')
+  @InitBinder()
 	private void initBinder(WebDataBinder binder) {
 		binder.addValidators(telephoneValidator)
 	}
@@ -47,7 +46,7 @@ class AdoptionController {
     log.info "Saving adoption for pet: ${telephoneCommand.uuid}"
     if (bindingResult.hasErrors()) {
       ModelAndView modelAndView = new ModelAndView('telephone/adopt')
-      fillPetAndAdoptionCommand(modelAndView, adoptionCommand)
+      fillPetAndTelephoneCommand(modelAndView, adoptionCommand)
       return modelAndView
     }
     new ModelAndView('redirect:/')
@@ -57,6 +56,10 @@ class AdoptionController {
   ModelAndView adopt(TelephoneCommand telephoneCommand){
     log.info "Adding description to pet with uuid: ${telephoneCommand.uuid}"
     ModelAndView modelAndView = new ModelAndView('adoption/adopt')
+    fillPetAndTelephoneCommand()
+  }
+
+  private fillPetAndTelephoneCommand(ModelAndView modelAndView, TelephoneCommand telephoneCommand){
     Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
     modelAndView.addObject('pet', pet)
     modelAndView.addObject('telephoneCommand', telephoneCommand)
