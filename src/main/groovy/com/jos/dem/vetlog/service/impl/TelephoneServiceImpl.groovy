@@ -1,4 +1,4 @@
-package com.jos.dem.vetlog.service
+package com.jos.dem.vetlog.service.impl
 
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
