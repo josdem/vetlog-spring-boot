@@ -30,6 +30,7 @@ class TelephoneServiceImpl implements TelephoneService {
   void save(Command command, User adopter){
     Pet pet = petService.getPetByUuid(command.uuid)
     pet.status = PetStatus.ADOPTED
+    adopter.mobile = command.mobile
     pet.adopter = adopter
     petRepository.save(pet)
     createAdoptionDataMessage(command, pet)
