@@ -54,12 +54,12 @@ class AdoptionController {
   }
 
   @RequestMapping(method = GET, value = "/adopt")
-  ModelAndView adopt(AdoptionCommand adoptionCommand){
-    log.info "Adding description to pet with uuid: ${adoptionCommand.uuid}"
+  ModelAndView adopt(TelephoneCommand telephoneCommand){
+    log.info "Adding description to pet with uuid: ${telephoneCommand.uuid}"
     ModelAndView modelAndView = new ModelAndView('adoption/adopt')
     Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
     modelAndView.addObject('pet', pet)
-    modelAndView.addObject('adoptionCommand', adoptionCommand)
+    modelAndView.addObject('telephoneCommand', telephoneCommand)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
   }
