@@ -62,9 +62,10 @@ class AdoptionController {
     }
     adoptionService.save(adoptionCommand)
     List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION)
+    ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
     modelAndView.addObject('pets', pets)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
-    return new ModelAndView('pet/listForAdoption')
+    modelAndView
   }
 
   private fillPetAndAdoptionCommand(ModelAndView modelAndView, AdoptionCommand adoptionCommand){
