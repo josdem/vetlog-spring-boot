@@ -26,6 +26,8 @@ class User implements Serializable {
   String lastname
   @Column(nullable = true)
   String email
+  @Column(nullable = true)
+  String mobile
   @Column(nullable = false)
   @Enumerated(STRING)
   Role role
