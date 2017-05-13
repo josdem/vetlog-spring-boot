@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
+import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.AdoptionCommand
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.AdoptionService
@@ -60,6 +61,9 @@ class AdoptionController {
       return modelAndView
     }
     adoptionService.save(adoptionCommand)
+    List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION)
+    modelAndView.addObject('pets', pets)
+    modelAndView.addObject('awsImageUrl', awsImageUrl)
     return new ModelAndView('pet/listForAdoption')
   }
 
