@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory
 
 @Controller
 @RequestMapping("/telephone")
-class AdoptionController {
+class TelephoneController {
 
   @Autowired
   PetService petService
@@ -46,7 +46,7 @@ class AdoptionController {
     log.info "Saving adoption for pet: ${telephoneCommand.uuid}"
     if (bindingResult.hasErrors()) {
       ModelAndView modelAndView = new ModelAndView('telephone/adopt')
-      fillPetAndTelephoneCommand(modelAndView, adoptionCommand)
+      fillPetAndTelephoneCommand(modelAndView, telephoneCommand)
       return modelAndView
     }
     new ModelAndView('redirect:/')
@@ -56,7 +56,7 @@ class AdoptionController {
   ModelAndView adopt(TelephoneCommand telephoneCommand){
     log.info "Adding description to pet with uuid: ${telephoneCommand.uuid}"
     ModelAndView modelAndView = new ModelAndView('adoption/adopt')
-    fillPetAndTelephoneCommand()
+    fillPetAndTelephoneCommand(modelAndView, telephoneCommand)
   }
 
   private fillPetAndTelephoneCommand(ModelAndView modelAndView, TelephoneCommand telephoneCommand){
