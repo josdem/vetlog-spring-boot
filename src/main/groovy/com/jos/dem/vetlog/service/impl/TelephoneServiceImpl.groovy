@@ -3,6 +3,7 @@ package com.jos.dem.vetlog.service.impl
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.annotation.Transactional
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
@@ -30,6 +31,7 @@ class TelephoneServiceImpl implements TelephoneService {
   @Value('${template.adoption.name}')
   String adoptionTemplate
 
+  @Transactional
   void save(Command command, User adopter){
     Pet pet = petService.getPetByUuid(command.uuid)
     pet.status = PetStatus.ADOPTED
