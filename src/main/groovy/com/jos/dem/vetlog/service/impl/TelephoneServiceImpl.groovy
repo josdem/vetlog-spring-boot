@@ -24,6 +24,21 @@ class TelephoneServiceImpl implements TelephoneService {
     pet.status = PetStatus.ADOPTED
     pet.adopter = adopter
     petRepository.save(pet)
+    createAdoptionDataMessage(command, pet)
+  }
+
+  private createAdoptionDataMessage(Command command, Pet pet){
+    User owner = pet.user
+    User adopter = pet.adopter
+    Command command = new MessageCommand(
+      email:owner.email,
+      name:pet.name,
+      contactName: "${adopter.firstname adopter.lastname}"
+      emailContact: adopter.email
+      message:adopter.mobile,
+      template:adoptionTemplate
+    )
+    recoveryService.sendAdoptionDataMessage(command)
   }
 
 }
