@@ -60,7 +60,7 @@ class AdoptionController {
       return modelAndView
     }
     adoptionService.save(adoptionCommand)
-    new ModelAndView('pet/listForAdoption')
+    return new ModelAndView('pet/listForAdoption')
   }
 
   private fillPetAndAdoptionCommand(ModelAndView modelAndView, AdoptionCommand adoptionCommand){
