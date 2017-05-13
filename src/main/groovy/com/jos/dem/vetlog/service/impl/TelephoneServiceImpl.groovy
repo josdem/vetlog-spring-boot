@@ -48,7 +48,7 @@ class TelephoneServiceImpl implements TelephoneService {
     Command messageCommand = new MessageCommand(
       email:owner.email,
       name:pet.name,
-      contactName: "${adopter.firstname adopter.lastname}",
+      contactName: "${adopter.firstname} ${adopter.lastname}",
       emailContact: adopter.email,
       message:adopter.mobile,
       template: adoptionTemplate
