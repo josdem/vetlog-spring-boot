@@ -30,7 +30,7 @@
             <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
             <div class="caption">
               <p>
-              Hello, thank you for adopting <strong th:text="${pet.name}"/> it such a pleasure know that you are now family, hope you enjoy this new stage in your life together
+              Hello, thank you for adopting <strong th:text="${pet.name}"/> it such a pleasure to know that you are now family, hope you enjoy this new stage in your life together
               </p>
               <br/>
                 <form id="description" th:action="@{/telephone/save}" th:object="${telephoneCommand}" method="post" class="form-horizontal">
