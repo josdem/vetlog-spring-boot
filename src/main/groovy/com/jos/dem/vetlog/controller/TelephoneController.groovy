@@ -15,8 +15,11 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
+import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.TelephoneCommand
 import com.jos.dem.vetlog.service.PetService
+import com.jos.dem.vetlog.service.UserService
+import com.jos.dem.vetlog.service.TelephoneService
 import com.jos.dem.vetlog.validator.TelephoneValidator
 
 import org.slf4j.Logger
@@ -28,6 +31,10 @@ class TelephoneController {
 
   @Autowired
   PetService petService
+  @Autowired
+  UserService userService
+  @Autowired
+  TelephoneService telephoneService
   @Autowired
   TelephoneValidator telephoneValidator
 
@@ -49,6 +56,8 @@ class TelephoneController {
       fillPetAndTelephoneCommand(modelAndView, telephoneCommand)
       return modelAndView
     }
+    User user = userService.getCurrentUser()
+    telephoneService.save(telephoneCommand, user)
     new ModelAndView('redirect:/')
   }
 

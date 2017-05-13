@@ -61,7 +61,7 @@ class Pet {
   User user
 
   @OneToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name="user_id")
+  @JoinColumn(name="adopter_id")
   User adopter
 
   @OneToMany(fetch=FetchType.LAZY)
