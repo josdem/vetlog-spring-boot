@@ -30,4 +30,8 @@ class PetLogServiceImpl implements PetLogService {
     petLog
   }
 
+  List<PetLog> getPetLogsByUser(User user){
+    petLogRepository.getAllByUser(user)
+  }
+
 }
