@@ -33,7 +33,7 @@
                 <p>
                 <ul>
                   <li th:text="${beans.dateFormatter.format(log.dateCreated)}" />
-                  <li th:text="Dr. ${log.vetName}" />
+                  <li th:text="${log.vetName}" />
                   <li th:text="${log.symptoms}" />
                   <li th:text="${log.diagnosis}" />
                   <li th:text="${log.medicine}" />
