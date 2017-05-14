@@ -29,8 +29,8 @@ class PetLogServiceImpl implements PetLogService {
     petLog
   }
 
-  List<PetLog> getPetLogsByUser(Pet pet){
-    petLogRepository.getAllByUser(pet)
+  List<PetLog> getPetLogsByPet(Pet pet){
+    petLogRepository.getAllByPet(pet)
   }
 
 }
