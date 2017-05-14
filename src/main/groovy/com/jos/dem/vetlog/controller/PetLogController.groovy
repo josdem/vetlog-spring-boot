@@ -84,11 +84,11 @@ class PetLogController {
   }
 
   @RequestMapping(method = GET, value = "/list")
-  ModelAndView list() {
+  ModelAndView list(@RequestParam("uuid") String uuid) {
     log.info 'Listing pet logs'
     ModelAndView modelAndView = new ModelAndView()
-    User user = userService.getCurrentUser()
-    List<PetLog> petLogs = petLogService.getPetLogsByUser(user)
+    Pet pet = petService.getPetByUuid(uuid)
+    List<PetLog> petLogs = petLogService.getPetLogsByPet(pet)
     modelAndView.addObject('pets', pets)
     modelAndView
   }

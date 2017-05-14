@@ -40,6 +40,12 @@
                   <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
                 </ul>
                 </p>
+                <br/>
+                <center>
+                <a th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-success">
+                  <p th:text="#{petlog.list}"/>
+                </a>
+                </center>
               </div>
             </div>
           </div>
