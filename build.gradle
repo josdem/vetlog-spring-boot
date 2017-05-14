@@ -30,13 +30,15 @@ bower {
   }
 }
 
+apply plugin: 'war'
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
 
-jar {
+war {
   baseName = 'vetlog-spring-boot'
   version = '0.0.1-SNAPSHOT'
 }
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
