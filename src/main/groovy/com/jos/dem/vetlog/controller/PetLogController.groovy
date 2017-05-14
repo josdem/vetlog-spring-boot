@@ -4,6 +4,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET
 import static org.springframework.web.bind.annotation.RequestMethod.POST
 
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.beans.factory.annotation.Autowired
@@ -89,7 +90,7 @@ class PetLogController {
     ModelAndView modelAndView = new ModelAndView()
     Pet pet = petService.getPetByUuid(uuid)
     List<PetLog> petLogs = petLogService.getPetLogsByPet(pet)
-    modelAndView.addObject('pets', pets)
+    modelAndView.addObject('petLogs', petLogs)
     modelAndView
   }
 
