@@ -28,7 +28,6 @@
         <div th:each="log : ${petLogs}">
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
-              <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
               <div class="caption">
                 <h3 th:text="${log.pet.name}"></h3>
                 <p>
