@@ -14,6 +14,7 @@ import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
+import com.jos.dem.vetlog.model.PetLog
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetLogCommand
 import com.jos.dem.vetlog.service.PetService

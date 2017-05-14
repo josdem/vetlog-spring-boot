@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.PetLog
-import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.binder.PetLogBinder
 import com.jos.dem.vetlog.service.PetLogService
@@ -30,8 +29,8 @@ class PetLogServiceImpl implements PetLogService {
     petLog
   }
 
-  List<PetLog> getPetLogsByUser(User user){
-    petLogRepository.getAllByUser(user)
+  List<PetLog> getPetLogsByUser(Pet pet){
+    petLogRepository.getAllByUser(pet)
   }
 
 }
