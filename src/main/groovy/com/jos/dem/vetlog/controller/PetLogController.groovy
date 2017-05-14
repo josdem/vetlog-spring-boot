@@ -82,4 +82,14 @@ class PetLogController {
     modelAndView
   }
 
+  @RequestMapping(method = GET, value = "/list")
+  ModelAndView list() {
+    log.info 'Listing pet logs'
+    ModelAndView modelAndView = new ModelAndView()
+    User user = userService.getCurrentUser()
+    List<PetLog> petLogs = petLogService.getPetLogsByUser(user)
+    modelAndView.addObject('pets', pets)
+    modelAndView
+  }
+
 }
