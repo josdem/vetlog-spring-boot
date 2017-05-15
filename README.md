@@ -16,4 +16,4 @@ http://vetlog.josdem.io/
 
 #### User Stories, Configuration and Run
 
-* https://github.com/josdem/vetlog-spring-boot/wiki
+https://github.com/josdem/vetlog-spring-boot/wiki
