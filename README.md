@@ -18,6 +18,6 @@ http://vetlog.josdem.io/
 
 https://github.com/josdem/vetlog-spring-boot/wiki
 
-**Note** Vetlog uses Jmailer project as a third party service:
+**Note:** Vetlog uses Jmailer project as a third party service:
 
 https://github.com/josdem/jmailer-spring-boot
