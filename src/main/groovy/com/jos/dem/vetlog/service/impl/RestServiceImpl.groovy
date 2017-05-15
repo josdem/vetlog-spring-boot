@@ -21,12 +21,15 @@ class RestServiceImpl implements RestService {
   String emailerUrl
   @Value('${emailer.path}')
   String emailerPath
+  @Value('${token}')
+  String token
 
   void sendCommand(Command message){
     try{
       def rest = new RESTClient(emailerUrl)
       def response = rest.post(
         path: emailerPath,
+        headers: [Authorization:"${token}"],
         body: message,
         requestContentType: 'application/json' )
       response.responseData
