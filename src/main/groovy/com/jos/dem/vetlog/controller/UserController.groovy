@@ -32,19 +32,23 @@ class UserController {
 
 	@RequestMapping(method = GET, value = "/create")
 	ModelAndView create(){
-		def modelAndView = new ModelAndView('user/create')
-		def userCommand = new UserCommand()
-		modelAndView.addObject('userCommand', userCommand)
-		modelAndView
+		Command userCommand = new UserCommand()
+    fillUserCommand(command)
 	}
 
 	@RequestMapping(method = POST, value = "/save")
 	String save(@Valid UserCommand command, BindingResult bindingResult) {
     if (bindingResult.hasErrors()) {
-      return 'user/create'
+      fillUserCommand(command)
     }
     userService.save(command)
-    'redirect:/'
+    new ModelAndView('redirect:/')
+  }
+
+  private ModelAndView fillUserCommand(UserCommand userCommand){
+		ModelAndView modelAndView = new ModelAndView('user/create')
+    modelAndView.addObject('userCommand', userCommand)
+		modelAndView
   }
 
 }
