@@ -12,9 +12,13 @@ import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
+import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.UserCommand
 import com.jos.dem.vetlog.validator.UserValidator
 import com.jos.dem.vetlog.service.UserService
+
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 @Controller
 @RequestMapping("/user")
@@ -25,7 +29,9 @@ class UserController {
   @Autowired
   UserService userService
 
-	@InitBinder
+  Logger log = LoggerFactory.getLogger(this.class)
+
+	@InitBinder('userCommand')
 	private void initBinder(WebDataBinder binder) {
 		binder.addValidators(userValidator)
 	}
@@ -33,19 +39,20 @@ class UserController {
 	@RequestMapping(method = GET, value = "/create")
 	ModelAndView create(){
 		Command userCommand = new UserCommand()
-    fillUserCommand(command)
+    fillUserCommand(userCommand)
 	}
 
 	@RequestMapping(method = POST, value = "/save")
-	String save(@Valid UserCommand command, BindingResult bindingResult) {
+	ModelAndView save(@Valid UserCommand userCommand, BindingResult bindingResult) {
+    log.info "Saving user: ${userCommand.username}"
     if (bindingResult.hasErrors()) {
-      fillUserCommand(command)
+      return fillUserCommand(userCommand)
     }
-    userService.save(command)
+    userService.save(userCommand)
     new ModelAndView('redirect:/')
   }
 
-  private ModelAndView fillUserCommand(UserCommand userCommand){
+  private ModelAndView fillUserCommand(Command userCommand){
 		ModelAndView modelAndView = new ModelAndView('user/create')
     modelAndView.addObject('userCommand', userCommand)
 		modelAndView
