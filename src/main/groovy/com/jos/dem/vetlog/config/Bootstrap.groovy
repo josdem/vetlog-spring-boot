@@ -29,8 +29,8 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
     if(environment.activeProfiles[0] == CurrentEnvironment.DEVELOPMENT.getDescription()){
       println "Loading development environment"
       createDefaultUsers()
-      createBreeds()
     }
+    createBreeds()
   }
 
   void createDefaultUsers(){
