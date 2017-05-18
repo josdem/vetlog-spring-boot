@@ -26,12 +26,12 @@
                   <p th:text="${error}"/>
                 </div>
               </div>
-              <div th:if="${empty}">
+              <div th:if="${petListEmpty}">
                 <div align="center">
-                  <p th:text="${empty}"/>
+                  <p th:text="${petListEmpty}"/>
                 </div>
               </div>
-              <div th:unless="${empty == null}">
+              <div th:if="${petListEmpty == null}">
               <form id="register" th:action="@{/petlog/save}" th:object="${petLogCommand}" method="post"  class="form-horizontal">
                 <fieldset>
                   <label for="pet"><h4 th:text="#{petlog.pet}"/></label>

@@ -79,7 +79,7 @@ class PetLogController {
   ModelAndView fillModelAndView(ModelAndView modelAndView, List<Pet> pets){
     modelAndView.addObject('pets', pets)
     if(!pets){
-      modelAndView.addObject('empty', localeService.getMessage('pet.list.empty'))
+      modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty'))
     }
     modelAndView
   }

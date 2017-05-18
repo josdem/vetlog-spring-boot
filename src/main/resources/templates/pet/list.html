@@ -17,14 +17,20 @@
           <h3 th:text="#{pet.data}" />
             <ol class="breadcrumb">
               <li><i class="fa fa-dashboard"></i> <a th:href="@{/}" th:text="#{home.name}" />
-            </li>
-            <li class="active" th:text="#{pet.user.data}" />
-          </ol>
+              </li>
+              <li class="active" th:text="#{pet.user.data}" />
+            </ol>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
+        <div th:if="${petListEmpty}">
+          <div align="center">
+            <p th:text="${petListEmpty}"/>
+          </div>
+        </div>
+        <div th:if="${petListEmpty == null}">
         <div th:each="pet : ${pets}">
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
@@ -34,21 +40,22 @@
                 <p>
                 <ul>
                   <li th:text="${beans.dateFormatter.format(pet.birthDate)}" />
-                  <li th:text="${pet.breed.name}" />
-                  <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
-                  <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
-                  <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
+                    <li th:text="${pet.breed.name}" />
+                      <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
+                        <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
+                          <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
                 </ul>
                 </p>
                 <br/>
                 <center>
-                <a th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-success">
-                  <p th:text="#{petlog.list}"/>
-                </a>
+                  <a th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-success">
+                    <p th:text="#{petlog.list}"/>
+                  </a>
                 </center>
               </div>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </div>
