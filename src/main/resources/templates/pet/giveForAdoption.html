@@ -17,35 +17,42 @@
           <h3 th:text="#{pet.data.select.adoption}" />
             <ol class="breadcrumb">
               <li><i class="fa fa-dashboard"></i> <a th:href="@{/}" th:text="#{home.name}" />
-            </li>
-            <li class="active" th:text="#{pet.user.data.select.adoption}" />
-          </ol>
+              </li>
+              <li class="active" th:text="#{pet.user.data.select.adoption}" />
+            </ol>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
-        <div th:each="pet : ${pets}">
-          <div class="col-sm-6 col-md-4">
-            <div class="thumbnail">
-              <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
-              <div class="caption">
-                <h3 th:text="${pet.name}"></h3>
-                <p>
-                <ul>
-                  <li th:text="${beans.dateFormatter.format(pet.birthDate)}" />
-                  <li th:text="${pet.breed.name}" />
-                  <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
-                  <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
-                  <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
-                </ul>
-                </p>
-                <br/>
-                <center>
-                <a th:href="@{/adoption/descriptionForAdoption(uuid=${pet.uuid})}" class="btn btn-success">
-                  <p th:text="#{pet.for.adoption}"/>
-                </a>
-                </center>
+        <div th:if="${petListEmpty}">
+          <div align="center">
+            <p th:text="${petListEmpty}"/>
+          </div>
+        </div>
+        <div th:if="${petListEmpty == null}">
+          <div th:each="pet : ${pets}">
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
+                <div class="caption">
+                  <h3 th:text="${pet.name}"></h3>
+                  <p>
+                  <ul>
+                    <li th:text="${beans.dateFormatter.format(pet.birthDate)}" />
+                      <li th:text="${pet.breed.name}" />
+                        <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
+                          <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
+                            <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}" />
+                  </ul>
+                  </p>
+                  <br/>
+                  <center>
+                    <a th:href="@{/adoption/descriptionForAdoption(uuid=${pet.uuid})}" class="btn btn-success">
+                      <p th:text="#{pet.for.adoption}"/>
+                    </a>
+                  </center>
+                </div>
               </div>
             </div>
           </div>
