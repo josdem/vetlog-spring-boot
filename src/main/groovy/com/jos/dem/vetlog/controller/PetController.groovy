@@ -118,6 +118,9 @@ class PetController {
     log.info 'Listing pets for adoption'
     ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
     List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION)
+    if(!pets){
+      modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty'))
+    }
     modelAndView.addObject('pets', pets)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
