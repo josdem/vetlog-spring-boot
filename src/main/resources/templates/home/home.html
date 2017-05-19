@@ -7,6 +7,11 @@
   <th:block layout:include="fragments/header"/>
   <div class="container">
     <div class="row">
+      <div th:if="${message}">
+        <div align="center">
+          <p th:text="${message}"/>
+        </div>
+      </div>
       <div class="col-md-4">
         <h4 th:text="#{home.register}" />
         <p th:text="#{home.register.label}" />

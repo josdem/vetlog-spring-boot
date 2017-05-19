@@ -49,7 +49,9 @@ class UserController {
       return fillUserCommand(userCommand)
     }
     userService.save(userCommand)
-    new ModelAndView('redirect:/')
+    ModelAndView modelAndView = new ModelAndView('redirect:/')
+    modelAndView.addObject('message', localeService.getMessage('user.account.created'))
+    modelAndView
   }
 
   private ModelAndView fillUserCommand(Command userCommand){
