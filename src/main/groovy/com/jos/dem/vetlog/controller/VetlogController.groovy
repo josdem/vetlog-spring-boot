@@ -17,8 +17,7 @@ class VetlogController {
   Logger log = LoggerFactory.getLogger(this.class)
 
   @RequestMapping("/")
-  ModelAndView index(@RequestParam("message") String message){
-  	log.info "message is: ${message}"
+  ModelAndView index(@RequestParam(value="message", required=false) String message){
     ModelAndView modelAndView = new ModelAndView('home/home')
     modelAndView.addObject('message', message)
     modelAndView

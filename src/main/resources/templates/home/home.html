@@ -9,9 +9,10 @@
     <div class="row">
       <div th:if="${message}">
         <div align="center">
-          <p th:text="${message}"/>
+          <p style="color:blue;font-size:18px;" th:text="${message}"/>
         </div>
       </div>
+      <br/><br/>
       <div class="col-md-4">
         <h4 th:text="#{home.register}" />
         <p th:text="#{home.register.label}" />
