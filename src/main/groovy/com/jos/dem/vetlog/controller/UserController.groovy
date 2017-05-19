@@ -16,6 +16,7 @@ import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.UserCommand
 import com.jos.dem.vetlog.validator.UserValidator
 import com.jos.dem.vetlog.service.UserService
+import com.jos.dem.vetlog.service.LocaleService
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -28,6 +29,8 @@ class UserController {
   UserValidator userValidator
   @Autowired
   UserService userService
+  @Autowired
+  LocaleService localeService
 
   Logger log = LoggerFactory.getLogger(this.class)
 
