@@ -26,7 +26,7 @@
           <div class="portlet-body">
             <div th:if="${message}">
               <div align="center">
-                <p th:text="${message}"/>
+                <p style="color:blue;font-size:18px;" th:text="${message}"/>
               </div>
             </div>
             <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal" enctype="multipart/form-data">
