@@ -68,8 +68,9 @@ class PetController {
   @RequestMapping(method = GET, value = "/create")
   ModelAndView create(){
     ModelAndView modelAndView = new ModelAndView('pet/create')
-    Command petCommand = new PetCommand()
+    Command petCommand = new PetCommand(type:PetType.DOG)
     modelAndView.addObject('petCommand', petCommand)
+    modelAndView.addObject('breeds', breedService.getBreedsByType(petCommand.type))
     fillModelAndView(modelAndView)
   }
 
