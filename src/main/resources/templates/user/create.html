@@ -37,7 +37,7 @@
                 <br/>
                 <label for="name"><h4 th:text="#{user.firstname}"/></label>
                 <input type="text" name='firstname' th:field="*{firstname}" class="form-control" placeholder="name" id='name'/>
-                <label th:if="${#fields.hasErrors('firstname')}" th:errors="*{name}"></label>
+                <label th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></label>
                 <br/>
                 <label for="lastname"><h4 th:text="#{user.lastname}"/></label>
                 <input type="text" name='lastname' th:field="*{lastname}" class="form-control" placeholder="lastname" id='lastname'/>
