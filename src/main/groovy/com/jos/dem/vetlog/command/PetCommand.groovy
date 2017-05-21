@@ -6,6 +6,7 @@ import javax.validation.constraints.Min
 import javax.validation.constraints.Max
 import javax.validation.constraints.Past
 
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.web.multipart.MultipartFile
 
 import com.jos.dem.vetlog.model.PetType
@@ -19,6 +20,7 @@ class PetCommand implements Command {
 
   @NotNull
   @Past
+  @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
   Date birthDate
 
   @NotNull
