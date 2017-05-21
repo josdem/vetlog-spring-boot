@@ -26,7 +26,7 @@ class LoginController {
   	log.info "Calling login"
     ModelAndView modelAndView = new ModelAndView('login/login')
     if(error.isPresent()){
-      modelAndView.addObject('error', localeService.getMessage('login.error'))
+      modelAndView.addObject('message', localeService.getMessage('login.error'))
     }
     modelAndView
   }

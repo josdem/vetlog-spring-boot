@@ -82,7 +82,7 @@ class RecoveryController {
     def modelAndView = new ModelAndView('recovery/changePassword')
     Boolean valid = recoveryService.validateToken(token)
     if(!valid){
-      modelAndView.addObject('error', localeService.getMessage('recovery.token.error'))
+      modelAndView.addObject('message', localeService.getMessage('recovery.token.error'))
     }
     def changePasswordCommand = new ChangePasswordCommand(token:token)
     modelAndView.addObject('changePasswordCommand', changePasswordCommand)
@@ -90,15 +90,15 @@ class RecoveryController {
   }
 
   @RequestMapping(method = POST, value = "/change")
-  String generateTokenToChangePassword(@Valid ChangePasswordCommand command, BindingResult bindingResult){
+  ModelAndView generateTokenToChangePassword(@Valid ChangePasswordCommand command, BindingResult bindingResult){
   	log.info "Calling save and changing password"
-    log.info "command: ${command.dump()}"
     if(bindingResult.hasErrors()){
-      log.info "errors: ${bindingResult.dump()}"
-      return 'recovery/changePassword'
+      return new ModelAndView('recovery/changePassword')
     }
+    ModelAndView modelAndView = new ModelAndView('login/login')
+    modelAndView.addObject('message', localeService.getMessage('recovery.password.changed'))
     recoveryService.changePassword(command)
-    'login/login'
+    modelAndView
   }
 
 }
