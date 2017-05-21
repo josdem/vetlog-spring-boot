@@ -58,7 +58,9 @@ class TelephoneController {
     }
     User user = userService.getCurrentUser()
     telephoneService.save(telephoneCommand, user)
-    new ModelAndView('redirect:/')
+    ModelAndView modelAndView = new ModelAndView('redirect:/')
+    modelAndView.addObject('message', localeService.getMessage('adoption.email.sent'))
+    modelAndView
   }
 
   @RequestMapping(method = GET, value = "/adopt")
