@@ -37,19 +37,19 @@ class UserValidator implements Validator {
 
   def validatePasswords(Errors errors, UserCommand command) {
     if (!command.password.equals(command.passwordConfirmation)){
-      errors.reject('password', localeService.getMessage('user.validation.password.equals'))
+      errors.rejectValue('password', 'error.password', localeService.getMessage('user.validation.password.equals'))
     }
   }
 
   def validateUsername(Errors errors, UserCommand command) {
     if (userService.getByUsername(command.username)){
-       errors.reject("username", localeService.getMessage('user.validation.duplicated.username'))
+       errors.rejectValue("username", 'error.username', localeService.getMessage('user.validation.duplicated.username'))
     }
   }
 
   def validateEmail(Errors errors, UserCommand command) {
     if (userService.getByEmail(command.email)){
-       errors.reject("email", localeService.getMessage('user.validation.duplicated.email'))
+       errors.rejectValue("email", 'error.email', localeService.getMessage('user.validation.duplicated.email'))
     }
   }
 
