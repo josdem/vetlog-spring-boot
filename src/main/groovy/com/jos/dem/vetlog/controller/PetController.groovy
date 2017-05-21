@@ -129,9 +129,6 @@ class PetController {
   private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView){
     User user = userService.getCurrentUser()
     List<Pet> pets = petService.getPetsByUser(user)
-    if(!pets){
-      modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty'))
-    }
     modelAndView.addObject('pets', pets)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
