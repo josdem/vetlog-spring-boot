@@ -40,41 +40,41 @@ class PetServiceSpec extends Specification {
 
   void "should list a pet by owner"(){
     given:"An owner"
-      User owner = new User()
+      User user = new User()
     and:"A pet"
       Pet pet = new Pet()
     when:"We list by user"
-      petRepository.findAllByUser(owner) >> [pet]
-      List<Pet> result = service.getPetsByUser(owner)
+      petRepository.findAllByUser(user) >> [pet]
+      petRepository.findAllByAdopter(user) >> []
+      List<Pet> result = service.getPetsByUser(user)
     then:"We expect a pet"
     1 == result.size()
   }
 
   void "should not list a pet if adopted"(){
     given:"An owner"
-      User owner = new User()
+      User user = new User()
     and:"A pet"
       Pet pet = new Pet(status:PetStatus.ADOPTED)
     when:"We list by user"
-      petRepository.findAllByUser(owner) >> [pet]
+      petRepository.findAllByUser(user) >> [pet]
       petRepository.findAllByStatus(PetStatus.ADOPTED) >> [pet]
-      List<Pet> result = service.getPetsByUser(owner)
+      petRepository.findAllByAdopter(user) >> []
+      List<Pet> result = service.getPetsByUser(user)
     then:"We expect a pet"
     0 == result.size()
   }
 
   void "should list a pet if I am the adopter"(){
     given:"An owner"
-      User owner = new User()
-    and:"An adopter"
-      User adopter = new User()
+      User user = new User()
     and:"A pet"
       Pet pet = new Pet(status:PetStatus.ADOPTED)
     when:"We list by user"
-      petRepository.findAllByUser(owner) >> [pet]
-      petRepository.findAllByStatus(PetStatus.ADOPTED) >> [pet]
-      petRepository.findAllByAdopter(adopter) >> [pet]
-      List<Pet> result = service.getPetsByUser(owner)
+      petRepository.findAllByUser(user) >> []
+      petRepository.findAllByStatus(PetStatus.ADOPTED) >> []
+      petRepository.findAllByAdopter(user) >> [pet]
+      List<Pet> result = service.getPetsByUser(user)
     then:"We expect a pet"
     1 == result.size()
   }
