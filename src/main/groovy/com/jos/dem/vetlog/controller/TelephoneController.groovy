@@ -19,6 +19,7 @@ import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.command.TelephoneCommand
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.UserService
+import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.service.TelephoneService
 import com.jos.dem.vetlog.validator.TelephoneValidator
 
@@ -33,6 +34,8 @@ class TelephoneController {
   PetService petService
   @Autowired
   UserService userService
+  @Autowired
+  LocaleService localeService
   @Autowired
   TelephoneService telephoneService
   @Autowired
