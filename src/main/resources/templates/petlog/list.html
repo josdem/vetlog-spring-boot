@@ -25,6 +25,11 @@
     </div>
     <div class="container">
       <div class="row">
+        <div th:if="${petLogs.isEmpty()}">
+          <div align="center">
+            <p th:text="#{pet.list.empty}"/>
+          </div>
+        </div>
         <div th:each="log : ${petLogs}">
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
