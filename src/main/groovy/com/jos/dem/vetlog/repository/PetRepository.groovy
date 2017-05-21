@@ -9,6 +9,7 @@ interface PetRepository extends JpaRepository<Pet,Long> {
   Pet save(Pet pet)
   Pet findByUuid(String uuid)
   List<Pet> findAllByUser(User user)
+  List<Pet> findAllByAdopter(User user)
   List<Pet> findAllByStatus(PetStatus status)
 }
 

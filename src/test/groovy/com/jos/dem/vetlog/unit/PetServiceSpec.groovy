@@ -63,5 +63,22 @@ class PetServiceSpec extends Specification {
     0 == result.size()
   }
 
+  void "should list a pet if I am the adopter"(){
+    given:"An owner"
+      User owner = new User()
+    and:"An adopter"
+      User adopter = new User()
+    and:"A pet"
+      Pet pet = new Pet(status:PetStatus.ADOPTED)
+    when:"We list by user"
+      petRepository.findAllByUser(owner) >> [pet]
+      petRepository.findAllByStatus(PetStatus.ADOPTED) >> [pet]
+      petRepository.findAllByAdopter(adopter) >> [pet]
+      List<Pet> result = service.getPetsByUser(owner)
+    then:"We expect a pet"
+    1 == result.size()
+  }
+
+
 
 }
