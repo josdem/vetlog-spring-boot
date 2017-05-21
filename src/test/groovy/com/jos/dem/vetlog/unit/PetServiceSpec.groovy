@@ -37,4 +37,16 @@ class PetServiceSpec extends Specification {
       1 * petRepository.save(_ as Pet)
   }
 
+  void "should list a pet by owner"(){
+    given:"An owner"
+      User owner = new User()
+    and:"A pet"
+      Pet pet = new Pet()
+    when:"We list by user"
+      petRepository.findAllByUser(owner) >> [pet]
+      List<Pet> result = service.getPetsByUser(owner)
+    then:"We expect a pet"
+    1 == result.size()
+  }
+
 }
