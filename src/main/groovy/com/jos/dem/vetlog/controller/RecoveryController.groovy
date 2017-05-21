@@ -58,13 +58,15 @@ class RecoveryController {
 	}
 
   @RequestMapping(method = POST, value = "/password")
-  String generateTokenToChangePassword(@Valid RecoveryPasswordCommand command, BindingResult bindingResult){
+  ModelAndView generateTokenToChangePassword(@Valid RecoveryPasswordCommand command, BindingResult bindingResult){
   	log.info "Calling generate token for changing password"
     if(bindingResult.hasErrors()){
-      return 'recovery/recoveryPassword'
+      return new ModelAndView('recovery/recoveryPassword')
     }
+    ModelAndView modelAndView = new ModelAndView('login/login')
+    modelAndView.addObject('message', localeService.getMessage('recovery.email.sent'))
     recoveryService.generateRegistrationCodeForEmail(command.email)
-    'login/login'
+    modelAndView
   }
 
 	@RequestMapping(method = GET, value = "/password")
