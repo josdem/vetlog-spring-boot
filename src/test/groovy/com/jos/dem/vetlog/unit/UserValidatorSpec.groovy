@@ -30,7 +30,7 @@ class UserValidatorSpec extends Specification {
       localeService.getMessage('user.validation.password.equals') >> 'The passwords are not equals'
       validator.validate(command, errors)
     then:"We expect valiation failed"
-    1 * errors.reject('password', 'The passwords are not equals')
+    1 * errors.rejectValue('password', 'error.password', 'The passwords are not equals')
   }
 
   void "should vaidate an user command"(){
@@ -40,7 +40,7 @@ class UserValidatorSpec extends Specification {
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', _ as String)
+    0 * errors.rejectValue('password', 'error.password', _ as String)
   }
 
   void "should accept characters and numbers in password"(){
@@ -50,7 +50,7 @@ class UserValidatorSpec extends Specification {
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', _ as String)
+    0 * errors.rejectValue('password', 'error.password', _ as String)
   }
 
   void "should accept dash character in password"(){
@@ -60,7 +60,7 @@ class UserValidatorSpec extends Specification {
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', _ as String)
+    0 * errors.rejectValue('password', 'error.password', _ as String)
   }
 
   void "should accept underscore character in password"(){
@@ -70,7 +70,7 @@ class UserValidatorSpec extends Specification {
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', _ as String)
+    0 * errors.rejectValue('password', 'error.password', _ as String)
   }
 
   void "should accept dot character in password"(){
@@ -80,7 +80,7 @@ class UserValidatorSpec extends Specification {
       localeService.getMessage(_ as String) >> 'Passwords are bad formed'
       validator.validate(command, errors)
     then:"We expect everything is going to be all right"
-    0 * errors.reject('password', _ as String)
+    0 * errors.rejectValue('password', 'error.password', _ as String)
   }
 
   void "should not duplicate an username"(){
@@ -93,7 +93,7 @@ class UserValidatorSpec extends Specification {
       userService.getByUsername('josdem') >> user
       validator.validate(command, errors)
     then:"We expected an error"
-    1 * errors.reject('username', 'This user is already taken')
+    1 * errors.rejectValue('username', 'error.username', 'This user is already taken')
   }
 
   void "should not duplicate an email"(){
@@ -106,7 +106,7 @@ class UserValidatorSpec extends Specification {
       userService.getByEmail('josdem@email.com') >> user
       validator.validate(command, errors)
     then:"We expected an error"
-    1 * errors.reject('email', 'This email is already taken')
+    1 * errors.rejectValue('email', 'error.email', 'This email is already taken')
   }
 
 }

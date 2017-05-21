@@ -27,7 +27,7 @@ class ChangePasswordValidatorSpec extends Specification {
       localeService.getMessage('user.validation.password.equals') >> 'The passwords are not equals'
       validator.validate(command, errors)
     then:"We expect valiation failed"
-    1 * errors.reject('password', 'The passwords are not equals')
+    1 * errors.rejectValue('password', 'error.password', 'The passwords are not equals')
   }
 
 }
