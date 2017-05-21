@@ -25,12 +25,11 @@
     </div>
     <div class="container">
       <div class="row">
-        <div th:if="${petListEmpty}">
+        <div th:if="${pets.isEmpty()}">
           <div align="center">
-            <p th:text="${petListEmpty}"/>
+            <p th:text="#{pet.list.empty}"/>
           </div>
         </div>
-        <div th:if="${petListEmpty == null}">
           <div th:each="pet : ${pets}">
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
@@ -56,7 +55,6 @@
               </div>
             </div>
           </div>
-        </div>
       </div>
     </div>
     <br/><br/><br/><br/>
