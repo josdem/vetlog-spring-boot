@@ -9,7 +9,7 @@ class TelephoneCommand implements Command {
   String uuid
 
   @NotNull
-  @Size(min=1, max=10)
+  @Size(min=10, max=10)
   String mobile
 
 }
