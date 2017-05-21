@@ -27,7 +27,7 @@ class ChangePasswordValidator implements Validator {
 
   def validatePasswords(Errors errors, ChangePasswordCommand command) {
     if (!command.password.equals(command.passwordConfirmation)){
-      errors.reject('password', localeService.getMessage('user.validation.password.equals'))
+      errors.rejectValue('password', 'error.password', localeService.getMessage('user.validation.password.equals'))
     }
   }
 
