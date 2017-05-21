@@ -31,10 +31,7 @@ class PetServiceImpl implements PetService {
   }
 
   List<Pet> getPetsByUser(User user){
-    List<Pet> pets = new ArrayList<Pet>()
-    pets << petRepository.findAllByUser(user)
-    pets - petRepository.findAllByStatus(PetStatus.ADOPTED)
-    pets
+    petRepository.findAllByUser(user) - petRepository.findAllByStatus(PetStatus.ADOPTED)
   }
 
   List<Pet> getPetsByStatus(PetStatus status){
