@@ -49,4 +49,17 @@ class PetServiceSpec extends Specification {
     1 == result.size()
   }
 
+  void "should not list a pet if adopted"(){
+    given:"An owner"
+      User owner = new User()
+    and:"A pet"
+      Pet pet = new Pet(status:PetStatus.ADOPTED)
+    when:"We list by user"
+      petRepository.findAllByUser(owner) >> [pet]
+      List<Pet> result = service.getPetsByUser(owner)
+    then:"We expect a pet"
+    0 == result.size()
+  }
+
+
 }
