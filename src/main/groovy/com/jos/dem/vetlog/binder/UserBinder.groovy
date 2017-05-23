@@ -31,7 +31,7 @@ class UserBinder {
     user.username = command.username
     user.password = new BCryptPasswordEncoder().encode(command.password)
     user.role = Role.USER
-    user.firstname = command.username
+    user.firstname = command.firstname
     user.lastname = command.lastname
     user.email = command.email
     user
