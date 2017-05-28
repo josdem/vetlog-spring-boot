@@ -37,4 +37,8 @@ class PetImageServiceImpl implements PetImageService {
     petImage
   }
 
+  Boolean hasImage(InputStream inputStream){
+    inputStream.available() > 0
+  }
+
 }
