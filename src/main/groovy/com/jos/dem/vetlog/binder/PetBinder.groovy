@@ -50,6 +50,7 @@ class PetBinder {
 
   PetCommand bindPet(Pet pet){
     Command command = new PetCommand(
+      id:pet.id,
       uuid:pet.uuid,
       name:pet.name,
       birthDate:pet.birthDate,
