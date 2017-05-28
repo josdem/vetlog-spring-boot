@@ -112,7 +112,7 @@ class PetController {
       modelAndView.addObject('petCommand', petCommand)
       return fillModelAndView(modelAndView)
     }
-    petImageService.hasImage(petCommand.image.getInputStream()){
+    if(petImageService.hasImage(petCommand.image.getInputStream())){
       PetImage petImage = petImageService.save()
       petCommand.images.add(petImage)
       s3Writer.uploadToBucket(bucketDestination, petImage.uuid, petCommand.image.getInputStream())

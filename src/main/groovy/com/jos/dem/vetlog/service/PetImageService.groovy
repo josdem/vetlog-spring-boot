@@ -20,4 +20,5 @@ import  com.jos.dem.vetlog.model.PetImage
 
 interface PetImageService {
   PetImage save()
+  Boolean hasImage(InputStream inputStream)
 }
