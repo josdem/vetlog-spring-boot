@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <th:block layout:include="fragments/include-form"/>
+  <link rel="stylesheet" href="/assets/third-party/bootstrap/less/dropdowns.less" />
+  <link rel="stylesheet" href="/assets/third-party/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
+  <script th:src="@{/assets/third-party/jquery/jquery.js}"/>
+  <title th:text="#{pet.view.create.title}"></title>
+</head>
+<body class="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="login-banner text-center">
+          <a th:href="@{/}">
+            <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
+          </a>
+        </div>
+        <div class="portlet portlet-green">
+          <div class="portlet-heading login-heading">
+            <div class="portlet-title">
+              <h4 th:text="#{pet.view.create.label}"/>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="portlet-body">
+            <div th:if="${message}">
+              <div align="center">
+                <p style="color:blue;font-size:18px;" th:text="${message}"/>
+              </div>
+            </div>
+            <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal" enctype="multipart/form-data">
+              <fieldset>
+                <label for="name"><h4 th:text="#{pet.name}"/></label>
+                <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name" id='name'/>
+                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                <br/>
+                <label for="image"><h4 th:text="#{pet.image}"/></label>
+                <input type="file" name="image"/>
+                <br/>
+                <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
+                <div class='input-group date' id='datepicker'>
+                <input type='text' class="form-control" name='birthDate' placeholder="birthDate" id='birthDate'/>
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                  </span>
+                </div>
+                <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
+                <br/>
+                <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
+                <input type="checkbox" name='dewormed' th:field="*{dewormed}" class="form-control" placeholder="dewormed" id='dewormed'/>
+                <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
+                <br/>
+                <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
+                <input type="checkbox" name='sterilized' th:field="*{sterilized}" class="form-control" placeholder="sterilized" id='sterilized'/>
+                <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
+                <br/>
+                <label for="vaccinated"><h4 th:text="#{pet.vaccinated}"/></label>
+                <input type="checkbox" name='vaccinated' th:field="*{vaccinated}" class="form-control" placeholder="vaccinated" id='vaccinated'/>
+                <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
+                <br/>
+                <br/>
+                <label for="type"><h4 th:text="#{pet.type}"/></label>
+                <select id="typeSelector" name="type" th:field="*{type}" class="form-control">
+                  <option th:each=" type : ${T(com.jos.dem.vetlog.model.PetType).values()}" th:value="${type}" th:text="${type.value}"></option>
+                </select>
+                <br/>
+                <label for="breed"><h4 th:text="#{pet.breed}"/></label>
+                <select id="breedSelector" name="breed" class="form-control">
+                  <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
+                </select>
+                <br/><br/>
+                <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
+                <input type="submit" class="btn btn-primary btn-block" />
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:src="@{/assets/third-party/bootstrap/js/dropdown.js}"/>
+  <script th:src="@{/assets/third-party/bootstrap-datepicker/dist/js/bootstrap-datepicker.js}"/>
+  <script th:src="@{/javascript/selector.js}"/>
+  <script th:src="@{/javascript/datepicker.js}"/>
+  <script th:src="@{/javascript/analytics.js}"/>
+</body>
+</html>

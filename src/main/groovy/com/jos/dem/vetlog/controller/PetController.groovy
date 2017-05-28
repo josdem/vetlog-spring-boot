@@ -97,7 +97,7 @@ class PetController {
     log.info "Editing pet: $uuid"
     Pet pet = petService.getPetByUuid(uuid)
     ModelAndView modelAndView = new ModelAndView()
-    modelAndView.addObject('petCommand', binder.bindPet(pet))
+    modelAndView.addObject('petCommand', petBinder.bindPet(pet))
     modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
     modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
     modelAndView
