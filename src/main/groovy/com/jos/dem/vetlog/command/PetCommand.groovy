@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile
 
 import com.jos.dem.vetlog.model.PetType
 import com.jos.dem.vetlog.model.PetImage
+import com.jos.dem.vetlog.enums.PetStatus
 
 class PetCommand implements Command {
 
@@ -54,6 +55,8 @@ class PetCommand implements Command {
   PetType type
 
   String uuid
+
+  PetStatus status
 
   MultipartFile image
 
