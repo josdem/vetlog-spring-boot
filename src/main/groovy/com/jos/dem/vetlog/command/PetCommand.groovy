@@ -30,6 +30,8 @@ import com.jos.dem.vetlog.enums.PetStatus
 
 class PetCommand implements Command {
 
+  Long id
+
   @NotNull
   @Size(min=1, max=50)
   String name
