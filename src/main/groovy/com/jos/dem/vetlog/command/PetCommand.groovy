@@ -53,7 +53,6 @@ class PetCommand implements Command {
   @Min(1L)
   Long breed
 
-  @NotNull
   @Min(1L)
   Long user
 
