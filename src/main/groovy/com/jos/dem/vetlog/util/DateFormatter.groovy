@@ -23,7 +23,7 @@ class DateFormatter {
 
   String format(String dateToFormat){
     Date date = Date.parse('yyyy-MM-dd HH:mm:ss', dateToFormat)
-    date.format( 'yyyy-MM-dd' )
+    date.format( 'MM/dd/yyyy' )
   }
 
 }

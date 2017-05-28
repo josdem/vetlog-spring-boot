@@ -104,6 +104,19 @@ class PetController {
   }
 
   @Transactional
+  @RequestMapping(method = POST, value = "/update")
+  ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult) {
+    log.info "Updating pet: ${petCommand.name}"
+    ModelAndView modelAndView = new ModelAndView('pet/create')
+    if (bindingResult.hasErrors()) {
+      modelAndView.addObject('petCommand', petCommand)
+      return fillModelAndView(modelAndView)
+    }
+
+  }
+
+
+  @Transactional
   @RequestMapping(method = POST, value = "/save")
   ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult) {
     log.info "Creating pet: ${petCommand.name}"
