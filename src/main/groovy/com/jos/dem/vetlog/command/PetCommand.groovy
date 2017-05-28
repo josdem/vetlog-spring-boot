@@ -54,6 +54,10 @@ class PetCommand implements Command {
   Long breed
 
   @NotNull
+  @Min(1L)
+  Long user
+
+  @NotNull
   PetType type
 
   String uuid

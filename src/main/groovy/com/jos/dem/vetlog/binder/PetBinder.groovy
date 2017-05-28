@@ -58,7 +58,8 @@ class PetBinder {
       sterilized:pet.sterilized,
       vaccinated:pet.vaccinated,
       status:pet.status,
-      breed:pet.breed.id
+      breed:pet.breed.id,
+      user:pet.user.id
     )
     command
   }
