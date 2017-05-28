@@ -29,7 +29,7 @@
                 <p style="color:blue;font-size:18px;" th:text="${message}"/>
               </div>
             </div>
-            <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"  class="form-horizontal" enctype="multipart/form-data">
+            <form id="register" th:action="@{/pet/update}" th:object="${petCommand}" method="post"  class="form-horizontal" enctype="multipart/form-data">
               <fieldset>
                 <label for="name"><h4 th:text="#{pet.name}"/></label>
                 <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name" id='name'/>
