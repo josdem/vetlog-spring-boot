@@ -46,6 +46,7 @@ import com.jos.dem.vetlog.service.PetImageService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.client.S3Writer
+import com.jos.dem.vetlog.binder.PetBinder
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -66,6 +67,8 @@ class PetController {
   LocaleService localeService
   @Autowired
   S3Writer s3Writer
+  @Autowired
+  PetBinder petBinder
 
   @Value('${breedsByTypeUrl}')
   String breedsByTypeUrl
@@ -87,6 +90,17 @@ class PetController {
     Command petCommand = new PetCommand()
     modelAndView.addObject('petCommand', petCommand)
     fillModelAndView(modelAndView)
+  }
+
+  @RequestMapping(method = GET, value = "/edit")
+  ModelAndView edit(@RequestParam("uuid") String uuid) {
+    log.info "Editing pet: $uuid"
+    Pet pet = petService.getPetByUuid(uuid)
+    ModelAndView modelAndView = new ModelAndView()
+    modelAndView.addObject('petCommand', binder.bindPet(pet))
+    modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
+    modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
+    modelAndView
   }
 
   @Transactional
