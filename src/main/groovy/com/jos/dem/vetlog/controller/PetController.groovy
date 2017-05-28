@@ -107,12 +107,15 @@ class PetController {
   @RequestMapping(method = POST, value = "/update")
   ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult) {
     log.info "Updating pet: ${petCommand.name}"
-    ModelAndView modelAndView = new ModelAndView('pet/create')
+    ModelAndView modelAndView = new ModelAndView('pet/edit')
     if (bindingResult.hasErrors()) {
       modelAndView.addObject('petCommand', petCommand)
       return fillModelAndView(modelAndView)
     }
-
+    petService.update(petCommand)
+    modelAndView.addObject('message', localeService.getMessage('pet.updated'))
+    modelAndView.addObject('petCommand', petCommand)
+    fillModelAndView(modelAndView)
   }
 
 

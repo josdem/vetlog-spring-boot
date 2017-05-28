@@ -23,6 +23,7 @@ import  com.jos.dem.vetlog.command.Command
 
 interface PetService {
   Pet save(Command command, User user)
+  Pet update(Command command)
   Pet getPetByUuid(String uuid)
   List<Pet> getPetsByUser(User user)
   List<Pet> getPetsByStatus(PetStatus status)

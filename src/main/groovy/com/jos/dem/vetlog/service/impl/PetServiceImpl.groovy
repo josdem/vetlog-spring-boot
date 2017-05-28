@@ -42,6 +42,12 @@ class PetServiceImpl implements PetService {
     pet
   }
 
+  Pet update(Command command){
+    Pet pet = petBinder.bindPet(command)
+    petRepository.save(pet)
+    pet
+  }
+
   Pet getPetByUuid(String uuid){
     petRepository.findByUuid(uuid)
   }

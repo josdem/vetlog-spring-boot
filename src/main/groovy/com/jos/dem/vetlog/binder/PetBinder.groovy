@@ -35,6 +35,7 @@ class PetBinder {
 
   Pet bindPet(Command command){
     Pet pet = new Pet()
+    pet.id = command.id
     pet.uuid = UuidGenerator.generateUuid()
     pet.name = command.name
     pet.birthDate = command.birthDate
