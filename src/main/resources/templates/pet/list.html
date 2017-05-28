@@ -50,7 +50,11 @@
                   <a th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-success">
                     <p th:text="#{petlog.list}"/>
                   </a>
+                  <a th:href="@{/petlog/edit(uuid=${pet.uuid})}" class="btn btn-success">
+                    <p th:text="#{pet.edit}"/>
+                  </a>
                 </center>
+                <br/><br/>
               </div>
             </div>
           </div>
