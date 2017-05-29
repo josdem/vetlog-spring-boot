@@ -40,7 +40,7 @@
                 <br/>
                 <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
                 <div class='input-group date' id='datepicker'>
-                <input type='text' class="form-control" name='birthDate' placeholder="birthDate" id='birthDate' th:field="*{birthDate}" />
+                <input type='text' class="form-control" name='birthDate' placeholder="birthDate" id='birthDate' th:value="${beans.dateFormatter.format(petCommand.birthDate)}" />
                   <span class="input-group-addon">
                     <span class="glyphicon glyphicon-th"></span>
                   </span>
