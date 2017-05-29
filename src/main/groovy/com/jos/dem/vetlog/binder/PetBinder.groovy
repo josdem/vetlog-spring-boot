@@ -32,6 +32,8 @@ class PetBinder {
 
   @Autowired
   BreedRepository breedRepository
+  @Autowired
+  UserRepository userRepository
 
   Pet bindPet(Command command){
     Pet pet = new Pet()
@@ -45,6 +47,7 @@ class PetBinder {
     pet.images = command.images
     pet.status = PetStatus.OWNED
     pet.breed = breedRepository.findOne(command.breed)
+    pet.user = userRepository.findOne(command.user)
     pet
   }
 

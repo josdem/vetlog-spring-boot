@@ -106,7 +106,7 @@ class PetController {
   @Transactional
   @RequestMapping(method = POST, value = "/update")
   ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult) {
-    log.info "Updating pet: ${petCommand.name}"
+    log.info "Updating pet: ${petCommand.dump()}"
     ModelAndView modelAndView = new ModelAndView('pet/edit')
     if (bindingResult.hasErrors()) {
       modelAndView.addObject('petCommand', petCommand)
