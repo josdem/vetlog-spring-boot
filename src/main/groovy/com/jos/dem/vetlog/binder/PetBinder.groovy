@@ -48,6 +48,7 @@ class PetBinder {
     pet.status = PetStatus.OWNED
     pet.breed = breedRepository.findOne(command.breed)
     pet.user = userRepository.findOne(command.user)
+    pet.adopter = userRepository.findOne(command.adopter)
     pet
   }
 

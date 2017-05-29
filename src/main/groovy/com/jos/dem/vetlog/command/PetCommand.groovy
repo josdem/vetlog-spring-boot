@@ -56,6 +56,9 @@ class PetCommand implements Command {
   @Min(1L)
   Long user
 
+  @Min(1L)
+  Long adopter
+
   @NotNull
   PetType type
 
