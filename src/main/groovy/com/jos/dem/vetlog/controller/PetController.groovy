@@ -106,12 +106,13 @@ class PetController {
   @Transactional
   @RequestMapping(method = POST, value = "/update")
   ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult) {
-    log.info "Updating pet: ${petCommand.dump()}"
+    log.info "Updating pet: ${petCommand.name}"
     ModelAndView modelAndView = new ModelAndView('pet/edit')
     if (bindingResult.hasErrors()) {
       modelAndView.addObject('petCommand', petCommand)
       return fillModelAndView(modelAndView)
     }
+    petService.recoveryImages(petCommand)
     if(petImageService.hasImage(petCommand.image.getInputStream())){
       PetImage petImage = petImageService.save()
       petCommand.images.add(petImage)

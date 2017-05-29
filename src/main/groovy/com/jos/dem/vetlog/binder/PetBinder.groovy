@@ -65,6 +65,7 @@ class PetBinder {
       sterilized:pet.sterilized,
       vaccinated:pet.vaccinated,
       status:pet.status,
+      images:pet.images,
       breed:pet.breed.id,
       user:pet.user.id
     )
