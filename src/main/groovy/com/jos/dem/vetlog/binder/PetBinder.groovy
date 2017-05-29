@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import com.jos.dem.vetlog.model.Pet
+import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetCommand
@@ -48,8 +49,8 @@ class PetBinder {
       images:command.images,
       status:PetStatus.OWNED,
       breed:breedRepository.findOne(command.breed),
-      user:userRepository.findOne(command.user),
-      adopter:getAdopter(command.adopter)
+      user:getUser(command.user),
+      adopter:getUser(command.adopter)
     )
     pet
   }
@@ -70,7 +71,7 @@ class PetBinder {
     command
   }
 
-  private User getAdopter(Long id){
+  private User getUser(Long id){
     id ? userRepository.findOne(id) : null
   }
 
