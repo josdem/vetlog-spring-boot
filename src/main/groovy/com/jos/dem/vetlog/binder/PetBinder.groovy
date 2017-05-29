@@ -25,6 +25,7 @@ import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.util.UuidGenerator
+import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.repository.BreedRepository
 
 @Component
