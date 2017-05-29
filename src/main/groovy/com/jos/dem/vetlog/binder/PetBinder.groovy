@@ -37,19 +37,20 @@ class PetBinder {
   UserRepository userRepository
 
   Pet bindPet(Command command){
-    Pet pet = new Pet()
-    pet.id = command.id
-    pet.uuid = UuidGenerator.generateUuid()
-    pet.name = command.name
-    pet.birthDate = command.birthDate
-    pet.dewormed = command.dewormed
-    pet.sterilized = command.sterilized
-    pet.vaccinated = command.vaccinated
-    pet.images = command.images
-    pet.status = PetStatus.OWNED
-    pet.breed = breedRepository.findOne(command.breed)
-    pet.user = userRepository.findOne(command.user)
-    pet.adopter = userRepository.findOne(command.adopter)
+    Pet pet = new Pet(
+      id:command.id,
+      uuid:UuidGenerator.generateUuid(),
+      name:command.name,
+      birthDate:command.birthDate,
+      dewormed:command.dewormed,
+      sterilized:command.sterilized,
+      vaccinated:command.vaccinated,
+      images:command.images,
+      status:PetStatus.OWNED,
+      breed:breedRepository.findOne(command.breed),
+      user:userRepository.findOne(command.user),
+      adopter:getAdopter(command.adopter)
+    )
     pet
   }
 
@@ -67,6 +68,10 @@ class PetBinder {
       user:pet.user.id
     )
     command
+  }
+
+  private User getAdopter(Long id){
+    id ? userRepository.findOne(id) : null
   }
 
 }
