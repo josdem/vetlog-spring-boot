@@ -26,6 +26,7 @@ import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.util.UuidGenerator
+import com.jos.dem.vetlog.util.DateFormatter
 import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.repository.BreedRepository
 
@@ -36,13 +37,16 @@ class PetBinder {
   BreedRepository breedRepository
   @Autowired
   UserRepository userRepository
+  @Autowired
+  DateFormatter dateFormatter
+
 
   Pet bindPet(Command command){
     Pet pet = new Pet(
       id:command.id,
       uuid:UuidGenerator.generateUuid(),
       name:command.name,
-      birthDate:command.birthDate,
+      birthDate:Date.parse('MM/dd/yyyy', command.birthDate),
       dewormed:command.dewormed,
       sterilized:command.sterilized,
       vaccinated:command.vaccinated,
@@ -60,7 +64,7 @@ class PetBinder {
       id:pet.id,
       uuid:pet.uuid,
       name:pet.name,
-      birthDate:pet.birthDate,
+      birthDate:dateFormatter.format(pet.birthDate.toString()),
       dewormed:pet.dewormed,
       sterilized:pet.sterilized,
       vaccinated:pet.vaccinated,
