@@ -34,5 +34,15 @@ class PetValidator implements Validator {
   @Override
   void validate(Object target, Errors errors) {
     PetCommand petCommand = (PetCommand) target
+    validateBirthdate(errors, petCommand)
+  }
+
+  private void validateBirthdate(Errors errors, PetCommand petCommand){
+    Date birthDate = Date.parse('MM/dd/yyyy', petCommand.birthDate)
+    if(birthDate.compareTo(new Date()) > 0){
+      errors.rejectValue('birthDate', 'error.birthDate', localeService.getMessage('pet.validation.birthdate.past'))
+
+    }
+
   }
 }
