@@ -2,7 +2,8 @@
 <html>
   <head>
     <th:block layout:include="fragments/include-form"/>
-      <title th:text="#{petlog.view.create.title}"></title>
+    <title th:text="#{petlog.view.create.title}"></title>
+    <script th:src="@{/javascript/analytics.js}"/> 
   </head>
   <body class="login">
     <div class="container">
@@ -65,6 +66,5 @@
       </div>
     </div>
     <th:block layout:include="fragments/footer"/>
-    <script th:src="@{/javascript/analytics.js}"/>
   </body>
 </html>

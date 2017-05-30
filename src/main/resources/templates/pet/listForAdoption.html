@@ -2,7 +2,8 @@
 <html>
   <head>
     <th:block layout:include="fragments/include"/>
-      <title th:text="#{pet.view.list.title}"></title>
+    <title th:text="#{pet.view.list.title}"></title>
+    <script th:src="@{/javascript/analytics.js}"/> 
   </head>
   <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -60,6 +61,5 @@
     </div>
     <br/><br/><br/><br/>
     <th:block layout:include="fragments/footer"/>
-    <script th:src="@{/javascript/analytics.js}"/>
   </body>
 </html>
