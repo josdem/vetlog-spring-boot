@@ -60,7 +60,7 @@ class PetServiceImpl implements PetService {
 
   @Transactional
   Pet update(Command command){
-    petService.recoveryImages(command)
+    recoveryImages(command)
     if(petImageService.hasImage(command.image.getInputStream())){
       PetImage petImage = petImageService.save()
       command.images.add(petImage)
@@ -83,7 +83,7 @@ class PetServiceImpl implements PetService {
     petRepository.findAllByStatus(status)
   }
 
-  void recoveryImages(Command command){
+  private void recoveryImages(Command command){
     Pet pet = petRepository.findOne(command.id)
     command.images = pet.images
   }

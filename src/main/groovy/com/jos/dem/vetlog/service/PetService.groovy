@@ -27,5 +27,4 @@ interface PetService {
   Pet getPetByUuid(String uuid)
   List<Pet> getPetsByUser(User user)
   List<Pet> getPetsByStatus(PetStatus status)
-  void recoveryImages(Command command)
 }
