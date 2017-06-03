@@ -27,6 +27,9 @@ import com.jos.dem.vetlog.service.LocaleService
 @Component
 class PetValidator implements Validator {
 
+  @Autowired
+  LocaleService localeService
+
   @Override
   boolean supports(Class<?> clazz) {
     PetCommand.class.equals(clazz)
@@ -43,7 +46,7 @@ class PetValidator implements Validator {
       return
     Date birthDate = Date.parse('MM/dd/yyyy', petCommand.birthDate)
     if(birthDate.compareTo(new Date()) > 0){
-      errors.rejectValue('birthDate', 'error.birthDate', 'Birthdate must be in the past')
+      errors.rejectValue('birthDate', 'error.birthDate', localeService.getMessage('pet.validator.birthDate.past'))
     }
   }
 
