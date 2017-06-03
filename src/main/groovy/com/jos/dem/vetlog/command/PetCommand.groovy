@@ -36,6 +36,7 @@ class PetCommand implements Command {
   String name
 
   @NotNull
+  @Size(min=10, max=10)
   String birthDate
 
   @NotNull

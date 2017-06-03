@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.InitBinder
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.WebDataBinder
@@ -69,6 +68,8 @@ class PetController {
   S3Writer s3Writer
   @Autowired
   PetBinder petBinder
+  @Autowired
+  PetValidator petValidator
 
   @Value('${breedsByTypeUrl}')
   String breedsByTypeUrl
@@ -79,9 +80,9 @@ class PetController {
 
   Logger log = LoggerFactory.getLogger(this.class)
 
-  @InitBinder
+  @InitBinder('petCommand')
   private void initBinder(WebDataBinder binder) {
-    binder.addValidators(new PetValidator())
+    binder.addValidators(petValidator)
   }
 
   @RequestMapping(method = GET, value = "/create")
@@ -103,7 +104,6 @@ class PetController {
     modelAndView
   }
 
-  @Transactional
   @RequestMapping(method = POST, value = "/update")
   ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult) {
     log.info "Updating pet: ${petCommand.name}"
@@ -125,7 +125,6 @@ class PetController {
   }
 
 
-  @Transactional
   @RequestMapping(method = POST, value = "/save")
   ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult) {
     log.info "Creating pet: ${petCommand.name}"
