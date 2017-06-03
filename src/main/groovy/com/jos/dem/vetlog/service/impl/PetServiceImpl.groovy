@@ -18,6 +18,7 @@ package com.jos.dem.vetlog.service.impl
 
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.annotation.Transactional
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
@@ -25,6 +26,7 @@ import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.binder.PetBinder
 import com.jos.dem.vetlog.service.PetService
+import com.jos.dem.vetlog.service.PetImageService
 import com.jos.dem.vetlog.repository.PetRepository
 
 @Service
@@ -34,6 +36,8 @@ class PetServiceImpl implements PetService {
   PetBinder petBinder
   @Autowired
   PetRepository petRepository
+  @Autowired
+  PetImageService petImageService
 
   Pet save(Command command, User user){
     Pet pet = petBinder.bindPet(command)
@@ -42,7 +46,14 @@ class PetServiceImpl implements PetService {
     pet
   }
 
+  @Transactional
   Pet update(Command command){
+    petService.recoveryImages(command)
+    if(petImageService.hasImage(command.image.getInputStream())){
+      PetImage petImage = petImageService.save()
+      command.images.add(petImage)
+      s3Writer.uploadToBucket(bucketDestination, petImage.uuid, command.image.getInputStream())
+    }
     Pet pet = petBinder.bindPet(command)
     petRepository.save(pet)
     pet

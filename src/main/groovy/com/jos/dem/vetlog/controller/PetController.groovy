@@ -59,8 +59,6 @@ class PetController {
   @Autowired
   PetService petService
   @Autowired
-  PetImageService petImageService
-  @Autowired
   UserService userService
   @Autowired
   LocaleService localeService
@@ -111,12 +109,6 @@ class PetController {
     if (bindingResult.hasErrors()) {
       modelAndView.addObject('petCommand', petCommand)
       return fillModelAndView(modelAndView)
-    }
-    petService.recoveryImages(petCommand)
-    if(petImageService.hasImage(petCommand.image.getInputStream())){
-      PetImage petImage = petImageService.save()
-      petCommand.images.add(petImage)
-      s3Writer.uploadToBucket(bucketDestination, petImage.uuid, petCommand.image.getInputStream())
     }
     petService.update(petCommand)
     modelAndView.addObject('message', localeService.getMessage('pet.updated'))
