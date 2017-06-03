@@ -17,14 +17,17 @@ limitations under the License.
 package com.jos.dem.vetlog.service.impl
 
 import org.springframework.stereotype.Service
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
+import com.jos.dem.vetlog.model.PetImage
 import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.binder.PetBinder
+import com.jos.dem.vetlog.client.S3Writer
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.PetImageService
 import com.jos.dem.vetlog.repository.PetRepository
@@ -33,15 +36,24 @@ import com.jos.dem.vetlog.repository.PetRepository
 class PetServiceImpl implements PetService {
 
   @Autowired
+  S3Writer s3Writer
+  @Autowired
   PetBinder petBinder
   @Autowired
   PetRepository petRepository
   @Autowired
   PetImageService petImageService
 
+  @Value('${bucketDestination}')
+  String bucketDestination
+
+  @Transactional
   Pet save(Command command, User user){
     Pet pet = petBinder.bindPet(command)
     pet.user = user
+    PetImage petImage = petImageService.save()
+    command.images.add(petImage)
+    s3Writer.uploadToBucket(bucketDestination, petImage.uuid, command.image.getInputStream())
     petRepository.save(pet)
     pet
   }

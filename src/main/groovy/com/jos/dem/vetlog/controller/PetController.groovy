@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.InitBinder
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.validation.BindingResult
@@ -32,7 +32,6 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
-import com.jos.dem.vetlog.model.PetImage
 import com.jos.dem.vetlog.model.PetType
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.enums.PetStatus
@@ -41,10 +40,8 @@ import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.validator.PetValidator
 import com.jos.dem.vetlog.service.BreedService
 import com.jos.dem.vetlog.service.PetService
-import com.jos.dem.vetlog.service.PetImageService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.LocaleService
-import com.jos.dem.vetlog.client.S3Writer
 import com.jos.dem.vetlog.binder.PetBinder
 
 import org.slf4j.Logger
@@ -63,16 +60,12 @@ class PetController {
   @Autowired
   LocaleService localeService
   @Autowired
-  S3Writer s3Writer
-  @Autowired
   PetBinder petBinder
   @Autowired
   PetValidator petValidator
 
   @Value('${breedsByTypeUrl}')
   String breedsByTypeUrl
-  @Value('${bucketDestination}')
-  String bucketDestination
   @Value('${awsImageUrl}')
   String awsImageUrl
 
@@ -126,10 +119,7 @@ class PetController {
       return fillModelAndView(modelAndView)
     }
     User user = userService.getCurrentUser()
-    PetImage petImage = petImageService.save()
-    petCommand.images.add(petImage)
     Pet pet = petService.save(petCommand, user)
-    s3Writer.uploadToBucket(bucketDestination, petImage.uuid, petCommand.image.getInputStream())
     modelAndView.addObject('message', localeService.getMessage('pet.created'))
     petCommand = new PetCommand()
     modelAndView.addObject('petCommand', petCommand)
