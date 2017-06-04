@@ -68,6 +68,8 @@ class PetController {
   String breedsByTypeUrl
   @Value('${awsImageUrl}')
   String awsImageUrl
+  @Value('${defaultImage}')
+  String defaultImage
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -164,7 +166,7 @@ class PetController {
     List<Pet> pets = petService.getPetsByUser(user)
     modelAndView.addObject('pets', pets)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
-    modelAndView.addObject('defaultImage', 'vetlog.png')
+    modelAndView.addObject('defaultImage', defaultImage)
     modelAndView
   }
 
