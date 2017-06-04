@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.model
+package com.jos.dem.vetlog.enums
 
 enum PetType {
-  DOG('Dog'), CAT('Cat'), BIRD('Bird'), RODENT('Rodent'), SPIDER('Spider'), SNAKE('Snake')
+  DOG('Dog'), CAT('Cat'), BIRD('Bird'), RODENT('Rodent'), SPIDER('Spider'), SNAKE('Snake'), FISH('Fish')
 
   private final String value
 
