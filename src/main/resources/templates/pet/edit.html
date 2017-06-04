@@ -72,7 +72,7 @@
                 <br/>
                 <label for="type"><h4 th:text="#{pet.type}"/></label>
                 <select id="typeSelector" name="type" th:field="*{type}" class="form-control">
-                  <option th:each=" type : ${T(com.jos.dem.vetlog.model.PetType).values()}" th:value="${type}" th:text="${type.value}" />
+                  <option th:each=" type : ${T(com.jos.dem.vetlog.enums.PetType).values()}" th:value="${type}" th:text="${type.value}" />
                 </select>
                 <br/>
                 <label for="breed"><h4 th:text="#{pet.breed}"/></label>
