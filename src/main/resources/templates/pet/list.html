@@ -43,7 +43,12 @@
       <div th:each="pet : ${pets}">
         <div class="col-sm-6 col-md-4">
           <div class="thumbnail">
-            <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
+            <div th:if="${!pet.images.isEmpty()}">
+              <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
+            </div>
+            <div th:if="${pet.images.isEmpty()}">
+              <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${defaultImage}}"/>
+            </div>
             <div class="caption">
               <h3 th:text="${pet.name}"></h3>
               <p>

@@ -164,6 +164,7 @@ class PetController {
     List<Pet> pets = petService.getPetsByUser(user)
     modelAndView.addObject('pets', pets)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
+    modelAndView.addObject('defaultImage', 'vetlog.png')
     modelAndView
   }
 
