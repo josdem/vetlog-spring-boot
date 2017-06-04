@@ -17,10 +17,12 @@ limitations under the License.
 package com.jos.dem.vetlog.service.impl
 
 import org.springframework.stereotype.Service
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.annotation.Autowired
 
 import com.jos.dem.vetlog.model.PetImage
 import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.client.S3Writer
 import com.jos.dem.vetlog.service.PetImageService
 import com.jos.dem.vetlog.repository.PetImageRepository
 import com.jos.dem.vetlog.util.UuidGenerator
@@ -29,7 +31,12 @@ import com.jos.dem.vetlog.util.UuidGenerator
 class PetImageServiceImpl implements PetImageService {
 
   @Autowired
+  S3Writer s3Writer
+  @Autowired
   PetImageRepository petImageRepository
+
+  @Value('${bucketDestination}')
+  String bucketDestination
 
   PetImage save(){
     PetImage petImage = new PetImage(uuid:UuidGenerator.generateUuid())
@@ -37,8 +44,12 @@ class PetImageServiceImpl implements PetImageService {
     petImage
   }
 
-  Boolean hasImage(InputStream inputStream){
-    inputStream.available() > 0
+  Boolean attachImage(Command command){
+    if(command.image.getInputStream().available() > 0){
+      PetImage petImage = petImageService.save()
+      command.images.add(petImage)
+      s3Writer.uploadToBucket(bucketDestination, petImage.uuid, command.image.getInputStream())
+    }
   }
 
 }

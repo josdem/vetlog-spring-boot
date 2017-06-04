@@ -36,24 +36,17 @@ import com.jos.dem.vetlog.repository.PetRepository
 class PetServiceImpl implements PetService {
 
   @Autowired
-  S3Writer s3Writer
-  @Autowired
   PetBinder petBinder
   @Autowired
   PetRepository petRepository
   @Autowired
   PetImageService petImageService
 
-  @Value('${bucketDestination}')
-  String bucketDestination
-
   @Transactional
   Pet save(Command command, User user){
     Pet pet = petBinder.bindPet(command)
     pet.user = user
-    PetImage petImage = petImageService.save()
-    command.images.add(petImage)
-    s3Writer.uploadToBucket(bucketDestination, petImage.uuid, command.image.getInputStream())
+    petImageService.attachImage(command)
     petRepository.save(pet)
     pet
   }
@@ -61,12 +54,8 @@ class PetServiceImpl implements PetService {
   @Transactional
   Pet update(Command command){
     recoveryImages(command)
-    if(petImageService.hasImage(command.image.getInputStream())){
-      PetImage petImage = petImageService.save()
-      command.images.add(petImage)
-      s3Writer.uploadToBucket(bucketDestination, petImage.uuid, command.image.getInputStream())
-    }
     Pet pet = petBinder.bindPet(command)
+    petImageService.attachImage(command)
     petRepository.save(pet)
     pet
   }
