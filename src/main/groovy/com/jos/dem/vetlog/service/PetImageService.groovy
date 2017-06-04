@@ -20,6 +20,5 @@ import com.jos.dem.vetlog.model.PetImage
 import com.jos.dem.vetlog.command.Command
 
 interface PetImageService {
-  PetImage save()
   void attachImage(Command command)
 }

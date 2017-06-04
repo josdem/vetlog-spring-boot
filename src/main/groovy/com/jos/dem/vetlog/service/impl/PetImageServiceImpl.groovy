@@ -38,7 +38,7 @@ class PetImageServiceImpl implements PetImageService {
   @Value('${bucketDestination}')
   String bucketDestination
 
-  PetImage save(){
+  private PetImage save(){
     PetImage petImage = new PetImage(uuid:UuidGenerator.generateUuid())
     petImageRepository.save(petImage)
     petImage
@@ -46,7 +46,7 @@ class PetImageServiceImpl implements PetImageService {
 
   void attachImage(Command command){
     if(command.image.getInputStream().available() > 0){
-      PetImage petImage = petImageService.save()
+      PetImage petImage = save()
       command.images.add(petImage)
       s3Writer.uploadToBucket(bucketDestination, petImage.uuid, command.image.getInputStream())
     }
