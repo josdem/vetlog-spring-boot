@@ -4,7 +4,6 @@ buildscript {
     logbackVersion = '1.2.1'
     awsLambdaVersion = '1.1.0'
     awsJavaVersion = '1.11.98'
-    flywayVersion = '4.2.0'
   }
   repositories {
     mavenCentral()
@@ -16,6 +15,7 @@ buildscript {
 
 plugins {
   id 'com.craigburke.bower-installer' version '2.5.1'
+  id "org.flywaydb.flyway" version "4.2.0"
 }
 
 bower {
@@ -29,6 +29,10 @@ bower {
   'bootstrap-datepicker'('https://github.com/uxsolutions/bootstrap-datepicker.git'){
      source '**'
   }
+}
+
+flyway {
+  url = 'jdbc:mysql://localhost:3306/vetlog_spring_boot'
 }
 
 apply plugin: 'war'
@@ -63,7 +67,6 @@ dependencies {
   compile "com.amazonaws:aws-lambda-java-core:$awsLambdaVersion"
   compile "com.amazonaws:aws-lambda-java-events:$awsLambdaVersion"
   compile "com.amazonaws:aws-java-sdk:$awsJavaVersion"
-  compile "org.flywaydb:flyway-core:$flywayVersion"
   testCompile "cglib:cglib-nodep:3.2.4"
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'org.spockframework:spock-spring'
@@ -73,4 +76,5 @@ bootRun {
   systemProperties = System.properties
 }
 
+bowerInstall.dependsOn rootProject.tasks['flywayMigrate']
 bootRun.dependsOn rootProject.tasks['bowerInstall']
