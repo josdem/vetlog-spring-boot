@@ -16,9 +16,10 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service
 
-import  com.jos.dem.vetlog.model.PetImage
+import com.jos.dem.vetlog.model.PetImage
+import com.jos.dem.vetlog.command.Command
 
 interface PetImageService {
   PetImage save()
-  Boolean hasImage(InputStream inputStream)
+  void attachImage(Command command)
 }

@@ -44,7 +44,7 @@ class PetImageServiceImpl implements PetImageService {
     petImage
   }
 
-  Boolean attachImage(Command command){
+  void attachImage(Command command){
     if(command.image.getInputStream().available() > 0){
       PetImage petImage = petImageService.save()
       command.images.add(petImage)

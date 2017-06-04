@@ -23,6 +23,7 @@ import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.binder.PetBinder
 import com.jos.dem.vetlog.repository.PetRepository
 import com.jos.dem.vetlog.service.PetService
+import com.jos.dem.vetlog.service.PetImageService
 import com.jos.dem.vetlog.service.impl.PetServiceImpl
 
 import spock.lang.Specification
@@ -33,10 +34,12 @@ class PetServiceSpec extends Specification {
 
   PetBinder petBinder = Mock(PetBinder)
   PetRepository petRepository = Mock(PetRepository)
+  PetImageService petImageService = Mock(PetImageService)
 
   def setup(){
     service.petBinder = petBinder
     service.petRepository = petRepository
+    service.petImageService = petImageService
   }
 
   void "should save pet"(){
@@ -52,6 +55,7 @@ class PetServiceSpec extends Specification {
     then:"We expect pet saved with user"
       pet.user
       1 * petRepository.save(_ as Pet)
+      1 * petImageService.attachImage(command)
   }
 
   void "should list a pet by owner"(){
