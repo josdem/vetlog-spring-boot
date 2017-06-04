@@ -32,7 +32,7 @@ bower {
 }
 
 flyway {
-  url = 'jdbc:mysql://localhost:3306/vetlog_spring_boot'
+  url = 'jdbc:mysql://localhost:3306/vetlog'
 }
 
 apply plugin: 'war'
