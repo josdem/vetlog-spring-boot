@@ -4,6 +4,7 @@ buildscript {
     logbackVersion = '1.2.1'
     awsLambdaVersion = '1.1.0'
     awsJavaVersion = '1.11.98'
+    flywayVersion = '4.2.0'
   }
   repositories {
     mavenCentral()
@@ -62,6 +63,7 @@ dependencies {
   compile "com.amazonaws:aws-lambda-java-core:$awsLambdaVersion"
   compile "com.amazonaws:aws-lambda-java-events:$awsLambdaVersion"
   compile "com.amazonaws:aws-java-sdk:$awsJavaVersion"
+  compile "org.flywaydb:flyway-core:$flywayVersion"
   testCompile "cglib:cglib-nodep:3.2.4"
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'org.spockframework:spock-spring'
