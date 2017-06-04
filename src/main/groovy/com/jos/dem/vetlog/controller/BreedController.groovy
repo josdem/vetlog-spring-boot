@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import javax.servlet.http.HttpServletResponse
 
-import com.jos.dem.vetlog.model.PetType
+import com.jos.dem.vetlog.enums.PetType
 import com.jos.dem.vetlog.service.BreedService
 
 import org.slf4j.Logger

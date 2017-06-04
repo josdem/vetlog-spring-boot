@@ -17,7 +17,7 @@ limitations under the License.
 package com.jos.dem.vetlog.service
 
 import  com.jos.dem.vetlog.model.Breed
-import  com.jos.dem.vetlog.model.PetType
+import  com.jos.dem.vetlog.enums.PetType
 
 interface BreedService {
   List<Breed> getBreedsByType(PetType type)

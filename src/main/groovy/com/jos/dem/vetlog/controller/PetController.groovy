@@ -32,8 +32,8 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
-import com.jos.dem.vetlog.model.PetType
 import com.jos.dem.vetlog.model.User
+import com.jos.dem.vetlog.enums.PetType
 import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetCommand

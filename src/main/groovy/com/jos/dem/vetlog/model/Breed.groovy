@@ -25,6 +25,8 @@ import javax.persistence.Entity
 import javax.persistence.Enumerated
 import javax.persistence.GeneratedValue
 
+import com.jos.dem.vetlog.enums.PetType
+
 @Entity
 class Breed {
 

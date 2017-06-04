@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
 
 import com.jos.dem.vetlog.model.Breed
-import com.jos.dem.vetlog.model.PetType
+import com.jos.dem.vetlog.enums.PetType
 import com.jos.dem.vetlog.service.BreedService
 import com.jos.dem.vetlog.repository.BreedRepository
 

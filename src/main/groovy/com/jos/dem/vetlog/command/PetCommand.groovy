@@ -23,7 +23,7 @@ import javax.validation.constraints.Max
 
 import org.springframework.web.multipart.MultipartFile
 
-import com.jos.dem.vetlog.model.PetType
+import com.jos.dem.vetlog.enums.PetType
 import com.jos.dem.vetlog.model.PetImage
 import com.jos.dem.vetlog.enums.PetStatus
 
