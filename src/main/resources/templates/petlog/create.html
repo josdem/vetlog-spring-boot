@@ -26,7 +26,7 @@
           <div class="portlet portlet-green">
             <div class="portlet-heading login-heading">
               <div class="portlet-title">
-                <h4 th:text="#{pet.view.create.label}"/>
+                <h4 th:text="#{petlog.view.create.label}"/>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -39,6 +39,7 @@
               <div th:if="${petListEmpty}">
                 <div align="center">
                   <p th:text="${petListEmpty}"/>
+                  <a th:href="@{pet/create}" class="btn btn-success"><p th:text="#{pet.register}"/></a>
                 </div>
               </div>
               <div th:if="${petListEmpty == null}">
