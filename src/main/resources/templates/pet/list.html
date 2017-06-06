@@ -38,6 +38,7 @@
       <div th:if="${pets.isEmpty()}">
         <div align="center">
           <p th:text="#{pet.list.empty}"/>
+          <a th:href="@{/pet/create}" class="btn btn-success"><p th:text="#{pet.register}"/></a>
         </div>
       </div>
       <div th:each="pet : ${pets}">
