@@ -39,7 +39,7 @@
               <div th:if="${petListEmpty}">
                 <div align="center">
                   <p th:text="${petListEmpty}"/>
-                  <a th:href="@{pet/create}" class="btn btn-success"><p th:text="#{pet.register}"/></a>
+                  <a th:href="@{/pet/create}" class="btn btn-success"><p th:text="#{pet.register}"/></a>
                 </div>
               </div>
               <div th:if="${petListEmpty == null}">
