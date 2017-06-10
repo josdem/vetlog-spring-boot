@@ -55,17 +55,15 @@ ga('send', 'pageview');
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
                       <div class="item active">
-                        <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(0).uuid}}"/>
-                        <div class="carousel-caption">
-                          <h1>Carousel in a container</h1>
-                          <p>This is a demo for the Bootstrap Carousel Guide.</p>
-                        </div>
+                        <center>
+                        <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(0).uuid}}"/>
+                        </center>
                       </div>
                       <div class="item">
-                        <img src="img/carousel2.jpg" alt=""/>
+                        <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(1).uuid}}"/>
                       </div>
                       <div class="item">
-                        <img src="img/carousel3.jpg" alt=""/>
+                        <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(2).uuid}}"/>
                       </div>
                     </div>
                     <!-- Controls -->

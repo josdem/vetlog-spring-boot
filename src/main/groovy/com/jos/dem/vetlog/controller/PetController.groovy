@@ -132,6 +132,7 @@ class PetController {
   ModelAndView fillModelAndView(ModelAndView modelAndView){
     modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
     modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
+    modelAndView.addObject('awsImageUrl', awsImageUrl)
     modelAndView
   }
 
