@@ -54,21 +54,13 @@ ga('send', 'pageview');
 
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
-                      <div class="item active">
-                        <center>
-                        <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(0).uuid}}"/>
-                        </center>
-                      </div>
-                      <div class="item">
-                        <center>
-                        <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(1).uuid}}"/>
-                        </center>
-                      </div>
-                      <div class="item">
-                        <center>
-                        <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(2).uuid}}"/>
-                        </center>
-                      </div>
+                      <div th:each="image : ${petCommand.images}">
+                        <div class="${petCommand.images.indexOf(image) == 0 ? 'item active' : 'item'}">
+                            <center>
+                              <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${image.uuid}}"/>
+                            </center>
+                          </div>
+                        </div>
                     </div>
                     <!-- Controls -->
                     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -129,7 +121,7 @@ ga('send', 'pageview');
       </div>
     </div>
     <script th:src="@{/assets/third-party/bootstrap/js/dropdown.js}"/>
-    <script th:src="@{/assets/third-party/bootstrap/dist/js/bootstrap.min.js}"/>
+<script th:src="@{/assets/third-party/bootstrap/dist/js/bootstrap.min.js}"/>
 <script th:src="@{/assets/third-party/bootstrap-datepicker/dist/js/bootstrap-datepicker.js}"/>
 <script th:src="@{/javascript/selector.js}"/>
 <script th:src="@{/javascript/datepicker.js}"/>
