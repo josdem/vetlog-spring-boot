@@ -60,10 +60,14 @@ ga('send', 'pageview');
                         </center>
                       </div>
                       <div class="item">
+                        <center>
                         <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(1).uuid}}"/>
+                        </center>
                       </div>
                       <div class="item">
+                        <center>
                         <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${petCommand.images.get(2).uuid}}"/>
+                        </center>
                       </div>
                     </div>
                     <!-- Controls -->
@@ -125,7 +129,9 @@ ga('send', 'pageview');
       </div>
     </div>
     <script th:src="@{/assets/third-party/bootstrap/js/dropdown.js}"/>
+    <script th:src="@{/assets/third-party/bootstrap/dist/js/bootstrap.min.js}"/>
 <script th:src="@{/assets/third-party/bootstrap-datepicker/dist/js/bootstrap-datepicker.js}"/>
+<script th:src="@{/assets/third-party/jquery/jquery.js}"/>
 <script th:src="@{/javascript/selector.js}"/>
 <script th:src="@{/javascript/datepicker.js}"/>
 </body>
