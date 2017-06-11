@@ -54,13 +54,9 @@ ga('send', 'pageview');
 
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
-                      <div th:each="image : ${petCommand.images}">
-                        <div class="${petCommand.images.indexOf(image) == 0 ? 'item active' : 'item'}">
-                            <center>
-                              <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${image.uuid}}"/>
-                            </center>
-                          </div>
-                        </div>
+                      <div th:each="image : ${petCommand.images}" class="item" th:classappend="|${petCommand.images.indexOf(image) == 0 ? 'active' : ''}|" align="center">
+                        <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${image.uuid}}"/>
+                      </div>
                     </div>
                     <!-- Controls -->
                     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
