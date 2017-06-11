@@ -69,7 +69,7 @@ ga('send', 'pageview');
                   </a>
                 </div>
               </div>
-              <div th:if="${pet.images.isEmpty()}">
+              <div th:if="${pet.images.isEmpty()}" align="center">
                 <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${defaultImage}}"/>
               </div>
               <div class="caption">
