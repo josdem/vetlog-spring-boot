@@ -45,28 +45,30 @@ ga('send', 'pageview');
                   <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name" id='name'/>
                   <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
                   <br/>
-                  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                    <ol class="carousel-indicators">
-                      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                    </ol>
+                  <div th:if="${!petCommand.images.isEmpty()}" >
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                      <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                      </ol>
 
-                    <!-- Wrapper for slides -->
-                    <div class="carousel-inner" role="listbox">
-                      <div th:each="image : ${petCommand.images}" class="item" th:classappend="|${petCommand.images.indexOf(image) == 0 ? 'active' : ''}|" align="center">
-                        <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${image.uuid}}"/>
+                      <!-- Wrapper for slides -->
+                      <div class="carousel-inner" role="listbox">
+                        <div th:each="image : ${petCommand.images}" class="item" th:classappend="|${petCommand.images.indexOf(image) == 0 ? 'active' : ''}|" align="center">
+                          <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${image.uuid}}"/>
+                        </div>
                       </div>
+                      <!-- Controls -->
+                      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                      </a>
                     </div>
-                    <!-- Controls -->
-                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
-                    </a>
                   </div>
                   <br/>
                   <label for="image"><h4 th:text="#{pet.image}"/></label>
