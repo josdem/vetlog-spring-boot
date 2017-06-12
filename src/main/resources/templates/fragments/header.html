@@ -13,10 +13,10 @@
       <h1>Welcome!</h1>
       <p>Maintain your pet history organized</p>
       <div sec:authorize="isAnonymous()">
-        <a th:href="login" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.action}"/></a>
+        <a th:href="@{login}" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.action}"/></a>
       </div>
       <div sec:authorize="isAuthenticated()">
-        <a th:href="login" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.logout}"/></a>
+        <a th:href="@{logout}" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.logout}"/></a>
       </div>
     </div>
   </div>
