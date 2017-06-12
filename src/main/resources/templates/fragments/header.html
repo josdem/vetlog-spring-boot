@@ -16,7 +16,7 @@
         <a th:href="login" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.action}"/></a>
       </div>
       <div sec:authorize="isAuthenticated()">
-        <p><a class="btn btn-primary btn-lg" href="login" role="button">Logout</a></p>
+        <a th:href="login" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.logout}"/></a>
       </div>
     </div>
   </div>
