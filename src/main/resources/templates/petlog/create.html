@@ -31,9 +31,9 @@
               <div class="clearfix"></div>
             </div>
             <div class="portlet-body">
-              <div th:if="${error}">
+              <div th:if="${message}">
                 <div align="center">
-                  <p th:text="${error}"/>
+                  <p style="color:blue;font-size:18px;" th:text="${message}"/>
                 </div>
               </div>
               <div th:if="${petListEmpty}">
@@ -75,6 +75,7 @@
         </div>
       </div>
     </div>
+    <br/><br/>
     <th:block layout:include="fragments/footer"/>
   </body>
 </html>
