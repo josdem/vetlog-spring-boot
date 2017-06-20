@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.http.HttpServletRequest
 
 import com.jos.dem.vetlog.service.LocaleService
+import com.jos.dem.vetlog.helper.LocaleResolver
 
 @Service
 class LocaleServiceImpl implements LocaleService {

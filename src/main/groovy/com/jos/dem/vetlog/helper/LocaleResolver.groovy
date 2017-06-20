@@ -19,6 +19,8 @@ package com.jos.dem.vetlog.helper
 import org.springframework.stereotype.Component
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver
 
+import javax.servlet.http.HttpServletRequest
+
 @Component
 class LocaleResolver extends AcceptHeaderLocaleResolver{
 
@@ -30,7 +32,7 @@ class LocaleResolver extends AcceptHeaderLocaleResolver{
       return Locale.getDefault()
     }
     List<Locale.LanguageRange> list = Locale.LanguageRange.parse(request.getHeader("Accept-Language"))
-    Locale locale = Locale.lookup(list, ApplicationConstants.LOCALES)
+    Locale locale = Locale.lookup(list, LOCALES)
     return locale
   }
 
