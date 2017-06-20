@@ -37,4 +37,8 @@ class LocaleServiceImpl implements LocaleService {
     messageSource.getMessage(code, null, localeResolver.resolveLocale(request))
   }
 
+  String getMessage(String code){
+    messageSource.getMessage(code, null, new Locale("en"))
+  }
+
 }
