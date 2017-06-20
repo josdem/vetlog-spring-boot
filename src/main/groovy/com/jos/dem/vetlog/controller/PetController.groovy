@@ -29,6 +29,8 @@ import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
+
+import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
 import com.jos.dem.vetlog.model.Pet
@@ -151,12 +153,12 @@ class PetController {
   }
 
   @RequestMapping(method = GET, value = "/listForAdoption")
-  ModelAndView listForAdoption() {
+  ModelAndView listForAdoption(HttpServletRequest request) {
     log.info 'Listing pets for adoption'
     ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
     List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION)
     if(!pets){
-      modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty'))
+      modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty', request))
     }
     modelAndView.addObject('pets', pets)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
