@@ -66,7 +66,7 @@
                       <textarea name="medicine" th:field="*{medicine}" rows="8" class="form-control" placeholder="Medicine"  id='medicine' />
                         <label th:if="${#fields.hasErrors('medicine')}" th:errors="*{medicine}"></label>
                         <br/><br/>
-                        <input type="submit" class="btn btn-primary btn-block" />
+                        <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><p th:text="#{button.submit}"/></button>
                 </fieldset>
               </form>
               </div>
