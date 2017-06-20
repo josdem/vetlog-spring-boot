@@ -46,11 +46,11 @@ class LoginController {
   Logger log = LoggerFactory.getLogger(this.class)
 
   @RequestMapping(method=GET, value="/login")
-  ModelAndView login(@RequestParam Optional<String> error){
+  ModelAndView login(@RequestParam Optional<String> error, HttpServletRequest request){
     log.info "Calling login"
     ModelAndView modelAndView = new ModelAndView('login/login')
     if(error.isPresent()){
-      modelAndView.addObject('message', localeService.getMessage('login.error'))
+      modelAndView.addObject('message', localeService.getMessage('login.error', request))
     }
     modelAndView
   }

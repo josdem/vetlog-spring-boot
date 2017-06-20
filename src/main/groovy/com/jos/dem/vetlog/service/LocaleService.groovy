@@ -16,6 +16,8 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service
 
+import javax.servlet.http.HttpServletRequest
+
 interface LocaleService {
-  String getMessage(String code)
+  String getMessage(String code, HttpServletRequest request)
 }
