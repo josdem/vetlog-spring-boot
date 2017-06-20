@@ -10,8 +10,8 @@
   </nav>
   <div class="jumbotron">
     <div class="container">
-      <h1>Welcome!</h1>
-      <p>Maintain your pet history organized</p>
+      <h1 th:text="#{home.welcome}" />
+      <p th:text="#{home.label}" />
       <div sec:authorize="isAnonymous()">
         <a th:href="@{login}" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.action}"/></a>
       </div>
