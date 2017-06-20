@@ -33,6 +33,7 @@ class LocaleResolver extends AcceptHeaderLocaleResolver{
 
   @Override
   Locale resolveLocale(HttpServletRequest request) {
+    log.info "Accept Language: ${request.getHeader('Accept-Language')}"
     if (!request.getHeader('Accept-Language')) {
       return Locale.getDefault()
     }
