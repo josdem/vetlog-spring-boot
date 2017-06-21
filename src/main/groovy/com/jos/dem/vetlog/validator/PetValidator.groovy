@@ -22,13 +22,9 @@ import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 
 import com.jos.dem.vetlog.command.PetCommand
-import com.jos.dem.vetlog.service.LocaleService
 
 @Component
 class PetValidator implements Validator {
-
-  @Autowired
-  LocaleService localeService
 
   @Override
   boolean supports(Class<?> clazz) {
@@ -46,7 +42,7 @@ class PetValidator implements Validator {
       return
     Date birthDate = Date.parse('MM/dd/yyyy', petCommand.birthDate)
     if(birthDate.compareTo(new Date()) > 0){
-      errors.rejectValue('birthDate', 'error.birthDate', localeService.getMessage('pet.validator.birthDate.past'))
+      errors.rejectValue('birthDate', 'pet.error.birthDate.past')
     }
   }
 
