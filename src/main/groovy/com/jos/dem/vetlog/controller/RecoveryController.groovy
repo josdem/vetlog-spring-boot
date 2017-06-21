@@ -29,7 +29,9 @@ import org.springframework.web.servlet.ModelAndView
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
+
 import javax.validation.Valid
+import javax.servlet.http.HttpServletRequest
 
 import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.service.LocaleService
@@ -74,13 +76,13 @@ class RecoveryController {
 	}
 
   @RequestMapping(method = POST, value = "/password")
-  ModelAndView generateTokenToChangePassword(@Valid RecoveryPasswordCommand command, BindingResult bindingResult){
+  ModelAndView generateTokenToChangePassword(@Valid RecoveryPasswordCommand command, BindingResult bindingResult, HttpServletRequest request){
   	log.info "Calling generate token for changing password"
     if(bindingResult.hasErrors()){
       return new ModelAndView('recovery/recoveryPassword')
     }
     ModelAndView modelAndView = new ModelAndView('login/login')
-    modelAndView.addObject('message', localeService.getMessage('recovery.email.sent'))
+    modelAndView.addObject('message', localeService.getMessage('recovery.email.sent', request))
     recoveryService.generateRegistrationCodeForEmail(command.email)
     modelAndView
   }
@@ -95,12 +97,12 @@ class RecoveryController {
   }
 
   @RequestMapping(method = GET, value = "/forgot/{token}")
-    ModelAndView changePassword(@PathVariable String token){
+    ModelAndView changePassword(@PathVariable String token, HttpServletRequest request){
     log.info "Calling change password"
     def modelAndView = new ModelAndView('recovery/changePassword')
     Boolean valid = recoveryService.validateToken(token)
     if(!valid){
-      modelAndView.addObject('message', localeService.getMessage('recovery.token.error'))
+      modelAndView.addObject('message', localeService.getMessage('recovery.token.error', request))
     }
     def changePasswordCommand = new ChangePasswordCommand(token:token)
     modelAndView.addObject('changePasswordCommand', changePasswordCommand)
@@ -108,13 +110,13 @@ class RecoveryController {
   }
 
   @RequestMapping(method = POST, value = "/change")
-  ModelAndView generateTokenToChangePassword(@Valid ChangePasswordCommand command, BindingResult bindingResult){
+  ModelAndView generateTokenToChangePassword(@Valid ChangePasswordCommand command, BindingResult bindingResult, HttpServletRequest request){
   	log.info "Calling save and changing password"
     if(bindingResult.hasErrors()){
       return new ModelAndView('recovery/changePassword')
     }
     ModelAndView modelAndView = new ModelAndView('login/login')
-    modelAndView.addObject('message', localeService.getMessage('recovery.password.changed'))
+    modelAndView.addObject('message', localeService.getMessage('recovery.password.changed', request))
     recoveryService.changePassword(command)
     modelAndView
   }
