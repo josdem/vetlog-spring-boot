@@ -27,7 +27,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.WebDataBinder
+
 import javax.validation.Valid
+import javax.servlet.http.HttpServletRequest
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
@@ -76,7 +78,7 @@ class PetLogController {
   }
 
   @RequestMapping(method = POST, value = "/save")
-  ModelAndView save(@Valid PetLogCommand petLogCommand, BindingResult bindingResult) {
+  ModelAndView save(@Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request) {
     log.info "Creating pet: ${petLogCommand.pet}"
     ModelAndView modelAndView = new ModelAndView('petlog/create')
     User user = userService.getCurrentUser()
@@ -86,7 +88,7 @@ class PetLogController {
       return fillModelAndView(modelAndView, pets)
     }
     petLogService.save(petLogCommand)
-    modelAndView.addObject('message', localeService.getMessage('petlog.created'))
+    modelAndView.addObject('message', localeService.getMessage('petlog.created', request))
     petLogCommand = new PetLogCommand()
     modelAndView.addObject('petLogCommand', petLogCommand)
     fillModelAndView(modelAndView, pets)
@@ -95,7 +97,7 @@ class PetLogController {
   ModelAndView fillModelAndView(ModelAndView modelAndView, List<Pet> pets){
     modelAndView.addObject('pets', pets)
     if(!pets){
-      modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty'))
+      modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty', request))
     }
     modelAndView
   }

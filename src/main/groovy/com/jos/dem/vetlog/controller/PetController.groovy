@@ -101,7 +101,7 @@ class PetController {
   }
 
   @RequestMapping(method = POST, value = "/update")
-  ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult) {
+  ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request) {
     log.info "Updating pet: ${petCommand.name}"
     ModelAndView modelAndView = new ModelAndView('pet/edit')
     if (bindingResult.hasErrors()) {
@@ -109,14 +109,14 @@ class PetController {
       return fillModelAndView(modelAndView)
     }
     petService.update(petCommand)
-    modelAndView.addObject('message', localeService.getMessage('pet.updated'))
+    modelAndView.addObject('message', localeService.getMessage('pet.updated', request))
     modelAndView.addObject('petCommand', petCommand)
     fillModelAndView(modelAndView)
   }
 
 
   @RequestMapping(method = POST, value = "/save")
-  ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult) {
+  ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request) {
     log.info "Creating pet: ${petCommand.name}"
     ModelAndView modelAndView = new ModelAndView('pet/create')
     if (bindingResult.hasErrors()) {
@@ -125,7 +125,7 @@ class PetController {
     }
     User user = userService.getCurrentUser()
     Pet pet = petService.save(petCommand, user)
-    modelAndView.addObject('message', localeService.getMessage('pet.created'))
+    modelAndView.addObject('message', localeService.getMessage('pet.created', request))
     petCommand = new PetCommand()
     modelAndView.addObject('petCommand', petCommand)
     fillModelAndView(modelAndView)

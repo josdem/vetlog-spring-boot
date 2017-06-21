@@ -28,7 +28,9 @@ import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
 import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
+
 import javax.validation.Valid
+import javax.servlet.http.HttpServletRequest
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
@@ -68,7 +70,7 @@ class TelephoneController {
 	}
 
   @RequestMapping(method = POST, value = "/save")
-  ModelAndView save(@Valid TelephoneCommand telephoneCommand, BindingResult bindingResult) {
+  ModelAndView save(@Valid TelephoneCommand telephoneCommand, BindingResult bindingResult, HttpServletRequest request) {
     log.info "Saving adoption for pet: ${telephoneCommand.uuid}"
     if (bindingResult.hasErrors()) {
       ModelAndView modelAndView = new ModelAndView('telephone/adopt')
@@ -78,7 +80,7 @@ class TelephoneController {
     User user = userService.getCurrentUser()
     telephoneService.save(telephoneCommand, user)
     ModelAndView modelAndView = new ModelAndView('redirect:/')
-    modelAndView.addObject('message', localeService.getMessage('adoption.email.sent'))
+    modelAndView.addObject('message', localeService.getMessage('adoption.email.sent', request))
     modelAndView
   }
 

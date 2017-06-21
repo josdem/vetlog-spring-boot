@@ -26,7 +26,9 @@ import org.springframework.web.servlet.ModelAndView
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.BindingResult
 import org.springframework.stereotype.Controller
+
 import javax.validation.Valid
+import javax.servlet.http.HttpServletRequest
 
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.UserCommand
@@ -62,14 +64,14 @@ class UserController {
 	}
 
 	@RequestMapping(method = POST, value = "/save")
-	ModelAndView save(@Valid UserCommand userCommand, BindingResult bindingResult) {
+	ModelAndView save(@Valid UserCommand userCommand, BindingResult bindingResult, HttpServletRequest request) {
     log.info "Saving user: ${userCommand.username}"
     if (bindingResult.hasErrors()) {
       return fillUserCommand(userCommand)
     }
     userService.save(userCommand)
     ModelAndView modelAndView = new ModelAndView('redirect:/')
-    modelAndView.addObject('message', localeService.getMessage('user.account.created'))
+    modelAndView.addObject('message', localeService.getMessage('user.account.created', request))
     modelAndView
   }
 
