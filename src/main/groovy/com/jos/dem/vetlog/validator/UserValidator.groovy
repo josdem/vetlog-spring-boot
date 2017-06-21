@@ -21,7 +21,6 @@ import org.springframework.validation.Errors
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 
-import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.command.UserCommand
 
@@ -31,8 +30,6 @@ import org.slf4j.LoggerFactory
 @Component
 class UserValidator implements Validator {
 
-  @Autowired
-  LocaleService localeService
   @Autowired
   UserService userService
 
@@ -53,19 +50,19 @@ class UserValidator implements Validator {
 
   def validatePasswords(Errors errors, UserCommand command) {
     if (!command.password.equals(command.passwordConfirmation)){
-      errors.rejectValue('password', 'error.password', localeService.getMessage('user.validation.password.equals'))
+      errors.rejectValue('password', 'user.error.password.equals')
     }
   }
 
   def validateUsername(Errors errors, UserCommand command) {
     if (userService.getByUsername(command.username)){
-       errors.rejectValue("username", 'error.username', localeService.getMessage('user.validation.duplicated.username'))
+       errors.rejectValue('username', 'user.error.duplicated.username')
     }
   }
 
   def validateEmail(Errors errors, UserCommand command) {
     if (userService.getByEmail(command.email)){
-       errors.rejectValue("email", 'error.email', localeService.getMessage('user.validation.duplicated.email'))
+       errors.rejectValue('email', 'user.error.duplicated.email')
     }
   }
 
