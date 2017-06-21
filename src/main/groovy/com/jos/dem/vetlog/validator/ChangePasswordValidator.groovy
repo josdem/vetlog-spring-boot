@@ -21,14 +21,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.Validator
 import org.springframework.validation.Errors
 import org.springframework.stereotype.Component
-import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.command.ChangePasswordCommand
 
 @Component
 class ChangePasswordValidator implements Validator {
-
-  @Autowired
-  LocaleService localeService
 
   @Override
   boolean supports(Class<?> clazz) {
@@ -43,7 +39,7 @@ class ChangePasswordValidator implements Validator {
 
   def validatePasswords(Errors errors, ChangePasswordCommand command) {
     if (!command.password.equals(command.passwordConfirmation)){
-      errors.rejectValue('password', 'error.password', localeService.getMessage('user.validation.password.equals'))
+      errors.rejectValue('password', 'user.error.password.equals')
     }
   }
 
