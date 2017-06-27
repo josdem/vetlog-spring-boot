@@ -98,12 +98,12 @@ ga('send', 'pageview');
                   <br/>
                   <label for="type"><h4 th:text="#{pet.type}"/></label>
                   <select id="typeSelector" name="type" th:field="*{type}" class="form-control">
-                    <option th:each=" type : ${T(com.jos.dem.vetlog.enums.PetType).values()}" th:value="${type}" th:text="${type.value}" />
+                    <option th:each=" type : ${T(com.jos.dem.vetlog.enums.PetType).values()}" th:value="${type}" th:text="${type.value}" th:selected="(${type} == *{type})" />
                   </select>
                   <br/>
                   <label for="breed"><h4 th:text="#{pet.breed}"/></label>
                   <select id="breedSelector" name="breed" class="form-control">
-                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}" />
+                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}" th:selected="(${breed.id} == *{breed})"/>
                   </select>
                   <br/><br/>
                   <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
