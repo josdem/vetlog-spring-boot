@@ -103,7 +103,7 @@ ga('send', 'pageview');
                   <br/>
                   <label for="breed"><h4 th:text="#{pet.breed}"/></label>
                   <select id="breedSelector" name="breed" class="form-control">
-                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}" th:selected="(${breed.id} == *{breed})"/>
+                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}" />
                   </select>
                   <br/><br/>
                   <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
@@ -121,7 +121,30 @@ ga('send', 'pageview');
     <script th:src="@{/assets/third-party/bootstrap/js/dropdown.js}"/>
 <script th:src="@{/assets/third-party/bootstrap/dist/js/bootstrap.min.js}"/>
 <script th:src="@{/assets/third-party/bootstrap-datepicker/dist/js/bootstrap-datepicker.js}"/>
-<script th:src="@{/javascript/selector.js}"/>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  $("#typeSelector").change(function () {
+    var breed = [[${petCommand.breed}]]
+    console.log(breed)
+    var str = $("#typeSelector option:selected").text()
+    console.log(str)
+    $.ajax($("#breedsByTypeUrl").val(), {
+      method: 'GET',
+      dataType: 'json',
+      data: {
+        type: str
+      }
+    }).done(function(data) {
+      $("#breedSelector").empty()
+      data.forEach(function(it){
+        $("#breedSelector").append($("<option></option>").attr("value", it.id).attr("selected", breed).text(it.name))
+      })
+    }).fail(function(data, status){
+      console.log(data, status)
+    });
+  }).change()
+/*]]>*/
+</script>
 <script th:src="@{/javascript/datepicker.js}"/>
 </body>
 </html>

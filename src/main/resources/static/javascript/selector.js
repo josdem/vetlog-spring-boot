@@ -16,3 +16,4 @@ $("#typeSelector").change(function () {
     console.log(data, status)
   });
 }).change()
+
