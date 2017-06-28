@@ -14,19 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.repository
+package com.jos.dem.vetlog.util
 
-import com.jos.dem.vetlog.model.Pet
-import com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.enums.PetStatus
-import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Component
+import org.springframework.beans.factory.annotation.Autowired
 
-interface PetRepository extends JpaRepository<Pet,Long> {
-  Pet save(Pet pet)
-  Pet findByUuid(String uuid)
-  List<Pet> findAll()
-  List<Pet> findAllByUser(User user)
-  List<Pet> findAllByAdopter(User user)
-  List<Pet> findAllByStatus(PetStatus status)
+import com.jos.dem.vetlog.model.Breed
+import com.jos.dem.vetlog.enums.PetType
+import com.jos.dem.vetlog.repository.BreedRepository
+
+@Component
+class BreedResolver {
+
+  @Autowired
+  BreedRepository breedRepository
+
+  Long resolve(PetType type, Long breedId){
+    List<Breed> breeds = breedRepository.findAll()
+    breeds.each {
+      if(it.type.value == type.value) {
+       return  breedId - it.id
+      }
+    }
+    return 0L
+  }
+
 }
-
