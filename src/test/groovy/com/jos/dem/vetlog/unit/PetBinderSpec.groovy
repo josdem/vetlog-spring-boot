@@ -44,6 +44,7 @@ class PetBinderSpec extends Specification {
   void "should bind a pet"(){
     given:'A Breed'
       Breed breed = new Breed(
+        id:45L,
         name:'Ragdoll',
         type:PetType.CAT
       )
