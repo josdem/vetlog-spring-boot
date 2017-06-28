@@ -19,6 +19,7 @@ package com.jos.dem.vetlog.unit
 import java.text.SimpleDateFormat
 
 import com.jos.dem.vetlog.model.Pet
+import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.Breed
 import com.jos.dem.vetlog.enums.PetType
 import com.jos.dem.vetlog.binder.PetBinder
@@ -31,11 +32,12 @@ class PetBinderSpec extends Specification {
 
   PetBinder binder = new PetBinder()
 
-  DateFormatter dateFormatter = new DateFormatter()
+  DateFormatter dateFormatter = Mock(DateFormatter)
   Date birthDate = Mock(Date)
 
   def setup(){
     binder.dateFormatter = dateFormatter
+    dateFormatter.format('2017-06-26 18:32:37') >> '06/26/2017'
     birthDate.toString() >> '2017-06-26 18:32:37'
   }
 
@@ -49,7 +51,8 @@ class PetBinderSpec extends Specification {
       Pet pet = new Pet(
         name:'Frida',
         breed:breed,
-        birthDate:birthDate
+        birthDate:birthDate,
+        user:new User()
       )
     when:'We bind'
       PetCommand result = binder.bindPet(pet)
