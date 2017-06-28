@@ -52,7 +52,7 @@ class BreedResolverSpec extends Specification {
     when:'We resolve breed index'
       Long result = resolver.resolve(type, breedId)
     then:'We expect sub id'
-      result ==  3L
+      result ==  2L
   }
 
 }

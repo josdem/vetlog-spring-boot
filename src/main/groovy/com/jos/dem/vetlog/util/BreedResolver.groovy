@@ -31,9 +31,9 @@ class BreedResolver {
 
   Long resolve(PetType type, Long breedId){
     List<Breed> breeds = breedRepository.findAll()
-    breeds.each {
+    for(Breed it: breeds) {
       if(it.type.value == type.value) {
-       return  breedId - it.id
+        return breedId - it.id
       }
     }
     return 0L
