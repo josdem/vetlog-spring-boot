@@ -60,6 +60,7 @@ class PetBinderSpec extends Specification {
     then:'We expect pet command'
       result.name == 'Frida'
       result.breed == 45L
+      result.type == PetType.CAT
   }
 
 }

@@ -71,7 +71,8 @@ class PetBinder {
       status:pet.status,
       images:pet.images,
       breed:pet.breed.id,
-      user:pet.user.id
+      user:pet.user.id,
+      type:pet.breed.type
     )
     command
   }
