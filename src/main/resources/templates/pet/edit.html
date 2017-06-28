@@ -124,7 +124,7 @@ ga('send', 'pageview');
 <script th:inline="javascript">
   /*<![CDATA[*/
   $("#typeSelector").change(function () {
-    var breed = [[${petCommand.breed}]]
+    var breed = [[${breedIndex}]]
     console.log(breed)
     var str = $("#typeSelector option:selected").text()
     console.log(str)
