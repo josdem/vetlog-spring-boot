@@ -124,10 +124,8 @@ ga('send', 'pageview');
 <script th:inline="javascript">
   /*<![CDATA[*/
   $("#typeSelector").change(function () {
-    var breed = [[${breedIndex}]]
-    console.log(breed)
+    var breed = [[${petCommand.breed}]]
     var str = $("#typeSelector option:selected").text()
-    console.log(str)
     $.ajax($("#breedsByTypeUrl").val(), {
       method: 'GET',
       dataType: 'json',
@@ -137,8 +135,10 @@ ga('send', 'pageview');
     }).done(function(data) {
       $("#breedSelector").empty()
       data.forEach(function(it){
-        $("#breedSelector").append($("<option></option>").attr("value", it.id).attr("selected", breed).text(it.name))
+        console.log(it.id)
+        $("#breedSelector").append($("<option></option>").attr("value", it.id).text(it.name))
       })
+      $("#breedSelector").val(breed).change()
     }).fail(function(data, status){
       console.log(data, status)
     });

@@ -45,7 +45,6 @@ import com.jos.dem.vetlog.service.BreedService
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.LocaleService
-import com.jos.dem.vetlog.util.BreedResolver
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -66,8 +65,6 @@ class PetController {
   PetBinder petBinder
   @Autowired
   PetValidator petValidator
-  @Autowired
-  BreedResolver breedResolver
 
   @Value('${breedsByTypeUrl}')
   String breedsByTypeUrl
@@ -95,13 +92,11 @@ class PetController {
   ModelAndView edit(@RequestParam("uuid") String uuid) {
     log.info "Editing pet: $uuid"
     Pet pet = petService.getPetByUuid(uuid)
-    Command petCommand = petBinder.bindPet(pet)
     ModelAndView modelAndView = new ModelAndView()
-    modelAndView.addObject('petCommand', petCommand)
+    modelAndView.addObject('petCommand', petBinder.bindPet(pet))
     modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
     modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
     modelAndView.addObject('awsImageUrl', awsImageUrl)
-    modelAndView.addObject('breedIndex', breedResolver.resolve(petCommand.type, petCommand.breed))
     modelAndView
   }
 
