@@ -27,7 +27,9 @@ import org.slf4j.LoggerFactory
 @Component
 class LocaleResolver extends AcceptHeaderLocaleResolver{
 
-  private static final List<Locale> LOCALES = [new Locale("en"), new Locale("es")]
+  private static final Locale english = new Locale('en')
+  private static final Locale spanish = new Locale('es')
+  private static final List<Locale> LOCALES = [english, spanish]
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -35,11 +37,11 @@ class LocaleResolver extends AcceptHeaderLocaleResolver{
   Locale resolveLocale(HttpServletRequest request) {
     log.info "Accept Language: ${request.getHeader('Accept-Language')}"
     if (!request.getHeader('Accept-Language')) {
-      return Locale.getDefault()
+      return english
     }
     List<Locale.LanguageRange> list = Locale.LanguageRange.parse(request.getHeader('Accept-Language'))
     Locale locale = Locale.lookup(list, LOCALES)
-    return locale
+    locale ?: english
   }
 
 }

@@ -32,7 +32,7 @@ class LocaleResolverSpec extends Specification {
     when:'We call resolve'
       Locale result = resolver.resolveLocale(request)
     then:'We expect default'
-      Locale.getDefault() == result
+      result == new Locale('en')
 	}
 
   void "should get en-US as locale"(){
@@ -54,6 +54,17 @@ class LocaleResolverSpec extends Specification {
     then:'We expect default'
       result  == new Locale('es')
 	}
+
+  void "should get english when unknown language as locale"(){
+		given:'A request'
+		  HttpServletRequest request = Mock(HttpServletRequest)
+    when:'We call resolve'
+      request.getHeader('Accept-Language') >> 'zh-cn,zh-tw'
+      Locale result = resolver.resolveLocale(request)
+    then:'We expect default'
+      result  == new Locale('en')
+	}
+
 
 
 
