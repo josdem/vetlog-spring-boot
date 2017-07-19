@@ -92,7 +92,7 @@ class RecoveryServiceImpl implements RecoveryService {
 
   Boolean validateToken(String token){
     RegistrationCode registrationCode = repository.findByToken(token)
-    registrationCode == null ? false : true
+    registrationCode == null
   }
 
   User changePassword(Command command){
