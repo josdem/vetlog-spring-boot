@@ -68,13 +68,13 @@ class PetLogController {
   }
 
   @RequestMapping(method = GET, value = "/create")
-  ModelAndView create(){
+  ModelAndView create(HttpServletRequest request){
     ModelAndView modelAndView = new ModelAndView('petlog/create')
     Command petLogCommand = new PetLogCommand()
     modelAndView.addObject('petLogCommand', petLogCommand)
     User user = userService.getCurrentUser()
     List<Pet> pets = petService.getPetsByUser(user)
-    fillModelAndView(modelAndView, pets)
+    fillModelAndView(modelAndView, pets, request)
   }
 
   @RequestMapping(method = POST, value = "/save")
@@ -91,10 +91,10 @@ class PetLogController {
     modelAndView.addObject('message', localeService.getMessage('petlog.created', request))
     petLogCommand = new PetLogCommand()
     modelAndView.addObject('petLogCommand', petLogCommand)
-    fillModelAndView(modelAndView, pets)
+    fillModelAndView(modelAndView, pets, request)
   }
 
-  ModelAndView fillModelAndView(ModelAndView modelAndView, List<Pet> pets){
+  ModelAndView fillModelAndView(ModelAndView modelAndView, List<Pet> pets, HttpServletRequest request){
     modelAndView.addObject('pets', pets)
     if(!pets){
       modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty', request))
