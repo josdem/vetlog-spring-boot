@@ -23,7 +23,7 @@ bower {
   'bootstrap'('3.3.7'){
     source '**'
   }
-  'vetlog-theme'('https://github.com/josdem/vetlog-theme.git'){
+  'servizi-dog-theme'('https://github.com/josdem/servizi-dog-template.git'){
     source '**'
   }
   'bootstrap-datepicker'('https://github.com/uxsolutions/bootstrap-datepicker.git'){
