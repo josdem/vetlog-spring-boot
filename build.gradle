@@ -29,6 +29,9 @@ bower {
   'bootstrap-datepicker'('https://github.com/uxsolutions/bootstrap-datepicker.git'){
      source '**'
   }
+  'font-awesome'('4.1.0'){
+    source '**'
+  }
 }
 
 flyway {
