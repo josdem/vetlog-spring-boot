@@ -108,7 +108,8 @@
 				</div>
 			</div>
 		</div>
-		<section>
+
+		<section id="list">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center section-content padding wow fadeInRight" data-wow-duration="1s">
@@ -124,7 +125,7 @@
 			</div>
 		</section>
 
-		<section class="section-darker">
+		<section id="register" class="section-darker">
 			<div class="row padding-left padding-right">
 				<div class="col-md-6 col-sm-6 text-left wow fadeInDown" data-wow-duration="1s">
 					<h4 th:text="#{home.register.title}"/>
@@ -149,7 +150,7 @@
 
 		<!-- SERVICES -->
 
-		<section id="servizi">
+		<section id="services">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12 col-sm-12 text-center">
@@ -185,6 +186,7 @@
 				</div>
 			</div>
 		</section>
+
 		<section class="call-to-action full-width-parallax">
 			<div class="trasparence">
 				<div class="container">
@@ -260,11 +262,10 @@
 				<p></p>
 				<div class="row">
 					<div class="col-md-12 col-sm-12 text-center">
-						<a href="">Home</a> |
-						<a href="">Servizi</a> |
-						<a href="">Contatti</a> |
-						<a href="">Regolamento</a> |
-						<a href="">Privacy Policy</a>
+            <a th:href="@{#home}"><i th:text="#{home.name}"/></a> |
+            <a th:href="@{#list}"><i th:text="#{home.list.name}"/></a> |
+            <a th:href="@{#register}"><i th:text="#{home.register.name}"/></a> |
+            <a th:href="@{#services}"><i th:text="#{home.services.name}"/></a>
 					</div>
 				</div>
 				<div class="row margin-top">
