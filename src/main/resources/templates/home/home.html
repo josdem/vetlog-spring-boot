@@ -2,9 +2,9 @@
 <html>
 	<head>
 		<meta charset="utf-8"/>
-		<title>Servizi Dog</title>
-		<meta name="description" content="Servizi Dog"/>
-		<meta name="author" content="Riccardo Borchi"/>
+    <title th:text="#{app.title}"/>
+		<meta name="description" content="Vetlog"/>
+		<meta name="author" content="josdem"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 		<!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="assets/third-party/bootstrap/dist/css/bootstrap.min.css"/>
@@ -30,23 +30,22 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-			        		<a class="page-scroll" href="index.html">Home</a>
+              <a class="page-scroll" th:href="@{#home}"><p th:text="#{home.name}"/></a>
 				        </li>
 				        <li>
-				        	<a class="page-scroll" href="login.html">Accedi</a>
+                  <a class="page-scroll" th:href="@{#home}"><p th:text="#{login.action}"/></a>
 				        </li>
 				        <li class="dropdown">
-				        	<a class="page-scroll dropdown-toggle" data-toggle="dropdown" href="form_servizio.html">Servizi</a>
+                  <a class="page-scroll dropdown-toggle" data-toggle="dropdown" th:href="@{#list}"><p th:text="#{home.list.name}"/></a>
 				        	<ul class="dropdown-menu">
-					          <li><a href="form_servizio.html">Dog Host</a></li>
-					          <li><a href="presentazione_servizio.html">Dog Sitter</a></li>
-					          <li><a href="form_servizio.html">Veterinario</a></li>
-					          <li><a href="form_servizio.html">Educatore</a></li>
-					          <li><a href="form_servizio.html">Associazione</a></li>
+                    <li><a th:href="@{#home}"><p th:text="#{home.name}"/></a></li>
+                    <li><a th:href="@{#list}"><p th:text="#{home.list.name}"/></a></li>
+                    <li><a th:href="@{#register}"><p th:text="#{home.register.name}"/></a></li>
+                    <li><a th:href="@{#services}"><p th:text="#{home.services.name}"/></a></li>
 				        	</ul>
 				        </li>
 				        <li>
-				        	<a class="page-scroll" href="contatti.html">Contatti</a>
+                  <a class="page-scroll" th:href="@{#register}"><p th:text="#{home.register.name}"/></a>
 				        </li>
 					</ul>
 				</div>
@@ -64,7 +63,7 @@
 
 					<div class="header-text">
 						<h1 class="title wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.25s"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></h1>
-						<a href="#about" class="btn btn-lg btn-primary page-scroll">Scopri</a>
+            <a th:href="@{#home}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.action}"/></a>
 					</div>
 
 				</div>
