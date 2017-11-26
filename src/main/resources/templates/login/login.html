@@ -5,44 +5,10 @@
     <th:block layout:include="fragments/include"/>
   </head>
   <body class="login">
-    <!-- MENU -->
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<i class="fa fa-paw list toggle-menu"></i>
-					</button>
-					<a class="navbar-brand" href="index.html"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-              <a class="page-scroll" th:href="@{#home}"><p th:text="#{home.name}"/></a>
-				        </li>
-				        <li>
-                  <a class="page-scroll" th:href="@{login}"><p th:text="#{login.action}"/></a>
-				        </li>
-				        <li class="dropdown">
-                  <a class="page-scroll dropdown-toggle" data-toggle="dropdown" th:href="@{#list}"><p th:text="#{home.list.name}"/></a>
-				        	<ul class="dropdown-menu">
-                    <li><a th:href="@{#home}"><p th:text="#{home.name}"/></a></li>
-                    <li><a th:href="@{#list}"><p th:text="#{home.list.name}"/></a></li>
-                    <li><a th:href="@{#register}"><p th:text="#{home.register.name}"/></a></li>
-                    <li><a th:href="@{#services}"><p th:text="#{home.services.name}"/></a></li>
-				        	</ul>
-				        </li>
-				        <li>
-                  <a class="page-scroll" th:href="@{#register}"><p th:text="#{home.register.name}"/></a>
-				        </li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+    <th:block layout:include="fragments/header"/>
+		<br/><br/>
     <br/><br/>
     <br/><br/>
-    <br/><br/>
-
     <div class="container">
       <div class="row">
         <div class="col-md-4 col-md-offset-4">

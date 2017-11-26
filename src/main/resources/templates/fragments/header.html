@@ -1,23 +1,38 @@
-<body>
-  <nav class="navbar navbar-inverse navbar-fixed-top">
-    <a class="navbar-brand" href="/">
-      <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
-    </a>
-  </nav>
-  <nav class="navbar-top" role="navigation">
-    <div class="navbar-brand">
+<html>
+  <head>
+    <th:block layout:include="fragments/include"/>
+  </head>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="fa fa-paw list toggle-menu"></i>
+      </button>
+      <a class="navbar-brand" href="index.html"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></a>
     </div>
-  </nav>
-  <div class="jumbotron">
-    <div class="container">
-      <h1 th:text="#{home.welcome}" />
-      <p th:text="#{home.label}" />
-      <div sec:authorize="isAnonymous()">
-        <a th:href="@{login}" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.action}"/></a>
-      </div>
-      <div sec:authorize="isAuthenticated()">
-        <a th:href="@{logout}" class="btn btn-primary btn-lg"  role="button"><p th:text="#{login.logout}"/></a>
-      </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a class="page-scroll" th:href="@{#home}"><p th:text="#{home.name}"/></a>
+        </li>
+        <li>
+          <a class="page-scroll" th:href="@{login}"><p th:text="#{login.action}"/></a>
+        </li>
+        <li class="dropdown">
+          <a class="page-scroll dropdown-toggle" data-toggle="dropdown" th:href="@{#list}"><p th:text="#{home.list.name}"/></a>
+          <ul class="dropdown-menu">
+            <li><a th:href="@{#home}"><p th:text="#{home.name}"/></a></li>
+            <li><a th:href="@{#list}"><p th:text="#{home.list.name}"/></a></li>
+            <li><a th:href="@{#register}"><p th:text="#{home.register.name}"/></a></li>
+            <li><a th:href="@{#services}"><p th:text="#{home.services.name}"/></a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="page-scroll" th:href="@{#register}"><p th:text="#{home.register.name}"/></a>
+        </li>
+      </ul>
     </div>
   </div>
-</body>
+</nav>
+</html>

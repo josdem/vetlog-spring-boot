@@ -1,57 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8"/>
     <title th:text="#{app.title}"/>
-		<meta name="description" content="Vetlog"/>
-		<meta name="author" content="josdem"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-		<link rel="stylesheet" type="text/css" href="assets/third-party/bootstrap/dist/css/bootstrap.min.css"/>
-		<link rel="stylesheet" type="text/css" href="assets/third-party/servizi-dog-theme/css/animate.css"/>
-		<link rel="stylesheet" type="text/css" href="assets/third-party/servizi-dog-theme/css/owl.css"/>
-		<link rel="stylesheet" type="text/css" href="assets/third-party/servizi-dog-theme/css/style.css"/>
-		<link rel="stylesheet" type="text/css" href="assets/third-party/font-awesome/css/font-awesome.min.css"/>
-		<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'/>
-		<link href='http://fonts.googleapis.com/css?family=Varela+Round:400,700' rel='stylesheet' type='text/css'/>
+    <th:block layout:include="fragments/include"/>
 	</head>
 	<body>
-		<!-- MENU -->
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-						<span class="sr-only">Toggle navigation</span>
-						<i class="fa fa-paw list toggle-menu"></i>
-					</button>
-					<a class="navbar-brand" href="index.html"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></a>
-				</div>
-				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav navbar-right">
-						<li>
-              <a class="page-scroll" th:href="@{#home}"><p th:text="#{home.name}"/></a>
-				        </li>
-				        <li>
-                  <a class="page-scroll" th:href="@{login}"><p th:text="#{login.action}"/></a>
-				        </li>
-				        <li class="dropdown">
-                  <a class="page-scroll dropdown-toggle" data-toggle="dropdown" th:href="@{#list}"><p th:text="#{home.list.name}"/></a>
-				        	<ul class="dropdown-menu">
-                    <li><a th:href="@{#home}"><p th:text="#{home.name}"/></a></li>
-                    <li><a th:href="@{#list}"><p th:text="#{home.list.name}"/></a></li>
-                    <li><a th:href="@{#register}"><p th:text="#{home.register.name}"/></a></li>
-                    <li><a th:href="@{#services}"><p th:text="#{home.services.name}"/></a></li>
-				        	</ul>
-				        </li>
-				        <li>
-                  <a class="page-scroll" th:href="@{#register}"><p th:text="#{home.register.name}"/></a>
-				        </li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-
+    <th:block layout:include="fragments/header"/>
 		<!-- HOME -->
-
 		<header id="home">
 			<div id="owl-demo">
 				<div class="item" style="background:url('assets/third-party/servizi-dog-theme/img/slider.png'); background-size:cover;">
@@ -238,36 +193,7 @@
 				</div>
 			</div>
 		</section>
-
-		<!-- FOOTER -->
-		<footer>
-			<div class="container">
-				<p></p>
-				<div class="row">
-					<div class="col-md-12 col-sm-12 text-center">
-            <a th:href="@{#home}"><i th:text="#{home.name}"/></a> |
-            <a th:href="@{#list}"><i th:text="#{home.list.name}"/></a> |
-            <a th:href="@{#register}"><i th:text="#{home.register.name}"/></a> |
-            <a th:href="@{#services}"><i th:text="#{home.services.name}"/></a>
-					</div>
-				</div>
-				<div class="row margin-top">
-					<div class="col-md-12 col-sm-12 text-center">
-						<a href="https://twitter.com/vetlog_mx"><i class="fa fa-2x fa-twitter"></i></a>
-						<a href="https://plus.google.com/112787708307859953767"><i class="fa fa-2x fa-google-plus"></i></a>
-						<a href="https://www.youtube.com/channel/UC9GTYz3aNsq6MA_uLXCvStg"><i class="fa fa-2x fa-youtube"></i></a>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 col-sm-12 text-center">
-						<a href="index.html"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></a>
-						<br/><br/>
-						<p>© Copyright 2017, Vetlog.</p>
-            <a th:href="#{home.footer.link}"><p th:text="#{home.footer.name}"/></a>
-					</div>
-				</div>
-			</div>
-		</footer>
+    <th:block layout:include="fragments/footer"/>
 		<script src="assets/third-party/servizi-dog-theme/js/jquery-2.1.0.min.js"></script>
 		<script src="assets/third-party/servizi-dog-theme/js/jquery.easing.js"></script>
 		<script src="assets/third-party/servizi-dog-theme/js/smoothScroll.js"></script>
