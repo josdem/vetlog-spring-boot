@@ -6,7 +6,6 @@
 		<meta name="description" content="Vetlog"/>
 		<meta name="author" content="josdem"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-		<!-- STYLES -->
 		<link rel="stylesheet" type="text/css" href="assets/third-party/bootstrap/dist/css/bootstrap.min.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/third-party/servizi-dog-theme/css/animate.css"/>
 		<link rel="stylesheet" type="text/css" href="assets/third-party/servizi-dog-theme/css/owl.css"/>
@@ -26,14 +25,13 @@
 					</button>
 					<a class="navbar-brand" href="index.html"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></a>
 				</div>
-
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right">
 						<li>
               <a class="page-scroll" th:href="@{#home}"><p th:text="#{home.name}"/></a>
 				        </li>
 				        <li>
-                  <a class="page-scroll" th:href="@{#home}"><p th:text="#{login.action}"/></a>
+                  <a class="page-scroll" th:href="@{login}"><p th:text="#{login.action}"/></a>
 				        </li>
 				        <li class="dropdown">
                   <a class="page-scroll dropdown-toggle" data-toggle="dropdown" th:href="@{#list}"><p th:text="#{home.list.name}"/></a>
@@ -49,41 +47,28 @@
 				        </li>
 					</ul>
 				</div>
-
 			</div>
 		</nav>
 
 		<!-- HOME -->
 
 		<header id="home">
-
 			<div id="owl-demo">
-
 				<div class="item" style="background:url('assets/third-party/servizi-dog-theme/img/slider.png'); background-size:cover;">
-
 					<div class="header-text">
 						<h1 class="title wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.25s"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></h1>
-            <a th:href="@{#home}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.action}"/></a>
+            <a th:href="@{login}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.action}"/></a>
 					</div>
-
 				</div>
-
 				<div class="item" style="background:url('assets/third-party/servizi-dog-theme/img/slider2.png'); background-size:cover;">
-
 					<div class="header-text">
 					</div>
-
 				</div>
-
 				<div class="item" style="background:url('assets/third-party/servizi-dog-theme/img/slider3.png'); background-size:cover;">
-
 					<div class="header-text">
 					</div>
-
 				</div>
-
 			</div>
-
 		</header>
 
 		<!-- ABOUT -->
@@ -255,7 +240,6 @@
 		</section>
 
 		<!-- FOOTER -->
-
 		<footer>
 			<div class="container">
 				<p></p>
@@ -284,9 +268,6 @@
 				</div>
 			</div>
 		</footer>
-
-		<!-- SCRIPTS -->
-
 		<script src="assets/third-party/servizi-dog-theme/js/jquery-2.1.0.min.js"></script>
 		<script src="assets/third-party/servizi-dog-theme/js/jquery.easing.js"></script>
 		<script src="assets/third-party/servizi-dog-theme/js/smoothScroll.js"></script>

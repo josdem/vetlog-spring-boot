@@ -1,5 +1,33 @@
-<footer>   
-	<nav class="navbar navbar-inverse navbar-fixed-bottom">
-		<a class="navbar-brand" href="http://josdem.io">© josdem.io 2017</a>
-	</nav>
-</footer>
+<html>
+  <head>
+    <th:block layout:include="fragments/include"/>
+  </head>
+  <footer>
+  <div class="container">
+    <p></p>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 text-center">
+        <a th:href="@{#home}"><i th:text="#{home.name}"/></a> |
+        <a th:href="@{#list}"><i th:text="#{home.list.name}"/></a> |
+        <a th:href="@{#register}"><i th:text="#{home.register.name}"/></a> |
+        <a th:href="@{#services}"><i th:text="#{home.services.name}"/></a>
+      </div>
+    </div>
+    <div class="row margin-top">
+      <div class="col-md-12 col-sm-12 text-center">
+        <a href="https://twitter.com/vetlog_mx"><i class="fa fa-2x fa-twitter"></i></a>
+        <a href="https://plus.google.com/112787708307859953767"><i class="fa fa-2x fa-google-plus"></i></a>
+        <a href="https://www.youtube.com/channel/UC9GTYz3aNsq6MA_uLXCvStg"><i class="fa fa-2x fa-youtube"></i></a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12 text-center">
+        <a href="index.html"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></a>
+        <br/><br/>
+        <p>© Copyright 2017, Vetlog.</p>
+        <a th:href="#{home.footer.link}"><p th:text="#{home.footer.name}"/></a>
+      </div>
+    </div>
+  </div>
+  </footer>
+</html>
