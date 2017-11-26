@@ -12,7 +12,12 @@
 				<div class="item" style="background:url('assets/third-party/servizi-dog-theme/img/slider.png'); background-size:cover;">
 					<div class="header-text">
 						<h1 class="title wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.25s"><img src="assets/third-party/servizi-dog-theme/img/servizidog.png" alt="Servizi Dog" /></h1>
+          <div sec:authorize="isAnonymous()">
             <a th:href="@{login}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.action}"/></a>
+          </div>
+          <div sec:authorize="isAuthenticated()">
+            <a th:href="@{logout}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.logout}"/></a>
+          </div>
 					</div>
 				</div>
 				<div class="item" style="background:url('assets/third-party/servizi-dog-theme/img/slider2.png'); background-size:cover;">
