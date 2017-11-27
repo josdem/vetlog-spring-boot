@@ -40,7 +40,7 @@
                 <input type="text" name='email' th:field="*{email}" class="form-control" placeholder="email" id='email'/>
                 <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
                 <br/>
-                <input type="submit" class="btn btn-primary btn-block" />
+                <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><h5 th:text="#{login.submit}"/></button>
               </fieldset>
             </form>
           </div>
