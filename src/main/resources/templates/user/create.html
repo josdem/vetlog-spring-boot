@@ -1,25 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <th:block layout:include="fragments/include-form"/>
   <title th:text="#{user.view.create.title}"></title>
+  <th:block layout:include="fragments/include"/>
 </head>
 <body class="login">
+  <th:block layout:include="fragments/header"/>
+  <br/><br/>
+  <br/><br/>
+  <br/><br/>
+  <br/><br/>
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-        <div class="login-banner text-center">
-          <a th:href="@{/}">
-          <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
-          </a>
-        </div>
         <div class="portlet portlet-green">
-          <div class="portlet-heading login-heading">
-            <div class="portlet-title">
-              <h4 th:text="#{user.view.create.label}"/>
-            </div>
-            <div class="clearfix"></div>
-          </div>
           <div class="portlet-body">
             <form id="register" th:action="@{/user/save}" th:object="${userCommand}" method="post"  class="form-horizontal">
               <fieldset>
@@ -55,5 +49,7 @@
       </div>
     </div>
   </div>
+  <br/><br/>
+  <th:block layout:include="fragments/footer"/>
 </body>
 </html>
