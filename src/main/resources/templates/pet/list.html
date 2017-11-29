@@ -26,6 +26,7 @@ ga('send', 'pageview');
             <p th:text="#{pet.list.empty}"/>
             <a th:href="@{/pet/create}" class="btn btn-success"><p th:text="#{pet.register}"/></a>
           </div>
+          <br/><br/>
         </div>
         <div th:each="pet : ${pets}">
           <div class="col-sm-6 col-md-4">
