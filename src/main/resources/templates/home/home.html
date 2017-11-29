@@ -193,7 +193,7 @@
             <p th:text="#{home.user.description}"/>
 					</div>
 					<div class="col-md-4 col-sm-4 text-center wow fadeInRight" data-wow-duration="1s">
-						<a href="registrazione.html" class="btn btn-lg btn-primary">REGISTRATI</a>
+            <a th:href="@{/user/create}" class="btn btn-lg btn-primary"><p th:text="#{button.action}"/></a>
 					</div>
 				</div>
 			</div>
