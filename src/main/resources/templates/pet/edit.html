@@ -111,34 +111,12 @@ ga('send', 'pageview');
         </div>
       </div>
     </div>
+    <br/><br/>
     <th:block layout:include="fragments/footer"/>
     <script th:src="@{/assets/third-party/bootstrap/js/dropdown.js}"/>
     <script th:src="@{/assets/third-party/bootstrap/dist/js/bootstrap.min.js}"/>
     <script th:src="@{/assets/third-party/bootstrap-datepicker/dist/js/bootstrap-datepicker.js}"/>
-    <script th:inline="javascript">
-  /*<![CDATA[*/
-  $("#typeSelector").change(function () {
-    var breed = [[${petCommand.breed}]]
-    var str = $("#typeSelector option:selected").text()
-    $.ajax($("#breedsByTypeUrl").val(), {
-      method: 'GET',
-      dataType: 'json',
-      data: {
-        type: str
-      }
-    }).done(function(data) {
-      $("#breedSelector").empty()
-      data.forEach(function(it){
-        console.log(it.id)
-        $("#breedSelector").append($("<option></option>").attr("value", it.id).text(it.name))
-      })
-      $("#breedSelector").val(breed).change()
-    }).fail(function(data, status){
-      console.log(data, status)
-    });
-  }).change()
-/*]]>*/
-</script>
-<script th:src="@{/javascript/datepicker.js}"/>
+    <script th:src="@{/javascript/selector.js}"/>
+    <script th:src="@{/javascript/datepicker.js}"/>
 </body>
 </html>
