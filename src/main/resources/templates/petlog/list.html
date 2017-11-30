@@ -26,6 +26,7 @@
             <p th:text="#{pet.list.empty}"/>
             <a th:href="@{/petlog/create}" class="btn btn-success"><p th:text="#{petlog.register}"/></a>
           </div>
+          <br/><br/>
         </div>
         <div th:each="log : ${petLogs}">
           <div class="col-sm-6 col-md-4">
