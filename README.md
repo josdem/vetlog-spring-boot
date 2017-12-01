@@ -12,7 +12,7 @@ Maintain your pet history organized
 
 #### Go here for more information
 
-http://vetlog.josdem.io/
+http://vetlog.org/
 
 #### User Stories, Configuration and Run
 
