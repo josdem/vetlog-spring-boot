@@ -2,7 +2,8 @@
 <html>
   <head>
     <title th:text="#{app.title}"/>
-      <th:block layout:include="fragments/include"/>
+    <th:block layout:include="fragments/include"/>
+    <script th:src="@{/javascript/analytics.js}"></script>
   </head>
   <body>
     <th:block layout:include="fragments/header"/>
