@@ -14,24 +14,10 @@
   </script>
   </head>
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <a class="navbar-brand" href="/">
-        <img src="/assets/third-party/vetlog-theme/img/flex-admin-logo.png" th:src="@{/assets/third-party/vetlog-theme/img/flex-admin-logo.png}"/>
-      </a>
-    </nav>
-    <br/><br/><br/>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="page-title">
-          <h3 th:text="#{adoption.name}" />
-            <ol class="breadcrumb">
-              <li><i class="fa fa-dashboard"></i> <a th:href="@{/}" th:text="#{home.name}" />
-            </li>
-            <li class="active" th:text="#{adoption.description}" />
-          </ol>
-        </div>
-      </div>
-    </div>
+    <th:block layout:include="fragments/header"/>
+    <br/><br/>
+    <br/><br/>
+    <br/><br/>
     <div class="container">
       <div class="row">
           <div class="col-sm-12 col-md-12">
@@ -61,6 +47,6 @@
       </div>
     </div>
     <br/><br/><br/><br/>
-    <th:block layout:include="fragments/footer"/>    
+    <th:block layout:include="fragments/footer"/>
   </body>
 </html>
