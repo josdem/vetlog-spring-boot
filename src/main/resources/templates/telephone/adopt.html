@@ -25,7 +25,13 @@
           <div class="thumbnail">
             <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
             <div class="caption">
-              <p th:text="#{adoption.thanks}"/><strong th:text="${pet.name}"/><p th:text="#{adoption.wishes}"/>
+              <p th:text="#{adoption.thanks}"/>
+              <br/>
+              <center>
+                <strong th:text="${pet.name}"/>
+              </center>
+              <br/>
+              <p th:text="#{adoption.wishes}"/>
               <br/>
                 <form id="description" th:action="@{/telephone/save}" th:object="${telephoneCommand}" method="post" class="form-horizontal">
                   <fieldset>
