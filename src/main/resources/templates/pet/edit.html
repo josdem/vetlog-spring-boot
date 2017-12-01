@@ -96,10 +96,11 @@ ga('send', 'pageview');
                   <br/>
                   <label for="breed"><h4 th:text="#{pet.breed}"/></label>
                   <select id="breedSelector" name="breed" class="form-control">
-                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}" />
+                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"/>
                   </select>
                   <br/><br/>
                   <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
+                  <input id="breed" type="hidden" th:field="*{breed}"/>
                   <input type="hidden" th:field="*{id}"/>
                   <input type="hidden" th:field="*{user}"/>
                   <input type="hidden" th:field="*{adopter}"/>
