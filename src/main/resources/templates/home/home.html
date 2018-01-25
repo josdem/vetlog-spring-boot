@@ -17,7 +17,9 @@
         <div id="owl-demo">
           <div class="item" style="background:url('/images/slider1.png'); background-size:cover;">
             <div class="header-text">
-              <h1 class="title wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.25s">Vetlog</h1>
+              <h1 class="title wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.25s">
+                <img th:src="@{/assets/third-party/servizi-dog-theme/img/servizidog.png}" alt="Vetlog"/>
+              </h1>
               <div sec:authorize="isAnonymous()">
                 <a th:href="@{login}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.action}"/></a>
               </div>
