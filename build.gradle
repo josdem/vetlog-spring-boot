@@ -1,6 +1,6 @@
 buildscript {
   ext {
-    springBootVersion = '1.4.3.RELEASE'
+    springBootVersion = '1.5.11.RELEASE'
     logbackVersion = '1.2.1'
     awsLambdaVersion = '1.1.0'
     awsJavaVersion = '1.11.98'
@@ -68,6 +68,7 @@ dependencies {
   compile "com.amazonaws:aws-lambda-java-core:$awsLambdaVersion"
   compile "com.amazonaws:aws-lambda-java-events:$awsLambdaVersion"
   compile "com.amazonaws:aws-java-sdk:$awsJavaVersion"
+  compile "net.minidev:json-smart:2.3'
   testCompile "cglib:cglib-nodep:3.2.4"
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'org.spockframework:spock-spring'
