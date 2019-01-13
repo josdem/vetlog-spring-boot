@@ -68,7 +68,7 @@ dependencies {
   compile "com.amazonaws:aws-lambda-java-core:$awsLambdaVersion"
   compile "com.amazonaws:aws-lambda-java-events:$awsLambdaVersion"
   compile "com.amazonaws:aws-java-sdk:$awsJavaVersion"
-  compile "net.minidev:json-smart:2.3'
+  compile 'net.minidev:json-smart:2.3'
   testCompile "cglib:cglib-nodep:3.2.4"
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'org.spockframework:spock-spring'

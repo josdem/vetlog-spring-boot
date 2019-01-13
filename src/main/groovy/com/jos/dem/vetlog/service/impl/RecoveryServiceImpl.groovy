@@ -48,8 +48,8 @@ class RecoveryServiceImpl implements RecoveryService {
   @Autowired
   LocaleService localeService
 
-  @Value('${server}')
-  String server
+  @Value('${baseUrl}')
+  String baseUrl
   @Value('${template.register.name}')
   String registerTemplate
   @Value('${template.register.path}')
@@ -62,7 +62,7 @@ class RecoveryServiceImpl implements RecoveryService {
 
   void sendConfirmationAccountToken(String email){
     String token = registrationService.generateToken(email)
-    Command command = new MessageCommand(email:email, template:registerTemplate, url:"${server}${registerPath}${token}")
+    Command command = new MessageCommand(email:email, template:registerTemplate, url:"${baseUrl}${registerPath}${token}")
     restService.sendCommand(command)
   }
 
@@ -86,7 +86,7 @@ class RecoveryServiceImpl implements RecoveryService {
     if(!user) throw new UserNotFoundException(localeService.getMessage('exception.user.not.found'))
     if(!user.enabled) throw new VetlogException(localeService.getMessage('exception.account.not.activated'))
     String token = registrationService.generateToken(email)
-    Command command = new MessageCommand(email:email, template:forgotTemplate, url:"${server}${forgotPath}${token}")
+    Command command = new MessageCommand(email:email, template:forgotTemplate, url:"${baseUrl}${forgotPath}${token}")
     restService.sendCommand(command)
   }
 
