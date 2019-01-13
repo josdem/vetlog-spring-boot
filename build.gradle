@@ -38,17 +38,13 @@ flyway {
   url = 'jdbc:mysql://localhost:3306/vetlog'
 }
 
-apply plugin: 'war'
 apply plugin: 'groovy'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
-war {
-  baseName = 'vetlog-spring-boot'
-  version = '0.0.1-SNAPSHOT'
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+group = 'com.jos.dem.vetlog'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
 
 repositories {
   mavenCentral()
