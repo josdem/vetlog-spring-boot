@@ -18,11 +18,16 @@ package com.dem.vetlog.util;
 
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Component
 public class DateFormatter {
 
-    public String format(String dateToFormat){
-        return dateToFormat;
+    public String format(String dateToFormat) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDate localDate = LocalDate.parse(dateToFormat, formatter);
+        return localDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
 
 }
