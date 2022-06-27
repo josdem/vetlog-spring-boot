@@ -1,83 +1,52 @@
-buildscript {
-  ext {
-    springBootVersion = '1.5.11.RELEASE'
-    logbackVersion = '1.2.1'
-    awsLambdaVersion = '1.1.0'
-    awsJavaVersion = '1.11.98'
-  }
-  repositories {
-    mavenCentral()
-  }
-  dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-  }
-}
-
 plugins {
-  id 'com.craigburke.bower-installer' version '2.5.1'
-  id "org.flywaydb.flyway" version "5.2.4"
+  id 'org.springframework.boot' version '2.7.0'
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+  id 'groovy'
+  id 'java'
 }
 
-bower {
-  installBase = 'src/main/resources/static/assets/third-party'
-  'bootstrap'('3.3.7'){
-    source '**'
-  }
-  'servizi-dog-theme'('https://github.com/josdem/servizi-dog-template.git'){
-    source '**'
-  }
-  'bootstrap-datepicker'('https://github.com/uxsolutions/bootstrap-datepicker.git'){
-     source '**'
-  }
-  'font-awesome'('4.1.0'){
-    source '**'
-  }
+ext {
+  logbackVersion = '1.2.1'
+  awsLambdaVersion = '1.1.0'
+  awsJavaVersion = '1.11.98'
 }
-
-flyway {
-  url = 'jdbc:mysql://localhost:3306/vetlog'
-}
-
-apply plugin: 'groovy'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
 
 group = 'com.jos.dem.vetlog'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '17'
 
 repositories {
   mavenCentral()
 }
 
-
 dependencies {
-  compile 'org.springframework.boot:spring-boot-starter-web'
-  compile 'org.codehaus.groovy:groovy-all'
-  compile 'org.springframework.boot:spring-boot-starter-aop'
-  compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-  compile 'org.springframework.boot:spring-boot-starter-security'
-  compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-  compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
-  compile 'org.springframework.boot:spring-boot-starter-actuator'
-  compile 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
-  compile 'mysql:mysql-connector-java:5.1.34'
-  compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
-  compile "ch.qos.logback:logback-classic:$logbackVersion"
-  compile "ch.qos.logback:logback-core:$logbackVersion"
-  compile "com.amazonaws:aws-lambda-java-core:$awsLambdaVersion"
-  compile "com.amazonaws:aws-lambda-java-events:$awsLambdaVersion"
-  compile "com.amazonaws:aws-java-sdk:$awsJavaVersion"
-  compile 'net.minidev:json-smart:2.3'
-  compile 'javax.xml.bind:jaxb-api:2.3.1'
-  testCompile "cglib:cglib-nodep:3.2.4"
-  testCompile 'org.springframework.boot:spring-boot-starter-test'
-  testCompile 'org.spockframework:spock-spring'
+  implementation 'org.springframework.boot:spring-boot-starter-web'
+  implementation 'org.codehaus.groovy:groovy'
+  implementation 'org.springframework.boot:spring-boot-starter-aop'
+  implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+  implementation 'org.springframework.boot:spring-boot-starter-security'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+  implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+  implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  //implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity4:2.1.2.RELEASE'
+  runtimeOnly 'mysql:mysql-connector-java'
+
+  implementation 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
+  // https://mvnrepository.com/artifact/javax.validation/validation-api
+  implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+  // https://mvnrepository.com/artifact/org.hibernate/hibernate-validator
+  implementation group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.4.Final'
+
+
+  implementation "ch.qos.logback:logback-classic:$logbackVersion"
+  implementation "ch.qos.logback:logback-core:$logbackVersion"
+  implementation "com.amazonaws:aws-lambda-java-core:$awsLambdaVersion"
+  implementation "com.amazonaws:aws-lambda-java-events:$awsLambdaVersion"
+  implementation "com.amazonaws:aws-java-sdk:$awsJavaVersion"
+  implementation 'net.minidev:json-smart:2.3'
+  implementation 'javax.xml.bind:jaxb-api:2.3.1'
+  testImplementation "cglib:cglib-nodep:3.2.4"
+  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+  testImplementation 'org.spockframework:spock-spring'
 }
 
-bootRun {
-  systemProperties = System.properties
-}
-
-bowerInstall.dependsOn rootProject.tasks['flywayMigrate']
-bootRun.dependsOn rootProject.tasks['bowerInstall']
