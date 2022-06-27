@@ -45,3 +45,8 @@ dependencies {
   testImplementation "org.spockframework:spock-spring:2.2-M1-groovy-3.0"
 }
 
+tasks.named('test') {
+  useJUnitPlatform()
+}
+
+
