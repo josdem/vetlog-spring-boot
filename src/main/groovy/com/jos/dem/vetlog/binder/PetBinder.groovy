@@ -16,17 +16,16 @@ limitations under the License.
 
 package com.jos.dem.vetlog.binder
 
+import com.dem.vetlog.util.DateFormatter
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.util.UuidGenerator
-import com.jos.dem.vetlog.util.DateFormatter
+
 import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.repository.BreedRepository
 

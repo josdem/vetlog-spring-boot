@@ -16,15 +16,13 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
-import java.text.SimpleDateFormat
-
+import com.dem.vetlog.util.DateFormatter
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.Breed
 import com.jos.dem.vetlog.enums.PetType
 import com.jos.dem.vetlog.binder.PetBinder
 import com.jos.dem.vetlog.command.PetCommand
-import com.jos.dem.vetlog.util.DateFormatter
 
 import spock.lang.Specification
 

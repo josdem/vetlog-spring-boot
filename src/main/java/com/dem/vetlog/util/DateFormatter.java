@@ -14,16 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.util
+package com.dem.vetlog.util;
 
-import org.springframework.stereotype.Component
+import org.springframework.stereotype.Component;
 
 @Component
-class DateFormatter {
+public class DateFormatter {
 
-  String format(String dateToFormat){
-    Date date = Date.parse('yyyy-MM-dd HH:mm:ss', dateToFormat)
-    date.format( 'MM/dd/yyyy' )
-  }
+    public String format(String dateToFormat){
+        return dateToFormat;
+    }
 
 }
