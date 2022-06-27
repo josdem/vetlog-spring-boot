@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface BreedRepository extends JpaRepository<Breed,Long> {
 
-  Breed findOne(Long breed)
+  Breed findById(Long breed)
   Breed save(Breed breed)
   List<Breed> findByType(PetType type)
 

@@ -9,3 +9,4 @@ gradle.properties
 application.properties
 *.log
 bower.json
+src/main/resources/application.yml
