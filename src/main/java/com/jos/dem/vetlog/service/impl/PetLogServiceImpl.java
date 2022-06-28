@@ -23,7 +23,6 @@ import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetLog;
 import com.jos.dem.vetlog.repository.PetLogRepository;
 import com.jos.dem.vetlog.repository.PetRepository;
-import com.jos.dem.vetlog.service.PetLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
