@@ -15,6 +15,12 @@ group = 'com.jos.dem.vetlog'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+}
+
 repositories {
   mavenCentral()
 }
@@ -28,6 +34,8 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
   implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  compileOnly 'org.projectlombok:lombok'
+  annotationProcessor 'org.projectlombok:lombok'
   runtimeOnly 'mysql:mysql-connector-java'
   implementation 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
   implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'

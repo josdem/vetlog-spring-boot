@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
-import com.dem.vetlog.util.DateFormatter
+import com.jos.dem.vetlog.util.DateFormatter
 import spock.lang.Specification
 
 class DateFormatterSpec extends Specification {

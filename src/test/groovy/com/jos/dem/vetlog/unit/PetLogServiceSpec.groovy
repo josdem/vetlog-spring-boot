@@ -24,7 +24,6 @@ import com.jos.dem.vetlog.binder.PetLogBinder
 import com.jos.dem.vetlog.repository.PetRepository
 import com.jos.dem.vetlog.repository.PetLogRepository
 import com.jos.dem.vetlog.service.PetLogService
-import com.jos.dem.vetlog.service.impl.PetLogServiceImpl
 
 import spock.lang.Specification
 
@@ -53,7 +52,7 @@ class PetLogServiceSpec extends Specification {
       PetLog petLog = new PetLog()
     when:"We save pet"
       petLogBinder.bind(command) >> petLog
-      petRepository.findOne(petId) >> pet
+      petRepository.findById(petId) >> pet
       PetLog result = service.save(command)
     then:"We expect pet saved with user"
       result.pet == pet

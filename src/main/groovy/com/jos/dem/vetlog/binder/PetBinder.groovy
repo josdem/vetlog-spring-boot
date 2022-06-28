@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.binder
 
-import com.dem.vetlog.util.DateFormatter
+import com.jos.dem.vetlog.util.DateFormatter
 import org.springframework.stereotype.Component
 import org.springframework.beans.factory.annotation.Autowired
 import com.jos.dem.vetlog.model.Pet
