@@ -20,7 +20,6 @@ import org.springframework.validation.Validator
 import org.springframework.validation.Errors
 import org.springframework.stereotype.Component
 
-import com.jos.dem.vetlog.command.RecoveryPasswordCommand
 
 @Component
 class RecoveryPasswordValidator implements Validator {

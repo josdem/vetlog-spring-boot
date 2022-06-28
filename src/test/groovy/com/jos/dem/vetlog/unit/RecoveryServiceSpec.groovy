@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
+import com.jos.dem.vetlog.command.ChangePasswordCommand
 import com.jos.dem.vetlog.command.Command
 import spock.lang.Specification
 

@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 
-import com.jos.dem.vetlog.command.MessageCommand
+
 import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.RestService

@@ -33,7 +33,6 @@ import javax.servlet.http.HttpServletRequest
 
 import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.service.LocaleService
-import com.jos.dem.vetlog.command.RecoveryPasswordCommand
 
 import com.jos.dem.vetlog.validator.RecoveryPasswordValidator
 import com.jos.dem.vetlog.validator.ChangePasswordValidator

@@ -27,7 +27,7 @@ import com.jos.dem.vetlog.service.RestService
 import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.model.User
 
-import com.jos.dem.vetlog.command.MessageCommand
+
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository
 import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.exception.UserNotFoundException
