@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.security.core.context.SecurityContextHolder
 
 import com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.binder.UserBinder
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.RecoveryService

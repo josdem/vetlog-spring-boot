@@ -19,8 +19,6 @@ package com.jos.dem.vetlog.unit
 import com.jos.dem.vetlog.binder.PetLogBinder
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.PetLog
-import com.jos.dem.vetlog.command.Command
-import com.jos.dem.vetlog.command.PetLogCommand
 
 import com.jos.dem.vetlog.repository.PetRepository
 import com.jos.dem.vetlog.repository.PetLogRepository

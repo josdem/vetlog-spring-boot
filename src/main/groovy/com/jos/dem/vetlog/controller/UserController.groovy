@@ -30,7 +30,7 @@ import org.springframework.stereotype.Controller
 import javax.validation.Valid
 import javax.servlet.http.HttpServletRequest
 
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.command.UserCommand
 import com.jos.dem.vetlog.validator.UserValidator
 import com.jos.dem.vetlog.service.UserService

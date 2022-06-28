@@ -19,7 +19,7 @@ package com.jos.dem.vetlog.unit
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.enums.PetStatus
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.binder.PetBinder
 import com.jos.dem.vetlog.repository.PetRepository
 import com.jos.dem.vetlog.service.PetService

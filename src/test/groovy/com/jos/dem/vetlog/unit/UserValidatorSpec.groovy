@@ -21,7 +21,7 @@ import org.springframework.validation.Errors
 import spock.lang.Specification
 
 import  com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.command.UserCommand
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.validator.UserValidator

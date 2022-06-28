@@ -27,7 +27,7 @@ import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.RegistrationCode
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.command.ChangePasswordCommand
 import com.jos.dem.vetlog.exception.UserNotFoundException
 import com.jos.dem.vetlog.exception.VetlogException

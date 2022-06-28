@@ -25,7 +25,7 @@ import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.binder.UserBinder
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.Role
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.command.UserCommand
 
 class UserServiceSpec extends Specification {

@@ -19,9 +19,6 @@ package com.jos.dem.vetlog.service.impl
 import groovyx.net.http.RESTClient
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Value
-import groovyx.net.http.HttpResponseException
-
-import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.service.RestService
 import com.jos.dem.vetlog.exception.RestException
 

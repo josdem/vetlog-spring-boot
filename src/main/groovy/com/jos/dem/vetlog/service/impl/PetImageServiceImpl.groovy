@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.annotation.Autowired
 
 import com.jos.dem.vetlog.model.PetImage
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.client.S3Writer
 import com.jos.dem.vetlog.service.PetImageService
 import com.jos.dem.vetlog.repository.PetImageRepository

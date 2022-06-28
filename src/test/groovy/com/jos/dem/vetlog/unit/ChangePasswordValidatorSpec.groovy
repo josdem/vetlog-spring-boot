@@ -18,7 +18,7 @@ package com.jos.dem.vetlog.unit
 
 import org.springframework.validation.Errors
 
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.command.ChangePasswordCommand
 import com.jos.dem.vetlog.validator.ChangePasswordValidator
 

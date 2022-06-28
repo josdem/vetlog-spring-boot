@@ -25,9 +25,8 @@ import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.service.RegistrationService
 import com.jos.dem.vetlog.service.RestService
 import com.jos.dem.vetlog.service.LocaleService
-import com.jos.dem.vetlog.model.RegistrationCode
 import com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.command.Command
+
 import com.jos.dem.vetlog.command.MessageCommand
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository
 import com.jos.dem.vetlog.repository.UserRepository

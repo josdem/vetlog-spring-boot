@@ -23,6 +23,7 @@ import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetLog;
 import com.jos.dem.vetlog.repository.PetLogRepository;
 import com.jos.dem.vetlog.repository.PetRepository;
+import com.jos.dem.vetlog.service.PetLogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,14 +35,14 @@ import java.util.Optional;
 public class PetLogServiceImpl implements PetLogService {
 
     private final PetLogBinder petLogBinder;
-    private final  PetLogRepository petLogRepository;
+    private final PetLogRepository petLogRepository;
     private final PetRepository petRepository;
 
     @Override
     public PetLog save(Command command) {
-        PetLogCommand petLogCommand = (PetLogCommand)command;
+        PetLogCommand petLogCommand = (PetLogCommand) command;
         PetLog petLog = petLogBinder.bind(petLogCommand);
-        Optional<Pet> pet = petRepository.findById(petLogCommand.getPet());
+        Optional<Pet> pet = petRepository.findById(petLogCommand.getId());
         petLog.setPet(pet.get());
         petLogRepository.save(petLog);
         return petLog;

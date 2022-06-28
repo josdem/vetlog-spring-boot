@@ -21,7 +21,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.Role
-import com.jos.dem.vetlog.command.Command
 
 @Component
 class UserBinder {
