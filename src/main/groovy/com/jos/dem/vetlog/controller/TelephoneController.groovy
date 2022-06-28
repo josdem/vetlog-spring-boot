@@ -21,7 +21,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.WebDataBinder
@@ -34,7 +33,7 @@ import javax.servlet.http.HttpServletRequest
 
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.command.TelephoneCommand
+
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.UserService
 import com.jos.dem.vetlog.service.LocaleService

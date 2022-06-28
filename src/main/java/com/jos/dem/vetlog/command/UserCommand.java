@@ -15,17 +15,37 @@ package com.jos.dem.vetlog.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Email;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class MessageCommand implements Command {
+public class UserCommand implements Command {
+
+    @NotNull
+    @Size(min=6, max=50)
+    private String username;
+
+    @NotNull
+    @Size(min=8, max=50)
+    private String password;
+
+    @NotNull
+    @Size(min=8, max=50)
+    private String passwordConfirmation;
+
+    @NotNull
+    @Size(min=1, max=50)
+    private String firstname;
+
+    @NotNull
+    @Size(min=1, max=100)
+    private String lastname;
+
+    @Email
+    @NotNull
+    @Size(min=1, max=250)
     private String email;
-    private String message;
-    private String name;
-    private String contactName;
-    private String url;
-    private String source;
-    private String redirect;
-    private String emailContact;
-    private String template;
 }
