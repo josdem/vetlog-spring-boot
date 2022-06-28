@@ -37,7 +37,7 @@ import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.enums.PetType
 import com.jos.dem.vetlog.enums.PetStatus
 
-import com.jos.dem.vetlog.command.PetCommand
+
 import com.jos.dem.vetlog.binder.PetBinder
 import com.jos.dem.vetlog.validator.PetValidator
 import com.jos.dem.vetlog.service.BreedService

@@ -42,7 +42,7 @@ public class PetLogServiceImpl implements PetLogService {
     public PetLog save(Command command) {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         PetLog petLog = petLogBinder.bind(petLogCommand);
-        Optional<Pet> pet = petRepository.findById(petLogCommand.getId());
+        Optional<Pet> pet = petRepository.findById(petLogCommand.getPet());
         petLog.setPet(pet.get());
         petLogRepository.save(petLog);
         return petLog;

@@ -23,7 +23,6 @@ import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.enums.PetStatus
 
-import com.jos.dem.vetlog.command.PetCommand
 import com.jos.dem.vetlog.util.UuidGenerator
 
 import com.jos.dem.vetlog.repository.UserRepository

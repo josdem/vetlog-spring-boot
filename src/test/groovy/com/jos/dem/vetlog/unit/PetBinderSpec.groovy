@@ -22,7 +22,6 @@ import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.Breed
 import com.jos.dem.vetlog.enums.PetType
 import com.jos.dem.vetlog.binder.PetBinder
-import com.jos.dem.vetlog.command.PetCommand
 
 import spock.lang.Specification
 

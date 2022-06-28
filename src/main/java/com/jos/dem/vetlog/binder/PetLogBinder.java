@@ -1,6 +1,7 @@
 package com.jos.dem.vetlog.binder;
 
 import com.jos.dem.vetlog.command.Command;
+import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.command.PetLogCommand;
 import com.jos.dem.vetlog.model.PetLog;
 
