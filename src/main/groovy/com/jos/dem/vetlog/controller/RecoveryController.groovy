@@ -21,8 +21,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST
 
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.InitBinder
 import org.springframework.web.bind.WebDataBinder
 import org.springframework.web.servlet.ModelAndView
@@ -36,7 +34,7 @@ import javax.servlet.http.HttpServletRequest
 import com.jos.dem.vetlog.service.RecoveryService
 import com.jos.dem.vetlog.service.LocaleService
 import com.jos.dem.vetlog.command.RecoveryPasswordCommand
-import com.jos.dem.vetlog.command.ChangePasswordCommand
+
 import com.jos.dem.vetlog.validator.RecoveryPasswordValidator
 import com.jos.dem.vetlog.validator.ChangePasswordValidator
 

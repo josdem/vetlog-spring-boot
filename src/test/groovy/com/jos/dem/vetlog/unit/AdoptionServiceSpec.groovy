@@ -16,10 +16,11 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
+import com.jos.dem.vetlog.command.AdoptionCommand
+import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.PetAdoption
 
-import com.jos.dem.vetlog.command.AdoptionCommand
 import com.jos.dem.vetlog.enums.PetStatus
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.AdoptionService
@@ -45,7 +46,7 @@ class AdoptionServiceSpec extends Specification {
 
   void "should save"(){
     given:"A adoptionCommand"
-      Command adoptionCommand = new AdoptionCommand(uuid:'uuid', description:'description')
+    Command adoptionCommand = new AdoptionCommand(uuid:'uuid', description:'description')
     and:"A pet"
       Pet pet = new Pet(status:'OWNED')
     when:"We save"

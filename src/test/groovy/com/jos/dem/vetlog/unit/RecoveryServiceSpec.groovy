@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
+import com.jos.dem.vetlog.command.Command
 import spock.lang.Specification
 
 import com.jos.dem.vetlog.service.RecoveryService
@@ -28,7 +29,7 @@ import com.jos.dem.vetlog.repository.RegistrationCodeRepository
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.model.RegistrationCode
 
-import com.jos.dem.vetlog.command.ChangePasswordCommand
+
 import com.jos.dem.vetlog.exception.UserNotFoundException
 import com.jos.dem.vetlog.exception.VetlogException
 

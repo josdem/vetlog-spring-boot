@@ -16,10 +16,11 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
+import com.jos.dem.vetlog.command.ChangePasswordCommand
+import com.jos.dem.vetlog.command.Command
 import org.springframework.validation.Errors
 
 
-import com.jos.dem.vetlog.command.ChangePasswordCommand
 import com.jos.dem.vetlog.validator.ChangePasswordValidator
 
 import spock.lang.Specification
@@ -32,7 +33,7 @@ class ChangePasswordValidatorSpec extends Specification {
 
   void "should not validate since passwords are not equals"(){
     given:"A user command"
-      Command command = new ChangePasswordCommand(token:'token',password:'password', passwordConfirmation:'p4ssword')
+    Command command = new ChangePasswordCommand(token:'token',password:'password', passwordConfirmation:'p4ssword')
     when:"We validate passwords"
       validator.validate(command, errors)
     then:"We expect valiation failed"
