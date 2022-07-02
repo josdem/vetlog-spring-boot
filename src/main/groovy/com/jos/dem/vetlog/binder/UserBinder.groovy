@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 import com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.model.Role
+import com.jos.dem.vetlog.enums.Role
 
 @Component
 class UserBinder {

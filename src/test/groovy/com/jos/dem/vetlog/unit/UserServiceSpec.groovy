@@ -24,7 +24,7 @@ import com.jos.dem.vetlog.service.impl.UserServiceImpl
 import com.jos.dem.vetlog.repository.UserRepository
 import com.jos.dem.vetlog.binder.UserBinder
 import com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.model.Role
+import com.jos.dem.vetlog.enums.Role
 
 import com.jos.dem.vetlog.command.UserCommand
 

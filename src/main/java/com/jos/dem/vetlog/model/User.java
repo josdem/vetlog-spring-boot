@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,50 +14,53 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.model
+package com.jos.dem.vetlog.model;
 
-import static javax.persistence.EnumType.STRING
-import static javax.persistence.GenerationType.AUTO
+import com.jos.dem.vetlog.enums.Role;
 
-import java.io.Serializable
-import javax.persistence.Id
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Enumerated
-import javax.persistence.GeneratedValue
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.Date;
+
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-class User implements Serializable {
+public class User implements Serializable {
 
-  @Id
-  @GeneratedValue(strategy=AUTO)
-  Long id
-  @Column(unique = true, nullable = false)
-  String username
-  @Column(nullable = false)
-  String password
-  @Column(nullable = true)
-  String firstname
-  @Column(nullable = true)
-  String lastname
-  @Column(nullable = true)
-  String email
-  @Column(nullable = true)
-  String mobile
-  @Column(nullable = false)
-  @Enumerated(STRING)
-  Role role
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
+    @Column(unique = true, nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private String password;
+    @Column(nullable = true)
+    private String firstname;
+    @Column(nullable = true)
+    private String lastname;
+    @Column(nullable = true)
+    private String email;
+    @Column(nullable = true)
+    private String mobile;
+    @Column(nullable = false)
+    @Enumerated(STRING)
+    private Role role;
 
-  @Column(nullable = false)
-  Boolean enabled = false
-  @Column(nullable = false)
-  Boolean accountNonExpired = true
-  @Column(nullable = false)
-  Boolean credentialsNonExpired = true
-  @Column(nullable = false)
-  Boolean accountNonLocked = true
-  @Column(nullable = false)
-  Date dateCreated = new Date()
+    @Column(nullable = false)
+    private Boolean enabled = false;
+    @Column(nullable = false)
+    private Boolean accountNonExpired = true;
+    @Column(nullable = false)
+    private Boolean credentialsNonExpired = true;
+    @Column(nullable = false)
+    private Boolean accountNonLocked = true;
+    @Column(nullable = false)
+    private Date dateCreated = new Date();
 
 }
 

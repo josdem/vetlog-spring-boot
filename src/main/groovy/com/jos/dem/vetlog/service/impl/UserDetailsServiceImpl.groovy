@@ -24,7 +24,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 import  com.jos.dem.vetlog.model.User
-import  com.jos.dem.vetlog.model.Role
 import  com.jos.dem.vetlog.service.UserService
 
 @Service

@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,26 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.model
+package com.jos.dem.vetlog.model;
 
-import static javax.persistence.GenerationType.AUTO
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-import javax.persistence.Id
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.ManyToOne
-import javax.persistence.JoinColumn
-import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
+import static javax.persistence.GenerationType.AUTO;
 
 @Entity
 class PetImage {
 
-  @Id
-  @GeneratedValue(strategy=AUTO)
-  Long id
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
-  @Column(nullable = false)
-  String uuid
+    @Column(nullable = false)
+    private String uuid;
 
 }

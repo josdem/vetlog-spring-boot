@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component
 import org.springframework.core.env.Environment
 
 import com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.model.Role
+import com.jos.dem.vetlog.enums.Role
 import com.jos.dem.vetlog.model.Breed
 import com.jos.dem.vetlog.enums.CurrentEnvironment
 import com.jos.dem.vetlog.repository.UserRepository

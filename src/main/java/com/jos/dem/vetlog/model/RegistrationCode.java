@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,33 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.model
+package com.jos.dem.vetlog.model;
 
-import static javax.persistence.GenerationType.AUTO
+import com.jos.dem.vetlog.enums.RegistrationCodeStatus;
 
-import javax.persistence.Id
-import javax.persistence.Entity
-import javax.persistence.Column
-import javax.persistence.GeneratedValue
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Date;
+import java.util.UUID;
 
-import com.jos.dem.vetlog.enums.RegistrationCodeStatus
+import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-class RegistrationCode {
+public class RegistrationCode {
 
-  @Id
-  @GeneratedValue(strategy=AUTO)
-  Long id
-  @Column(nullable = false)
-  String email
-  @Column(nullable = false)
-  Date dateCreated = new Date()
-  @Column(nullable = false)
-  String token = UUID.randomUUID().toString().replaceAll('-','')
-  @Column(nullable = false)
-  RegistrationCodeStatus status = RegistrationCodeStatus.VALID
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
+    @Column(nullable = false)
+    private String email;
+    @Column(nullable = false)
+    private Date dateCreated = new Date();
+    @Column(nullable = false)
+    private String token = UUID.randomUUID().toString();
+    @Column(nullable = false)
+    private RegistrationCodeStatus status = RegistrationCodeStatus.VALID;
 
-  Boolean isValid(){
-    status == RegistrationCodeStatus.VALID ? true : false
-  }
+    private Boolean isValid() {
+        return status == RegistrationCodeStatus.VALID ? true : false;
+    }
 }

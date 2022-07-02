@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,42 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.model
+package com.jos.dem.vetlog.model;
 
-import static javax.persistence.GenerationType.AUTO
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.util.Date;
 
-import javax.persistence.Id
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.ManyToOne
-import javax.persistence.JoinColumn
-import javax.persistence.FetchType
+import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-class PetLog {
+public class PetLog {
 
-  @Id
-  @GeneratedValue(strategy=AUTO)
-  Long id
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
-  @Column(nullable = true)
-  String vetName
+    @Column(nullable = true)
+    private String vetName;
 
-  @Column(nullable = false)
-  String symptoms
+    @Column(nullable = false)
+    private String symptoms;
 
-  @Column(nullable = false)
-  String diagnosis
+    @Column(nullable = false)
+    private String diagnosis;
 
-  @Column(nullable = true)
-  String medicine
+    @Column(nullable = true)
+    private String medicine;
 
-  @Column(nullable = false)
-  Date dateCreated = new Date()
+    @Column(nullable = false)
+    private Date dateCreated = new Date();
 
-  @ManyToOne(fetch=FetchType.LAZY)
-  @JoinColumn(name="pet_id")
-  Pet pet
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
 
 }
