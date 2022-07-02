@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.enums;
 
-enum PetType {
+public enum PetType {
   DOG("Dog"), CAT("Cat"), BIRD("Bird"), RODENT("Rodent"), SPIDER("Spider"), SNAKE("Snake"), FISH("Fish");
 
   private final String value;

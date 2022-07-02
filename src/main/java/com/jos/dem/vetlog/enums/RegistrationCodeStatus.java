@@ -16,6 +16,6 @@ limitations under the License.
 
 package com.jos.dem.vetlog.enums;
 
-enum RegistrationCodeStatus {
+public enum RegistrationCodeStatus {
   VALID ,INVALID
 }

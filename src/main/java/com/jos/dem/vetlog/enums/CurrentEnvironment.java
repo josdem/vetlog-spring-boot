@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.enums;
 
-enum CurrentEnvironment {
+public enum CurrentEnvironment {
 
   DEVELOPMENT("development"), STAGE("stage"), PRODUCTION("production");
 
