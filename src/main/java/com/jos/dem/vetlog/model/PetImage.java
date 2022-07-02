@@ -24,7 +24,7 @@ import javax.persistence.Id;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
-class PetImage {
+public class PetImage {
 
     @Id
     @GeneratedValue(strategy = AUTO)
