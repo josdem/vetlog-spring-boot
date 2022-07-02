@@ -16,6 +16,9 @@ limitations under the License.
 
 package com.jos.dem.vetlog.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,6 +30,8 @@ import java.util.Date;
 
 import static javax.persistence.GenerationType.AUTO;
 
+@Getter
+@Setter
 @Entity
 public class PetLog {
 
