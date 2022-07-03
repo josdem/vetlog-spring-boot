@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.util
+package com.jos.dem.vetlog.util;
 
-class UuidGenerator {
-  static String generateUuid() {
-    UUID.randomUUID().toString().replaceAll('-', '')
-  }
+import java.util.UUID;
+
+public class UuidGenerator {
+
+    public static String generateUuid() {
+        return UUID.randomUUID().toString();
+    }
 }

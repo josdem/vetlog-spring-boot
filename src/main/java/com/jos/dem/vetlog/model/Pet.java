@@ -17,6 +17,8 @@ limitations under the License.
 package com.jos.dem.vetlog.model;
 
 import com.jos.dem.vetlog.enums.PetStatus;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,12 +30,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.AUTO;
 
+@Getter
+@Setter
 @Entity
 public class Pet {
 
@@ -48,7 +53,7 @@ public class Pet {
     private String name;
 
     @Column(nullable = false)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @Column(nullable = false)
     private Boolean dewormed = false;

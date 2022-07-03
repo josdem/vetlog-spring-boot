@@ -17,6 +17,8 @@ limitations under the License.
 package com.jos.dem.vetlog.model;
 
 import com.jos.dem.vetlog.enums.Role;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +31,9 @@ import java.util.Date;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.AUTO;
 
+
+@Getter
+@Setter
 @Entity
 public class User implements Serializable {
 
