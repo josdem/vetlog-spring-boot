@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,19 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.repository
+package com.jos.dem.vetlog.repository;
 
-import com.jos.dem.vetlog.model.Pet
-import com.jos.dem.vetlog.model.User
-import com.jos.dem.vetlog.enums.PetStatus
-import org.springframework.data.jpa.repository.JpaRepository
+import com.jos.dem.vetlog.enums.PetStatus;
+import com.jos.dem.vetlog.model.Pet;
+import com.jos.dem.vetlog.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-interface PetRepository extends JpaRepository<Pet,Long> {
-  Pet save(Pet pet)
-  Pet findByUuid(String uuid)
-  List<Pet> findAll()
-  List<Pet> findAllByUser(User user)
-  List<Pet> findAllByAdopter(User user)
-  List<Pet> findAllByStatus(PetStatus status)
+import java.util.List;
+
+public interface PetRepository extends JpaRepository<Pet, Long> {
+    Pet save(Pet pet);
+
+    Pet findByUuid(String uuid);
+
+    List<Pet> findAll();
+
+    List<Pet> findAllByUser(User user);
+
+    List<Pet> findAllByAdopter(User user);
+
+    List<Pet> findAllByStatus(PetStatus status);
 }
 

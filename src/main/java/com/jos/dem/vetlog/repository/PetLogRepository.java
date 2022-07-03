@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.repository
+package com.jos.dem.vetlog.repository;
 
-import com.jos.dem.vetlog.model.Pet
-import com.jos.dem.vetlog.model.PetLog
-import org.springframework.data.jpa.repository.JpaRepository
+import com.jos.dem.vetlog.model.Pet;
+import com.jos.dem.vetlog.model.PetLog;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-interface PetLogRepository extends JpaRepository<PetLog,Long> {
+import java.util.List;
 
-  PetLog save(PetLog petLog)
-  List<PetLog> getAllByPet(Pet pet)
+public interface PetLogRepository extends JpaRepository<PetLog, Long> {
+
+    PetLog save(PetLog petLog);
+
+    List<PetLog> getAllByPet(Pet pet);
 
 }
 

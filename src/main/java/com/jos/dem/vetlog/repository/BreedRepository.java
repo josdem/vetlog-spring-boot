@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.repository
+package com.jos.dem.vetlog.repository;
 
-import com.jos.dem.vetlog.model.Breed
-import com.jos.dem.vetlog.enums.PetType
-import org.springframework.data.jpa.repository.JpaRepository
+import com.jos.dem.vetlog.model.Breed;
+import com.jos.dem.vetlog.enums.PetType;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-interface BreedRepository extends JpaRepository<Breed,Long> {
+import java.util.List;
+import java.util.Optional;
 
-  Breed findById(Long breed)
-  Breed save(Breed breed)
-  List<Breed> findByType(PetType type)
+public interface BreedRepository extends JpaRepository<Breed,Long> {
+
+  Optional<Breed> findById(Long breed);
+  Breed save(Breed breed);
+  List<Breed> findByType(PetType type);
 
 }
 
