@@ -16,6 +16,8 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
+import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.command.TelephoneCommand
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 
@@ -48,7 +50,7 @@ class TelephoneServiceSpec extends Specification{
 
   void "should save"(){
     given:"A command"
-      Command command = new TelephoneCommand(uuid:'uuid', mobile:'5516827055')
+    Command command = new TelephoneCommand(uuid:'uuid', mobile:'5516827055')
     and:"A owner and adopter"
       User owner = new User(email:'josdem@email.com')
       User adopter = new User(email:'estrella@email.com', mobile:'5500012345')

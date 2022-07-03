@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
+import com.jos.dem.vetlog.command.Command
 import org.springframework.validation.Errors
 
 import spock.lang.Specification
@@ -38,7 +39,7 @@ class UserValidatorSpec extends Specification {
 
   void "should not validate an user command since passwords are not equals"(){
     given:"A user command"
-      Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'p4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
+    Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'p4ssword', firstname:'josdem',lastname:'lastname',email:'josdem@email.com')
     when:"We validate passwords"
       validator.validate(command, errors)
     then:"We expect valiation failed"

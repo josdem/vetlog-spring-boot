@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.validator
 
-
+import com.jos.dem.vetlog.command.ChangePasswordCommand
 import org.springframework.validation.Validator
 import org.springframework.validation.Errors
 import org.springframework.stereotype.Component

@@ -16,6 +16,9 @@ limitations under the License.
 
 package com.jos.dem.vetlog.controller
 
+import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.command.PetCommand
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET
 import static org.springframework.web.bind.annotation.RequestMethod.POST
 

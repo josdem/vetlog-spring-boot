@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
+import com.jos.dem.vetlog.command.Command
 import spock.lang.Specification
 
 import com.jos.dem.vetlog.service.UserService
@@ -62,7 +63,7 @@ class UserServiceSpec extends Specification {
 
   void "should save an user"(){
     given:"A command"
-      Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password',firstname:'Jose Luis',lastname:'lastname',email:'josdem@email.com')
+    Command command = new UserCommand(username:'josdem',password:'password', passwordConfirmation:'password',firstname:'Jose Luis',lastname:'lastname',email:'josdem@email.com')
     when:"We save an user"
       User user = userService.save(command)
     then:"We expect repository delegation"

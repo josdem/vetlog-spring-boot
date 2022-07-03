@@ -17,6 +17,8 @@ limitations under the License.
 package com.jos.dem.vetlog.unit
 
 import com.jos.dem.vetlog.binder.PetLogBinder
+import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.command.PetLogCommand
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.PetLog
 
@@ -42,7 +44,7 @@ class PetLogServiceSpec extends Specification {
 
   void "should save pet"(){
     given:"A command"
-      Command command = new PetLogCommand()
+    Command command = new PetLogCommand()
     and:"A pet id"
       Long petId = 1L
       command.pet = petId

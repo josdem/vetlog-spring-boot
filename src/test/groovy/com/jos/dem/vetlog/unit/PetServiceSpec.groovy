@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
+import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.enums.PetStatus
@@ -46,7 +47,7 @@ class PetServiceSpec extends Specification {
     given:"And User"
       User user = new User()
     and:"A command"
-      Command command = Mock(Command)
+    Command command = Mock(Command)
     and:"A pet"
       Pet pet = new Pet()
     when:"We save pet"

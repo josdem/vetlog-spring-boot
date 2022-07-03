@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service.impl
 
+import com.jos.dem.vetlog.command.Command
 import groovyx.net.http.RESTClient
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Value
