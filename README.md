@@ -5,7 +5,7 @@ Maintain your pet history organized
 
 #### Features
 
-* You can register youself in the platform as a user
+* You can register yourself in the platform as a user
 * You can register your pets, so you can maintain vet visits logs
 * You can give some pet in adoption
 * You can adopt a pet
