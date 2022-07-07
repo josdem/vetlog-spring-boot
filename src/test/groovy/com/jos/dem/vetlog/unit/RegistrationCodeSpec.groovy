@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,29 +16,28 @@ limitations under the License.
 
 package com.jos.dem.vetlog.unit
 
-import spock.lang.Specification
-
-import com.jos.dem.vetlog.model.RegistrationCode
 import com.jos.dem.vetlog.enums.RegistrationCodeStatus
+import com.jos.dem.vetlog.model.RegistrationCode
+import spock.lang.Specification
 
 class RegistrationCodeSpec extends Specification {
 
-  RegistrationCode registrationCode = new RegistrationCode()
+    RegistrationCode registrationCode = new RegistrationCode()
 
-  void "should create a registration code with creation date"(){
-    given:"A date"
-      Date now = new Date()
-    expect:"Date is not null and in the past"
-      registrationCode.dateCreated.getTime() - now.getTime() < 10000
-      registrationCode.token.size() == 32
-      registrationCode.isValid()
-  }
+    void "should create a registration code with creation date"() {
+        given: "A date"
+        Date now = new Date()
+        expect: "Date is not null and in the past"
+        registrationCode.dateCreated.getTime() - now.getTime() < 10000
+        registrationCode.token.size() == 36
+        registrationCode.isValid()
+    }
 
-  void "should invalidate a token"(){
-    when:"We invalidate token"
-      registrationCode.status = RegistrationCodeStatus.INVALID
-    then:"Is not valid"
-      registrationCode.isValid() == false
-  }
+    void "should invalidate a token"() {
+        when: "We invalidate token"
+        registrationCode.status = RegistrationCodeStatus.INVALID
+        then: "Is not valid"
+        registrationCode.isValid() == false
+    }
 
 }
