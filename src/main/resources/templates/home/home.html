@@ -2,11 +2,49 @@
 <html>
   <head>
     <title th:text="#{app.title}"/>
-    <th:block layout:include="fragments/include"/>
-    <th:block layout:include="google/analytics"/>
+    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/css/animate.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/css/owl.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/node_modules/font-awesome/css/font-awesome.min.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'/>
+    <link href='http://fonts.googleapis.com/css?family=Varela+Round:400,700' rel='stylesheet' type='text/css'/>
   </head>
   <body>
-    <th:block layout:include="fragments/header"/>
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <i class="fa fa-paw list toggle-menu"></i>
+        </button>
+        <a class="navbar-brand" th:href="@{/}">
+          <img class="img-responsive" th:src="@{/images/logo-complete.png}" alt="Vetlog" />
+        </a>
+      </div>
+      <div sec:authorize="isAnonymous()">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a class="page-scroll" th:href="@{/}"><p th:text="#{home.name}"/></a>
+            </li>
+            <li>
+              <a class="page-scroll" th:href="@{/login}"><p th:text="#{login.action}"/></a>
+            </li>
+            <li>
+              <a class="page-scroll" th:href="@{/pet/list}"><p th:text="#{home.list.name}"/></a>
+            </li>
+            <li>
+              <a class="page-scroll" th:href="@{/pet/create}"><p th:text="#{home.register.name}"/></a>
+            </li>
+            <li>
+              <a class="page-scroll" th:href="@{/pet/giveForAdoption}"><p th:text="#{adoption.name}"/></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
       <div th:if="${message}">
         <div align="center">
           <p style="color:blue;font-size:18px;" th:text="${message}"/>
@@ -206,7 +244,35 @@
           </div>
         </div>
       </section>
-      <th:block layout:include="fragments/footer"/>
+  <footer>
+    <div class="container">
+      <p></p>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 text-center">
+          <a th:href="@{/}"><i th:text="#{home.name}"/></a> |
+          <a th:href="@{/pet/list}"><i th:text="#{home.list.name}"/></a> |
+          <a th:href="@{/pet/create}"><i th:text="#{home.register.name}"/></a> |
+          <a th:href="@{/pet/giveForAdoption}"><i th:text="#{adoption.name}"/></a>
+        </div>
+      </div>
+      <div class="row margin-top">
+        <div class="col-md-12 col-sm-12 text-center">
+          <a href="https://twitter.com/vetlog_org"><i class="fa fa-2x fa-twitter"></i></a>
+          <a href="https://plus.google.com/102860193591185377637"><i class="fa fa-2x fa-google-plus"></i></a>
+          <a href="https://www.instagram.com/vetlog_org"><i class="fa fa-2x fa-instagram"></i></a>
+          <a href="https://www.youtube.com/channel/UC47DthaYwStgMUNLSXrBnjQ"><i class="fa fa-2x fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-sm-12 text-center">
+          <a th:href="#{app.mailto}"><p style="font-size:18px" th:text="#{app.contact.us}"/></a>
+          <br/><br/>
+          <p>© Copyright 2022, Vetlog.</p>
+          <a th:href="#{home.footer.link}"><p th:text="#{home.footer.name}"/></a>
+        </div>
+      </div>
+    </div>
+  </footer>
         <script src="assets/third-party/servizi-dog-theme/js/jquery-2.1.0.min.js"></script>
         <script src="assets/third-party/servizi-dog-theme/js/jquery.easing.js"></script>
         <script src="assets/third-party/servizi-dog-theme/js/smoothScroll.js"></script>
