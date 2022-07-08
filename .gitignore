@@ -3,10 +3,10 @@
 /build/
 **swp
 **swo
-node_modules/
-src/main/resources/static/assets/
+**node_modules/
 gradle.properties
 application.properties
 *.log
 bower.json
 src/main/resources/application.yml
+**package-lock.json
