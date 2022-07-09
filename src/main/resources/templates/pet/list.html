@@ -1,21 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org">
   <head>
-    <th:block layout:include="fragments/include"/>
     <title th:text="#{pet.view.list.title}"></title>
-    <script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-25685398-5', 'auto');
-ga('send', 'pageview');
-
-    </script>
+    <head th:insert="fragments/include"/>
   </head>
   <body>
-    <th:block layout:include="fragments/header"/>
+    <div th:insert="fragments/header"/>
     <br/><br/>
     <br/><br/>
     <br/><br/>
@@ -86,7 +76,7 @@ ga('send', 'pageview');
         </div>
       </div>
     </div>
-    <th:block layout:include="fragments/footer"/>
+    <div th:insert="fragments/footer"/>
     <script th:src="@{/assets/third-party/servizi-dog-theme/node_modules/jquery/jquery.js}"/>
     <script th:src="@{/assets/third-party/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"/>
   </body>
