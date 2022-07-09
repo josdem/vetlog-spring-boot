@@ -1,315 +1,231 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org">
-  <head>
+<head>
     <title th:text="#{app.title}"/>
-    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/css/animate.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/css/owl.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/css/style.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/node_modules/font-awesome/css/font-awesome.min.css"/>
-    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'/>
-    <link href='http://fonts.googleapis.com/css?family=Varela+Round:400,700' rel='stylesheet' type='text/css'/>
-  </head>
-  <body>
-  <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-          <span class="sr-only">Toggle navigation</span>
-          <i class="fa fa-paw list toggle-menu"></i>
-        </button>
-        <a class="navbar-brand" th:href="@{/}">
-          <img class="img-responsive" th:src="@{/images/logo-complete.png}" alt="Vetlog" />
-        </a>
-      </div>
-      <div sec:authorize="isAnonymous()">
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a class="page-scroll" th:href="@{/}"><p th:text="#{home.name}"/></a>
-            </li>
-            <li>
-              <a class="page-scroll" th:href="@{/login}"><p th:text="#{login.action}"/></a>
-            </li>
-            <li>
-              <a class="page-scroll" th:href="@{/pet/list}"><p th:text="#{home.list.name}"/></a>
-            </li>
-            <li>
-              <a class="page-scroll" th:href="@{/pet/create}"><p th:text="#{home.register.name}"/></a>
-            </li>
-            <li>
-              <a class="page-scroll" th:href="@{/pet/giveForAdoption}"><p th:text="#{adoption.name}"/></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div sec:authorize="isAuthenticated()">
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a class="page-scroll" th:href="@{/}"><p th:text="#{home.name}"/></a>
-            </li>
-            <li>
-              <a class="page-scroll" th:href="@{/logout}"><p th:text="#{login.logout}"/></a>
-            </li>
-            <li>
-              <a class="page-scroll" th:href="@{/pet/list}"><p th:text="#{home.list.name}"/></a>
-            </li>
-            <li>
-              <a class="page-scroll" th:href="@{/pet/create}"><p th:text="#{home.register.name}"/></a>
-            </li>
-            <li>
-              <a class="page-scroll" th:href="@{/pet/giveForAdoption}"><p th:text="#{adoption.name}"/></a>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <head th:insert="fragments/include"/>
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<div th:insert="fragments/header"/>
+<div th:if="${message}">
+    <div align="center">
+        <p style="color:blue;font-size:18px;" th:text="${message}"/>
+        <br/><br/>
     </div>
-  </nav>
-      <div th:if="${message}">
-        <div align="center">
-          <p style="color:blue;font-size:18px;" th:text="${message}"/>
-          <br/><br/>
+</div>
+<header id="home">
+    <div id="owl-demo">
+        <div class="item" style="background:url('/images/slider1.png'); background-size:cover;">
+            <div class="header-text">
+                <h1 class="title wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.25s">
+                    <img th:src="@{/images/logo-partial.png}" alt="Vetlog"/>
+                </h1>
+                <div sec:authorize="isAnonymous()">
+                    <a th:href="@{login}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.action}"/></a>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <a th:href="@{logout}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.logout}"/></a>
+                </div>
+            </div>
         </div>
-      </div>
-      <header id="home">
-        <div id="owl-demo">
-          <div class="item" style="background:url('/images/slider1.png'); background-size:cover;">
-            <div class="header-text">
-              <h1 class="title wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.25s">
-                <img th:src="@{/images/logo-partial.png}" alt="Vetlog"/>
-              </h1>
-              <div sec:authorize="isAnonymous()">
-                <a th:href="@{login}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.action}"/></a>
-              </div>
-              <div sec:authorize="isAuthenticated()">
-                <a th:href="@{logout}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.logout}"/></a>
-              </div>
-            </div>
-          </div>
-          <div class="item" style="background:url('/images/slider2.png'); background-size:cover;">
+        <div class="item" style="background:url('/images/slider2.png'); background-size:cover;">
             <div class="header-text">
             </div>
-          </div>
-          <div class="item" style="background:url('/images/slider3.png'); background-size:cover;">
-            <div class="header-text">
-            </div>
-          </div>
         </div>
-      </header>
+        <div class="item" style="background:url('/images/slider3.png'); background-size:cover;">
+            <div class="header-text">
+            </div>
+        </div>
+    </div>
+</header>
 
-      <!-- ABOUT -->
+<!-- ABOUT -->
 
-      <div id="about">
-        <div class="row">
-          <div class="col-md-4 col-sm-4 text-center wow fadeIn section-1" data-wow-duration="0.5s">
+<div id="about">
+    <div class="row">
+        <div class="col-md-4 col-sm-4 text-center wow fadeIn section-1" data-wow-duration="0.5s">
             <div class="fa fa-3x fa-lock"></div>
             <h4 th:text="#{home.care.title}"/>
-              <p th:text="#{home.care.description}"/>
-          </div>
-          <div class="col-md-4 col-sm-4 text-center wow fadeIn section-2" data-wow-duration="1s">
+            <p th:text="#{home.care.description}"/>
+        </div>
+        <div class="col-md-4 col-sm-4 text-center wow fadeIn section-2" data-wow-duration="1s">
             <div class="fa fa-3x fa-paw"></div>
             <h4 th:text="#{home.responsability.title}"/>
-              <p th:text="#{home.responsability.description}"/>
-          </div>
-          <div class="col-md-4 col-sm-4 text-center wow fadeIn section-3" data-wow-duration="1.5s">
+            <p th:text="#{home.responsability.description}"/>
+        </div>
+        <div class="col-md-4 col-sm-4 text-center wow fadeIn section-3" data-wow-duration="1.5s">
             <div class="fa fa-3x fa-leaf"></div>
             <h4 th:text="#{home.respect.title}"/>
-              <p th:text="#{home.respect.description}"/>
-          </div>
+            <p th:text="#{home.respect.description}"/>
         </div>
-      </div>
+    </div>
+</div>
 
-      <section id="list">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center section-content padding wow fadeInRight" data-wow-duration="1s">
-              <div class="content">
-                <h1 th:text="#{home.list.adoption.title}"/>
-                  <hr/>
-                  <p th:text="#{home.list.adoption.description}"/>
-                  <br/>
-                  <a th:href="@{/pet/listForAdoption}" class="page-scroll btn btn-primary"><p th:text="#{button.action}"/></a>
-              </div>
+<section id="list">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center section-content padding wow fadeInRight"
+                 data-wow-duration="1s">
+                <div class="content">
+                    <h1 th:text="#{home.list.adoption.title}"/>
+                    <hr/>
+                    <p th:text="#{home.list.adoption.description}"/>
+                    <br/>
+                    <a th:href="@{/pet/listForAdoption}" class="page-scroll btn btn-primary"><p
+                            th:text="#{button.action}"/></a>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+</section>
 
-      <section id="register" class="section-darker">
-        <div class="row padding-left padding-right">
-          <div class="col-md-6 col-sm-6 text-left wow fadeInDown" data-wow-duration="1s">
+<section id="register" class="section-darker">
+    <div class="row padding-left padding-right">
+        <div class="col-md-6 col-sm-6 text-left wow fadeInDown" data-wow-duration="1s">
             <h4 th:text="#{home.register.title}"/>
-              <p th:text="#{home.register.description}"/>
-              <br/>
-              <a th:href="@{pet/create}" class="page-scroll btn btn-primary"><p th:text="#{button.action}"/></a>
-          </div>
-          <div class="col-md-6 col-sm-6">
-          </div>
+            <p th:text="#{home.register.description}"/>
+            <br/>
+            <a th:href="@{pet/create}" class="page-scroll btn btn-primary"><p th:text="#{button.action}"/></a>
         </div>
-        <div class="row margin-top padding-left padding-right">
-          <div class="col-md-6 col-sm-6">
-          </div>
-          <div class="col-md-6 col-sm-6 text-right wow fadeInDown" data-wow-duration="1s">
+        <div class="col-md-6 col-sm-6">
+        </div>
+    </div>
+    <div class="row margin-top padding-left padding-right">
+        <div class="col-md-6 col-sm-6">
+        </div>
+        <div class="col-md-6 col-sm-6 text-right wow fadeInDown" data-wow-duration="1s">
             <h4 th:text="#{home.log.title}"/>
-              <p th:text="#{home.log.description}"/>
-              <br/>
-              <a th:href="@{petlog/create}" class="page-scroll btn btn-primary"><p th:text="#{button.action}"/></a>
-          </div>
+            <p th:text="#{home.log.description}"/>
+            <br/>
+            <a th:href="@{petlog/create}" class="page-scroll btn btn-primary"><p th:text="#{button.action}"/></a>
         </div>
-      </section>
+    </div>
+</section>
 
-      <!-- SERVICES -->
+<!-- SERVICES -->
 
-      <section id="services">
-        <div class="container">
-          <div class="row">
+<section id="services">
+    <div class="container">
+        <div class="row">
             <div class="col-md-12 col-sm-12 text-center">
-              <h1 th:text="#{app.title}"/>
+                <h1 th:text="#{app.title}"/>
                 <hr/>
                 <p th:text="#{app.description}"/>
             </div>
-          </div>
+        </div>
 
-          <div class="row margin-top wow fadeInLeft" data-wow-duration="1s">
+        <div class="row margin-top wow fadeInLeft" data-wow-duration="1s">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left service-item">
-              <div class="fa fa-3x fa-paw"></div>
-              <h4 th:text="#{home.services.sitter.title}"/>
+                <div class="fa fa-3x fa-paw"></div>
+                <h4 th:text="#{home.services.sitter.title}"/>
                 <p th:text="#{home.services.sitter.description}"/>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right service-item">
-              <div class="fa fa-3x fa-home"></div>
-              <h4 th:text="#{home.services.host.title}"/>
+                <div class="fa fa-3x fa-home"></div>
+                <h4 th:text="#{home.services.host.title}"/>
                 <p th:text="#{home.services.host.description}"/>
             </div>
-          </div>
-          <div class="row margin-top wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
+        </div>
+        <div class="row margin-top wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left service-item">
-              <div class="fa fa-3x fa-graduation-cap"></div>
-              <h4 th:text="#{home.services.experience.title}"/>
+                <div class="fa fa-3x fa-graduation-cap"></div>
+                <h4 th:text="#{home.services.experience.title}"/>
                 <p th:text="#{home.services.experience.description}"/>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-right service-item">
-              <div class="fa fa-3x fa-group"></div>
-              <h4 th:text="#{home.services.volunteers.title}"/>
+                <div class="fa fa-3x fa-group"></div>
+                <h4 th:text="#{home.services.volunteers.title}"/>
                 <p th:text="#{home.services.volunteers.description}"/>
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+</section>
 
-      <section class="call-to-action full-width-parallax">
-        <div class="trasparence">
-          <div class="container">
+<section class="call-to-action full-width-parallax">
+    <div class="trasparence">
+        <div class="container">
             <div class="row">
-              <div class="col-md-3 col-sm-6 col-xs-12 padding-tb text-center">
-                <div class="fa fa-3x fa-paw wow fadeInDown" data-wow-duration="1s"></div>
-                <h3 th:text="#{home.services.sitter.title}"/>
-                  <hr/>
-                  <h2 class="wow fadeInUp" data-wow-duration="1s">7</h2>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12 padding-tb text-center">
-                <div class="fa fa-3x fa-home wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s"></div>
-                <h3 th:text="#{home.services.host.title}"/>
-                  <hr/>
-                  <h2 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">25</h2>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12 padding-tb text-center">
-                <div class="fa fa-3x fa-graduation-cap wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.5s"></div>
-                <h3 th:text="#{home.services.experience.title}"/>
-                  <hr/>
-                  <h2 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">8</h2>
-              </div>
-              <div class="col-md-3 col-sm-6 col-xs-12 padding-tb text-center">
-                <div class="fa fa-3x fa-group wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.75s"></div>
-                <h3 th:text="#{home.services.volunteers.title}"/>
-                  <hr/>
-                  <h2 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.75s">12</h2>
-              </div>
+                <div class="col-md-3 col-sm-6 col-xs-12 padding-tb text-center">
+                    <div class="fa fa-3x fa-paw wow fadeInDown" data-wow-duration="1s"></div>
+                    <h3 th:text="#{home.services.sitter.title}"/>
+                    <hr/>
+                    <h2 class="wow fadeInUp" data-wow-duration="1s">7</h2>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12 padding-tb text-center">
+                    <div class="fa fa-3x fa-home wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.25s"></div>
+                    <h3 th:text="#{home.services.host.title}"/>
+                    <hr/>
+                    <h2 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">25</h2>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12 padding-tb text-center">
+                    <div class="fa fa-3x fa-graduation-cap wow fadeInDown" data-wow-duration="1s"
+                         data-wow-delay="0.5s"></div>
+                    <h3 th:text="#{home.services.experience.title}"/>
+                    <hr/>
+                    <h2 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.5s">8</h2>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12 padding-tb text-center">
+                    <div class="fa fa-3x fa-group wow fadeInDown" data-wow-duration="1s" data-wow-delay="0.75s"></div>
+                    <h3 th:text="#{home.services.volunteers.title}"/>
+                    <hr/>
+                    <h2 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay="0.75s">12</h2>
+                </div>
             </div>
-          </div>
         </div>
-      </section>
+    </div>
+</section>
 
-      <div id="testimonials">
-        <div class="container">
-          <div class="row">
+<div id="testimonials">
+    <div class="container">
+        <div class="row">
             <div class="col-md-12 col-sm-12 text-center">
-              <div id="owl-testimonials">
-                <div class="item">
-                  <p th:text="#{home.testimonials.one.description}"/>
-                  <br/>
-                  <i th:text="#{home.testimonials.one.author}"/>
+                <div id="owl-testimonials">
+                    <div class="item">
+                        <p th:text="#{home.testimonials.one.description}"/>
+                        <br/>
+                        <i th:text="#{home.testimonials.one.author}"/>
+                    </div>
+                    <div class="item">
+                        <p th:text="#{home.testimonials.two.description}"/>
+                        <br/>
+                        <i th:text="#{home.testimonials.two.author}"/>
+                    </div>
                 </div>
-                <div class="item">
-                  <p th:text="#{home.testimonials.two.description}"/>
-                  <br/>
-                  <i th:text="#{home.testimonials.two.author}"/>
-                </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
 
-      <section class="darker">
-        <div class="container">
-          <div class="row">
+<section class="darker">
+    <div class="container">
+        <div class="row">
             <div class="col-md-8 col-sm-8 text-left wow fadeInLeft" data-wow-duration="1s">
-              <h3 th:text="#{home.user.title}"/>
+                <h3 th:text="#{home.user.title}"/>
                 <p th:text="#{home.user.description}"/>
             </div>
             <div class="col-md-4 col-sm-4 text-center wow fadeInRight" data-wow-duration="1s">
-              <a th:href="@{/user/create}" class="btn btn-lg btn-primary"><p th:text="#{button.action}"/></a>
+                <a th:href="@{/user/create}" class="btn btn-lg btn-primary"><p th:text="#{button.action}"/></a>
             </div>
-          </div>
         </div>
-      </section>
-  <footer>
-    <div class="container">
-      <p></p>
-      <div class="row">
-        <div class="col-md-12 col-sm-12 text-center">
-          <a th:href="@{/}"><i th:text="#{home.name}"/></a> |
-          <a th:href="@{/pet/list}"><i th:text="#{home.list.name}"/></a> |
-          <a th:href="@{/pet/create}"><i th:text="#{home.register.name}"/></a> |
-          <a th:href="@{/pet/giveForAdoption}"><i th:text="#{adoption.name}"/></a>
-        </div>
-      </div>
-      <div class="row margin-top">
-        <div class="col-md-12 col-sm-12 text-center">
-          <a href="https://twitter.com/vetlog_org"><i class="fa fa-2x fa-twitter"></i></a>
-          <a href="https://plus.google.com/102860193591185377637"><i class="fa fa-2x fa-google-plus"></i></a>
-          <a href="https://www.instagram.com/vetlog_org"><i class="fa fa-2x fa-instagram"></i></a>
-          <a href="https://www.youtube.com/channel/UC47DthaYwStgMUNLSXrBnjQ"><i class="fa fa-2x fa-youtube"></i></a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12 col-sm-12 text-center">
-          <a th:href="#{app.mailto}"><p style="font-size:18px" th:text="#{app.contact.us}"/></a>
-          <br/><br/>
-          <p>© Copyright 2022, Vetlog.</p>
-          <a th:href="#{home.footer.link}"><p th:text="#{home.footer.name}"/></a>
-        </div>
-      </div>
     </div>
-  </footer>
-        <script src="assets/third-party/servizi-dog-theme/js/jquery-2.1.0.min.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/jquery.easing.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/smoothScroll.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/images-loaded.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/jquery.localscroll-1.2.7-min.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/jquery.count.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/jquery.prettyPhoto.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/jquery.parallax-1.1.3.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/owl.carousel.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/wow.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/waypoints.min.js"></script>
-        <script src="assets/third-party/servizi-dog-theme/js/main.js"></script>
-        <script>
+</section>
+<div th:insert="fragments/footer"/>
+<script src="assets/third-party/servizi-dog-theme/js/jquery-2.1.0.min.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/jquery.easing.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/smoothScroll.js"></script>
+<script src="assets/third-party/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/images-loaded.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/jquery.localscroll-1.2.7-min.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/jquery.count.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/jquery.prettyPhoto.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/jquery.parallax-1.1.3.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/owl.carousel.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/wow.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/waypoints.min.js"></script>
+<script src="assets/third-party/servizi-dog-theme/js/main.js"></script>
+<script>
 new WOW().init();
-        </script>
-  </body>
+
+</script>
+</body>
 </html>
