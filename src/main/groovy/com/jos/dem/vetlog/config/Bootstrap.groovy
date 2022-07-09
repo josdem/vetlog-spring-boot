@@ -51,7 +51,7 @@ class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
   void createDefaultUsers(){
     createUserWithRole('josdem', '12345678', 'joseluis.delacruz@gmail.com', Role.USER)
-    createUserWithRole('estrella', '12345678', 'estrella@gmail.com', Role.USER)
+    createUserWithRole('miriam', '12345678', 'miriam@gmail.com', Role.USER)
     createUserWithRole('admin', '12345678', 'admin@email.com', Role.ADMIN)
   }
 
