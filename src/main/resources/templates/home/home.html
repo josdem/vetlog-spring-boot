@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="https://www.thymeleaf.org">
   <head>
     <title th:text="#{app.title}"/>
     <link rel="stylesheet" type="text/css" href="/assets/third-party/servizi-dog-theme/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
@@ -11,6 +11,7 @@
     <link href='http://fonts.googleapis.com/css?family=Varela+Round:400,700' rel='stylesheet' type='text/css'/>
   </head>
   <body>
+  <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
   <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -30,6 +31,27 @@
             </li>
             <li>
               <a class="page-scroll" th:href="@{/login}"><p th:text="#{login.action}"/></a>
+            </li>
+            <li>
+              <a class="page-scroll" th:href="@{/pet/list}"><p th:text="#{home.list.name}"/></a>
+            </li>
+            <li>
+              <a class="page-scroll" th:href="@{/pet/create}"><p th:text="#{home.register.name}"/></a>
+            </li>
+            <li>
+              <a class="page-scroll" th:href="@{/pet/giveForAdoption}"><p th:text="#{adoption.name}"/></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              <a class="page-scroll" th:href="@{/}"><p th:text="#{home.name}"/></a>
+            </li>
+            <li>
+              <a class="page-scroll" th:href="@{/logout}"><p th:text="#{login.logout}"/></a>
             </li>
             <li>
               <a class="page-scroll" th:href="@{/pet/list}"><p th:text="#{home.list.name}"/></a>
