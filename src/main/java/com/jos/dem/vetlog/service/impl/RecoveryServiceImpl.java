@@ -44,15 +44,15 @@ public class RecoveryServiceImpl implements RecoveryService {
     private final LocaleService localeService;
 
     @Value("${baseUrl}")
-    private final String baseUrl;
+    private String baseUrl;
     @Value("${template.register.name}")
-    private final String registerTemplate;
+    private String registerTemplate;
     @Value("${template.register.path}")
-    private final String registerPath;
+    private String registerPath;
     @Value("${template.forgot.name}")
-    private final String forgotTemplate;
+    private String forgotTemplate;
     @Value("${template.forgot.path}")
-    private final String forgotPath;
+    private String forgotPath;
 
 
     public void sendConfirmationAccountToken(String email) {
