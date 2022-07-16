@@ -17,6 +17,8 @@ limitations under the License.
 package com.jos.dem.vetlog.model;
 
 import com.jos.dem.vetlog.enums.RegistrationCodeStatus;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +30,8 @@ import java.util.UUID;
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
+@Getter
+@Setter
 public class RegistrationCode {
 
     @Id

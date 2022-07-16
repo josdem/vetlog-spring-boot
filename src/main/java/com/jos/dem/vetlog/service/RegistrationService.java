@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.service
+package com.jos.dem.vetlog.service;
 
-import org.springframework.stereotype.Service
-import org.springframework.util.StringUtils
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+public interface RegistrationService {
+    String findEmailByToken(String token);
 
-import com.jos.dem.vetlog.exception.VetlogException
-
-@Service
-class VetlogService {
-
-  Logger log = LoggerFactory.getLogger(this.class)
-
-  def sendRegistration(){
-    log.debug 'Sending email'
-    throw new VetlogException()
-  }
-
+    String generateToken(String email);
 }
