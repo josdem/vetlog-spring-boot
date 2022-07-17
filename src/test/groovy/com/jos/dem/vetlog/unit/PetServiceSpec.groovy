@@ -56,7 +56,6 @@ class PetServiceSpec extends Specification {
     then:"We expect pet saved with user"
       pet.user
       1 * petRepository.save(_ as Pet)
-      1 * petImageService.attachImage(command)
   }
 
   void "should list a pet by owner"(){
