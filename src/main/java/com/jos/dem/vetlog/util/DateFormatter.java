@@ -25,8 +25,9 @@ import java.time.format.DateTimeFormatter;
 public class DateFormatter {
 
     public String format(String dateToFormat) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDate localDate = LocalDate.parse(dateToFormat, formatter);
+        String onlyDate = dateToFormat.substring(0, 10);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(onlyDate, formatter);
         return localDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
 

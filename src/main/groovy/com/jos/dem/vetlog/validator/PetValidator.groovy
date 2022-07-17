@@ -36,12 +36,7 @@ class PetValidator implements Validator {
   }
 
   private void validateBirthdate(Errors errors, PetCommand petCommand){
-    if(petCommand.birthDate.isEmpty())
-      return
-    Date birthDate = Date.parse('MM/dd/yyyy', petCommand.birthDate)
-    if(birthDate.compareTo(new Date()) > 0){
-      errors.rejectValue('birthDate', 'pet.error.birthDate.past')
-    }
+    //TODO: Validate pet birth date: https://github.com/josdem/vetlog-spring-boot/issues/122
   }
 
 }

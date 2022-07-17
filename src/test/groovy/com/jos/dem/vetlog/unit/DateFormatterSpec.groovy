@@ -25,10 +25,10 @@ class DateFormatterSpec extends Specification {
 
   void "should format date"(){
     given:"A Date"
-      String dateToFormat = '2017-05-14 20:30:00'
+      String dateToFormat = '2021-01-17T00:00'
     when:"We format a date"
       String result = formatter.format(dateToFormat)
     then:"We expect date formatted"
-      result == '05/14/2017'
+      result == '01/17/2021'
   }
 }
