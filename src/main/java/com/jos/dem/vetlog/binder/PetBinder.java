@@ -1,5 +1,5 @@
 /*
-Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component
@@ -44,12 +45,13 @@ public class PetBinder {
 
 
     public Pet bindPet(Command command) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
         PetCommand petCommand = (PetCommand) command;
         Pet pet = new Pet();
         pet.setId(petCommand.getId());
         pet.setUuid(UuidGenerator.generateUuid());
         pet.setName(petCommand.getName());
-        pet.setBirthDate(LocalDate.parse(petCommand.getBirthDate()));
+        pet.setBirthDate(LocalDate.parse(dateFormatter.format(petCommand.getBirthDate()), formatter));
         pet.setDewormed(petCommand.getDewormed());
         pet.setSterilized(petCommand.getSterilized());
         pet.setVaccinated(petCommand.getVaccinated());
@@ -57,8 +59,6 @@ public class PetBinder {
         pet.setStatus(PetStatus.OWNED);
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
         pet.setBreed(breed.get());
-        pet.setUser(getUser(petCommand.getUser()).get());
-        pet.setAdopter(getUser(petCommand.getAdopter()).get());
         return pet;
     }
 

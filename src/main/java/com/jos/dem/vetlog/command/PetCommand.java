@@ -18,6 +18,7 @@ import com.jos.dem.vetlog.enums.PetType;
 import com.jos.dem.vetlog.model.PetImage;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
@@ -27,6 +28,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class PetCommand implements Command {
 
     private Long id;
