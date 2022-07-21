@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/josdem/servizi-dog-template#readme",
   "dependencies": {
+    "jquery": "^3.6.0",
     "bootstrap": "~3.3.7",
     "font-awesome": "~4.1.0"
   }
