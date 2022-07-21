@@ -12,7 +12,6 @@ const updateBreedType = () => {
       data.forEach(function(it){
         $("#breedSelector").append($("<option></option>").attr("value", it.id).text(it.name))
       })
-      $("#breedSelector").val($("#breed").val())
     }).fail(function(data, status){
       console.log(data, status)
     })
