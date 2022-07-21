@@ -17,22 +17,24 @@ limitations under the License.
 package com.jos.dem.vetlog.enums;
 
 public enum PetType {
-  DOG("Dog"), CAT("Cat"), BIRD("Bird"), RODENT("Rodent"), SPIDER("Spider"), SNAKE("Snake"), FISH("Fish");
+    DOG("Dog"), CAT("Cat"), BIRD("Bird"), RODENT("Rodent"), SPIDER("Spider"), SNAKE("Snake"), FISH("Fish");
 
-  private final String value;
+    private final String value;
 
-  PetType(String value){
-    this.value = value;
-  }
-
-  public String getValue(){
-    return value;
-  }
-
-  public static PetType getPetTypeByValue(String value){
-    for(PetType type : PetType.values()){
-      if(value == type.value) return type;
+    PetType(String value) {
+        this.value = value;
     }
-    return null;
-  }
+
+    public String getValue() {
+        return value;
+    }
+
+    public static PetType getPetTypeByValue(String value) {
+        for (PetType type : PetType.values()) {
+            if (value.equals(type.value)) {
+                return type;
+            }
+        }
+        return null;
+    }
 }
