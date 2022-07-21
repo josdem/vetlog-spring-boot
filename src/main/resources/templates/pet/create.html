@@ -3,6 +3,8 @@
 <head>
     <title th:text="#{pet.view.create.title}"/>
     <head th:insert="fragments/include"/>
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/javascript/selector.js}"></script>
 </head>
 <body class="login">
 <div th:insert="fragments/header"/>
@@ -53,7 +55,7 @@
                             <br/>
                             <br/>
                             <label for="type"><h4 th:text="#{pet.type}"/></label>
-                            <select id="typeSelector" name="type" th:field="*{type}" class="form-control">
+                            <select id="typeSelector" name="type" th:field="*{type}" class="form-control" onchange="updateBreedType()">
                                 <option th:each=" type : ${T(com.jos.dem.vetlog.enums.PetType).values()}"
                                         th:value="${type}" th:text="${type.value}"></option>
                             </select>
