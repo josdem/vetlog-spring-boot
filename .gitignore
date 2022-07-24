@@ -10,3 +10,4 @@ application.properties
 bower.json
 src/main/resources/application.yml
 **package-lock.json
+**vetlog.json
