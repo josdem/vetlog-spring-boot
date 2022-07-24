@@ -16,14 +16,30 @@ limitations under the License.
 
 package com.jos.dem.vetlog.client;
 
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+import com.jos.dem.vetlog.exception.BusinessException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 @Service
 public class GoogleStorageWriter {
 
-    public void uploadToBucket(String bucket, String fileName, InputStream inputStream) {
+    private static Storage storage = StorageOptions.getDefaultInstance().getService();
+
+    public void uploadToBucket(String bucket, String fileName, InputStream inputStream) throws IOException {
+        try {
+            storage.create(
+                    BlobInfo.newBuilder(bucket, fileName).build(),
+                    inputStream.readAllBytes(),
+                    Storage.BlobTargetOption.predefinedAcl(Storage.PredefinedAcl.PUBLIC_READ)
+            );
+        } catch (IllegalStateException iee) {
+            throw new BusinessException(iee.getMessage());
+        }
 
     }
 
