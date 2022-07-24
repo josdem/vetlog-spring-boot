@@ -10,6 +10,7 @@ ext {
   thymeleafSecurityVersion = '3.0.4.RELEASE'
   awsLambdaVersion = '1.1.0'
   awsJavaVersion = '1.11.98'
+  gcpVersion = "1.2.8.RELEASE"
 }
 
 group = 'com.jos.dem.vetlog'
@@ -31,6 +32,7 @@ dependencies {
   implementation "org.codehaus.groovy:groovy-all:3.0.11"
   implementation 'org.springframework.boot:spring-boot-starter-aop'
   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+  implementation "org.springframework.cloud:spring-cloud-gcp-starter-storage:$gcpVersion"
   implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:$thymeleafSecurityVersion"
   implementation 'org.springframework.boot:spring-boot-starter-security'
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
