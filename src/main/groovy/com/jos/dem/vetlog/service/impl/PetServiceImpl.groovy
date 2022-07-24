@@ -44,7 +44,7 @@ class PetServiceImpl implements PetService {
   Pet save(Command command, User user){
     Pet pet = petBinder.bindPet(command)
     pet.user = user
-    //TODO: Add save pet image service attach image: https://github.com/josdem/vetlog-spring-boot/issues/123
+    petImageService.attachImage(command)
     petRepository.save(pet)
     pet
   }

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -68,5 +69,5 @@ public class PetCommand implements Command {
 
     private MultipartFile image;
 
-    private List<PetImage> images;
+    private List<PetImage> images = new ArrayList<>();
 }
