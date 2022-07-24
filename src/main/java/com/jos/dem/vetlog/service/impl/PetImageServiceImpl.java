@@ -16,18 +16,16 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service.impl;
 
+import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.jos.dem.vetlog.model.PetImage;
-
-import com.jos.dem.vetlog.service.PetImageService;
 import com.jos.dem.vetlog.repository.PetImageRepository;
+import com.jos.dem.vetlog.service.PetImageService;
 import com.jos.dem.vetlog.util.UuidGenerator;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
@@ -35,25 +33,26 @@ import java.io.IOException;
 @RequiredArgsConstructor
 class PetImageServiceImpl implements PetImageService {
 
-  @Autowired
-  private final PetImageRepository petImageRepository;
+    private final PetImageRepository petImageRepository;
+    private final GoogleStorageWriter googleStorageWriter;
 
-  @Value("${bucket}")
-  private String bucket;
+    @Value("${bucket}")
+    private String bucket;
 
-  private PetImage save(){
-    PetImage petImage = new PetImage();
-    petImage.setUuid(UuidGenerator.generateUuid());
-    petImageRepository.save(petImage);
-    return petImage;
-  }
-
-  public void attachImage(Command command) throws IOException {
-    PetCommand petCommand = (PetCommand) command;
-    if(petCommand.getImage().getInputStream().available() > 0){
-      PetImage petImage = save();
-      petCommand.getImages().add(petImage);
+    private PetImage save() {
+        PetImage petImage = new PetImage();
+        petImage.setUuid(UuidGenerator.generateUuid());
+        petImageRepository.save(petImage);
+        return petImage;
     }
-  }
+
+    public void attachImage(Command command) throws IOException {
+        PetCommand petCommand = (PetCommand) command;
+        if (petCommand.getImage().getInputStream().available() > 0) {
+            PetImage petImage = save();
+            petCommand.getImages().add(petImage);
+            googleStorageWriter.uploadToBucket(bucket, petImage.getUuid(), petCommand.getImage().getInputStream());
+        }
+    }
 
 }

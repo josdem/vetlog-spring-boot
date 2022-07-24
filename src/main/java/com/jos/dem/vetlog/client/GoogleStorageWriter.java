@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,8 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.client
+package com.jos.dem.vetlog.client;
 
-interface S3Writer {
-  void uploadToBucket(String bucketDestination, String fileName,  InputStream inputStream)
+import org.springframework.stereotype.Service;
+
+import java.io.InputStream;
+
+@Service
+public class GoogleStorageWriter {
+
+    public void uploadToBucket(String bucket, String fileName, InputStream inputStream) {
+
+    }
+
 }
