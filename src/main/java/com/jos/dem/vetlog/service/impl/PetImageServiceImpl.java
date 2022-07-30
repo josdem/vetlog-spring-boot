@@ -23,6 +23,7 @@ import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.repository.PetImageRepository;
 import com.jos.dem.vetlog.service.PetImageService;
 import com.jos.dem.vetlog.util.UuidGenerator;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
