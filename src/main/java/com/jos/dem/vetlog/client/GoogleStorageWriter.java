@@ -16,27 +16,38 @@ limitations under the License.
 
 package com.jos.dem.vetlog.client;
 
+import com.google.api.gax.core.CredentialsProvider;
+import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.jos.dem.vetlog.exception.BusinessException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.gcp.core.GcpProjectIdProvider;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 
 @Service
+@RequiredArgsConstructor
 public class GoogleStorageWriter {
 
-    private static Storage storage = StorageOptions.getDefaultInstance().getService();
+    private final CredentialsProvider credentialsProvider;
+    private final GcpProjectIdProvider gcpProjectIdProvider;
+    private Storage storage;
+
+    @PostConstruct
+    void setup() throws IOException {
+        storage = StorageOptions.newBuilder().setProjectId(gcpProjectIdProvider.getProjectId()).setCredentials(credentialsProvider.getCredentials()).build().getService();
+    }
 
     public void uploadToBucket(String bucket, String fileName, InputStream inputStream) throws IOException {
+        BlobId blobId = BlobId.of(bucket, fileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
         try {
-            storage.create(
-                    BlobInfo.newBuilder(bucket, fileName).build(),
-                    inputStream.readAllBytes(),
-                    Storage.BlobTargetOption.predefinedAcl(Storage.PredefinedAcl.PUBLIC_READ)
-            );
+            storage.create(blobInfo, inputStream.readAllBytes());
         } catch (IllegalStateException iee) {
             throw new BusinessException(iee.getMessage());
         }
