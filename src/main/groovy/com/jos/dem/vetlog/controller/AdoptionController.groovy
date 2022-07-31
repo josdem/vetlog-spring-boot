@@ -52,7 +52,7 @@ class AdoptionController {
   @Autowired
   AdoptionService adoptionService
 
-  @Value('${awsImageUrl}')
+  @Value('${gcpImageUrl}')
   String awsImageUrl
 
   Logger log = LoggerFactory.getLogger(this.class)

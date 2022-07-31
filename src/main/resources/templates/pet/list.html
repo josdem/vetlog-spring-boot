@@ -33,7 +33,7 @@
                   <!-- Wrapper for slides -->
                   <div class="carousel-inner" role="listbox">
                     <div th:each="image : ${pet.images}" class="item" th:classappend="|${pet.images.indexOf(image) == 0 ? 'active' : ''}|" align="center">
-                      <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${image.uuid}}"/>
+                      <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
                     </div>
                   </div>
                   <!-- Controls -->
@@ -48,7 +48,7 @@
                 </div>
               </div>
               <div th:if="${pet.images.isEmpty()}" align="center">
-                <img style="width:320px;height:300px;" th:attr="src=@{${awsImageUrl} + ${defaultImage}}"/>
+                <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${defaultImage}}"/>
               </div>
               <div class="caption">
                 <h3 th:text="${pet.name}"></h3>

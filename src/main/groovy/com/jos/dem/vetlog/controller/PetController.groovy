@@ -65,8 +65,8 @@ class PetController {
 
     @Value('${breedsByTypeUrl}')
     String breedsByTypeUrl
-    @Value('${awsImageUrl}')
-    String awsImageUrl
+    @Value('${gcpImageUrl}')
+    String gcpImageUrl
     @Value('${defaultImage}')
     String defaultImage
 
@@ -93,7 +93,7 @@ class PetController {
         modelAndView.addObject('petCommand', petBinder.bindPet(pet))
         modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
         modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
-        modelAndView.addObject('awsImageUrl', awsImageUrl)
+        modelAndView.addObject('awsImageUrl', gcpImageUrl)
         modelAndView
     }
 
@@ -131,7 +131,7 @@ class PetController {
     ModelAndView fillModelAndView(ModelAndView modelAndView) {
         modelAndView.addObject('breeds', breedService.getBreedsByType(PetType.DOG))
         modelAndView.addObject('breedsByTypeUrl', breedsByTypeUrl)
-        modelAndView.addObject('awsImageUrl', awsImageUrl)
+        modelAndView.addObject('awsImageUrl', gcpImageUrl)
         modelAndView
     }
 
@@ -158,7 +158,7 @@ class PetController {
             modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty', request))
         }
         modelAndView.addObject('pets', pets)
-        modelAndView.addObject('awsImageUrl', awsImageUrl)
+        modelAndView.addObject('awsImageUrl', gcpImageUrl)
         modelAndView
     }
 
@@ -166,7 +166,7 @@ class PetController {
         User user = userService.getCurrentUser()
         List<Pet> pets = petService.getPetsByUser(user)
         modelAndView.addObject('pets', pets)
-        modelAndView.addObject('awsImageUrl', awsImageUrl)
+        modelAndView.addObject('gcpImageUrl', gcpImageUrl)
         modelAndView.addObject('defaultImage', defaultImage)
         modelAndView
     }

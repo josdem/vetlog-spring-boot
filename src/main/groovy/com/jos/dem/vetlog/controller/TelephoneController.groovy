@@ -60,7 +60,7 @@ class TelephoneController {
   @Autowired
   TelephoneValidator telephoneValidator
 
-  @Value('${awsImageUrl}')
+  @Value('${gcpImageUrl}')
   String awsImageUrl
 
   Logger log = LoggerFactory.getLogger(this.class)
