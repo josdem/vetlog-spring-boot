@@ -34,6 +34,7 @@ import java.io.InputStream;
 @RequiredArgsConstructor
 public class GoogleStorageWriter {
 
+    public static final String CONTENT_TYPE = "image/jpeg";
     private final CredentialsProvider credentialsProvider;
     private final GcpProjectIdProvider gcpProjectIdProvider;
     private Storage storage;
@@ -45,7 +46,7 @@ public class GoogleStorageWriter {
 
     public void uploadToBucket(String bucket, String fileName, InputStream inputStream) throws IOException {
         BlobId blobId = BlobId.of(bucket, fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(CONTENT_TYPE).build();
         try {
             storage.create(blobInfo, inputStream.readAllBytes());
         } catch (IllegalStateException iee) {
