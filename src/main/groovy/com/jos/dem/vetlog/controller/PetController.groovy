@@ -16,7 +16,6 @@ limitations under the License.
 
 package com.jos.dem.vetlog.controller
 
-
 import com.jos.dem.vetlog.binder.PetBinder
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.PetCommand

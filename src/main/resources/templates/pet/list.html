@@ -3,6 +3,7 @@
   <head>
     <title th:text="#{pet.view.list.title}"></title>
     <head th:insert="fragments/include"/>
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
   </head>
   <body>
     <div th:insert="fragments/header"/>
@@ -53,7 +54,7 @@
                 <h3 th:text="${pet.name}"></h3>
                 <p>
                 <ul>
-                  <li th:text="${beans.dateFormatter.format(pet.birthDate)}" />
+                  <li th:text="${pet.birthDate}" />
                     <li th:text="${pet.breed.name}" />
                       <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}" />
                         <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}" />
@@ -77,7 +78,5 @@
       </div>
     </div>
     <div th:insert="fragments/footer"/>
-    <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/jquery.js}"/>
-    <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"/>
   </body>
 </html>

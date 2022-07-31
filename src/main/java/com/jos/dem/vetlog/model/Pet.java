@@ -19,6 +19,7 @@ package com.jos.dem.vetlog.model;
 import com.jos.dem.vetlog.enums.PetStatus;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,6 +41,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Getter
 @Setter
 @Entity
+@ToString
 public class Pet {
 
     @Id
