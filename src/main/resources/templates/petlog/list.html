@@ -26,7 +26,7 @@
                 <h3 th:text="${log.pet.name}"></h3>
                 <p>
                 <ul>
-                  <li th:text="${beans.dateFormatter.format(log.dateCreated)}" />
+                  <li th:text="${log.dateCreated}" />
                   <li th:text="${log.vetName}" />
                   <li th:text="${log.symptoms}" />
                   <li th:text="${log.diagnosis}" />
