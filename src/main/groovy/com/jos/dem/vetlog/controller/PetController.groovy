@@ -158,7 +158,7 @@ class PetController {
             modelAndView.addObject('petListEmpty', localeService.getMessage('pet.list.empty', request))
         }
         modelAndView.addObject('pets', pets)
-        modelAndView.addObject('awsImageUrl', gcpImageUrl)
+        modelAndView.addObject('gcpImageUrl', gcpImageUrl)
         modelAndView
     }
 

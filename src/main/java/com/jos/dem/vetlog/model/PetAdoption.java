@@ -16,6 +16,10 @@ limitations under the License.
 
 package com.jos.dem.vetlog.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,7 +30,10 @@ import javax.persistence.ManyToOne;
 
 import static javax.persistence.GenerationType.AUTO;
 
+@Getter
+@Setter
 @Entity
+@ToString
 public class PetAdoption {
 
     @Id
