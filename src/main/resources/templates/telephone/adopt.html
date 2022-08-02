@@ -1,54 +1,46 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <th:block layout:include="fragments/include"/>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
     <title th:text="#{pet.view.list.title}"></title>
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-25685398-5', 'auto');
-    ga('send', 'pageview');
-
-    </script>
-  </head>
-  <body>
-    <th:block layout:include="fragments/header"/>
-    <br/><br/>
-    <br/><br/>
-    <br/><br/>
-    <div class="container">
-      <div class="row">
+    <head th:insert="fragments/include"/>
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
+</head>
+<body>
+<div th:insert="fragments/header"/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<div class="container">
+    <div class="row">
         <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
-            <div class="caption">
-              <p th:text="#{adoption.thanks}"/>
-              <br/>
-              <center>
-                <strong th:text="${pet.name}"/>
-              </center>
-              <br/>
-              <p th:text="#{adoption.wishes}"/>
-              <br/>
-                <form id="description" th:action="@{/telephone/save}" th:object="${telephoneCommand}" method="post" class="form-horizontal">
-                  <fieldset>
-                    <label for="mobile"><h4 th:text="#{adoption.mobile}"/></label>
-                    <input type="text" name="mobile" class="form-control" placeholder="Mobile"  id='mobile' />
-                    <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
-                    <input type="hidden" th:value="${telephoneCommand.uuid}" name="uuid" />
-                    <br/><br/>
-                    <input type="submit" class="btn btn-primary btn-block" />
-                  </fieldset>
-                </form>
+            <div class="thumbnail">
+                <img style="width:320px;height:240px;" th:attr="src=@{${awsImageUrl} + ${pet.images.get(0).uuid}}"/>
+                <div class="caption">
+                    <p th:text="#{adoption.thanks}"/>
+                    <br/>
+                    <center>
+                        <strong th:text="${pet.name}"/>
+                    </center>
+                    <br/>
+                    <p th:text="#{adoption.wishes}"/>
+                    <br/>
+                    <form id="description" th:action="@{/telephone/save}" th:object="${telephoneCommand}" method="post"
+                          class="form-horizontal">
+                        <fieldset>
+                            <label for="mobile"><h4 th:text="#{adoption.mobile}"/></label>
+                            <input type="text" name="mobile" class="form-control" placeholder="Mobile" id='mobile'/>
+                            <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
+                            <input type="hidden" th:value="${telephoneCommand.uuid}" name="uuid"/>
+                            <br/><br/>
+                            <input type="submit" class="btn btn-primary btn-block"/>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-    <br/><br/><br/><br/>
-    <th:block layout:include="fragments/footer"/>
-  </body>
+</div>
+<br/><br/><br/><br/>
+<div th:insert="fragments/footer"/>
+</body>
 </html>
