@@ -53,7 +53,7 @@ class AdoptionController {
   AdoptionService adoptionService
 
   @Value('${gcpImageUrl}')
-  String awsImageUrl
+  String gcpImageUrl
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -81,7 +81,7 @@ class AdoptionController {
     List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION)
     ModelAndView modelAndView = new ModelAndView('pet/listForAdoption')
     modelAndView.addObject('pets', pets)
-    modelAndView.addObject('awsImageUrl', awsImageUrl)
+    modelAndView.addObject('gcpImageUrl', gcpImageUrl)
     modelAndView
   }
 
@@ -89,7 +89,7 @@ class AdoptionController {
     Pet pet = petService.getPetByUuid(adoptionCommand.uuid)
     modelAndView.addObject('pet', pet)
     modelAndView.addObject('adoptionCommand', adoptionCommand)
-    modelAndView.addObject('awsImageUrl', awsImageUrl)
+    modelAndView.addObject('gcpImageUrl', gcpImageUrl)
     modelAndView
   }
 
