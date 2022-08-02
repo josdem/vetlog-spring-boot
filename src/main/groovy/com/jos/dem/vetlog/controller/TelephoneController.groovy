@@ -61,7 +61,7 @@ class TelephoneController {
   TelephoneValidator telephoneValidator
 
   @Value('${gcpImageUrl}')
-  String awsImageUrl
+  String gcpImageUrl
 
   Logger log = LoggerFactory.getLogger(this.class)
 
@@ -96,7 +96,7 @@ class TelephoneController {
     Pet pet = petService.getPetByUuid(telephoneCommand.uuid)
     modelAndView.addObject('pet', pet)
     modelAndView.addObject('telephoneCommand', telephoneCommand)
-    modelAndView.addObject('awsImageUrl', awsImageUrl)
+    modelAndView.addObject('gcpImageUrl', gcpImageUrl)
     modelAndView
   }
 

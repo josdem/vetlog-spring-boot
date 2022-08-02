@@ -7,13 +7,13 @@
 <body>
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 <div th:insert="fragments/header"/>
-<div th:if="${message}">
-    <div align="center">
-        <p style="color:blue;font-size:18px;" th:text="${message}"/>
-        <br/><br/>
-    </div>
-</div>
 <header id="home">
+    <div th:if="${message}">
+        <div align="center">
+            <p style="color:blue;font-size:18px;" th:text="${message}"/>
+            <br/><br/>
+        </div>
+    </div>
     <div id="owl-demo">
         <div class="item" style="background:url('/images/slider1.png'); background-size:cover;">
             <div class="header-text">
