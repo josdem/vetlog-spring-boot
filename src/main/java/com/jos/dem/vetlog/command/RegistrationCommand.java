@@ -15,6 +15,7 @@ package com.jos.dem.vetlog.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.NotNull;
@@ -22,6 +23,7 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
+@ToString
 public class RegistrationCommand implements Command {
     private String email;
     private String token;

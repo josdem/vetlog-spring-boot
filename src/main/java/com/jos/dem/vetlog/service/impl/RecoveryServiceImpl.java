@@ -30,10 +30,12 @@ import com.jos.dem.vetlog.service.RecoveryService;
 import com.jos.dem.vetlog.service.RegistrationService;
 import com.jos.dem.vetlog.service.RestService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecoveryServiceImpl implements RecoveryService {
@@ -65,6 +67,7 @@ public class RecoveryServiceImpl implements RecoveryService {
         command.setTemplate(registerTemplate);
         command.setMessage(baseUrl + registerPath + token);
         command.setToken(clientToken);
+        log.info("Registration command: {}", command);
         restService.sendMessage(command);
     }
 
