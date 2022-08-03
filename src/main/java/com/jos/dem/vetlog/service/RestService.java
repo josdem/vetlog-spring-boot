@@ -25,5 +25,5 @@ import retrofit2.http.POST;
 
 public interface RestService {
     @POST("message")
-    Call<Response<String>> sendMessage(@Body Command command);
+    Call<Response<Void>> sendMessage(@Body Command command);
 }

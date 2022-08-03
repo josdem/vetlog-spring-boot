@@ -39,10 +39,11 @@ public class RestServiceImpl implements RestService {
     @PostConstruct
     public void setup() {
         restService = retrofit.create(RestService.class);
+        log.info("Creating rest service {}", restService);
     }
 
     @Override
-    public Call<Response<String>> sendMessage(@Body Command command) {
+    public Call<Response<Void>> sendMessage(@Body Command command) {
         return restService.sendMessage(command);
     }
 }

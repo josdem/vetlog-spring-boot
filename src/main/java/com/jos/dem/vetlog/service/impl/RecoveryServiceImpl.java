@@ -63,6 +63,7 @@ public class RecoveryServiceImpl implements RecoveryService {
     public void sendConfirmationAccountToken(String email) {
         String token = registrationService.generateToken(email);
         RegistrationCommand command = new RegistrationCommand();
+        command.setName(email);
         command.setEmail(email);
         command.setTemplate(registerTemplate);
         command.setMessage(baseUrl + registerPath + token);

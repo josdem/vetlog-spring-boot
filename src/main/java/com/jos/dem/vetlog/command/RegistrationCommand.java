@@ -25,6 +25,7 @@ import javax.validation.constraints.Size;
 @Setter
 @ToString
 public class RegistrationCommand implements Command {
+    private String name;
     private String email;
     private String token;
     private String message;
