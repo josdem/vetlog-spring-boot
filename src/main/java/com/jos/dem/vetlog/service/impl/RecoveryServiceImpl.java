@@ -45,6 +45,8 @@ public class RecoveryServiceImpl implements RecoveryService {
 
     @Value("${baseUrl}")
     private String baseUrl;
+    @Value("${token}")
+    private String clientToken;
     @Value("${template.register.name}")
     private String registerTemplate;
     @Value("${template.register.path}")
@@ -61,7 +63,8 @@ public class RecoveryServiceImpl implements RecoveryService {
         command.setEmail(email);
         command.setTemplate(registerTemplate);
         command.setUrl(baseUrl + registerPath + token);
-        restService.sendCommand(command);
+        command.setToken(clientToken);
+        restService.sendMessage(command);
     }
 
     public User confirmAccountForToken(String token) {
@@ -96,7 +99,7 @@ public class RecoveryServiceImpl implements RecoveryService {
         command.setEmail(email);
         command.setTemplate(forgotTemplate);
         command.setUrl(baseUrl + forgotPath + token);
-        restService.sendCommand(command);
+        restService.sendMessage(command);
     }
 
     public Boolean validateToken(String token) {

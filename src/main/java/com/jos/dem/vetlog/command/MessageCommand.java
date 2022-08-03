@@ -28,4 +28,5 @@ public class MessageCommand implements Command {
     private String redirect;
     private String emailContact;
     private String template;
+    private String token;
 }
