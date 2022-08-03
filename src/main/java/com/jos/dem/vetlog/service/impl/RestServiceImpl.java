@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.Body;
 
 import javax.annotation.PostConstruct;
 
@@ -41,7 +42,7 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public Call<Response<String>> sendMessage(Command command) {
+    public Call<Response<String>> sendMessage(@Body Command command) {
         return restService.sendMessage(command);
     }
 }

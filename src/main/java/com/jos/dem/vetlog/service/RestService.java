@@ -19,10 +19,11 @@ package com.jos.dem.vetlog.service;
 import com.jos.dem.vetlog.command.Command;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 
 public interface RestService {
     @POST("message")
-    Call<Response<String>> sendMessage(Command command);
+    Call<Response<String>> sendMessage(@Body Command command);
 }
