@@ -15,17 +15,16 @@ package com.jos.dem.vetlog.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Email;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-public class MessageCommand implements Command {
+public class RegistrationCommand implements Command {
     private String email;
+    private String token;
     private String message;
-    private String name;
-    private String contactName;
-    private String url;
-    private String source;
-    private String redirect;
-    private String emailContact;
     private String template;
 }

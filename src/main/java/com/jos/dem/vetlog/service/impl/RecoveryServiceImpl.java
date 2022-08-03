@@ -19,6 +19,7 @@ package com.jos.dem.vetlog.service.impl;
 import com.jos.dem.vetlog.command.ChangePasswordCommand;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.MessageCommand;
+import com.jos.dem.vetlog.command.RegistrationCommand;
 import com.jos.dem.vetlog.exception.UserNotFoundException;
 import com.jos.dem.vetlog.exception.VetlogException;
 import com.jos.dem.vetlog.model.User;
@@ -59,10 +60,10 @@ public class RecoveryServiceImpl implements RecoveryService {
 
     public void sendConfirmationAccountToken(String email) {
         String token = registrationService.generateToken(email);
-        MessageCommand command = new MessageCommand();
+        RegistrationCommand command = new RegistrationCommand();
         command.setEmail(email);
         command.setTemplate(registerTemplate);
-        command.setUrl(baseUrl + registerPath + token);
+        command.setMessage(baseUrl + registerPath + token);
         command.setToken(clientToken);
         restService.sendMessage(command);
     }
