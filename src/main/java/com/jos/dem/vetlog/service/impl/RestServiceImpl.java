@@ -21,14 +21,27 @@ import com.jos.dem.vetlog.service.RestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
+import javax.annotation.PostConstruct;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class RestServiceImpl implements RestService {
 
-    public void sendCommand(Command message) {
-        //TODO: Implement send an email: https://github.com/josdem/vetlog-spring-boot/issues/119
+    private final Retrofit retrofit;
+    private RestService restService;
+
+    @PostConstruct
+    public void setup() {
+        restService = retrofit.create(RestService.class);
     }
 
+    @Override
+    public Call<Response<String>> sendMessage(Command command) {
+        return restService.sendMessage(command);
+    }
 }

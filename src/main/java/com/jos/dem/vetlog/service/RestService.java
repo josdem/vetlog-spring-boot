@@ -17,8 +17,12 @@ limitations under the License.
 package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.command.Command;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.http.POST;
 
 
 public interface RestService {
-    void sendCommand(Command message);
+    @POST("message")
+    Call<Response<String>> sendMessage(Command command);
 }
