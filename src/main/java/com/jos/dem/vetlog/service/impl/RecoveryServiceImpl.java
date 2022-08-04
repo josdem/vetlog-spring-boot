@@ -67,14 +67,12 @@ public class RecoveryServiceImpl implements RecoveryService {
         try {
             String token = registrationService.generateToken(email);
             RegistrationCommand command = new RegistrationCommand();
-            command.setName(email);
             command.setEmail(email);
             command.setTemplate(registerTemplate);
             command.setMessage(baseUrl + registerPath + token);
             command.setToken(clientToken);
-            log.info("Registration command: {}", command);
             restService.sendMessage(command);
-        } catch (IOException ioException){
+        } catch (IOException ioException) {
             throw new BusinessException(ioException.getMessage());
         }
 
@@ -107,16 +105,11 @@ public class RecoveryServiceImpl implements RecoveryService {
         if (user.getEnabled() == false) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
-        try{
-            String token = registrationService.generateToken(email);
-            MessageCommand command = new MessageCommand();
-            command.setEmail(email);
-            command.setTemplate(forgotTemplate);
-            command.setUrl(baseUrl + forgotPath + token);
-            restService.sendMessage(command);
-        }catch (IOException ioException){
-            throw new BusinessException(ioException.getMessage());
-        }
+        String token = registrationService.generateToken(email);
+        MessageCommand command = new MessageCommand();
+        command.setEmail(email);
+        command.setTemplate(forgotTemplate);
+        command.setUrl(baseUrl + forgotPath + token);
     }
 
     public Boolean validateToken(String token) {

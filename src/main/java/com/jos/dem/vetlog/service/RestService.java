@@ -17,8 +17,9 @@ limitations under the License.
 package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.command.Command;
+import com.jos.dem.vetlog.command.RegistrationCommand;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -27,5 +28,5 @@ import java.io.IOException;
 
 public interface RestService {
     @POST("message")
-    Call<Response<Void>> sendMessage(@Body Command command) throws IOException;
+    Call<ResponseBody> sendMessage(@Body RegistrationCommand command) throws IOException;
 }
