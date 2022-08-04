@@ -17,6 +17,7 @@ limitations under the License.
 package com.jos.dem.vetlog.unit
 
 import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.command.RegistrationCommand
 import com.jos.dem.vetlog.command.TelephoneCommand
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
@@ -39,13 +40,11 @@ class TelephoneServiceSpec extends Specification{
   PetService petService = Mock(PetService)
   PetRepository petRepository = Mock(PetRepository)
   UserRepository userRepository = Mock(UserRepository)
-  RestService restService = Mock(RestService)
 
   def setup(){
     service.petService = petService
     service.petRepository = petRepository
     service.userRepository = userRepository
-    service.restService = restService
   }
 
   void "should save"(){
@@ -65,6 +64,5 @@ class TelephoneServiceSpec extends Specification{
     adopter.mobile == command.mobile
     pet.status == PetStatus.ADOPTED
     pet.adopter == adopter
-    restService.sendCommand(_ as Command)
   }
 }
