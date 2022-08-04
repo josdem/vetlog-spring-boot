@@ -20,6 +20,7 @@ import com.jos.dem.vetlog.command.ChangePasswordCommand;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.MessageCommand;
 import com.jos.dem.vetlog.command.RegistrationCommand;
+import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.exception.UserNotFoundException;
 import com.jos.dem.vetlog.exception.VetlogException;
 import com.jos.dem.vetlog.model.User;
@@ -34,6 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 @Slf4j
 @Service
@@ -61,15 +64,20 @@ public class RecoveryServiceImpl implements RecoveryService {
 
 
     public void sendConfirmationAccountToken(String email) {
-        String token = registrationService.generateToken(email);
-        RegistrationCommand command = new RegistrationCommand();
-        command.setName(email);
-        command.setEmail(email);
-        command.setTemplate(registerTemplate);
-        command.setMessage(baseUrl + registerPath + token);
-        command.setToken(clientToken);
-        log.info("Registration command: {}", command);
-        restService.sendMessage(command);
+        try {
+            String token = registrationService.generateToken(email);
+            RegistrationCommand command = new RegistrationCommand();
+            command.setName(email);
+            command.setEmail(email);
+            command.setTemplate(registerTemplate);
+            command.setMessage(baseUrl + registerPath + token);
+            command.setToken(clientToken);
+            log.info("Registration command: {}", command);
+            restService.sendMessage(command);
+        } catch (IOException ioException){
+            throw new BusinessException(ioException.getMessage());
+        }
+
     }
 
     public User confirmAccountForToken(String token) {
@@ -99,12 +107,16 @@ public class RecoveryServiceImpl implements RecoveryService {
         if (user.getEnabled() == false) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
-        String token = registrationService.generateToken(email);
-        MessageCommand command = new MessageCommand();
-        command.setEmail(email);
-        command.setTemplate(forgotTemplate);
-        command.setUrl(baseUrl + forgotPath + token);
-        restService.sendMessage(command);
+        try{
+            String token = registrationService.generateToken(email);
+            MessageCommand command = new MessageCommand();
+            command.setEmail(email);
+            command.setTemplate(forgotTemplate);
+            command.setUrl(baseUrl + forgotPath + token);
+            restService.sendMessage(command);
+        }catch (IOException ioException){
+            throw new BusinessException(ioException.getMessage());
+        }
     }
 
     public Boolean validateToken(String token) {

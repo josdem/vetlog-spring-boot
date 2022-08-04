@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Slf4j
 @Configuration
@@ -16,15 +16,15 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class ClientConfiguration {
 
     private final ApplicationProperties applicationProperties;
-    private final OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
+    private final OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
 
     @Bean
     public Retrofit retrofit() {
         log.info("Calling service with url: {}", applicationProperties.getUrl());
         return new Retrofit.Builder()
                 .baseUrl(applicationProperties.getUrl())
-                .client(okHttpClient)
-                .addConverterFactory(JacksonConverterFactory.create())
+                .client(okHttpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 }

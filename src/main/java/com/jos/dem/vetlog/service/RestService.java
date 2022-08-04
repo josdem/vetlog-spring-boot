@@ -22,8 +22,10 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
+import java.io.IOException;
+
 
 public interface RestService {
     @POST("message")
-    Call<Response<Void>> sendMessage(@Body Command command);
+    Call<Response<Void>> sendMessage(@Body Command command) throws IOException;
 }

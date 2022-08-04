@@ -27,6 +27,7 @@ import retrofit2.Retrofit;
 import retrofit2.http.Body;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @Slf4j
 @Service
@@ -43,7 +44,9 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public Call<Response<Void>> sendMessage(@Body Command command) {
-        return restService.sendMessage(command);
+    public Call<Response<Void>> sendMessage(@Body Command command) throws IOException {
+        Call<Response<Void>> call = restService.sendMessage(command);
+        call.execute();
+        return call;
     }
 }

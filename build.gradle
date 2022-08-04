@@ -11,7 +11,7 @@ ext {
   awsLambdaVersion = '1.1.0'
   awsJavaVersion = '1.11.98'
   gcpVersion = "1.2.8.RELEASE"
-  retrofitVersion = '2.9.0'
+  retrofitVersion = '2.7.1'
 }
 
 group = 'com.jos.dem.vetlog'
@@ -35,7 +35,7 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
   implementation "org.springframework.cloud:spring-cloud-gcp-starter-storage:$gcpVersion"
   implementation group: 'org.springframework.cloud', name: 'spring-cloud-gcp-core', version: '1.2.8.RELEASE'
-  implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+  implementation('com.squareup.retrofit2:converter-gson:2.7.1')
   implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
   implementation "org.thymeleaf.extras:thymeleaf-extras-springsecurity5:$thymeleafSecurityVersion"
   implementation 'org.springframework.boot:spring-boot-starter-security'
