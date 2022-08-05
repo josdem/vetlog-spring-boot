@@ -71,6 +71,7 @@ class TelephoneServiceImpl implements TelephoneService {
       message:adopter.mobile,
       template: adoptionTemplate
     )
+    restService.sendMessage(messageCommand)
   }
 
 }
