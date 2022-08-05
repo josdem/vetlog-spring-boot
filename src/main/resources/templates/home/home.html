@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml">
 <head>
     <title th:text="#{app.title}"/>
     <head th:insert="fragments/include"/>
@@ -8,12 +8,6 @@
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 <div th:insert="fragments/header"/>
 <header id="home">
-    <div th:if="${message}">
-        <div align="center">
-            <p style="color:blue;font-size:18px;" th:text="${message}"/>
-            <br/><br/>
-        </div>
-    </div>
     <div id="owl-demo">
         <div class="item" style="background:url('/images/slider1.png'); background-size:cover;">
             <div class="header-text">
@@ -38,6 +32,13 @@
         </div>
     </div>
 </header>
+
+<div th:if="${message}">
+    <div align="center" class="bg-warning">
+        <p style="color:blue;font-size:18px;" th:text="${message}"/>
+        <br/><br/>
+    </div>
+</div>
 
 <!-- ABOUT -->
 
