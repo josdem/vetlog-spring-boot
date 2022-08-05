@@ -110,6 +110,7 @@ public class RecoveryServiceImpl implements RecoveryService {
             command.setEmail(email);
             command.setTemplate(forgotTemplate);
             command.setMessage(baseUrl + forgotPath + token);
+            command.setToken(clientToken);
             restService.sendMessage(command);
         } catch (IOException ioException) {
             throw new BusinessException(ioException.getMessage());

@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
 
@@ -45,7 +46,8 @@ public class RestServiceImpl implements RestService {
     @Override
     public Call<ResponseBody> sendMessage(@Body MessageCommand command) throws IOException {
         Call<ResponseBody> call = restService.sendMessage(command);
-        call.execute();
+        Response<ResponseBody> execute = call.execute();
+        log.info("Rest response: {}", execute.code());
         return call;
     }
 }
