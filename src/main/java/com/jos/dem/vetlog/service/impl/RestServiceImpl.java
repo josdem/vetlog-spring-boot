@@ -16,7 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service.impl;
 
-import com.jos.dem.vetlog.command.RegistrationCommand;
+import com.jos.dem.vetlog.command.MessageCommand;
 import com.jos.dem.vetlog.service.RestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public Call<ResponseBody> sendMessage(@Body RegistrationCommand command) throws IOException {
+    public Call<ResponseBody> sendMessage(@Body MessageCommand command) throws IOException {
         Call<ResponseBody> call = restService.sendMessage(command);
         call.execute();
         return call;

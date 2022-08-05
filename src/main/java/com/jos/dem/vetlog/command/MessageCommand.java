@@ -1,5 +1,5 @@
 /*
-Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -19,13 +19,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MessageCommand implements Command {
-    private String email;
-    private String message;
     private String name;
-    private String contactName;
-    private String url;
-    private String source;
-    private String redirect;
-    private String emailContact;
+    private String email;
+    private String token;
+    private String message;
     private String template;
 }
