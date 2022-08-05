@@ -1,5 +1,5 @@
 /*
-Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
 public class ChangePasswordCommand implements Command {
 
     @NotNull
-    @Size(min=32, max=32)
+    @Size(min=36, max=36)
     private String token;
 
     @NotNull

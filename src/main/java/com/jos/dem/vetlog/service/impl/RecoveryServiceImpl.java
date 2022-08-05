@@ -30,14 +30,12 @@ import com.jos.dem.vetlog.service.RecoveryService;
 import com.jos.dem.vetlog.service.RegistrationService;
 import com.jos.dem.vetlog.service.RestService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RecoveryServiceImpl implements RecoveryService {
