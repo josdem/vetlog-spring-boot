@@ -114,7 +114,8 @@ class PetController {
 
     @RequestMapping(method = POST, value = "/save")
     ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request) {
-        log.info "Creating pet: ${petCommand.name} "
+        log.info "Creating pet: ${petCommand.name}"
+        log.info "Pet command: ${petCommand}"
         ModelAndView modelAndView = new ModelAndView('pet/create')
         if (bindingResult.hasErrors()) {
             modelAndView.addObject('petCommand', petCommand)
