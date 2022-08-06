@@ -59,6 +59,8 @@ public class PetBinder {
         pet.setStatus(PetStatus.OWNED);
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
         pet.setBreed(breed.get());
+        Optional<User> user = getUser(petCommand.getUser());
+        pet.setUser(user.get());
         return pet;
     }
 
