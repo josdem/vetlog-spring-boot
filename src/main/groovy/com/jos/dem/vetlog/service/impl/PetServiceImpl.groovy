@@ -17,6 +17,7 @@ limitations under the License.
 package com.jos.dem.vetlog.service.impl
 
 import com.jos.dem.vetlog.command.Command
+import com.jos.dem.vetlog.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
@@ -39,6 +40,8 @@ class PetServiceImpl implements PetService {
   PetRepository petRepository
   @Autowired
   PetImageService petImageService
+  @Autowired
+  UserRepository userRepository;
 
   @Transactional
   Pet save(Command command, User user){
@@ -53,6 +56,8 @@ class PetServiceImpl implements PetService {
   Pet update(Command command){
     recoveryImages(command)
     Pet pet = petBinder.bindPet(command)
+    Optional<User> user = getUser(command.user);
+    pet.setUser(user.get());
     petImageService.attachImage(command)
     petRepository.save(pet)
     pet
@@ -73,6 +78,10 @@ class PetServiceImpl implements PetService {
   private void recoveryImages(Command command){
     Pet pet = petRepository.findById(command.id).get()
     command.images = pet.images
+  }
+
+  private Optional<User> getUser(Long id) {
+    return userRepository.findById(id);
   }
 
 }

@@ -39,8 +39,6 @@ public class PetBinder {
     @Autowired
     private BreedRepository breedRepository;
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private DateFormatter dateFormatter;
 
 
@@ -59,8 +57,6 @@ public class PetBinder {
         pet.setStatus(PetStatus.OWNED);
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
         pet.setBreed(breed.get());
-        Optional<User> user = getUser(petCommand.getUser());
-        pet.setUser(user.get());
         return pet;
     }
 
@@ -79,10 +75,6 @@ public class PetBinder {
         command.setUser(pet.getUser().getId());
         command.setType(pet.getBreed().getType());
         return command;
-    }
-
-    private Optional<User> getUser(Long id) {
-        return userRepository.findById(id);
     }
 
 }
