@@ -71,7 +71,7 @@ class PetServiceImpl implements PetService {
   }
 
   private void recoveryImages(Command command){
-    Pet pet = petRepository.findOne(command.id)
+    Pet pet = petRepository.findById(command.id).get()
     command.images = pet.images
   }
 
