@@ -15,17 +15,17 @@ package com.jos.dem.vetlog.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class MessageCommand implements Command {
     private String name;
     private String email;
     private String token;
     private String message;
-    private String template;
     private String contactName;
     private String emailContact;
-    private String uuid;
-    private String mobile;
+    private String template;
 }

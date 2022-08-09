@@ -53,7 +53,7 @@ class TelephoneServiceSpec extends Specification{
 
   void "should save"(){
     given:"A command"
-    Command command = new MessageCommand(uuid:'uuid', mobile:'5516827055')
+    Command command = new MessageCommand()
     and:"A owner and adopter"
       User owner = new User(email:'josdem@email.com')
       User adopter = new User(email:'estrella@email.com', mobile:'5500012345')
@@ -65,7 +65,6 @@ class TelephoneServiceSpec extends Specification{
     then:"I expect adoption"
     1 * petRepository.save(pet)
     1 * userRepository.save(adopter)
-    adopter.mobile == command.mobile
     pet.status == PetStatus.ADOPTED
     pet.adopter == adopter
     1 * restService.sendMessage(_ as Command)

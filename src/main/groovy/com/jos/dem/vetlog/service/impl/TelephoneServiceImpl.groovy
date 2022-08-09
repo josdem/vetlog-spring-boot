@@ -18,6 +18,8 @@ package com.jos.dem.vetlog.service.impl
 
 import com.jos.dem.vetlog.command.Command
 import com.jos.dem.vetlog.command.MessageCommand
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,6 +36,7 @@ import com.jos.dem.vetlog.service.TelephoneService
 import com.jos.dem.vetlog.repository.PetRepository
 import com.jos.dem.vetlog.repository.UserRepository
 
+
 @Service
 class TelephoneServiceImpl implements TelephoneService {
 
@@ -46,8 +49,12 @@ class TelephoneServiceImpl implements TelephoneService {
   @Autowired
   PetRepository petRepository
 
+  @Value('${token}')
+  String clientToken
   @Value('${template.adoption.name}')
   String adoptionTemplate
+
+  Logger log = LoggerFactory.getLogger(this.class)
 
   @Transactional
   void save(Command command, User adopter){
@@ -63,14 +70,16 @@ class TelephoneServiceImpl implements TelephoneService {
   private createAdoptionDataMessage(Command command, Pet pet){
     User owner = pet.user
     User adopter = pet.adopter
-    Command messageCommand = new MessageCommand(
+    MessageCommand messageCommand = new MessageCommand(
       email:owner.email,
       name:pet.name,
       contactName: "${adopter.firstname} ${adopter.lastname}",
       emailContact: adopter.email,
       message:adopter.mobile,
+      token: clientToken,
       template: adoptionTemplate
     )
+    log.info "Command: " + messageCommand
     restService.sendMessage(messageCommand)
   }
 
