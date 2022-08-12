@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.controller
 
+import com.jos.dem.vetlog.exception.BusinessException
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.ModelAndView
@@ -32,6 +33,7 @@ class VetlogController {
   @RequestMapping("/")
   ModelAndView index(@RequestParam(value="message", required=false) String message){
     ModelAndView modelAndView = new ModelAndView('home/home')
+    throw new BusinessException("This is an expected error!")
     modelAndView.addObject('message', message)
     modelAndView
   }
