@@ -16,26 +16,23 @@ limitations under the License.
 
 package com.jos.dem.vetlog.controller
 
-import com.jos.dem.vetlog.exception.BusinessException
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.servlet.ModelAndView
-import org.springframework.stereotype.Controller
-
 
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Controller
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.servlet.ModelAndView
 
 @Controller
 class VetlogController {
-  Logger log = LoggerFactory.getLogger(this.class)
+    Logger log = LoggerFactory.getLogger(this.class)
 
-  @RequestMapping("/")
-  ModelAndView index(@RequestParam(value="message", required=false) String message){
-    ModelAndView modelAndView = new ModelAndView('home/home')
-    throw new BusinessException("This is an expected error!")
-    modelAndView.addObject('message', message)
-    modelAndView
-  }
+    @RequestMapping("/")
+    ModelAndView index(@RequestParam(value = "message", required = false) String message) {
+        ModelAndView modelAndView = new ModelAndView('home/home')
+        modelAndView.addObject('message', message)
+        modelAndView
+    }
 
 }

@@ -4,8 +4,21 @@
     <title th:text="#{app.title}"/>
     <head th:insert="fragments/include"/>
 </head>
+<style>
+.space-div {
+height: 80px;
+}
+</style>
 <body>
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+<div class="space-div">...</div>
+<!--<div th:if="${message}">-->
+    <div align="center" class="bg-warning">
+        <!--<p style="color:blue;font-size:18px;" th:text="${message}"/>-->
+        <p style="color:blue;font-size:18px;">Hello from Vetlog!</p>
+        <br/><br/>
+    </div>
+<!--</div>-->
 <div th:insert="fragments/header"/>
 <header id="home">
     <div id="owl-demo">
@@ -32,14 +45,6 @@
         </div>
     </div>
 </header>
-
-<div th:if="${message}">
-    <div align="center" class="bg-warning">
-        <p style="color:blue;font-size:18px;" th:text="${message}"/>
-        <br/><br/>
-    </div>
-</div>
-
 <!-- ABOUT -->
 
 <div id="about">
