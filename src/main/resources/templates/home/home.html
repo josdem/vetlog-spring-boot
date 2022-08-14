@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org" xmlns:background-color="http://www.w3.org/1999/xhtml">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title th:text="#{app.title}"/>
     <head th:insert="fragments/include"/>
 </head>
 <style>
 .space-div {
-height: 80px;
+height: 100px;
+background-color: #faf6e6;
 }
+
 </style>
 <body>
 <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-<div class="space-div">...</div>
-<!--<div th:if="${message}">-->
+<div th:if="${message}">
+    <div class="space-div">...</div>
     <div align="center" class="bg-warning">
-        <!--<p style="color:blue;font-size:18px;" th:text="${message}"/>-->
-        <p style="color:blue;font-size:18px;">Hello from Vetlog!</p>
+        <p style="color:blue;font-size:18px;" th:text="${message}"/>
         <br/><br/>
     </div>
-<!--</div>-->
+</div>
 <div th:insert="fragments/header"/>
 <header id="home">
     <div id="owl-demo">
@@ -231,6 +232,7 @@ height: 80px;
 <script src="assets/servizi-dog-theme/js/main.js"></script>
 <script>
 new WOW().init();
+
 
 </script>
 </body>
