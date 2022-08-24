@@ -14,6 +14,6 @@ public class VetController {
     @GetMapping("/search")
     public ModelAndView search(){
         log.info("Searching pets");
-        return new ModelAndView("search");
+        return new ModelAndView("vet/search");
     }
 }
