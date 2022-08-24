@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title th:text="#{vet.view.search.title}"></title>
+    <head th:insert="fragments/include"/>
+</head>
+<body>
+<div th:insert="fragments/header"/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <p th:text="#{vet.username}"/>
+                    <br/>
+                    <form id="search" th:action="@{/vet/search}" th:object="${usernameCommand}" method="post" class="form-horizontal">
+                        <fieldset>
+                            <label for="username"><h4 th:text="#{vet.username}"/></label>
+                            <input type="text" name="username" class="form-control" placeholder="username" id='username'/>
+                            <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
+                            <br/><br/>
+                            <input type="submit" class="btn btn-primary btn-block"/>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer"/>
+</body>
+</html>

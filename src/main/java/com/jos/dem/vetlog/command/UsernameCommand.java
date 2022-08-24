@@ -13,19 +13,16 @@ limitations under the License.
 
 package com.jos.dem.vetlog.command;
 
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 @Getter
 @Setter
-public class TelephoneCommand implements Command {
-    @NotNull
-    private String uuid;
-
-    @NotNull
-    @Size(min=10, max=10)
-    private String mobile;
+public class UsernameCommand implements Command {
+  @NotNull
+  @Size(min = 6, max = 50)
+  private String username;
 }
