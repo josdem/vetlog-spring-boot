@@ -1,13 +1,13 @@
-package com.jos.dem.vetlog.controller;
+package com.jos.dem.vetlog.controller
 
 import com.jos.dem.vetlog.command.UsernameCommand
 import com.jos.dem.vetlog.model.Pet
 import com.jos.dem.vetlog.model.User
 import com.jos.dem.vetlog.service.PetService
 import com.jos.dem.vetlog.service.UserService
-import lombok.RequiredArgsConstructor
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
@@ -15,15 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.servlet.ModelAndView
 
-import javax.validation.Valid;
+import javax.validation.Valid
 
 @Controller
 @RequestMapping("/vet")
-@RequiredArgsConstructor
 class VetController {
 
-    private final UserService userService
-    private final PetService petService
+    @Autowired
+    private UserService userService
+    @Autowired
+    private PetService petService
 
     @Value('${gcpImageUrl}')
     String gcpImageUrl;
