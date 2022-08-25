@@ -11,15 +11,19 @@
 <br/><br/>
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 col-md-4">
+        <div class="col-md-4 col-md-offset-4">
             <div class="thumbnail">
                 <div class="caption">
-                    <p th:text="#{vet.username}"/>
+                    <div align="center">
+                        <p th:text="#{vet.search.username}"/>
+                    </div>
                     <br/>
-                    <form id="search" th:action="@{/vet/search}" th:object="${usernameCommand}" method="post" class="form-horizontal">
+                    <form id="search" th:action="@{/vet/search}" th:object="${usernameCommand}" method="post"
+                          class="form-horizontal">
                         <fieldset>
                             <label for="username"><h4 th:text="#{vet.username}"/></label>
-                            <input type="text" name="username" class="form-control" placeholder="username" id='username'/>
+                            <input type="text" name="username" class="form-control" placeholder="username"
+                                   id='username'/>
                             <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
                             <br/><br/>
                             <input type="submit" class="btn btn-primary btn-block"/>
