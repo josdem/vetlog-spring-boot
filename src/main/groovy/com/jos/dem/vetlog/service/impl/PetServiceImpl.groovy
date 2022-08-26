@@ -67,6 +67,10 @@ class PetServiceImpl implements PetService {
     petRepository.findByUuid(uuid)
   }
 
+  Pet getPetById(Long id){
+    petRepository.findById(id).get()
+  }
+
   List<Pet> getPetsByUser(User user){
     petRepository.findAllByUser(user) - petRepository.findAllByStatus(PetStatus.ADOPTED) + petRepository.findAllByAdopter(user)
   }

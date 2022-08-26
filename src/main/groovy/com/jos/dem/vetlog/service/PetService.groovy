@@ -25,6 +25,7 @@ interface PetService {
   Pet save(Command command, User user)
   Pet update(Command command)
   Pet getPetByUuid(String uuid)
+  Pet getPetById(Long id)
   List<Pet> getPetsByUser(User user)
   List<Pet> getPetsByStatus(PetStatus status)
 }
