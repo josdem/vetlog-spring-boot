@@ -79,12 +79,7 @@ class PetLogController {
     modelAndView.addObject('petLogCommand', petLogCommand)
     Pet pet = petService.getPetByUuid(uuid)
     User currentUser = userService.getCurrentUser()
-    List<Pet> pets
-    if(pet.getUser() == currentUser){
-      pets = petService.getPetsByUser(currentUser)
-    } else {
-      pets = petService.getPetsByUser(pet.getUser())
-    }
+    List<Pet> pets = getPetsFromUser(pet, currentUser)
     fillModelAndView(modelAndView, pets, request)
   }
 
@@ -92,8 +87,9 @@ class PetLogController {
   ModelAndView save(@Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request) {
     log.info "Creating pet: ${petLogCommand.pet}"
     ModelAndView modelAndView = new ModelAndView('petlog/create')
-    User user = userService.getCurrentUser()
-    List<Pet> pets = petService.getPetsByUser(user)
+    Pet pet = petService.getPetById(petLogCommand.pet)
+    User currentUser = userService.getCurrentUser()
+    List<Pet> pets = getPetsFromUser(pet, currentUser)
     if (bindingResult.hasErrors()) {
       modelAndView.addObject('petLogCommand', petLogCommand)
       return fillModelAndView(modelAndView, pets)
@@ -122,6 +118,16 @@ class PetLogController {
     modelAndView.addObject('petLogs', petLogs)
     modelAndView.addObject('uuid', uuid)
     modelAndView
+  }
+
+  private List<Pet> getPetsFromUser(Pet pet, User currentUser){
+    List<Pet> pets
+    if(pet.getUser() == currentUser){
+      pets = petService.getPetsByUser(currentUser)
+    } else {
+      pets = petService.getPetsByUser(pet.getUser())
+    }
+    pets
   }
 
 }
