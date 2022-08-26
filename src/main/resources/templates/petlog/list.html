@@ -13,7 +13,9 @@
 <div class="container">
     <div class="row">
         <div th:if="${petLogs.isEmpty()}">
-            <p th:text="#{pet.list.empty}"/>
+            <div align="center">
+                <p th:text="#{pet.list.empty}"/>
+            </div>
         </div>
         <div align="center">
             <a th:href="@{/petlog/create}" class="btn btn-success"><p th:text="#{petlog.register}"/></a>
