@@ -72,7 +72,8 @@ class PetLogController {
   }
 
   @RequestMapping(method = GET, value = "/create")
-  ModelAndView create(HttpServletRequest request){
+  ModelAndView create(@RequestParam("uuid") String uuid, HttpServletRequest request){
+    log.info "Pet uuid: ${uuid}"
     ModelAndView modelAndView = new ModelAndView('petlog/create')
     Command petLogCommand = new PetLogCommand()
     modelAndView.addObject('petLogCommand', petLogCommand)
@@ -113,6 +114,7 @@ class PetLogController {
     Pet pet = petService.getPetByUuid(uuid)
     List<PetLog> petLogs = petLogService.getPetLogsByPet(pet)
     modelAndView.addObject('petLogs', petLogs)
+    modelAndView.addObject('uuid', uuid)
     modelAndView
   }
 
