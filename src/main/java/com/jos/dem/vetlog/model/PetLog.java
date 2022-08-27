@@ -35,27 +35,24 @@ import static javax.persistence.GenerationType.AUTO;
 @Entity
 public class PetLog {
 
-    @Id
-    @GeneratedValue(strategy = AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = AUTO)
+  private Long id;
 
-    @Column(nullable = true)
-    private String vetName;
+  @Column private String vetName;
 
-    @Column(nullable = false)
-    private String symptoms;
+  @Column(nullable = false)
+  private String symptoms;
 
-    @Column(nullable = false)
-    private String diagnosis;
+  @Column(nullable = false)
+  private String diagnosis;
 
-    @Column(nullable = true)
-    private String medicine;
+  private String medicine;
 
-    @Column(nullable = false)
-    private Date dateCreated = new Date();
+  @Column(nullable = false)
+  private Date dateCreated = new Date();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_id")
-    private Pet pet;
-
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "pet_id")
+  private Pet pet;
 }
