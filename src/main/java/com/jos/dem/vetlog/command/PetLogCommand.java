@@ -28,7 +28,7 @@ public class PetLogCommand implements Command {
 
     @NotNull
     @Size(min = 1, max = 1000)
-    private String symptoms;
+    private String signs;
 
     @NotNull
     @Size(min = 1, max = 1000)

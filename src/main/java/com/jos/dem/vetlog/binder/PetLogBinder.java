@@ -28,7 +28,7 @@ public class PetLogBinder {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         PetLog petLog = new PetLog();
         petLog.setVetName(petLogCommand.getVetName());
-        petLog.setSymptoms(petLogCommand.getSymptoms());
+        petLog.setSymptoms(petLogCommand.getSigns());
         petLog.setDiagnosis(petLogCommand.getDiagnosis());
         petLog.setMedicine(petLogCommand.getMedicine());
         return petLog;
