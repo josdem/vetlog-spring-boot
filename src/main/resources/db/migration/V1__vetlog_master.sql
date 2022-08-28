@@ -197,7 +197,7 @@ CREATE TABLE `pet_log` (
   `date_created` datetime NOT NULL,
   `diagnosis` varchar(255) NOT NULL,
   `medicine` varchar(255) DEFAULT NULL,
-  `symptoms` varchar(255) NOT NULL,
+  `signs` varchar(255) NOT NULL,
   `vet_name` varchar(255) DEFAULT NULL,
   `pet_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
