@@ -42,7 +42,7 @@ public class PetLog {
   @Column private String vetName;
 
   @Column(nullable = false)
-  private String symptoms;
+  private String signs;
 
   @Column(nullable = false)
   private String diagnosis;
