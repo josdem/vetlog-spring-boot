@@ -42,12 +42,12 @@ public class VetController {
   @Autowired private PetService petService;
 
   @Value("${gcpImageUrl}")
-  String gcpImageUrl;
+  private String gcpImageUrl;
 
   @Value("${defaultImage}")
-  String defaultImage;
+  private String defaultImage;
 
-  Logger log = LoggerFactory.getLogger(this.getClass());
+  private Logger log = LoggerFactory.getLogger(this.getClass());
 
   @GetMapping("/form")
   ModelAndView form() {
