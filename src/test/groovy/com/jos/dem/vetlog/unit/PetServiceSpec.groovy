@@ -66,6 +66,7 @@ class PetServiceSpec extends Specification {
     when:"We list by user"
       petRepository.findAllByUser(user) >> [pet]
       petRepository.findAllByAdopter(user) >> []
+      petRepository.findAllByStatus(PetStatus.ADOPTED) >> []
       List<Pet> result = service.getPetsByUser(user)
     then:"We expect a pet"
     1 == result.size()
