@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.validator
+package com.jos.dem.vetlog.validator;
 
-import com.jos.dem.vetlog.command.TelephoneCommand
-import org.springframework.validation.Validator
-import org.springframework.validation.Errors
-import org.springframework.stereotype.Component
+import com.jos.dem.vetlog.command.TelephoneCommand;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 @Component
-class TelephoneValidator implements Validator {
+public class TelephoneValidator implements Validator {
 
   @Override
-  boolean supports(Class<?> clazz) {
-    TelephoneCommand.class.equals(clazz)
+  public boolean supports(Class<?> clazz) {
+    return TelephoneCommand.class.equals(clazz);
   }
 
   @Override
-  void validate(Object target, Errors errors) {
-    TelephoneCommand telephoneCommand = (TelephoneCommand) target
+  public void validate(Object target, Errors errors) {
+    TelephoneCommand telephoneCommand = (TelephoneCommand) target;
   }
 }
