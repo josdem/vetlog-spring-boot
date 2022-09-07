@@ -26,7 +26,7 @@ public enum CurrentEnvironment {
     this.description = description;
   }
 
-  String getDescription(){
+  public String getDescription(){
     return description;
   }
 
