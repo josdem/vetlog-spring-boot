@@ -20,8 +20,10 @@ import org.mockito.MockitoAnnotations;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,6 +39,7 @@ class PetServiceTest {
 
   private User user;
   private Pet pet;
+  private List<Pet> pets = new ArrayList<>();
 
   @BeforeEach
   void setup() {
@@ -58,11 +61,22 @@ class PetServiceTest {
 
   @Test
   @DisplayName("listing a pet by owner")
-  void shouldListPetsByOwner(TestInfo testInfo){
+  void shouldListPetsByOwner(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     when(petRepository.findAllByUser(user)).thenReturn(Arrays.asList(pet));
     when(petRepository.findAllByAdopter(user)).thenReturn(new ArrayList<>());
     when(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(new ArrayList<>());
     assertEquals(1, service.getPetsByUser(user).size());
+  }
+
+  @Test
+  @DisplayName("not listing pet if adopted")
+  void shouldNotListPetsIfAdopted(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    pets.add(pet);
+    when(petRepository.findAllByUser(user)).thenReturn(pets);
+    when(petRepository.findAllByAdopter(user)).thenReturn(new ArrayList<>());
+    when(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(pets);
+    assertTrue(service.getPetsByUser(user).isEmpty());
   }
 }
