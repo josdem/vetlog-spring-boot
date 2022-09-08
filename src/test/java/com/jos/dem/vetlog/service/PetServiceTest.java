@@ -2,6 +2,7 @@ package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.binder.PetBinder;
 import com.jos.dem.vetlog.command.Command;
+import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.PetRepository;
@@ -17,7 +18,10 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,9 +35,14 @@ class PetServiceTest {
   @Mock private PetImageService petImageService;
   @Mock private UserRepository userRepository;
 
+  private User user;
+  private Pet pet;
+
   @BeforeEach
   void setup() {
     MockitoAnnotations.openMocks(this);
+    user = new User();
+    pet = new Pet();
     service = new PetServiceImpl(petBinder, petRepository, petImageService, userRepository);
   }
 
@@ -41,11 +50,19 @@ class PetServiceTest {
   @DisplayName("saving a pet")
   void shouldSavePet(TestInfo testInfo) throws IOException {
     log.info("Running: {}", testInfo.getDisplayName());
-    User user = new User();
-    Pet pet = new Pet();
     Command command = Mockito.mock(Command.class);
     when(petBinder.bindPet(command)).thenReturn(pet);
     service.save(command, user);
     verify(petRepository).save(Mockito.isA(Pet.class));
+  }
+
+  @Test
+  @DisplayName("listing a pet by owner")
+  void shouldListPetsByOwner(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    when(petRepository.findAllByUser(user)).thenReturn(Arrays.asList(pet));
+    when(petRepository.findAllByAdopter(user)).thenReturn(new ArrayList<>());
+    when(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(new ArrayList<>());
+    assertEquals(1, service.getPetsByUser(user).size());
   }
 }
