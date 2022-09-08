@@ -51,8 +51,7 @@ dependencies {
   implementation 'javax.xml.bind:jaxb-api:2.3.1'
   testImplementation "cglib:cglib-nodep:3.2.4"
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
-  testImplementation 'org.spockframework:spock-spring'
-  testImplementation "org.spockframework:spock-spring:2.2-M1-groovy-3.0"
+  testImplementation 'io.projectreactor:reactor-test'
 }
 
 tasks.named('test') {
