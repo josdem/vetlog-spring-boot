@@ -21,19 +21,18 @@ import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetAdoption;
-import com.jos.dem.vetlog.repository.AdoptionRepository;
 import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.service.AdoptionService;
 import com.jos.dem.vetlog.service.PetService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AdoptionServiceImpl implements AdoptionService {
 
-  @Autowired private AdoptionRepository adoptionRepository;
-  @Autowired private PetService petService;
-  @Autowired private PetRepository petRepository;
+  private final PetService petService;
+  private final PetRepository petRepository;
 
   public PetAdoption save(Command command) {
     AdoptionCommand adoptionCommand = (AdoptionCommand) command;
