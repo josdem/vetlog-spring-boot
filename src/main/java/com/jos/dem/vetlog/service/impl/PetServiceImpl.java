@@ -26,7 +26,7 @@ import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.PetImageService;
 import com.jos.dem.vetlog.service.PetService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,12 +35,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PetServiceImpl implements PetService {
 
-  @Autowired private PetBinder petBinder;
-  @Autowired private PetRepository petRepository;
-  @Autowired private PetImageService petImageService;
-  @Autowired private UserRepository userRepository;
+  private final PetBinder petBinder;
+  private final PetRepository petRepository;
+  private final PetImageService petImageService;
+  private final UserRepository userRepository;
 
   @Transactional
   public Pet save(Command command, User user) throws IOException {
