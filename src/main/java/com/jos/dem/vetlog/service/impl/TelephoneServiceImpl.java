@@ -19,50 +19,44 @@ package com.jos.dem.vetlog.service.impl;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.MessageCommand;
 import com.jos.dem.vetlog.command.TelephoneCommand;
+import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.exception.BusinessException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
-
-
-import com.jos.dem.vetlog.enums.PetStatus;
+import com.jos.dem.vetlog.repository.PetRepository;
+import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.PetService;
 import com.jos.dem.vetlog.service.RestService;
 import com.jos.dem.vetlog.service.TelephoneService;
-import com.jos.dem.vetlog.repository.PetRepository;
-import com.jos.dem.vetlog.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
-
 @Service
+@RequiredArgsConstructor
 public class TelephoneServiceImpl implements TelephoneService {
 
-  @Autowired
-  private PetService petService;
-  @Autowired
-  private RestService restService;
-  @Autowired
-  private UserRepository userRepository;
-  @Autowired
-  private PetRepository petRepository;
+  private final PetService petService;
+  private final RestService restService;
+  private final UserRepository userRepository;
+  private final PetRepository petRepository;
 
   @Value("${token}")
   private String clientToken;
+
   @Value("${template.adoption.name}")
   private String adoptionTemplate;
 
   private Logger log = LoggerFactory.getLogger(this.getClass());
 
   @Transactional
-  public void save(Command command, User adopter){
-    TelephoneCommand telephoneCommand = (TelephoneCommand)command;
+  public void save(Command command, User adopter) {
+    TelephoneCommand telephoneCommand = (TelephoneCommand) command;
     Pet pet = petService.getPetByUuid(telephoneCommand.getUuid());
     pet.setStatus(PetStatus.ADOPTED);
     adopter.setMobile(telephoneCommand.getMobile());
@@ -72,7 +66,7 @@ public class TelephoneServiceImpl implements TelephoneService {
     createAdoptionDataMessage(command, pet);
   }
 
-  private void createAdoptionDataMessage(Command command, Pet pet){
+  private void createAdoptionDataMessage(Command command, Pet pet) {
     User owner = pet.getUser();
     User adopter = pet.getAdopter();
     MessageCommand messageCommand = new MessageCommand();
@@ -88,11 +82,10 @@ public class TelephoneServiceImpl implements TelephoneService {
     messageCommand.setToken(clientToken);
     messageCommand.setTemplate(adoptionTemplate);
     log.info("Command: " + messageCommand);
-    try{
+    try {
       restService.sendMessage(messageCommand);
-    } catch (IOException ioe){
+    } catch (IOException ioe) {
       throw new BusinessException(ioe.getMessage());
     }
   }
-
 }
