@@ -1,6 +1,5 @@
 package com.jos.dem.vetlog.service;
 
-import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.MessageCommand;
 import com.jos.dem.vetlog.command.TelephoneCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
@@ -48,16 +47,9 @@ class TelephoneServiceTest {
     telephoneCommand.setUuid("uuid");
     telephoneCommand.setMobile("7346041832");
 
-    User owner = new User();
-    owner.setEmail("contact@josdem.io");
-
-    User adopter = new User();
-    adopter.setEmail("athena@gmail.com");
-
-    Pet pet = new Pet();
-    pet.setName("Cinnamon");
-    pet.setUser(owner);
-    pet.setAdopter(adopter);
+    User owner = getUser("contact@josdem.io");
+    User adopter = getUser("athena@gmail.com");
+    Pet pet = getPet(owner, adopter);
 
     when(petService.getPetByUuid("uuid")).thenReturn(pet);
     service.save(telephoneCommand, adopter);
@@ -68,5 +60,18 @@ class TelephoneServiceTest {
     assertEquals(PetStatus.ADOPTED, pet.getStatus());
     assertEquals(adopter, pet.getAdopter());
   }
-  
+
+  private Pet getPet(User owner, User adopter) {
+    Pet pet = new Pet();
+    pet.setName("Cinnamon");
+    pet.setUser(owner);
+    pet.setAdopter(adopter);
+    return pet;
+  }
+
+  private User getUser(String email) {
+    User user = new User();
+    user.setEmail(email);
+    return user;
+  }
 }
