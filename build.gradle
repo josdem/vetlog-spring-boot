@@ -50,6 +50,8 @@ dependencies {
   implementation 'net.minidev:json-smart:2.3'
   implementation 'javax.xml.bind:jaxb-api:2.3.1'
   testImplementation "cglib:cglib-nodep:3.2.4"
+  testCompileOnly 'org.projectlombok:lombok'
+  testAnnotationProcessor 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
 }
