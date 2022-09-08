@@ -1,6 +1,9 @@
 package com.jos.dem.vetlog.service;
 
+import com.jos.dem.vetlog.command.Command;
+import com.jos.dem.vetlog.command.MessageCommand;
 import com.jos.dem.vetlog.command.TelephoneCommand;
+import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.PetRepository;
@@ -12,8 +15,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -35,7 +42,7 @@ class TelephoneServiceTest {
 
   @Test
   @DisplayName("sending adopter contact information to the pet owner")
-  void shouldSendAdopterInformation(TestInfo testInfo) {
+  void shouldSendAdopterInformation(TestInfo testInfo) throws IOException {
     log.info("Running: {}", testInfo.getDisplayName());
     TelephoneCommand telephoneCommand = new TelephoneCommand();
     telephoneCommand.setUuid("uuid");
@@ -56,5 +63,10 @@ class TelephoneServiceTest {
     service.save(telephoneCommand, adopter);
 
     verify(petRepository).save(pet);
+    verify(userRepository).save(adopter);
+    verify(restService).sendMessage(Mockito.isA(MessageCommand.class));
+    assertEquals(PetStatus.ADOPTED, pet.getStatus());
+    assertEquals(adopter, pet.getAdopter());
   }
+  
 }
