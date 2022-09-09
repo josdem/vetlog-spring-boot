@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
 @Slf4j
 class PetServiceTest {
@@ -53,7 +54,7 @@ class PetServiceTest {
   @DisplayName("saving a pet")
   void shouldSavePet(TestInfo testInfo) throws IOException {
     log.info("Running: {}", testInfo.getDisplayName());
-    Command command = Mockito.mock(Command.class);
+    Command command = mock(Command.class);
     when(petBinder.bindPet(command)).thenReturn(pet);
     service.save(command, user);
     verify(petRepository).save(Mockito.isA(Pet.class));
