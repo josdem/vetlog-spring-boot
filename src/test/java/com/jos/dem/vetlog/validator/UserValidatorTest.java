@@ -3,16 +3,15 @@ package com.jos.dem.vetlog.validator;
 import com.jos.dem.vetlog.command.UserCommand;
 import com.jos.dem.vetlog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.validation.Errors;
 
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -37,7 +36,7 @@ class UserValidatorTest {
     log.info("Running: {}", testInfo.getDisplayName());
     UserCommand userCommand = getUserCommand();
     validator.validate(userCommand, errors);
-    verify(errors, never()).rejectValue(Mockito.anyString(), Mockito.anyString());
+    verify(errors, never()).rejectValue(anyString(), anyString());
   }
 
   @Test
@@ -52,12 +51,12 @@ class UserValidatorTest {
 
   @Test
   @DisplayName("accepting dash in password")
-  void shouldAcceptDashCharacterInPassword(TestInfo testInfo){
+  void shouldAcceptDashCharacterInPassword(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     UserCommand userCommand = getUserCommand();
     userCommand.setPassword("pass-word");
     userCommand.setPasswordConfirmation("pass-word");
-    verify(errors, never()).rejectValue(Mockito.anyString(), Mockito.anyString());
+    verify(errors, never()).rejectValue(anyString(), anyString());
   }
 
   private UserCommand getUserCommand() {
