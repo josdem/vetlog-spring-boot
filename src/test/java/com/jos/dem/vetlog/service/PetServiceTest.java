@@ -82,9 +82,8 @@ class PetServiceTest {
 
   @Test
   @DisplayName("listing pets if I am adopter")
-  void shouldListPetIfIamAdopter(TestInfo testInfo){
+  void shouldListPetIfIamAdopter(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    pets.add(pet);
     when(petRepository.findAllByUser(user)).thenReturn(new ArrayList<>());
     when(petRepository.findAllByAdopter(user)).thenReturn(Arrays.asList(pet));
     when(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(new ArrayList<>());
