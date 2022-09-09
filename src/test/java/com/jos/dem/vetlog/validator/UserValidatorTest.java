@@ -50,6 +50,16 @@ class UserValidatorTest {
     verify(errors).rejectValue("password", "user.error.password.equals");
   }
 
+  @Test
+  @DisplayName("accepting dash in password")
+  void shouldAcceptDashCharacterInPassword(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    UserCommand userCommand = getUserCommand();
+    userCommand.setPassword("pass-word");
+    userCommand.setPasswordConfirmation("pass-word");
+    verify(errors, never()).rejectValue(Mockito.anyString(), Mockito.anyString());
+  }
+
   private UserCommand getUserCommand() {
     UserCommand userCommand = new UserCommand();
     userCommand.setUsername("josdem");
