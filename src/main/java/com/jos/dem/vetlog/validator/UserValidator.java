@@ -18,6 +18,7 @@ package com.jos.dem.vetlog.validator;
 
 import com.jos.dem.vetlog.command.UserCommand;
 import com.jos.dem.vetlog.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +27,10 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
+@RequiredArgsConstructor
 public class UserValidator implements Validator {
 
-  @Autowired public UserService userService;
+  private final UserService userService;
 
   private Logger log = LoggerFactory.getLogger(this.getClass());
 
