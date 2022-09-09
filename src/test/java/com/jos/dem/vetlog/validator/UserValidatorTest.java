@@ -59,6 +59,16 @@ class UserValidatorTest {
     verify(errors, never()).rejectValue(anyString(), anyString());
   }
 
+  @Test
+  @DisplayName("accepting underscore in password")
+  void shouldAcceptUnderscoreCharacterInPassword(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    UserCommand userCommand = getUserCommand();
+    userCommand.setPassword("pass_word");
+    userCommand.setPasswordConfirmation("pass_word");
+    verify(errors, never()).rejectValue(anyString(), anyString());
+  }
+
   private UserCommand getUserCommand() {
     UserCommand userCommand = new UserCommand();
     userCommand.setUsername("josdem");
