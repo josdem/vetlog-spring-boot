@@ -8,10 +8,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.validation.Errors;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @Slf4j
@@ -21,9 +23,25 @@ class UserValidatorTest {
   @Mock private UserService userService;
 
   @BeforeEach
-  void setup(){
+  void setup() {
     MockitoAnnotations.openMocks(this);
     validator = new UserValidator(userService);
+  }
+
+  @Test
+  @DisplayName("validating an user")
+  void shouldValidateAnUser(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    UserCommand userCommand = new UserCommand();
+    userCommand.setUsername("josdem");
+    userCommand.setPassword("password");
+    userCommand.setPasswordConfirmation("password");
+    userCommand.setFirstname("Jose");
+    userCommand.setLastname("Morales");
+    userCommand.setEmail("contact@josdem.io");
+    Errors errors = mock(Errors.class);
+    validator.validate(userCommand, errors);
+    verify(errors, never()).rejectValue(Mockito.anyString(), Mockito.anyString());
   }
 
   @Test
