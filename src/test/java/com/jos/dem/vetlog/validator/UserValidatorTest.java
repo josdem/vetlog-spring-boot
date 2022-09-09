@@ -3,6 +3,7 @@ package com.jos.dem.vetlog.validator;
 import com.jos.dem.vetlog.command.UserCommand;
 import com.jos.dem.vetlog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,8 @@ import static org.mockito.Mockito.verify;
 class UserValidatorTest {
 
   private UserValidator validator;
+  private Errors errors = mock(Errors.class);
+
   @Mock private UserService userService;
 
   @BeforeEach
@@ -32,14 +35,7 @@ class UserValidatorTest {
   @DisplayName("validating an user")
   void shouldValidateAnUser(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    UserCommand userCommand = new UserCommand();
-    userCommand.setUsername("josdem");
-    userCommand.setPassword("password");
-    userCommand.setPasswordConfirmation("password");
-    userCommand.setFirstname("Jose");
-    userCommand.setLastname("Morales");
-    userCommand.setEmail("contact@josdem.io");
-    Errors errors = mock(Errors.class);
+    UserCommand userCommand = getUserCommand();
     validator.validate(userCommand, errors);
     verify(errors, never()).rejectValue(Mockito.anyString(), Mockito.anyString());
   }
@@ -48,15 +44,20 @@ class UserValidatorTest {
   @DisplayName("rejecting an user since passwords do not match")
   void shouldRejectUserSincePasswordDoesNotMatch(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
+    UserCommand userCommand = getUserCommand();
+    userCommand.setPasswordConfirmation("passwords");
+    validator.validate(userCommand, errors);
+    verify(errors).rejectValue("password", "user.error.password.equals");
+  }
+
+  private UserCommand getUserCommand() {
     UserCommand userCommand = new UserCommand();
     userCommand.setUsername("josdem");
     userCommand.setPassword("password");
-    userCommand.setPasswordConfirmation("passwords");
+    userCommand.setPasswordConfirmation("password");
     userCommand.setFirstname("Jose");
     userCommand.setLastname("Morales");
     userCommand.setEmail("contact@josdem.io");
-    Errors errors = mock(Errors.class);
-    validator.validate(userCommand, errors);
-    verify(errors).rejectValue("password", "user.error.password.equals");
+    return userCommand;
   }
 }
