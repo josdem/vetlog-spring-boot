@@ -1,6 +1,7 @@
 package com.jos.dem.vetlog.validator;
 
 import com.jos.dem.vetlog.command.UserCommand;
+import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @Slf4j
 class UserValidatorTest {
@@ -56,6 +58,7 @@ class UserValidatorTest {
     UserCommand userCommand = getUserCommand();
     userCommand.setPassword("pass-word");
     userCommand.setPasswordConfirmation("pass-word");
+    validator.validate(userCommand, errors);
     verify(errors, never()).rejectValue(anyString(), anyString());
   }
 
@@ -66,6 +69,7 @@ class UserValidatorTest {
     UserCommand userCommand = getUserCommand();
     userCommand.setPassword("pass_word");
     userCommand.setPasswordConfirmation("pass_word");
+    validator.validate(userCommand, errors);
     verify(errors, never()).rejectValue(anyString(), anyString());
   }
 
@@ -76,7 +80,18 @@ class UserValidatorTest {
     UserCommand userCommand = getUserCommand();
     userCommand.setPassword("password.");
     userCommand.setPasswordConfirmation("password.");
+    validator.validate(userCommand, errors);
     verify(errors, never()).rejectValue(anyString(), anyString());
+  }
+
+  @Test
+  @DisplayName("not duplicating users")
+  void shouldNotDuplicateUsers(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    UserCommand userCommand = getUserCommand();
+    when(userService.getByUsername("josdem")).thenReturn(new User());
+    validator.validate(userCommand, errors);
+    verify(errors).rejectValue("username", "user.error.duplicated.username");
   }
 
   private UserCommand getUserCommand() {
