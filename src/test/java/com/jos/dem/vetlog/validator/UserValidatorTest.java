@@ -69,6 +69,16 @@ class UserValidatorTest {
     verify(errors, never()).rejectValue(anyString(), anyString());
   }
 
+  @Test
+  @DisplayName("accepting dot in password")
+  void shouldAcceptDotCharacterInPassword(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    UserCommand userCommand = getUserCommand();
+    userCommand.setPassword("password.");
+    userCommand.setPasswordConfirmation("password.");
+    verify(errors, never()).rejectValue(anyString(), anyString());
+  }
+
   private UserCommand getUserCommand() {
     UserCommand userCommand = new UserCommand();
     userCommand.setUsername("josdem");
