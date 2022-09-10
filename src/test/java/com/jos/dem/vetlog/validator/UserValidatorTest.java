@@ -94,6 +94,16 @@ class UserValidatorTest {
     verify(errors).rejectValue("username", "user.error.duplicated.username");
   }
 
+  @Test
+  @DisplayName("not duplicating users by email")
+  void shouldNotDuplicateUsersByEmail(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    UserCommand userCommand = getUserCommand();
+    when(userService.getByEmail("contact@josdem.io")).thenReturn(new User());
+    validator.validate(userCommand, errors);
+    verify(errors).rejectValue("email", "user.error.duplicated.email");
+  }
+
   private UserCommand getUserCommand() {
     UserCommand userCommand = new UserCommand();
     userCommand.setUsername("josdem");
