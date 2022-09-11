@@ -4,6 +4,7 @@ import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.enums.PetType;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.model.Pet;
+import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.BreedRepository;
 import com.jos.dem.vetlog.util.DateFormatter;
@@ -17,8 +18,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
@@ -50,7 +53,9 @@ class PetBinderTest {
     assertTrue(result.getDewormed());
     assertTrue(result.getSterilized());
     assertTrue(result.getVaccinated());
+    assertFalse(result.getImages().isEmpty());
     assertEquals(5L, result.getBreed());
+    assertEquals(2L, result.getUser());
     assertEquals(PetType.CAT, result.getType());
   }
 
@@ -63,10 +68,18 @@ class PetBinderTest {
     pet.setDewormed(true);
     pet.setSterilized(true);
     pet.setVaccinated(true);
+    pet.setImages(Arrays.asList(new PetImage()));
     pet.setBreed(breed);
     pet.setBirthDate(LocalDate.now());
-    pet.setUser(new User());
+    pet.setUser(getUser());
     return pet;
+  }
+
+  @NotNull
+  private User getUser() {
+    User user = new User();
+    user.setId(2L);
+    return user;
   }
 
   @NotNull
