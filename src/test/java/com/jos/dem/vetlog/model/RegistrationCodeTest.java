@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static java.time.temporal.ChronoUnit.DAYS;
@@ -23,7 +22,8 @@ class RegistrationCodeTest {
   @DisplayName("getting a valid registration code")
   void shouldGetValidRegistrationCode(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    assertEquals(7, DAYS.between(registrationCode.getDateCreated(), LocalDateTime.now().plusDays(7)));
+    assertEquals(
+        7, DAYS.between(registrationCode.getDateCreated(), LocalDateTime.now().plusDays(7)));
     assertEquals(36, registrationCode.getToken().length());
     assertTrue(registrationCode.isValid());
   }
