@@ -5,38 +5,76 @@ import com.jos.dem.vetlog.enums.PetType;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
+import com.jos.dem.vetlog.repository.BreedRepository;
+import com.jos.dem.vetlog.util.DateFormatter;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 class PetBinderTest {
 
-  private PetBinder petBinder = new PetBinder();
+  private PetBinder petBinder;
+
+  @Mock private BreedRepository breedRepository;
+  @Mock private DateFormatter dateFormatter;
+
+  @BeforeEach
+  void setup() {
+    MockitoAnnotations.openMocks(this);
+    petBinder = new PetBinder(breedRepository, dateFormatter);
+  }
 
   @Test
   @DisplayName("binding a pet")
   void shouldBindPet(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
+    Breed breed = getBreed();
+    Pet pet = getPet(breed);
+
+    PetCommand result = petBinder.bindPet(pet);
+
+    assertEquals(1L, result.getId());
+    assertEquals("1b211410-320b-11ed-a261-0242ac120002", result.getUuid());
+    assertEquals("Frida", result.getName());
+    assertTrue(result.getDewormed());
+    assertTrue(result.getSterilized());
+    assertTrue(result.getVaccinated());
+    assertEquals(5L, result.getBreed());
+    assertEquals(PetType.CAT, result.getType());
+  }
+
+  @NotNull
+  private Pet getPet(Breed breed) {
+    Pet pet = new Pet();
+    pet.setId(1L);
+    pet.setUuid("1b211410-320b-11ed-a261-0242ac120002");
+    pet.setName("Frida");
+    pet.setDewormed(true);
+    pet.setSterilized(true);
+    pet.setVaccinated(true);
+    pet.setBreed(breed);
+    pet.setBirthDate(LocalDate.now());
+    pet.setUser(new User());
+    return pet;
+  }
+
+  @NotNull
+  private Breed getBreed() {
     Breed breed = new Breed();
     breed.setId(5L);
     breed.setName("Ragdoll");
     breed.setType(PetType.CAT);
-
-    Pet pet = new Pet();
-    pet.setName("Frida");
-    pet.setBreed(breed);
-    pet.setBirthDate(LocalDate.now());
-    pet.setUser(new User());
-
-    PetCommand result = petBinder.bindPet(pet);
-    assertEquals("Frida", result.getName());
-    assertEquals(5L, result.getBreed());
-    assertEquals(PetType.CAT, result.getType());
+    return breed;
   }
 }
