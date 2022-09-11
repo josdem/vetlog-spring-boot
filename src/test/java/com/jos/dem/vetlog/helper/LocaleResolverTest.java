@@ -35,4 +35,14 @@ class LocaleResolverTest {
     Locale result = localeResolver.resolveLocale(request);
     assertEquals(new Locale("en"), result);
   }
+
+  @Test
+  @DisplayName("getting spanish from headers")
+  void shouldGetSpanishFromHeaders(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getHeader("Accept-Language")).thenReturn("es-MX,en-US;q=0.7,en;q=0.3");
+    Locale result = localeResolver.resolveLocale(request);
+    assertEquals(new Locale("es"), result);
+  }
 }
