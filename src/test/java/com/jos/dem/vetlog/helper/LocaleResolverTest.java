@@ -43,4 +43,13 @@ class LocaleResolverTest {
     Locale result = localeResolver.resolveLocale(request);
     assertEquals(new Locale("es"), result);
   }
+
+  @Test
+  @DisplayName("getting english when unknown language")
+  void shouldGetEnglishWhenUnknownLanguage(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    when(request.getHeader("Accept-Language")).thenReturn("zh-cn,zh-tw");
+    Locale result = localeResolver.resolveLocale(request);
+    assertEquals(new Locale("en"), result);
+  }
 }
