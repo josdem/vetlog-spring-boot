@@ -25,6 +25,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -41,7 +42,7 @@ public class RegistrationCode {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
-    private LocalDate dateCreated = LocalDate.now();
+    private LocalDateTime dateCreated = LocalDateTime.now();
     @Column(nullable = false)
     private String token = UUID.randomUUID().toString();
     @Column(nullable = false)
