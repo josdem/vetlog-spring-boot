@@ -10,6 +10,7 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @Slf4j
 class LocaleResolverTest {
@@ -21,6 +22,16 @@ class LocaleResolverTest {
   void shouldGetDefaultLocale(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     HttpServletRequest request = mock(HttpServletRequest.class);
+    Locale result = localeResolver.resolveLocale(request);
+    assertEquals(new Locale("en"), result);
+  }
+
+  @Test
+  @DisplayName("getting english from headers")
+  void shouldGetEnglishFromHeaders(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getHeader("Accept-Language")).thenReturn("en-US,en;q=0.8");
     Locale result = localeResolver.resolveLocale(request);
     assertEquals(new Locale("en"), result);
   }
