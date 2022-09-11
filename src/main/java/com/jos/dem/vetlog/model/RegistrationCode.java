@@ -1,5 +1,5 @@
 /*
-Copyright 2022 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -40,13 +41,13 @@ public class RegistrationCode {
     @Column(nullable = false)
     private String email;
     @Column(nullable = false)
-    private Date dateCreated = new Date();
+    private LocalDate dateCreated = LocalDate.now();
     @Column(nullable = false)
     private String token = UUID.randomUUID().toString();
     @Column(nullable = false)
     private RegistrationCodeStatus status = RegistrationCodeStatus.VALID;
 
-    private Boolean isValid() {
+    public Boolean isValid() {
         return status == RegistrationCodeStatus.VALID ? true : false;
     }
 }
