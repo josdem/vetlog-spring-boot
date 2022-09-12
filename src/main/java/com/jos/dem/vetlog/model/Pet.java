@@ -31,7 +31,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class Pet {
     private String name;
 
     @Column(nullable = false)
-    private LocalDate birthDate;
+    private LocalDateTime birthDate;
 
     @Column(nullable = false)
     private Boolean dewormed = false;
