@@ -124,7 +124,7 @@ public class PetController {
       return fillModelAndView(modelAndView);
     }
     User user = userService.getCurrentUser();
-    Pet pet = petService.save(petCommand, user);
+    petService.save(petCommand, user);
     modelAndView.addObject("message", localeService.getMessage("pet.created", request));
     petCommand = new PetCommand();
     modelAndView.addObject("petCommand", petCommand);

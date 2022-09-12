@@ -28,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Component
@@ -44,7 +43,7 @@ public class PetBinder {
     pet.setId(petCommand.getId());
     pet.setUuid(UuidGenerator.generateUuid());
     pet.setName(petCommand.getName());
-    pet.setBirthDate(LocalDateTime.parse(dateFormatter.format(petCommand.getBirthDate())));
+    pet.setBirthDate(LocalDateTime.parse(petCommand.getBirthDate()));
     pet.setDewormed(petCommand.getDewormed());
     pet.setSterilized(petCommand.getSterilized());
     pet.setVaccinated(petCommand.getVaccinated());
