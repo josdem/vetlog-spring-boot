@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,7 +31,7 @@ class PetBinderTest {
   private PetBinder petBinder;
 
   @Mock private BreedRepository breedRepository;
-  @Mock private DateFormatter dateFormatter;
+  private DateFormatter dateFormatter = new DateFormatter();
 
   @BeforeEach
   void setup() {
@@ -50,6 +51,7 @@ class PetBinderTest {
     assertEquals(1L, result.getId());
     assertEquals("1b211410-320b-11ed-a261-0242ac120002", result.getUuid());
     assertEquals("Frida", result.getName());
+    assertEquals("01/17/2021", result.getBirthDate());
     assertTrue(result.getDewormed());
     assertTrue(result.getSterilized());
     assertTrue(result.getVaccinated());
@@ -70,7 +72,7 @@ class PetBinderTest {
     pet.setVaccinated(true);
     pet.setImages(Arrays.asList(new PetImage()));
     pet.setBreed(breed);
-    pet.setBirthDate(LocalDate.now());
+    pet.setBirthDate(LocalDateTime.of(2021, 01, 17, 0,0,0));
     pet.setUser(getUser());
     return pet;
   }
