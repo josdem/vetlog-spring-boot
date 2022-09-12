@@ -16,6 +16,6 @@ class DateFormatterTest {
   @DisplayName("formatting a date")
   void shouldFormatADate(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    assertEquals("09/12/2022", dateFormatter.format("2022-09-12T15:34:49.049584795"));
+    assertEquals("01/17/2021", dateFormatter.format("2021-01-17T00:00"));
   }
 }
