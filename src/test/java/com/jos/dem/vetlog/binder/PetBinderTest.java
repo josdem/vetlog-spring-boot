@@ -8,7 +8,6 @@ import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.BreedRepository;
-import com.jos.dem.vetlog.util.DateFormatter;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,12 +33,11 @@ class PetBinderTest {
   private PetBinder petBinder;
 
   @Mock private BreedRepository breedRepository;
-  private DateFormatter dateFormatter = new DateFormatter();
 
   @BeforeEach
   void setup() {
     MockitoAnnotations.openMocks(this);
-    petBinder = new PetBinder(breedRepository, dateFormatter);
+    petBinder = new PetBinder(breedRepository);
   }
 
   @Test

@@ -22,7 +22,6 @@ import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.repository.BreedRepository;
-import com.jos.dem.vetlog.util.DateFormatter;
 import com.jos.dem.vetlog.util.UuidGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -35,7 +34,6 @@ import java.util.Optional;
 public class PetBinder {
 
   private final BreedRepository breedRepository;
-  private final DateFormatter dateFormatter;
 
   public Pet bindPet(Command command) {
     PetCommand petCommand = (PetCommand) command;
