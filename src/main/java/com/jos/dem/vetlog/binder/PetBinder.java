@@ -59,7 +59,7 @@ public class PetBinder {
     command.setId(pet.getId());
     command.setUuid(pet.getUuid());
     command.setName(pet.getName());
-    command.setBirthDate(dateFormatter.format(pet.getBirthDate().toString()));
+    command.setBirthDate(pet.getBirthDate().toString());
     command.setDewormed(pet.getDewormed());
     command.setSterilized(pet.getSterilized());
     command.setVaccinated(pet.getVaccinated());

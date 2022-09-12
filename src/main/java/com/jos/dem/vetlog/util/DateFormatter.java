@@ -1,5 +1,5 @@
 /*
-Copyright 2017 José Luis De la Cruz Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,11 +24,9 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class DateFormatter {
 
-    public String format(String dateToFormat) {
-        String onlyDate = dateToFormat.substring(0, 10);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(onlyDate, formatter);
-        return localDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-    }
-
+  public String format(String dateToFormat) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/dd/yy, h:mm a");
+    LocalDate localDate = LocalDate.parse(dateToFormat, formatter);
+    return localDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+  }
 }
