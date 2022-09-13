@@ -2,6 +2,7 @@ package com.jos.dem.vetlog.validator;
 
 import com.jos.dem.vetlog.command.PetCommand;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -16,14 +17,13 @@ import static org.mockito.Mockito.verify;
 class PetValidatorTest {
 
   private PetValidator validator = new PetValidator();
+  private Errors errors = mock(Errors.class);
 
   @Test
   @DisplayName("validating birthdate")
   void shouldValidateBirthdate(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    Errors errors = mock(Errors.class);
-    PetCommand petCommand = new PetCommand();
-    petCommand.setBirthDate("2021-01-17T00:00");
+    PetCommand petCommand = getPetCommand("2021-01-17T00:00");
     validator.validate(petCommand, errors);
     verify(errors, never()).rejectValue(anyString(), anyString());
   }
@@ -32,10 +32,15 @@ class PetValidatorTest {
   @DisplayName("rejecting a birthdate")
   void shouldRejectBirthdate(TestInfo testInfo){
     log.info("Running: {}", testInfo.getDisplayName());
-    Errors errors = mock(Errors.class);
-    PetCommand petCommand = new PetCommand();
-    petCommand.setBirthDate("2023-01-17T00:00");
+    PetCommand petCommand = getPetCommand("2023-01-17T00:00");
     validator.validate(petCommand, errors);
     verify(errors).rejectValue("birthDate", "pet.error.birthDate.past");
+  }
+
+  @NotNull
+  private PetCommand getPetCommand(String birthdate) {
+    PetCommand petCommand = new PetCommand();
+    petCommand.setBirthDate(birthdate);
+    return petCommand;
   }
 }
