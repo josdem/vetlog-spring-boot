@@ -4,6 +4,7 @@ import com.jos.dem.vetlog.command.UserCommand;
 import com.jos.dem.vetlog.enums.Role;
 import com.jos.dem.vetlog.model.User;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -19,13 +20,7 @@ class UserBinderTest {
   @DisplayName("binding an user")
   void shouldBindAnUser(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    UserCommand userCommand = new UserCommand();
-    userCommand.setUsername("josdem");
-    userCommand.setPassword("password");
-    userCommand.setPasswordConfirmation("password");
-    userCommand.setFirstname("Jose");
-    userCommand.setLastname("Morales");
-    userCommand.setEmail("contact@josdem.io");
+    UserCommand userCommand = getUserCommand();
 
     User result = binder.bindUser(userCommand);
 
@@ -35,5 +30,17 @@ class UserBinderTest {
     assertEquals("Morales", result.getLastname());
     assertEquals("contact@josdem.io", result.getEmail());
     assertEquals(Role.USER, result.getRole());
+  }
+
+  @NotNull
+  private UserCommand getUserCommand() {
+    UserCommand userCommand = new UserCommand();
+    userCommand.setUsername("josdem");
+    userCommand.setPassword("password");
+    userCommand.setPasswordConfirmation("password");
+    userCommand.setFirstname("Jose");
+    userCommand.setLastname("Morales");
+    userCommand.setEmail("contact@josdem.io");
+    return userCommand;
   }
 }
