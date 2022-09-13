@@ -27,4 +27,15 @@ class PetValidatorTest {
     validator.validate(petCommand, errors);
     verify(errors, never()).rejectValue(anyString(), anyString());
   }
+
+  @Test
+  @DisplayName("rejecting a birthdate")
+  void shouldRejectBirthdate(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    Errors errors = mock(Errors.class);
+    PetCommand petCommand = new PetCommand();
+    petCommand.setBirthDate("2023-01-17T00:00");
+    validator.validate(petCommand, errors);
+    verify(errors).rejectValue("birthDate", "pet.error.birthDate.past");
+  }
 }
