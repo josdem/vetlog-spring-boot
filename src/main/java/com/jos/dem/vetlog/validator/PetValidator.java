@@ -17,9 +17,12 @@ limitations under the License.
 package com.jos.dem.vetlog.validator;
 
 import com.jos.dem.vetlog.command.PetCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+import java.time.LocalDateTime;
 
 @Component
 public class PetValidator implements Validator {
@@ -36,6 +39,9 @@ public class PetValidator implements Validator {
   }
 
   private void validateBirthdate(Errors errors, PetCommand petCommand) {
-    // TODO: Validate pet birth date: https://github.com/josdem/vetlog-spring-boot/issues/122
+    LocalDateTime now = LocalDateTime.now();
+    if (now.isBefore(LocalDateTime.parse(petCommand.getBirthDate()))) {
+      errors.rejectValue("birthDate", "pet.error.birthDate.past");
+    }
   }
 }

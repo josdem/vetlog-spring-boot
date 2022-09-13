@@ -168,7 +168,6 @@ public class PetController {
   private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView) {
     User user = userService.getCurrentUser();
     List<Pet> pets = petService.getPetsByUser(user);
-    pets.forEach(pet -> log.info("pet: " + pet));
     modelAndView.addObject("pets", pets);
     modelAndView.addObject("gcpImageUrl", gcpImageUrl);
     modelAndView.addObject("defaultImage", defaultImage);
