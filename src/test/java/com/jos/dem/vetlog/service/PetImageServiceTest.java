@@ -49,7 +49,7 @@ class PetImageServiceTest {
         petCommand.setImage(multiPartFile);
 
         service.attachImage(petCommand);
-        
+
         verify(petImageRepository).save(Mockito.isA(PetImage.class));
         verify(googleStorageWriter).uploadToBucket(any(), anyString(), eq(inputStream));
     }
