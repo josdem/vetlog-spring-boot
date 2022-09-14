@@ -106,4 +106,12 @@ class PetServiceTest {
     when(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(new ArrayList<>());
     assertEquals(1, service.getPetsByUser(user).size());
   }
+
+  @Test
+  @DisplayName("getting pet by status")
+  void shouldGetPetByStatus(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    when(petRepository.findAllByStatus(PetStatus.OWNED)).thenReturn(pets);
+    assertEquals(pets, service.getPetsByStatus(PetStatus.OWNED));
+  }
 }
