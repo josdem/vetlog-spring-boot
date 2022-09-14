@@ -61,6 +61,14 @@ class PetServiceTest {
   }
 
   @Test
+  @DisplayName("getting pet by uuid")
+  void shouldGetPetByUuid(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    when(petRepository.findByUuid("uuid")).thenReturn(pet);
+    assertEquals(pet, service.getPetByUuid("uuid"));
+  }
+
+  @Test
   @DisplayName("listing a pet by owner")
   void shouldListPetsByOwner(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
