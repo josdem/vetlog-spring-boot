@@ -15,8 +15,11 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
@@ -50,5 +53,16 @@ class PetLogServiceTest {
 
         service.save(petLogCommand);
         verify(petLogRepository).save(petLog);
+    }
+
+    @Test
+    @DisplayName("getting logs by pet")
+    void shouldGetPetLogsByPet(TestInfo testInfo){
+        log.info("Running: {}", testInfo.getDisplayName());
+        Pet pet = new Pet();
+        PetLog petLog = new PetLog();
+        when(petLogRepository.getAllByPet(pet)).thenReturn(Arrays.asList(petLog));
+        List<PetLog> result = service.getPetLogsByPet(pet);
+        assertEquals(Arrays.asList(petLog), result);
     }
 }
