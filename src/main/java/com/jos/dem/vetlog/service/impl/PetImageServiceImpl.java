@@ -32,7 +32,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-class PetImageServiceImpl implements PetImageService {
+public class PetImageServiceImpl implements PetImageService {
 
     private final PetImageRepository petImageRepository;
     private final GoogleStorageWriter googleStorageWriter;
