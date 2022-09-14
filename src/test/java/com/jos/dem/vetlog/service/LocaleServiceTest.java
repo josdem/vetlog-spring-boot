@@ -11,6 +11,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.MessageSource;
 
+import javax.servlet.http.HttpServletRequest;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Slf4j
@@ -32,6 +36,8 @@ class LocaleServiceTest {
     void shouldGetMessageByRequest(TestInfo testInfo){
         log.info("Running: {}", testInfo.getDisplayName());
         String code = "code";
-        when(messageSource.getMessage(code, null, localeResolver.resolveLocale(request));)
+        HttpServletRequest request = mock(HttpServletRequest.class);
+        when(messageSource.getMessage(code, null, localeResolver.resolveLocale(request))).thenReturn("message");
+        assertEquals("message", service.getMessage(code, request));
     }
 }
