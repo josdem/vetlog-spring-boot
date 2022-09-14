@@ -27,6 +27,8 @@ class LocaleServiceTest {
     @Mock private MessageSource messageSource;
     @Mock private LocaleResolver localeResolver;
 
+    private String code = "code";
+
     @BeforeEach
     void setup(){
         MockitoAnnotations.openMocks(this);
@@ -37,7 +39,6 @@ class LocaleServiceTest {
     @DisplayName("getting message by request")
     void shouldGetMessageByRequest(TestInfo testInfo){
         log.info("Running: {}", testInfo.getDisplayName());
-        String code = "code";
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(messageSource.getMessage(code, null, localeResolver.resolveLocale(request))).thenReturn("message");
         assertEquals("message", service.getMessage(code, request));
@@ -47,7 +48,6 @@ class LocaleServiceTest {
     @DisplayName("getting message by code")
     void shouldGetMessageByCode(TestInfo testInfo){
         log.info("Running: {}", testInfo.getDisplayName());
-        String code = "code";
         when(messageSource.getMessage(code, null, new Locale("en"))).thenReturn("message");
         assertEquals("message", service.getMessage(code));
     }
