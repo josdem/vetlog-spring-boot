@@ -8,6 +8,7 @@ import com.jos.dem.vetlog.repository.PetLogRepository;
 import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.service.impl.PetLogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,8 @@ class PetLogServiceTest {
 
     private PetLogService service;
 
+    private Pet pet = new Pet();
+
     @Mock private PetLogBinder petLogBinder;
     @Mock private PetLogRepository petLogRepository;
     @Mock private PetRepository petRepository;
@@ -42,11 +45,9 @@ class PetLogServiceTest {
     @DisplayName("saving a pet log")
     void shouldSavePetLog(TestInfo testInfo){
         log.info("Running: {}", testInfo.getDisplayName());
-        Pet pet = new Pet();
         PetLogCommand petLogCommand = new PetLogCommand();
         petLogCommand.setPet(1L);
-        PetLog petLog = new PetLog();
-        petLog.setPet(pet);
+        PetLog petLog = getPetLog();
 
         when(petLogBinder.bind(petLogCommand)).thenReturn(petLog);
         when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
@@ -59,10 +60,16 @@ class PetLogServiceTest {
     @DisplayName("getting logs by pet")
     void shouldGetPetLogsByPet(TestInfo testInfo){
         log.info("Running: {}", testInfo.getDisplayName());
-        Pet pet = new Pet();
-        PetLog petLog = new PetLog();
+        PetLog petLog = getPetLog();
         when(petLogRepository.getAllByPet(pet)).thenReturn(Arrays.asList(petLog));
         List<PetLog> result = service.getPetLogsByPet(pet);
         assertEquals(Arrays.asList(petLog), result);
+    }
+
+    @NotNull
+    private PetLog getPetLog() {
+        PetLog petLog = new PetLog();
+        petLog.setPet(pet);
+        return petLog;
     }
 }
