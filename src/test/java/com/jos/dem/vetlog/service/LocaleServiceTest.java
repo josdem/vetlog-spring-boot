@@ -13,6 +13,8 @@ import org.springframework.context.MessageSource;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Locale;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -39,5 +41,14 @@ class LocaleServiceTest {
         HttpServletRequest request = mock(HttpServletRequest.class);
         when(messageSource.getMessage(code, null, localeResolver.resolveLocale(request))).thenReturn("message");
         assertEquals("message", service.getMessage(code, request));
+    }
+
+    @Test
+    @DisplayName("getting message by code")
+    void shouldGetMessageByCode(TestInfo testInfo){
+        log.info("Running: {}", testInfo.getDisplayName());
+        String code = "code";
+        when(messageSource.getMessage(code, null, new Locale("en"))).thenReturn("message");
+        assertEquals("message", service.getMessage(code));
     }
 }
