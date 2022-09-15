@@ -12,6 +12,7 @@ ext {
   awsJavaVersion = '1.11.98'
   gcpVersion = "1.2.8.RELEASE"
   retrofitVersion = '2.9.0'
+  mockitoInlineVersion = '4.8.0'
 }
 
 group = 'com.jos.dem.vetlog'
@@ -54,7 +55,7 @@ dependencies {
   testAnnotationProcessor 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
-  testImplementation group: 'org.mockito', name: 'mockito-inline', version: '4.8.0'
+  testImplementation "org.mockito:mockito-inline:$mockitoInlineVersion"
 }
 
 tasks.named('test') {

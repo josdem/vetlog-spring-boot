@@ -22,10 +22,11 @@ class RestServiceTest {
 
     private RestServiceImpl service;
 
-    @Mock private Retrofit retrofit;
+    @Mock
+    private Retrofit retrofit;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         MockitoAnnotations.openMocks(this);
         service = new RestServiceImpl(retrofit);
     }
@@ -37,6 +38,7 @@ class RestServiceTest {
         RestService restService = mock(RestService.class);
         MessageCommand messageCommand = mock(MessageCommand.class);
         Call<ResponseBody> call = mock(Call.class);
+
         when(retrofit.create(RestService.class)).thenReturn(restService);
         when(restService.sendMessage(messageCommand)).thenReturn(call);
 
