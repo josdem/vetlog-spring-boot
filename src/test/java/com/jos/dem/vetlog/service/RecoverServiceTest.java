@@ -2,6 +2,8 @@ package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.MessageCommand;
+import com.jos.dem.vetlog.exception.UserNotFoundException;
+import com.jos.dem.vetlog.exception.VetlogException;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
@@ -14,6 +16,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
@@ -70,5 +73,12 @@ class RecoverServiceTest {
 
         assertTrue(user.getEnabled());
         verify(userRepository).save(user);
+    }
+
+    @Test
+    @DisplayName("not sending activation account token due to user do not exist")
+    void shouldNotSendActivationAccountToken(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        assertThrows(VetlogException.class, () -> service.confirmAccountForToken(TOKEN));
     }
 }
