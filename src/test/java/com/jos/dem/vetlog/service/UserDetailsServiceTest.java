@@ -17,6 +17,8 @@ import static org.mockito.Mockito.when;
 @Slf4j
 class UserDetailsServiceTest {
 
+  private static final String USERNAME = "josdem";
+
   private UserDetailsServiceImpl service;
 
   @Mock private UserService userService;
@@ -32,17 +34,17 @@ class UserDetailsServiceTest {
   void shouldLoadUserByUsername(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     User user = new User();
-    user.setUsername("josdem");
+    user.setUsername(USERNAME);
     user.setPassword("password");
     user.setEnabled(true);
     user.setAccountNonExpired(true);
     user.setAccountNonLocked(true);
     user.setCredentialsNonExpired(true);
     user.setRole(Role.USER);
-    when(userService.getByUsername("josdem")).thenReturn(user);
+    when(userService.getByUsername(USERNAME)).thenReturn(user);
 
     org.springframework.security.core.userdetails.User result =
-        service.loadUserByUsername("josdem");
+        service.loadUserByUsername(USERNAME);
 
     assertEquals(user.getUsername(), result.getUsername());
     assertEquals(user.getPassword(), result.getPassword());
