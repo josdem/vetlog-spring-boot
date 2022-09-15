@@ -54,6 +54,7 @@ dependencies {
   testAnnotationProcessor 'org.projectlombok:lombok'
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
+  testImplementation group: 'org.mockito', name: 'mockito-inline', version: '4.8.0'
 }
 
 tasks.named('test') {
