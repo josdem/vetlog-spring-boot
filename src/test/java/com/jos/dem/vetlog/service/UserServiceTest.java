@@ -15,29 +15,39 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-
 @Slf4j
 class UserServiceTest {
 
-    private UserService service;
+  public static final String USERNAME = "josdem";
+  private UserService service;
+  private User user = new User();
 
-    @Mock private UserBinder userBinder;
-    @Mock private UserRepository userRepository;
-    @Mock private RecoveryService recoveryService;
+  @Mock private UserBinder userBinder;
+  @Mock private UserRepository userRepository;
+  @Mock private RecoveryService recoveryService;
 
-    @BeforeEach
-    void setup(){
-        MockitoAnnotations.openMocks(this);
-        service = new UserServiceImpl(userBinder, userRepository, recoveryService);
-    }
+  @BeforeEach
+  void setup() {
+    MockitoAnnotations.openMocks(this);
+    service = new UserServiceImpl(userBinder, userRepository, recoveryService);
+  }
 
-    @Test
-    @DisplayName("getting user by username")
-    void shouldGetUserByUsername(TestInfo testInfo){
-        log.info("Running: {}", testInfo.getDisplayName());
-        User user = new User();
-        when(userRepository.findByUsername("josdem")).thenReturn(user);
-        User result = service.getByUsername("josdem");
-        assertEquals(user, result);
-    }
+  @Test
+  @DisplayName("getting user by username")
+  void shouldGetUserByUsername(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    when(userRepository.findByUsername(USERNAME)).thenReturn(user);
+    User result = service.getByUsername(USERNAME);
+    assertEquals(user, result);
+  }
+
+  @Test
+  @DisplayName("getting user by email")
+  void shouldGetUserByEmail(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    final String email = "contact@josdem.io";
+    when(userRepository.findByEmail(email)).thenReturn(user);
+    User result = service.getByEmail(email);
+    assertEquals(user, result);
+  }
 }
