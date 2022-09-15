@@ -108,6 +108,15 @@ class RecoverServiceTest {
     @DisplayName("not sending change password token due to user not found")
     void shouldNotSendChangePasswordTokenDueUserNotFound(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        assertThrows(UserNotFoundException.class, () -> service.generateRegistrationCodeForEmail(TOKEN));
+        assertThrows(UserNotFoundException.class, () -> service.generateRegistrationCodeForEmail(EMAIL));
+    }
+
+    @Test
+    @DisplayName("not sending change password token due to user not enabled")
+    void shouldNotSendChangePasswordTokenDueUserNotEnabled(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        User user = new User();
+        when(userRepository.findByEmail(EMAIL)).thenReturn(user);
+        assertThrows(VetlogException.class, () -> service.generateRegistrationCodeForEmail(EMAIL));
     }
 }
