@@ -1,5 +1,6 @@
 package com.jos.dem.vetlog.service;
 
+import com.jos.dem.vetlog.command.ChangePasswordCommand;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.MessageCommand;
 import com.jos.dem.vetlog.exception.UserNotFoundException;
@@ -17,8 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
@@ -126,5 +126,21 @@ class RecoverServiceTest {
         log.info("Running: {}", testInfo.getDisplayName());
         when(repository.findByToken(TOKEN)).thenReturn(new RegistrationCode());
         assertTrue(service.validateToken(TOKEN));
+    }
+
+    @Test
+    @DisplayName("changing password")
+    void shouldChangePassword(TestInfo testInfo){
+        log.info("Running: {}", testInfo.getDisplayName());
+        ChangePasswordCommand changePasswordCommand = new ChangePasswordCommand();
+        changePasswordCommand.setToken(TOKEN);
+        changePasswordCommand.setPassword("password");
+        when(registrationService.findEmailByToken(TOKEN)).thenReturn(EMAIL);
+        when(userRepository.findByEmail(EMAIL)).thenReturn(user);
+
+        service.changePassword(changePasswordCommand);
+
+        assertEquals(60, user.getPassword().length());
+        verify(userRepository).save(user);
     }
 }
