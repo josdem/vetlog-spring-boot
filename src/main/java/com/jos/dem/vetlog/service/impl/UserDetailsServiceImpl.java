@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Jose Morales joseluis.delacruz@gmail.com
+Copyright 2022 Jose Morales joseluis.delacruz@gmail.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.jos.dem.vetlog.service.impl;
 
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -29,9 +29,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  @Autowired private UserService userService;
+  private final UserService userService;
 
   @Override
   public org.springframework.security.core.userdetails.User loadUserByUsername(String username)
