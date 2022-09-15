@@ -103,4 +103,11 @@ class RecoverServiceTest {
         service.generateRegistrationCodeForEmail(EMAIL);
         verify(restService).sendMessage(isA(MessageCommand.class));
     }
+
+    @Test
+    @DisplayName("not sending change password token due to user not found")
+    void shouldNotSendChangePasswordTokenDueUserNotFound(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        assertThrows(UserNotFoundException.class, () -> service.generateRegistrationCodeForEmail(TOKEN));
+    }
 }
