@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @Slf4j
@@ -40,5 +42,14 @@ class RegistrationServiceTest {
         registrationCode.setEmail(EMAIL);
         when(repository.findByToken(TOKEN)).thenReturn(registrationCode);
         assertEquals(EMAIL, service.findEmailByToken(TOKEN));
+    }
+
+    @Test
+    @DisplayName("generating token")
+    void shouldGenerateToken(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        String token = service.generateToken(EMAIL);
+        assertEquals(36, token.length());
+        verify(repository).save(isA(RegistrationCode.class));
     }
 }
