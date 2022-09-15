@@ -76,9 +76,17 @@ class RecoverServiceTest {
     }
 
     @Test
-    @DisplayName("not sending activation account token due to user do not exist")
-    void shouldNotSendActivationAccountToken(TestInfo testInfo) {
+    @DisplayName("not sending activation account token due to token do not exist")
+    void shouldNotSendActivationAccountTokenDueNotValidToken(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         assertThrows(VetlogException.class, () -> service.confirmAccountForToken(TOKEN));
+    }
+
+    @Test
+    @DisplayName("not sending activation account token due to user not found")
+    void shouldNotSendActivationAccountTokenDueUserNotFound(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        when(registrationService.findEmailByToken(TOKEN)).thenReturn(EMAIL);
+        assertThrows(UserNotFoundException.class, () -> service.confirmAccountForToken(TOKEN));
     }
 }
