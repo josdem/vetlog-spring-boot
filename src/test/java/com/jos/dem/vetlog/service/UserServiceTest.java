@@ -5,6 +5,7 @@ import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.impl.UserServiceImpl;
+import com.jos.dem.vetlog.util.UserContextHolderProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.Authentication;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -29,11 +31,12 @@ class UserServiceTest {
   @Mock private UserBinder userBinder;
   @Mock private UserRepository userRepository;
   @Mock private RecoveryService recoveryService;
+  @Mock private UserContextHolderProvider provider;
 
   @BeforeEach
   void setup() {
     MockitoAnnotations.openMocks(this);
-    service = new UserServiceImpl(userBinder, userRepository, recoveryService);
+    service = new UserServiceImpl(userBinder, userRepository, recoveryService, provider);
   }
 
   @Test
@@ -68,5 +71,16 @@ class UserServiceTest {
     verify(userRepository).save(user);
     verify(recoveryService).sendConfirmationAccountToken(EMAIL);
     assertEquals(user, result);
+  }
+
+  @Test
+  @DisplayName("getting current user")
+  void shouldGetCurrentUser(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    Authentication authentication = mock(Authentication.class);
+    when(authentication.getName()).thenReturn(USERNAME);
+    when(provider.getAuthentication()).thenReturn(authentication);
+    when(userRepository.findByUsername(USERNAME)).thenReturn(user);
+    assertEquals(user, service.getCurrentUser());
   }
 }

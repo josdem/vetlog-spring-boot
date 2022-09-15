@@ -22,9 +22,9 @@ import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.RecoveryService;
 import com.jos.dem.vetlog.service.UserService;
+import com.jos.dem.vetlog.util.UserContextHolderProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final UserBinder userBinder;
     private final UserRepository userRepository;
     private final RecoveryService recoveryService;
+    private final UserContextHolderProvider provider;
 
     public User getByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = provider.getAuthentication();
         String username = auth.getName();
         return userRepository.findByUsername(username);
     }
