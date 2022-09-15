@@ -4,6 +4,7 @@ import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.MessageCommand;
 import com.jos.dem.vetlog.exception.UserNotFoundException;
 import com.jos.dem.vetlog.exception.VetlogException;
+import com.jos.dem.vetlog.model.RegistrationCode;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
@@ -117,5 +118,13 @@ class RecoverServiceTest {
         log.info("Running: {}", testInfo.getDisplayName());
         when(userRepository.findByEmail(EMAIL)).thenReturn(user);
         assertThrows(VetlogException.class, () -> service.generateRegistrationCodeForEmail(EMAIL));
+    }
+
+    @Test
+    @DisplayName("validating a token")
+    void shouldValidateToken(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        when(repository.findByToken(TOKEN)).thenReturn(new RegistrationCode());
+        assertTrue(service.validateToken(TOKEN));
     }
 }
