@@ -89,4 +89,18 @@ class RecoverServiceTest {
         when(registrationService.findEmailByToken(TOKEN)).thenReturn(EMAIL);
         assertThrows(UserNotFoundException.class, () -> service.confirmAccountForToken(TOKEN));
     }
+
+    @Test
+    @DisplayName("generating token to change password")
+    void shouldSendChangePasswordToken(TestInfo testInfo) throws IOException {
+        log.info("Running: {}", testInfo.getDisplayName());
+
+        User user = new User();
+        user.setEnabled(true);
+        when(userRepository.findByEmail(EMAIL)).thenReturn(user);
+        when(registrationService.generateToken(EMAIL)).thenReturn(TOKEN);
+
+        service.generateRegistrationCodeForEmail(EMAIL);
+        verify(restService).sendMessage(isA(MessageCommand.class));
+    }
 }
