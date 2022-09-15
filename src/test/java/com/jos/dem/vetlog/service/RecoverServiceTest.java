@@ -25,6 +25,8 @@ import static org.mockito.Mockito.when;
 @TestPropertySource(properties = {"template.register.name=registerTemplate"})
 class RecoverServiceTest {
 
+    private static final String TOKEN = "token";
+    private static final String EMAIL = "contact@josdem.io";
     private RecoveryService service;
 
     @Mock
@@ -49,7 +51,7 @@ class RecoverServiceTest {
     void shouldSendConfirmationToken(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
 
-        service.sendConfirmationAccountToken("contact@josdem.io");
+        service.sendConfirmationAccountToken(EMAIL);
 
         verify(registrationService).generateToken(anyString());
         verify(restService).sendMessage(isA(MessageCommand.class));
@@ -60,11 +62,11 @@ class RecoverServiceTest {
     void shouldSendActivationAccountToken(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
 
-        when(registrationService.findEmailByToken("token")).thenReturn("contact@josdem.io");
+        when(registrationService.findEmailByToken(TOKEN)).thenReturn(EMAIL);
         User user = new User();
-        when(userRepository.findByEmail("contact@josdem.io")).thenReturn(user);
+        when(userRepository.findByEmail(EMAIL)).thenReturn(user);
 
-        service.confirmAccountForToken("token");
+        service.confirmAccountForToken(TOKEN);
 
         assertTrue(user.getEnabled());
         verify(userRepository).save(user);
