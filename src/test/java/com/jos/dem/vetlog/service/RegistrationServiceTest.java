@@ -17,25 +17,28 @@ import static org.mockito.Mockito.when;
 @Slf4j
 class RegistrationServiceTest {
 
+    private static final String TOKEN = "token";
+    private static final String EMAIL = "contact@josdem.io";
     private RegistrationService service;
 
-    @Mock private LocaleService localeService;
-    @Mock private RegistrationCodeRepository repository;
+    @Mock
+    private LocaleService localeService;
+    @Mock
+    private RegistrationCodeRepository repository;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         MockitoAnnotations.openMocks(this);
         service = new RegistrationServiceImpl(localeService, repository);
     }
 
     @Test
     @DisplayName("getting user by token")
-    void shouldGetUserByToken(TestInfo testInfo){
+    void shouldGetUserByToken(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        String token = "token";
         RegistrationCode registrationCode = new RegistrationCode();
-        registrationCode.setEmail("contact@josdem.io");
-        when(repository.findByToken(token)).thenReturn(registrationCode);
-        assertEquals("contact@josdem.io", service.findEmailByToken(token));
+        registrationCode.setEmail(EMAIL);
+        when(repository.findByToken(TOKEN)).thenReturn(registrationCode);
+        assertEquals(EMAIL, service.findEmailByToken(TOKEN));
     }
 }
