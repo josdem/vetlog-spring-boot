@@ -32,6 +32,8 @@ class RecoverServiceTest {
     private static final String EMAIL = "contact@josdem.io";
     private RecoveryService service;
 
+    private User user = new User();
+
     @Mock
     private RestService restService;
     @Mock
@@ -66,7 +68,6 @@ class RecoverServiceTest {
         log.info("Running: {}", testInfo.getDisplayName());
 
         when(registrationService.findEmailByToken(TOKEN)).thenReturn(EMAIL);
-        User user = new User();
         when(userRepository.findByEmail(EMAIL)).thenReturn(user);
 
         service.confirmAccountForToken(TOKEN);
@@ -95,7 +96,6 @@ class RecoverServiceTest {
     void shouldSendChangePasswordToken(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
 
-        User user = new User();
         user.setEnabled(true);
         when(userRepository.findByEmail(EMAIL)).thenReturn(user);
         when(registrationService.generateToken(EMAIL)).thenReturn(TOKEN);
@@ -115,7 +115,6 @@ class RecoverServiceTest {
     @DisplayName("not sending change password token due to user not enabled")
     void shouldNotSendChangePasswordTokenDueUserNotEnabled(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        User user = new User();
         when(userRepository.findByEmail(EMAIL)).thenReturn(user);
         assertThrows(VetlogException.class, () -> service.generateRegistrationCodeForEmail(EMAIL));
     }
