@@ -5,9 +5,7 @@
 **swo
 **node_modules/
 gradle.properties
-application.properties
 *.log
 bower.json
-src/main/resources/application.yml
 **package-lock.json
 **vetlog.json
