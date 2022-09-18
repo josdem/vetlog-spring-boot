@@ -27,11 +27,9 @@ import com.jos.dem.vetlog.service.BreedService;
 import com.jos.dem.vetlog.service.LocaleService;
 import com.jos.dem.vetlog.service.PetService;
 import com.jos.dem.vetlog.service.UserService;
-import com.jos.dem.vetlog.util.DateFormatter;
 import com.jos.dem.vetlog.validator.PetValidator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -49,17 +47,18 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+@Slf4j
 @Controller
 @RequestMapping("/pet")
+@RequiredArgsConstructor
 public class PetController {
 
-  @Autowired private BreedService breedService;
-  @Autowired private PetService petService;
-  @Autowired private UserService userService;
-  @Autowired private LocaleService localeService;
-  @Autowired private PetBinder petBinder;
-  @Autowired private PetValidator petValidator;
-  @Autowired private DateFormatter dateFormatter;
+  private final BreedService breedService;
+  private final PetService petService;
+  private final UserService userService;
+  private final LocaleService localeService;
+  private final PetBinder petBinder;
+  private final PetValidator petValidator;
 
   @Value("${breedsByTypeUrl}")
   private String breedsByTypeUrl;
@@ -69,8 +68,6 @@ public class PetController {
 
   @Value("${defaultImage}")
   private String defaultImage;
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
   @InitBinder("petCommand")
   private void initBinder(WebDataBinder binder) {

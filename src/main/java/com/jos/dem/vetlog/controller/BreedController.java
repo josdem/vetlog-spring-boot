@@ -19,9 +19,8 @@ package com.jos.dem.vetlog.controller;
 import com.jos.dem.vetlog.enums.PetType;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.service.BreedService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,13 +30,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/breed")
+@RequiredArgsConstructor
 public class BreedController {
 
-  @Autowired private BreedService breedService;
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
+  private final BreedService breedService;
 
   @RequestMapping(method = RequestMethod.GET, value = "/list")
   @ResponseBody
