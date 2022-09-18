@@ -2,6 +2,7 @@ plugins {
   id 'org.springframework.boot' version '2.7.0'
   id 'io.spring.dependency-management' version '1.0.11.RELEASE'
   id 'groovy'
+  id 'jacoco'
   id 'java'
 }
 
@@ -56,6 +57,14 @@ dependencies {
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'io.projectreactor:reactor-test'
   testImplementation "org.mockito:mockito-inline:$mockitoInlineVersion"
+}
+
+jacocoTestReport {
+  reports {
+    xml.enabled = true
+    html.enabled = true
+    html.destination file("${buildDir}/jacocoHtml")
+  }
 }
 
 tasks.named('test') {
