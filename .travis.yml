@@ -1,4 +1,0 @@
-language: java
-jdk: openjdk17
-script:
-  - ./gradlew jacocoTestReport sonarqube test
