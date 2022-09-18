@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -38,5 +39,16 @@ class RecoveryControllerTest {
         .perform(get("/recovery/password"))
         .andExpect(status().isOk())
         .andExpect(view().name("recovery/recoveryPassword"));
+  }
+
+  @Test
+  @DisplayName("showing change password forms")
+  void shouldShowChangePasswordForms(TestInfo testInfo) throws Exception {
+    log.info("Running: {}", testInfo.getDisplayName());
+    mockMvc
+            .perform(get("/recovery/forgot/token"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("message"))
+            .andExpect(view().name("recovery/changePassword"));
   }
 }

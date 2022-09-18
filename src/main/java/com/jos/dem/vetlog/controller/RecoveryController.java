@@ -23,6 +23,8 @@ import com.jos.dem.vetlog.service.LocaleService;
 import com.jos.dem.vetlog.service.RecoveryService;
 import com.jos.dem.vetlog.validator.ChangePasswordValidator;
 import com.jos.dem.vetlog.validator.RecoveryPasswordValidator;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +42,16 @@ import javax.validation.Valid;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+@Slf4j
 @Controller
 @RequestMapping("/recovery")
+@RequiredArgsConstructor
 public class RecoveryController {
 
-  @Autowired private RecoveryService recoveryService;
-  @Autowired private RecoveryPasswordValidator recoveryPasswordValidator;
-  @Autowired private ChangePasswordValidator changePasswordValidator;
-  @Autowired private LocaleService localeService;
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
+  private final RecoveryService recoveryService;
+  private final RecoveryPasswordValidator recoveryPasswordValidator;
+  private final ChangePasswordValidator changePasswordValidator;
+  private final LocaleService localeService;
 
   @InitBinder("recoveryPassword")
   private void initPasswordBinder(WebDataBinder binder) {
