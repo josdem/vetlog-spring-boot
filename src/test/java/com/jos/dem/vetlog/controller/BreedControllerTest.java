@@ -1,5 +1,6 @@
 package com.jos.dem.vetlog.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,13 +19,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class BreedControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
-    @Test
-    @DisplayName("getting dogs breeds")
-    void shouldGetDogsBreed(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(get("/breed/list").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-    }
+  @Test
+  @DisplayName("getting dogs breeds")
+  void shouldGetDogsBreed(TestInfo testInfo) throws Exception {
+    log.info("Running: {}", testInfo.getDisplayName());
+    mockMvc
+        .perform(get("/breed/list").contentType(MediaType.APPLICATION_JSON).param("type", "Dog"))
+        .andExpect(status().isOk());
+  }
 }
