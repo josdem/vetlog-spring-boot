@@ -157,7 +157,7 @@ public class PetController {
     log.info("Listing pets for adoption");
     ModelAndView modelAndView = new ModelAndView("pet/listForAdoption");
     List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION);
-    if (pets == null) {
+    if (pets == null || pets.isEmpty()) {
       modelAndView.addObject("petListEmpty", localeService.getMessage("pet.list.empty", request));
     }
     modelAndView.addObject("pets", pets);
