@@ -34,7 +34,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,9 +45,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Slf4j
 @Controller
@@ -74,7 +73,7 @@ public class PetController {
     binder.addValidators(petValidator);
   }
 
-  @RequestMapping(method = GET, value = "/create")
+  @GetMapping(value = "/create")
   public ModelAndView create(@RequestParam(value = "type", required = false) String type) {
     ModelAndView modelAndView = new ModelAndView("pet/create");
     Command petCommand = new PetCommand();
@@ -82,7 +81,7 @@ public class PetController {
     return fillModelAndView(modelAndView);
   }
 
-  @RequestMapping(method = GET, value = "/edit")
+  @GetMapping(value = "/edit")
   public ModelAndView edit(@RequestParam("uuid") String uuid) {
     log.info("Editing pet: " + uuid);
     Pet pet = petService.getPetByUuid(uuid);
@@ -94,7 +93,7 @@ public class PetController {
     return modelAndView;
   }
 
-  @RequestMapping(method = POST, value = "/update")
+  @PostMapping(value = "/update")
   public ModelAndView update(
       @Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
       throws IOException {
@@ -110,7 +109,7 @@ public class PetController {
     return fillModelAndView(modelAndView);
   }
 
-  @RequestMapping(method = POST, value = "/save")
+  @PostMapping(value = "/save")
   public ModelAndView save(
       @Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
       throws IOException {
@@ -135,21 +134,21 @@ public class PetController {
     return modelAndView;
   }
 
-  @RequestMapping(method = GET, value = "/list")
+  @GetMapping(value = "/list")
   public ModelAndView list() {
     log.info("Listing pets");
     ModelAndView modelAndView = new ModelAndView();
     return fillPetAndImageUrl(modelAndView);
   }
 
-  @RequestMapping(method = GET, value = "/giveForAdoption")
+  @GetMapping(value = "/giveForAdoption")
   public ModelAndView giveForAdoption() {
     log.info("Select a pet for adoption");
     ModelAndView modelAndView = new ModelAndView("pet/giveForAdoption");
     return fillPetAndImageUrl(modelAndView);
   }
 
-  @RequestMapping(method = GET, value = "/listForAdoption")
+  @GetMapping(value = "/listForAdoption")
   public ModelAndView listForAdoption(HttpServletRequest request) {
     log.info("Listing pets for adoption");
     ModelAndView modelAndView = new ModelAndView("pet/listForAdoption");

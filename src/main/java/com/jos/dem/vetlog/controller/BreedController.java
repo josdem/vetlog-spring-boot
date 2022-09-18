@@ -22,8 +22,8 @@ import com.jos.dem.vetlog.service.BreedService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,7 +38,7 @@ public class BreedController {
 
   private final BreedService breedService;
 
-  @RequestMapping(method = RequestMethod.GET, value = "/list")
+  @GetMapping(value = "/list")
   @ResponseBody
   public List<Breed> listByType(@RequestParam String type, HttpServletResponse response) {
     log.info("Listing Pets by type: " + type);

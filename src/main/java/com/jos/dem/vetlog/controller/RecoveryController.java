@@ -25,22 +25,18 @@ import com.jos.dem.vetlog.validator.ChangePasswordValidator;
 import com.jos.dem.vetlog.validator.RecoveryPasswordValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Slf4j
 @Controller
@@ -63,14 +59,14 @@ public class RecoveryController {
     binder.addValidators(changePasswordValidator);
   }
 
-  @RequestMapping(method = GET, value = "/activate/{token}")
+  @GetMapping(value = "/activate/{token}")
   public String create(@PathVariable String token) {
     log.info("Calling activate token");
     recoveryService.confirmAccountForToken(token);
     return "login/login";
   }
 
-  @RequestMapping(method = POST, value = "/password")
+  @PostMapping(value = "/password")
   public ModelAndView generateTokenToChangePassword(
       @Valid RecoveryPasswordCommand command,
       BindingResult bindingResult,
@@ -85,7 +81,7 @@ public class RecoveryController {
     return modelAndView;
   }
 
-  @RequestMapping(method = GET, value = "/password")
+  @GetMapping(value = "/password")
   public ModelAndView recoveryPassword() {
     log.info("Calling recovery password");
     ModelAndView modelAndView = new ModelAndView("recovery/recoveryPassword");
@@ -94,7 +90,7 @@ public class RecoveryController {
     return modelAndView;
   }
 
-  @RequestMapping(method = GET, value = "/forgot/{token}")
+  @GetMapping(value = "/forgot/{token}")
   public ModelAndView changePassword(@PathVariable String token, HttpServletRequest request) {
     log.info("Calling change password");
     ModelAndView modelAndView = new ModelAndView("recovery/changePassword");
@@ -108,7 +104,7 @@ public class RecoveryController {
     return modelAndView;
   }
 
-  @RequestMapping(method = POST, value = "/change")
+  @PostMapping(value = "/change")
   public ModelAndView generateTokenToChangePassword(
       @Valid ChangePasswordCommand command,
       BindingResult bindingResult,
