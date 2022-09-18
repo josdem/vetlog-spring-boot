@@ -70,9 +70,9 @@ jacocoTestReport {
 
 tasks.named('test') {
   useJUnitPlatform()
+  systemProperties = System.properties
 }
 
 bootRun {
   systemProperties = System.properties
 }
-
