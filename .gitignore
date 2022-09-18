@@ -4,7 +4,6 @@
 **swp
 **swo
 **node_modules/
-gradle.properties
 *.log
 bower.json
 **package-lock.json
