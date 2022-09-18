@@ -1,6 +1,8 @@
 Vetlog Spring Boot
 ---------------------------------------
 
+[![Quality Gate Status](https://sonar.josdem.io/api/project_badges/measure?project=com.jos.dem.vetlog%3Avetlog-spring-boot&metric=alert_status)](https://sonar.josdem.io/dashboard?id=com.jos.dem.vetlog%3Avetlog-spring-boot)
+
 Maintain your pet history organized
 
 #### Features
