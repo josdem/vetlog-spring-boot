@@ -23,6 +23,6 @@ class DateFormatterTest {
   @DisplayName("formatting a date with one digit day")
   void shouldFormatADateWithOneDigitDay(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    assertEquals("08/10/2020", dateFormatter.format("8/6/10 0:00 AM"));
+    assertEquals("08/06/2010", dateFormatter.format("8/6/10, 0:00 AM"));
   }
 }
