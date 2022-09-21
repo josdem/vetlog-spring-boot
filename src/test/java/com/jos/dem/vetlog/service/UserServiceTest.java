@@ -69,7 +69,6 @@ class UserServiceTest {
     final User result = service.save(command);
 
     verify(userRepository).save(user);
-    verify(recoveryService).sendConfirmationAccountToken(EMAIL);
     assertEquals(user, result);
   }
 
