@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 @Slf4j
 @TestPropertySource(properties = {"template.register.name=registerTemplate"})
-class RecoverServiceTest {
+class RecoveryServiceTest {
 
     private static final String TOKEN = "token";
     private static final String EMAIL = "contact@josdem.io";
@@ -116,6 +116,7 @@ class RecoverServiceTest {
     @DisplayName("not sending change password token due to user not enabled")
     void shouldNotSendChangePasswordTokenDueUserNotEnabled(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
+        user.setEnabled(false);
         when(userRepository.findByEmail(EMAIL)).thenReturn(user);
         assertThrows(VetlogException.class, () -> service.generateRegistrationCodeForEmail(EMAIL));
     }
