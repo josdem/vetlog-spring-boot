@@ -18,4 +18,11 @@ class DateFormatterTest {
     log.info("Running: {}", testInfo.getDisplayName());
     assertEquals("01/17/2021", dateFormatter.format("1/17/21, 12:00 AM"));
   }
+
+  @Test
+  @DisplayName("formatting a date with one digit day")
+  void shouldFormatADateWithOneDigitDay(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    assertEquals("08/10/2020", dateFormatter.format("8/6/10 0:00 AM"));
+  }
 }
