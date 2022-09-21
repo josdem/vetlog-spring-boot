@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService {
     public User save(Command command) {
         User user = userBinder.bindUser(command);
         userRepository.save(user);
-        recoveryService.sendConfirmationAccountToken(user.getEmail());
         return user;
     }
 

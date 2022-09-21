@@ -20,8 +20,6 @@ import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.model.User;
 
 public interface RecoveryService {
-    void sendConfirmationAccountToken(String email);
-
     User confirmAccountForToken(String token);
 
     void generateRegistrationCodeForEmail(String email);

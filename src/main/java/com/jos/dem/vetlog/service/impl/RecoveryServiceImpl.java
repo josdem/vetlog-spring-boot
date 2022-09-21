@@ -59,22 +59,6 @@ public class RecoveryServiceImpl implements RecoveryService {
     @Value("${template.forgot.path}")
     private String forgotPath;
 
-
-    public void sendConfirmationAccountToken(String email) {
-        try {
-            String token = registrationService.generateToken(email);
-            MessageCommand command = new MessageCommand();
-            command.setEmail(email);
-            command.setTemplate(registerTemplate);
-            command.setMessage(baseUrl + registerPath + token);
-            command.setToken(clientToken);
-            restService.sendMessage(command);
-        } catch (IOException ioException) {
-            throw new BusinessException(ioException.getMessage());
-        }
-
-    }
-
     public User confirmAccountForToken(String token) {
         User user = getUserByToken(token);
         if (user == null) {
