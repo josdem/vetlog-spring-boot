@@ -214,3 +214,15 @@ LOCK TABLES `pet_log` WRITE;
 /*!40000 ALTER TABLE `pet_log` DISABLE KEYS */;
 /*!40000 ALTER TABLE `pet_log` ENABLE KEYS */;
 UNLOCK TABLES;
+
+DROP TABLE IF EXISTS `pet_medicine`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `pet_medicine` (
+    `id` bigint(20) NOT NULL AUTO_INCREMENT,
+    `uuid` varchar(255) NOT NULL,
+    `pet_medicine_id` bigint(20) DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `FKnf9loskcjkxo9f2qafq08dyjm` (`pet_medicine_id`),
+    CONSTRAINT `FKnf9loskcjkxo9f2qafq08dyjm` FOREIGN KEY (`pet_medicine_id`) REFERENCES `pet` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
