@@ -26,9 +26,12 @@ import com.jos.dem.vetlog.service.PetLogService;
 import com.jos.dem.vetlog.service.PetService;
 import com.jos.dem.vetlog.service.UserService;
 import com.jos.dem.vetlog.validator.PetLogValidator;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -44,17 +47,17 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+@Slf4j
 @Controller
 @RequestMapping("/petlog")
+@RequiredArgsConstructor
 public class PetLogController {
 
-  @Autowired private PetLogValidator petLogValidator;
-  @Autowired private PetService petService;
-  @Autowired private PetLogService petLogService;
-  @Autowired private UserService userService;
-  @Autowired private LocaleService localeService;
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
+  private final PetLogValidator petLogValidator;
+  private final PetService petService;
+  private final PetLogService petLogService;
+  private final UserService userService;
+  private final LocaleService localeService;
 
   @InitBinder
   private void initBinder(WebDataBinder binder) {

@@ -15,6 +15,7 @@ package com.jos.dem.vetlog.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -40,4 +41,6 @@ public class PetLogCommand implements Command {
     @NotNull
     @Min(1L)
     private Long pet;
+
+    private MultipartFile attachment;
 }
