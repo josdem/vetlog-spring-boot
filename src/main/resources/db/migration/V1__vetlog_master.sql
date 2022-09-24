@@ -195,9 +195,9 @@ DROP TABLE IF EXISTS `pet_log`;
 CREATE TABLE `pet_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date_created` datetime NOT NULL,
-  `diagnosis` varchar(255) NOT NULL,
-  `medicine` varchar(255) DEFAULT NULL,
-  `signs` varchar(255) NOT NULL,
+  `diagnosis` varchar(1000) NOT NULL,
+  `medicine` varchar(1000) DEFAULT NULL,
+  `signs` varchar(1000) NOT NULL,
   `vet_name` varchar(255) DEFAULT NULL,
   `pet_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),

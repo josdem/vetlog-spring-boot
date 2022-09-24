@@ -34,7 +34,7 @@ public class PetLogCommand implements Command {
     @Size(min = 1, max = 1000)
     private String diagnosis;
 
-    @Size(min = 1, max = 500)
+    @Size(min = 1, max = 1000)
     private String medicine;
 
     @NotNull
