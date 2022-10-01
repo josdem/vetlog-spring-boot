@@ -20,6 +20,6 @@ import com.jos.dem.vetlog.command.Command;
 
 import java.io.IOException;
 
-public interface PetImageService {
+public interface BucketService {
     void attachImage(Command command) throws IOException;
 }

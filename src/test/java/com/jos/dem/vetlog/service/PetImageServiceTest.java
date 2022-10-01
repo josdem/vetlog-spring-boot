@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 @Slf4j
 class PetImageServiceTest {
 
-    private PetImageService service;
+    private BucketService service;
 
     @Mock private PetImageRepository petImageRepository;
     @Mock private GoogleStorageWriter googleStorageWriter;

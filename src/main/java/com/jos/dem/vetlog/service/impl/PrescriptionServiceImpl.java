@@ -31,7 +31,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class PetImageServiceImpl implements BucketService {
+public class PrescriptionServiceImpl implements BucketService {
 
     private final PetImageRepository petImageRepository;
     private final GoogleStorageWriter googleStorageWriter;
