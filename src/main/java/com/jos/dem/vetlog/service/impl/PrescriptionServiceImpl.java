@@ -20,7 +20,9 @@ import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.model.PetImage;
+import com.jos.dem.vetlog.model.PetPrescription;
 import com.jos.dem.vetlog.repository.PetImageRepository;
+import com.jos.dem.vetlog.repository.PetPrescriptionRepository;
 import com.jos.dem.vetlog.service.BucketService;
 import com.jos.dem.vetlog.util.UuidGenerator;
 import lombok.RequiredArgsConstructor;
@@ -33,25 +35,25 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PrescriptionServiceImpl implements BucketService {
 
-    private final PetImageRepository petImageRepository;
+    private final PetPrescriptionRepository petPrescriptionRepository;
     private final GoogleStorageWriter googleStorageWriter;
 
     @Value("${bucket}")
     private String bucket;
 
-    private PetImage save() {
-        PetImage petImage = new PetImage();
-        petImage.setUuid(UuidGenerator.generateUuid());
-        petImageRepository.save(petImage);
-        return petImage;
+    private PetPrescription save() {
+        PetPrescription petPrescription = new PetPrescription();
+        petPrescription.setUuid(UuidGenerator.generateUuid());
+        petPrescriptionRepository.save(petPrescription);
+        return petPrescription;
     }
 
-    public void attachImage(Command command) throws IOException {
+    public void attachFile(Command command) throws IOException {
         PetCommand petCommand = (PetCommand) command;
         if (petCommand.getImage().getInputStream().available() > 0) {
-            PetImage petImage = save();
-            petCommand.getImages().add(petImage);
-            googleStorageWriter.uploadToBucket(bucket, petImage.getUuid(), petCommand.getImage().getInputStream());
+            PetPrescription petPrescription = save();
+            petCommand.getPrescriptions().add(petPrescription);
+            googleStorageWriter.uploadToBucket(bucket, petPrescription.getUuid(), petCommand.getImage().getInputStream());
         }
     }
 

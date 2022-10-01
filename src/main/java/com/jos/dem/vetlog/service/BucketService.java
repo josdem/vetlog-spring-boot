@@ -21,5 +21,5 @@ import com.jos.dem.vetlog.command.Command;
 import java.io.IOException;
 
 public interface BucketService {
-    void attachImage(Command command) throws IOException;
+    void attachFile(Command command) throws IOException;
 }

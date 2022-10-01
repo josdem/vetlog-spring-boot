@@ -48,7 +48,7 @@ class PetImageServiceTest {
         when(multiPartFile.getInputStream()).thenReturn(inputStream);
         petCommand.setImage(multiPartFile);
 
-        service.attachImage(petCommand);
+        service.attachFile(petCommand);
 
         verify(petImageRepository).save(Mockito.isA(PetImage.class));
         verify(googleStorageWriter).uploadToBucket(any(), anyString(), eq(inputStream));

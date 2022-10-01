@@ -46,7 +46,7 @@ public class PetImageServiceImpl implements BucketService {
         return petImage;
     }
 
-    public void attachImage(Command command) throws IOException {
+    public void attachFile(Command command) throws IOException {
         PetCommand petCommand = (PetCommand) command;
         if (petCommand.getImage().getInputStream().available() > 0) {
             PetImage petImage = save();

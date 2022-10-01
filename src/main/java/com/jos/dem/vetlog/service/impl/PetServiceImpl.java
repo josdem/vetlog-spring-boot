@@ -47,7 +47,7 @@ public class PetServiceImpl implements PetService {
   public Pet save(Command command, User user) throws IOException {
     Pet pet = petBinder.bindPet(command);
     pet.setUser(user);
-    petImageService.attachImage(command);
+    petImageService.attachFile(command);
     petRepository.save(pet);
     return pet;
   }
@@ -59,7 +59,7 @@ public class PetServiceImpl implements PetService {
     Pet pet = petBinder.bindPet(petCommand);
     Optional<User> user = getUser(petCommand.getUser());
     pet.setUser(user.get());
-    petImageService.attachImage(petCommand);
+    petImageService.attachFile(petCommand);
     petRepository.save(pet);
     return pet;
   }
