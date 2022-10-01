@@ -22,7 +22,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PetPrescriptionRepository extends JpaRepository<PetImage, Long> {
 
-    PetImage save(PetPrescription petImage);
+    PetPrescription save(PetPrescription petImage);
 
 }
 

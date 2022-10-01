@@ -28,6 +28,7 @@ import com.jos.dem.vetlog.service.PetPrescriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -43,6 +44,7 @@ public class PetLogServiceImpl implements PetLogService {
     private final PetPrescriptionService petPrescriptionService;
 
     @Override
+    @Transactional
     public PetLog save(Command command) throws IOException {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         PetLog petLog = petLogBinder.bind(petLogCommand);
