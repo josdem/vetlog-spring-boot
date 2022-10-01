@@ -15,7 +15,7 @@ package com.jos.dem.vetlog.command;
 
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.enums.PetType;
-import com.jos.dem.vetlog.model.PetBucket;
+import com.jos.dem.vetlog.model.PetImage;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -69,5 +69,5 @@ public class PetCommand implements Command {
 
     private MultipartFile image;
 
-    private List<PetBucket> images = new ArrayList<>();
+    private List<PetImage> images = new ArrayList<>();
 }

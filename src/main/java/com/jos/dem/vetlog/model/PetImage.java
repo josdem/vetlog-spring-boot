@@ -29,7 +29,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Entity
 @Getter
 @Setter
-public class PetBucket {
+public class PetImage {
 
     @Id
     @GeneratedValue(strategy = AUTO)

@@ -19,7 +19,7 @@ package com.jos.dem.vetlog.service.impl;
 import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
-import com.jos.dem.vetlog.model.PetBucket;
+import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.repository.PetImageRepository;
 import com.jos.dem.vetlog.service.BucketService;
 import com.jos.dem.vetlog.util.UuidGenerator;
@@ -39,8 +39,8 @@ public class PetImageServiceImpl implements BucketService {
     @Value("${bucket}")
     private String bucket;
 
-    private PetBucket save() {
-        PetBucket petImage = new PetBucket();
+    private PetImage save() {
+        PetImage petImage = new PetImage();
         petImage.setUuid(UuidGenerator.generateUuid());
         petImageRepository.save(petImage);
         return petImage;
@@ -49,7 +49,7 @@ public class PetImageServiceImpl implements BucketService {
     public void attachImage(Command command) throws IOException {
         PetCommand petCommand = (PetCommand) command;
         if (petCommand.getImage().getInputStream().available() > 0) {
-            PetBucket petImage = save();
+            PetImage petImage = save();
             petCommand.getImages().add(petImage);
             googleStorageWriter.uploadToBucket(bucket, petImage.getUuid(), petCommand.getImage().getInputStream());
         }
