@@ -42,6 +42,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -78,7 +79,7 @@ public class PetLogController {
 
   @RequestMapping(method = POST, value = "/save")
   public ModelAndView save(
-      @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request) {
+      @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request) throws IOException {
     log.info("Creating pet: " + petLogCommand.getPet());
     ModelAndView modelAndView = new ModelAndView("petlog/create");
     Pet pet = petService.getPetById(petLogCommand.getPet());

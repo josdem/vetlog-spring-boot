@@ -72,5 +72,4 @@ public class PetCommand implements Command {
 
     private List<PetImage> images = new ArrayList<>();
 
-    private List<PetPrescription> prescriptions = new ArrayList<>();
 }

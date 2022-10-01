@@ -4,7 +4,7 @@ import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.repository.PetImageRepository;
-import com.jos.dem.vetlog.service.impl.PetPrescriptionServiceImpl;
+import com.jos.dem.vetlog.service.impl.PetImageServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ import static org.mockito.Mockito.verify;
 @Slf4j
 class PetImageServiceTest {
 
-    private PetPrescriptionService service;
+    private PetImageService service;
 
     @Mock private PetImageRepository petImageRepository;
     @Mock private GoogleStorageWriter googleStorageWriter;
@@ -34,7 +34,7 @@ class PetImageServiceTest {
     @BeforeEach
     void setup(){
         MockitoAnnotations.openMocks(this);
-        service = new PetPrescriptionServiceImpl(petImageRepository, googleStorageWriter);
+        service = new PetImageServiceImpl(petImageRepository, googleStorageWriter);
     }
 
     @Test
