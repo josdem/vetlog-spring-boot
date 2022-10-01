@@ -2,7 +2,7 @@ package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.PetCommand;
-import com.jos.dem.vetlog.model.PetImage;
+import com.jos.dem.vetlog.model.PetBucket;
 import com.jos.dem.vetlog.repository.PetImageRepository;
 import com.jos.dem.vetlog.service.impl.PetImageServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 
 @Slf4j
-class PetImageServiceTest {
+class PetBucketServiceTest {
 
     private BucketService service;
 
@@ -50,7 +50,7 @@ class PetImageServiceTest {
 
         service.attachImage(petCommand);
 
-        verify(petImageRepository).save(Mockito.isA(PetImage.class));
+        verify(petImageRepository).save(Mockito.isA(PetBucket.class));
         verify(googleStorageWriter).uploadToBucket(any(), anyString(), eq(inputStream));
     }
 }

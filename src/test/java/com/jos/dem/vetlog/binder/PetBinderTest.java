@@ -5,7 +5,7 @@ import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.enums.PetType;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.model.Pet;
-import com.jos.dem.vetlog.model.PetImage;
+import com.jos.dem.vetlog.model.PetBucket;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.BreedRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -73,7 +73,7 @@ class PetBinderTest {
     petCommand.setDewormed(true);
     petCommand.setSterilized(true);
     petCommand.setVaccinated(true);
-    petCommand.setImages(Arrays.asList(new PetImage()));
+    petCommand.setImages(Arrays.asList(new PetBucket()));
     petCommand.setBreed(1L);
 
     Breed breed = getBreed();
@@ -98,7 +98,7 @@ class PetBinderTest {
     pet.setDewormed(true);
     pet.setSterilized(true);
     pet.setVaccinated(true);
-    pet.setImages(Arrays.asList(new PetImage()));
+    pet.setImages(Arrays.asList(new PetBucket()));
     pet.setBreed(breed);
     pet.setBirthDate(LocalDateTime.of(2021, 01, 17, 0, 0, 0));
     pet.setUser(getUser());

@@ -91,6 +91,6 @@ public class Pet {
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_image_id")
-    private List<PetImage> images;
+    private List<PetBucket> images;
 
 }
