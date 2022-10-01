@@ -51,6 +51,6 @@ class PetImageServiceTest {
         service.attachFile(petCommand);
 
         verify(petImageRepository).save(Mockito.isA(PetImage.class));
-        verify(googleStorageWriter).uploadToBucket(any(), anyString(), eq(inputStream));
+        verify(googleStorageWriter).uploadToBucket(any(), anyString(), eq(inputStream), anyString());
     }
 }
