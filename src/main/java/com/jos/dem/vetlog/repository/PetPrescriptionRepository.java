@@ -17,11 +17,12 @@ limitations under the License.
 package com.jos.dem.vetlog.repository;
 
 import com.jos.dem.vetlog.model.PetImage;
+import com.jos.dem.vetlog.model.PetPrescription;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PetImageRepository extends JpaRepository<PetImage, Long> {
+public interface PetPrescriptionRepository extends JpaRepository<PetImage, Long> {
 
-    PetImage save(PetImage petImage);
+    PetImage save(PetPrescription petImage);
 
 }
 

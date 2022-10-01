@@ -14,14 +14,28 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.repository;
+package com.jos.dem.vetlog.model;
 
-import com.jos.dem.vetlog.model.PetImage;
-import org.springframework.data.jpa.repository.JpaRepository;
+import lombok.Getter;
+import lombok.Setter;
 
-public interface PetImageRepository extends JpaRepository<PetImage, Long> {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-    PetImage save(PetImage petImage);
+import static javax.persistence.GenerationType.AUTO;
+
+@Entity
+@Getter
+@Setter
+public class PetPrescription {
+
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
+
+    @Column(nullable = false)
+    private String uuid;
 
 }
-
