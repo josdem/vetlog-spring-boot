@@ -13,8 +13,10 @@ limitations under the License.
 
 package com.jos.dem.vetlog.command;
 
+import com.jos.dem.vetlog.util.UuidGenerator;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
@@ -25,6 +27,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString
 public class PetLogCommand implements Command {
     @Size(max = 200)
     private String vetName;
@@ -40,8 +43,7 @@ public class PetLogCommand implements Command {
     @Size(min = 1, max = 1000)
     private String medicine;
 
-    @NotNull
-    private String uuid;
+    private String uuid = UuidGenerator.generateUuid();
 
     @NotNull
     @Min(1L)

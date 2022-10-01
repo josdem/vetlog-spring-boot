@@ -86,7 +86,7 @@ public class PetLogController {
   @RequestMapping(method = POST, value = "/save")
   public ModelAndView save(
       @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request) throws IOException {
-    log.info("Creating pet: " + petLogCommand.getPet());
+    log.info("Creating petLog: " + petLogCommand.getPet());
     ModelAndView modelAndView = new ModelAndView("petlog/create");
     Pet pet = petService.getPetById(petLogCommand.getPet());
     User currentUser = userService.getCurrentUser();

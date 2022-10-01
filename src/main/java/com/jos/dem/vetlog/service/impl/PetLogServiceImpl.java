@@ -26,6 +26,7 @@ import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.service.PetLogService;
 import com.jos.dem.vetlog.service.PetPrescriptionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -33,6 +34,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PetLogServiceImpl implements PetLogService {
@@ -51,6 +53,7 @@ public class PetLogServiceImpl implements PetLogService {
         Optional<Pet> pet = petRepository.findById(petLogCommand.getPet());
         petLog.setPet(pet.get());
         petPrescriptionService.attachFile(petLogCommand);
+        log.info("petLog: {}", petLogCommand);
         petLogRepository.save(petLog);
         return petLog;
     }

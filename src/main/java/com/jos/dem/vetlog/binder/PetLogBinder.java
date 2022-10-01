@@ -31,6 +31,7 @@ public class PetLogBinder {
         petLog.setSigns(petLogCommand.getSigns());
         petLog.setDiagnosis(petLogCommand.getDiagnosis());
         petLog.setMedicine(petLogCommand.getMedicine());
+        petLog.setUuid(petLogCommand.getUuid());
         return petLog;
     }
 }

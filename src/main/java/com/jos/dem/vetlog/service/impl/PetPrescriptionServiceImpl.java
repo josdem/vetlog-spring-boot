@@ -41,7 +41,6 @@ public class PetPrescriptionServiceImpl implements PetPrescriptionService {
     public void attachFile(Command command) throws IOException {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         if (petLogCommand.getAttachment().getInputStream().available() > 0) {
-            petLogCommand.setUuid(UuidGenerator.generateUuid());
             googleStorageWriter.uploadToBucket(bucket, petLogCommand.getUuid(), petLogCommand.getAttachment().getInputStream(), CONTENT_TYPE);
         }
     }

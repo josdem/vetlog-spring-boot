@@ -50,6 +50,9 @@ public class PetLog {
   private String medicine;
 
   @Column(nullable = false)
+  private String uuid;
+
+  @Column(nullable = false)
   private Date dateCreated = new Date();
 
   @ManyToOne(fetch = FetchType.LAZY)
