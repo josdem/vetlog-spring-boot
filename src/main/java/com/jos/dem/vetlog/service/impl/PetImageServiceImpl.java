@@ -34,6 +34,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PetImageServiceImpl implements PetImageService {
 
+    public static final String CONTENT_TYPE = "image/jpeg";
+
     private final PetImageRepository petImageRepository;
     private final GoogleStorageWriter googleStorageWriter;
 
@@ -52,7 +54,7 @@ public class PetImageServiceImpl implements PetImageService {
         if (petCommand.getImage().getInputStream().available() > 0) {
             PetImage petImage = save();
             petCommand.getImages().add(petImage);
-            googleStorageWriter.uploadToBucket(bucket, petImage.getUuid(), petCommand.getImage().getInputStream());
+            googleStorageWriter.uploadToBucket(bucket, petImage.getUuid(), petCommand.getImage().getInputStream(), CONTENT_TYPE);
         }
     }
 

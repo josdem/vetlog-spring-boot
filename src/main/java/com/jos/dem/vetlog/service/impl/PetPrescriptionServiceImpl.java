@@ -33,6 +33,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class PetPrescriptionServiceImpl implements PetPrescriptionService {
 
+    public static final String CONTENT_TYPE = "application/octet-stream";
+
     private final PetPrescriptionRepository petPrescriptionRepository;
     private final GoogleStorageWriter googleStorageWriter;
 
@@ -51,7 +53,7 @@ public class PetPrescriptionServiceImpl implements PetPrescriptionService {
         if (petLogCommand.getAttachment().getInputStream().available() > 0) {
             PetPrescription petPrescription = save();
             petLogCommand.getPrescriptions().add(petPrescription);
-            googleStorageWriter.uploadToBucket(bucket, petPrescription.getUuid(), petLogCommand.getAttachment().getInputStream());
+            googleStorageWriter.uploadToBucket(bucket, petPrescription.getUuid(), petLogCommand.getAttachment().getInputStream(), CONTENT_TYPE);
         }
     }
 
