@@ -16,13 +16,14 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @Slf4j
 class PetLogServiceTest {
@@ -31,19 +32,25 @@ class PetLogServiceTest {
 
     private Pet pet = new Pet();
 
-    @Mock private PetLogBinder petLogBinder;
-    @Mock private PetLogRepository petLogRepository;
-    @Mock private PetRepository petRepository;
+    @Mock
+    private PetLogBinder petLogBinder;
+    @Mock
+    private PetLogRepository petLogRepository;
+    @Mock
+    private PetRepository petRepository;
+
+    @Mock
+    private PetPrescriptionService petPrescriptionService;
 
     @BeforeEach
-    void setup(TestInfo testInfo){
+    void setup(TestInfo testInfo) {
         MockitoAnnotations.openMocks(this);
-        service = new PetLogServiceImpl(petLogBinder, petLogRepository, petRepository);
+        service = new PetLogServiceImpl(petLogBinder, petLogRepository, petRepository, petPrescriptionService);
     }
 
     @Test
     @DisplayName("saving a pet log")
-    void shouldSavePetLog(TestInfo testInfo){
+    void shouldSavePetLog(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
         PetLogCommand petLogCommand = new PetLogCommand();
         petLogCommand.setPet(1L);
@@ -58,7 +65,7 @@ class PetLogServiceTest {
 
     @Test
     @DisplayName("getting logs by pet")
-    void shouldGetPetLogsByPet(TestInfo testInfo){
+    void shouldGetPetLogsByPet(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         PetLog petLog = getPetLog();
         when(petLogRepository.getAllByPet(pet)).thenReturn(Arrays.asList(petLog));

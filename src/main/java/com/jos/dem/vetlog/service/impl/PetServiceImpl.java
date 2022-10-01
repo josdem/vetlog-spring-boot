@@ -24,7 +24,7 @@ import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
-import com.jos.dem.vetlog.service.BucketService;
+import com.jos.dem.vetlog.service.PetPrescriptionService;
 import com.jos.dem.vetlog.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,7 +40,7 @@ public class PetServiceImpl implements PetService {
 
   private final PetBinder petBinder;
   private final PetRepository petRepository;
-  private final BucketService petImageService;
+  private final PetPrescriptionService petImageService;
   private final UserRepository userRepository;
 
   @Transactional

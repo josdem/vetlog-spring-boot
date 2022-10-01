@@ -35,7 +35,7 @@ class PetServiceTest {
 
   @Mock private PetBinder petBinder;
   @Mock private PetRepository petRepository;
-  @Mock private BucketService bucketService;
+  @Mock private PetPrescriptionService petImageService;
   @Mock private UserRepository userRepository;
 
   private User user;
@@ -47,7 +47,7 @@ class PetServiceTest {
     MockitoAnnotations.openMocks(this);
     user = new User();
     pet = new Pet();
-    service = new PetServiceImpl(petBinder, petRepository, bucketService, userRepository);
+    service = new PetServiceImpl(petBinder, petRepository, petImageService, userRepository);
   }
 
   @Test

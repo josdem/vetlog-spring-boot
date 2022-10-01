@@ -19,11 +19,9 @@ package com.jos.dem.vetlog.service.impl;
 import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
-import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.model.PetPrescription;
-import com.jos.dem.vetlog.repository.PetImageRepository;
 import com.jos.dem.vetlog.repository.PetPrescriptionRepository;
-import com.jos.dem.vetlog.service.BucketService;
+import com.jos.dem.vetlog.service.PetPrescriptionService;
 import com.jos.dem.vetlog.util.UuidGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,7 +31,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class PrescriptionServiceImpl implements BucketService {
+public class PrescriptionServiceImpl implements PetPrescriptionService {
 
     private final PetPrescriptionRepository petPrescriptionRepository;
     private final GoogleStorageWriter googleStorageWriter;

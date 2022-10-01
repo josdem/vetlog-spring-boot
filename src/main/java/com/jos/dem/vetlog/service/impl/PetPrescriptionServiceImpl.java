@@ -21,7 +21,7 @@ import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.repository.PetImageRepository;
-import com.jos.dem.vetlog.service.BucketService;
+import com.jos.dem.vetlog.service.PetPrescriptionService;
 import com.jos.dem.vetlog.util.UuidGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +31,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class PetImageServiceImpl implements BucketService {
+public class PetPrescriptionServiceImpl implements PetPrescriptionService {
 
     private final PetImageRepository petImageRepository;
     private final GoogleStorageWriter googleStorageWriter;
