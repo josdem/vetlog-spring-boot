@@ -47,8 +47,11 @@ public class AdoptionController {
   @Autowired private AdoptionValidator adoptionValidator;
   @Autowired private AdoptionService adoptionService;
 
-  @Value("${gcpImageUrl}")
-  private String gcpImageUrl;
+  @Value("${gcpUrl}")
+  private String gcpUrl;
+
+  @Value("${imageBucket}")
+  private String imageBucket;
 
   private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -76,7 +79,7 @@ public class AdoptionController {
     List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION);
     ModelAndView modelAndView = new ModelAndView("pet/listForAdoption");
     modelAndView.addObject("pets", pets);
-    modelAndView.addObject("gcpImageUrl", gcpImageUrl);
+    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
     return modelAndView;
   }
 
@@ -85,7 +88,7 @@ public class AdoptionController {
     Pet pet = petService.getPetByUuid(adoptionCommand.getUuid());
     modelAndView.addObject("pet", pet);
     modelAndView.addObject("adoptionCommand", adoptionCommand);
-    modelAndView.addObject("gcpImageUrl", gcpImageUrl);
+    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
     return modelAndView;
   }
 }

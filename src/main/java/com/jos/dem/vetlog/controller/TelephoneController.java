@@ -51,8 +51,11 @@ public class TelephoneController {
   @Autowired private TelephoneService telephoneService;
   @Autowired private TelephoneValidator telephoneValidator;
 
-  @Value("${gcpImageUrl}")
-  private String gcpImageUrl;
+  @Value("${gcpUrl}")
+  private String gcpUrl;
+
+  @Value("${imageBucket}")
+  private String imageBucket;
 
   private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -90,7 +93,7 @@ public class TelephoneController {
     Pet pet = petService.getPetByUuid(telephoneCommand.getUuid());
     modelAndView.addObject("pet", pet);
     modelAndView.addObject("telephoneCommand", telephoneCommand);
-    modelAndView.addObject("gcpImageUrl", gcpImageUrl);
+    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
     return modelAndView;
   }
 }

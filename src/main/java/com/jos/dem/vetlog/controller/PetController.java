@@ -62,8 +62,11 @@ public class PetController {
   @Value("${breedsByTypeUrl}")
   private String breedsByTypeUrl;
 
-  @Value("${gcpImageUrl}")
-  private String gcpImageUrl;
+  @Value("${gcpUrl}")
+  private String gcpUrl;
+
+  @Value("${imageBucket}")
+  private String imageBucket;
 
   @Value("${defaultImage}")
   private String defaultImage;
@@ -89,7 +92,6 @@ public class PetController {
     modelAndView.addObject("petCommand", petBinder.bindPet(pet));
     modelAndView.addObject("breeds", breedService.getBreedsByType(PetType.DOG));
     modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
-    modelAndView.addObject("awsImageUrl", gcpImageUrl);
     return modelAndView;
   }
 
@@ -156,7 +158,7 @@ public class PetController {
       modelAndView.addObject("petListEmpty", localeService.getMessage("pet.list.empty", request));
     }
     modelAndView.addObject("pets", pets);
-    modelAndView.addObject("gcpImageUrl", gcpImageUrl);
+    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket);
     return modelAndView;
   }
 
@@ -164,7 +166,7 @@ public class PetController {
     User user = userService.getCurrentUser();
     List<Pet> pets = petService.getPetsByUser(user);
     modelAndView.addObject("pets", pets);
-    modelAndView.addObject("gcpImageUrl", gcpImageUrl);
+    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
     modelAndView.addObject("defaultImage", defaultImage);
     return modelAndView;
   }

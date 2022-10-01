@@ -13,7 +13,6 @@ limitations under the License.
 
 package com.jos.dem.vetlog.command;
 
-import com.jos.dem.vetlog.model.PetPrescription;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,10 +41,11 @@ public class PetLogCommand implements Command {
     private String medicine;
 
     @NotNull
+    private String uuid;
+
+    @NotNull
     @Min(1L)
     private Long pet;
 
     private MultipartFile attachment;
-
-    private List<PetPrescription> prescriptions = new ArrayList<>();
 }

@@ -41,8 +41,11 @@ public class VetController {
   @Autowired private UserService userService;
   @Autowired private PetService petService;
 
-  @Value("${gcpImageUrl}")
-  private String gcpImageUrl;
+  @Value("${gcpUrl}")
+  private String gcpUrl;
+
+  @Value("${imageBucket}")
+  private String imageBucket;
 
   @Value("${defaultImage}")
   private String defaultImage;
@@ -64,7 +67,7 @@ public class VetController {
     User user = userService.getByUsername(command.getUsername());
     List<Pet> pets = petService.getPetsByUser(user);
     modelAndView.addObject("pets", pets);
-    modelAndView.addObject("gcpImageUrl", gcpImageUrl);
+    modelAndView.addObject("gcpImageUrl", gcpUrl  + imageBucket + "/");
     modelAndView.addObject("defaultImage", defaultImage);
     return modelAndView;
   }

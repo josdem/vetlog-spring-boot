@@ -19,8 +19,6 @@ package com.jos.dem.vetlog.service.impl;
 import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetLogCommand;
-import com.jos.dem.vetlog.model.PetPrescription;
-import com.jos.dem.vetlog.repository.PetPrescriptionRepository;
 import com.jos.dem.vetlog.service.PetPrescriptionService;
 import com.jos.dem.vetlog.util.UuidGenerator;
 import lombok.RequiredArgsConstructor;
@@ -34,26 +32,17 @@ import java.io.IOException;
 public class PetPrescriptionServiceImpl implements PetPrescriptionService {
 
     public static final String CONTENT_TYPE = "application/octet-stream";
-
-    private final PetPrescriptionRepository petPrescriptionRepository;
     private final GoogleStorageWriter googleStorageWriter;
 
     @Value("${prescriptionBucket}")
     private String bucket;
 
-    private PetPrescription save() {
-        PetPrescription petPrescription = new PetPrescription();
-        petPrescription.setUuid(UuidGenerator.generateUuid());
-        petPrescriptionRepository.save(petPrescription);
-        return petPrescription;
-    }
 
     public void attachFile(Command command) throws IOException {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         if (petLogCommand.getAttachment().getInputStream().available() > 0) {
-            PetPrescription petPrescription = save();
-            petLogCommand.getPrescriptions().add(petPrescription);
-            googleStorageWriter.uploadToBucket(bucket, petPrescription.getUuid(), petLogCommand.getAttachment().getInputStream(), CONTENT_TYPE);
+            petLogCommand.setUuid(UuidGenerator.generateUuid());
+            googleStorageWriter.uploadToBucket(bucket, petLogCommand.getUuid(), petLogCommand.getAttachment().getInputStream(), CONTENT_TYPE);
         }
     }
 

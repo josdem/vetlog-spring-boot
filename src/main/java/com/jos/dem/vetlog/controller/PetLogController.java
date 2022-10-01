@@ -60,6 +60,12 @@ public class PetLogController {
   private final UserService userService;
   private final LocaleService localeService;
 
+  @Value("${gcpUrl}")
+  private String gcpUrl;
+
+  @Value("${prescriptionBucket}")
+  private String prescriptionBucket;
+
   @InitBinder
   private void initBinder(WebDataBinder binder) {
     binder.addValidators(petLogValidator);
@@ -113,6 +119,7 @@ public class PetLogController {
     List<PetLog> petLogs = petLogService.getPetLogsByPet(pet);
     modelAndView.addObject("petLogs", petLogs);
     modelAndView.addObject("uuid", uuid);
+    modelAndView.addObject("gcpPrescriptionUrl", gcpUrl + prescriptionBucket + "/");
     return modelAndView;
   }
 
