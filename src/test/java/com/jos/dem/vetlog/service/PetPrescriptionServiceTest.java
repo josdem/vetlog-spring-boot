@@ -1,7 +1,6 @@
 package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.client.GoogleStorageWriter;
-import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.command.PetLogCommand;
 import com.jos.dem.vetlog.service.impl.PetPrescriptionServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +25,13 @@ import static org.mockito.Mockito.when;
 @Slf4j
 class PetPrescriptionServiceTest {
 
-    public static final String CONTENT_TYPE = "application/octet-stream";
-
     private PetPrescriptionService service;
 
-    @Mock private GoogleStorageWriter googleStorageWriter;
+    @Mock
+    private GoogleStorageWriter googleStorageWriter;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         MockitoAnnotations.openMocks(this);
         service = new PetPrescriptionServiceImpl(googleStorageWriter);
     }
