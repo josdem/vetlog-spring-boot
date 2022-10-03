@@ -158,7 +158,7 @@ public class PetController {
       modelAndView.addObject("petListEmpty", localeService.getMessage("pet.list.empty", request));
     }
     modelAndView.addObject("pets", pets);
-    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket);
+    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
     return modelAndView;
   }
 
