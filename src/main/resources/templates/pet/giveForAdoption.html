@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title th:text="#{pet.view.list.title}"></title>
     <head th:insert="fragments/include"/>
@@ -33,9 +33,12 @@
                         </p>
                         <br/>
                         <center>
-                            <a th:href="@{/adoption/descriptionForAdoption(uuid=${pet.uuid})}" class="btn btn-success">
-                                <p th:text="#{pet.for.adoption}"/>
-                            </a>
+                            <div th:unless="${pet.status.toString() == 'IN_ADOPTION'}">
+                                <a th:href="@{/adoption/descriptionForAdoption(uuid=${pet.uuid})}"
+                                   class="btn btn-success">
+                                    <p th:text="#{pet.for.adoption}"/>
+                                </a>
+                            </div>
                         </center>
                     </div>
                 </div>
