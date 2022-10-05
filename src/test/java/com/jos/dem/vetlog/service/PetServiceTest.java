@@ -3,6 +3,7 @@ package com.jos.dem.vetlog.service;
 import com.jos.dem.vetlog.binder.PetBinder;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.enums.PetStatus;
+import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.PetRepository;
@@ -21,8 +22,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -72,8 +75,16 @@ class PetServiceTest {
   @DisplayName("getting pet by id")
   void shouldGetPetById(TestInfo testInfo){
     log.info("Running: {}", testInfo.getDisplayName());
-    when(petRepository.findByUuid("id")).thenReturn(pet);
-    assertEquals(pet, service.getPetByUuid("id"));
+    Optional<Pet> optionalPet = Optional.of(pet);
+    when(petRepository.findById(1L)).thenReturn(optionalPet);
+    assertEquals(pet, service.getPetById(1L));
+  }
+
+  @Test
+  @DisplayName("pet by id not found")
+  void shouldNotFoundPetById(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    assertThrows(BusinessException.class, () -> service.getPetById(1L));
   }
 
   @Test
