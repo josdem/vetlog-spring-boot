@@ -19,6 +19,7 @@ package com.jos.dem.vetlog.service.impl;
 import com.jos.dem.vetlog.binder.PetLogBinder;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetLogCommand;
+import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetLog;
 import com.jos.dem.vetlog.repository.PetLogRepository;
@@ -51,7 +52,10 @@ public class PetLogServiceImpl implements PetLogService {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         PetLog petLog = petLogBinder.bind(petLogCommand);
         Optional<Pet> pet = petRepository.findById(petLogCommand.getPet());
-        petLog.setPet(pet.get());
+        if (pet.isPresent()) {
+            petLog.setPet(pet.get());
+        }
+        pet.orElseThrow(() -> new BusinessException("No pet was found under id: " + petLogCommand.getPet()));
         petPrescriptionService.attachFile(petLogCommand);
         log.info("petLog: {}", petLogCommand);
         petLogRepository.save(petLog);
