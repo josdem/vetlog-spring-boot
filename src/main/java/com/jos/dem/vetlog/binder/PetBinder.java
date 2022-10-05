@@ -19,6 +19,7 @@ package com.jos.dem.vetlog.binder;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
+import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.repository.BreedRepository;
@@ -33,39 +34,42 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PetBinder {
 
-  private final BreedRepository breedRepository;
+    private final BreedRepository breedRepository;
 
-  public Pet bindPet(Command command) {
-    PetCommand petCommand = (PetCommand) command;
-    Pet pet = new Pet();
-    pet.setId(petCommand.getId());
-    pet.setUuid(UuidGenerator.generateUuid());
-    pet.setName(petCommand.getName());
-    pet.setBirthDate(LocalDateTime.parse(petCommand.getBirthDate()));
-    pet.setDewormed(petCommand.getDewormed());
-    pet.setSterilized(petCommand.getSterilized());
-    pet.setVaccinated(petCommand.getVaccinated());
-    pet.setImages(petCommand.getImages());
-    pet.setStatus(PetStatus.OWNED);
-    Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
-    pet.setBreed(breed.get());
-    return pet;
-  }
+    public Pet bindPet(Command command) {
+        PetCommand petCommand = (PetCommand) command;
+        Pet pet = new Pet();
+        pet.setId(petCommand.getId());
+        pet.setUuid(UuidGenerator.generateUuid());
+        pet.setName(petCommand.getName());
+        pet.setBirthDate(LocalDateTime.parse(petCommand.getBirthDate()));
+        pet.setDewormed(petCommand.getDewormed());
+        pet.setSterilized(petCommand.getSterilized());
+        pet.setVaccinated(petCommand.getVaccinated());
+        pet.setImages(petCommand.getImages());
+        pet.setStatus(PetStatus.OWNED);
+        Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
+        if (breed.isPresent()) {
+            pet.setBreed(breed.get());
+        }
+        breed.orElseThrow(() -> new BusinessException("Breed was not found for pet: " + pet.getName()));
+        return pet;
+    }
 
-  public PetCommand bindPet(Pet pet) {
-    PetCommand command = new PetCommand();
-    command.setId(pet.getId());
-    command.setUuid(pet.getUuid());
-    command.setName(pet.getName());
-    command.setBirthDate(pet.getBirthDate().toString());
-    command.setDewormed(pet.getDewormed());
-    command.setSterilized(pet.getSterilized());
-    command.setVaccinated(pet.getVaccinated());
-    command.setStatus(pet.getStatus());
-    command.setImages(pet.getImages());
-    command.setBreed(pet.getBreed().getId());
-    command.setUser(pet.getUser().getId());
-    command.setType(pet.getBreed().getType());
-    return command;
-  }
+    public PetCommand bindPet(Pet pet) {
+        PetCommand command = new PetCommand();
+        command.setId(pet.getId());
+        command.setUuid(pet.getUuid());
+        command.setName(pet.getName());
+        command.setBirthDate(pet.getBirthDate().toString());
+        command.setDewormed(pet.getDewormed());
+        command.setSterilized(pet.getSterilized());
+        command.setVaccinated(pet.getVaccinated());
+        command.setStatus(pet.getStatus());
+        command.setImages(pet.getImages());
+        command.setBreed(pet.getBreed().getId());
+        command.setUser(pet.getUser().getId());
+        command.setType(pet.getBreed().getType());
+        return command;
+    }
 }
