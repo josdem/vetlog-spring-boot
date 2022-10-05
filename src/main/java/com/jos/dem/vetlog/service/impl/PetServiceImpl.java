@@ -20,6 +20,7 @@ import com.jos.dem.vetlog.binder.PetBinder;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
+import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.PetRepository;
@@ -38,57 +39,68 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PetServiceImpl implements PetService {
 
-  private final PetBinder petBinder;
-  private final PetRepository petRepository;
-  private final PetPrescriptionService petImageService;
-  private final UserRepository userRepository;
+    private final PetBinder petBinder;
+    private final PetRepository petRepository;
+    private final PetPrescriptionService petImageService;
+    private final UserRepository userRepository;
 
-  @Transactional
-  public Pet save(Command command, User user) throws IOException {
-    Pet pet = petBinder.bindPet(command);
-    pet.setUser(user);
-    petImageService.attachFile(command);
-    petRepository.save(pet);
-    return pet;
-  }
+    @Transactional
+    public Pet save(Command command, User user) throws IOException {
+        Pet pet = petBinder.bindPet(command);
+        pet.setUser(user);
+        petImageService.attachFile(command);
+        petRepository.save(pet);
+        return pet;
+    }
 
-  @Transactional
-  public Pet update(Command command) throws IOException {
-    PetCommand petCommand = (PetCommand) command;
-    recoveryImages(petCommand);
-    Pet pet = petBinder.bindPet(petCommand);
-    Optional<User> user = getUser(petCommand.getUser());
-    pet.setUser(user.get());
-    petImageService.attachFile(petCommand);
-    petRepository.save(pet);
-    return pet;
-  }
+    @Transactional
+    public Pet update(Command command) throws IOException {
+        PetCommand petCommand = (PetCommand) command;
+        recoveryImages(petCommand);
+        Pet pet = petBinder.bindPet(petCommand);
+        Optional<User> user = getUser(petCommand.getUser());
+        if (user.isPresent()) {
+            pet.setUser(user.get());
+        }
+        user.orElseThrow(() -> new BusinessException("No user was found with id: " + petCommand.getUser()));
+        petImageService.attachFile(petCommand);
+        petRepository.save(pet);
+        return pet;
+    }
 
-  public Pet getPetByUuid(String uuid) {
-    return petRepository.findByUuid(uuid);
-  }
+    public Pet getPetByUuid(String uuid) {
+        return petRepository.findByUuid(uuid);
+    }
 
-  public Pet getPetById(Long id) {
-    return petRepository.findById(id).get();
-  }
+    public Pet getPetById(Long id) {
+        Optional<Pet> pet = petRepository.findById(id);
+        if (pet.isPresent()) {
+            return pet.get();
+        }
+        pet.orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
+        return new Pet();
+    }
 
-  public List<Pet> getPetsByUser(User user) {
-    List<Pet> result = petRepository.findAllByUser(user);
-    result.removeAll(petRepository.findAllByStatus(PetStatus.ADOPTED));
-    result.addAll(petRepository.findAllByAdopter(user));
-    return result;
-  }
+    public List<Pet> getPetsByUser(User user) {
+        List<Pet> result = petRepository.findAllByUser(user);
+        result.removeAll(petRepository.findAllByStatus(PetStatus.ADOPTED));
+        result.addAll(petRepository.findAllByAdopter(user));
+        return result;
+    }
 
-  public List<Pet> getPetsByStatus(PetStatus status) {
-    return petRepository.findAllByStatus(status);
-  }
+    public List<Pet> getPetsByStatus(PetStatus status) {
+        return petRepository.findAllByStatus(status);
+    }
 
-  private void recoveryImages(PetCommand command) {
-    Pet pet = petRepository.findById(command.getId()).get();
-    command.setImages(pet.getImages());
-  }
+    private void recoveryImages(PetCommand command) {
+        Optional<Pet> pet = petRepository.findById(command.getId());
+        if (pet.isPresent()) {
+            command.setImages(pet.get().getImages());
+        }
+        pet.orElseThrow(() -> new BusinessException("No pet was found with id: " + command.getId()));
+    }
 
-  private Optional<User> getUser(Long id) {
-    return userRepository.findById(id);
-  }
+    private Optional<User> getUser(Long id) {
+        return userRepository.findById(id);
+    }
 }
