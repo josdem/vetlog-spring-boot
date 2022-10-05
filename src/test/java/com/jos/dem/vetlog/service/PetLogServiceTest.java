@@ -2,6 +2,7 @@ package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.binder.PetLogBinder;
 import com.jos.dem.vetlog.command.PetLogCommand;
+import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetLog;
 import com.jos.dem.vetlog.repository.PetLogRepository;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -55,12 +57,26 @@ class PetLogServiceTest {
         PetLogCommand petLogCommand = new PetLogCommand();
         petLogCommand.setPet(1L);
         PetLog petLog = getPetLog();
+        Optional<Pet> optionalPet = Optional.of(pet);
 
         when(petLogBinder.bind(petLogCommand)).thenReturn(petLog);
-        when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
+        when(petRepository.findById(1L)).thenReturn(optionalPet);
 
         service.save(petLogCommand);
         verify(petLogRepository).save(petLog);
+    }
+
+
+    @Test
+    @DisplayName("should not find a pet log")
+    void shouldNotFindPetLog(TestInfo testInfo) throws IOException {
+        log.info("Running: {}", testInfo.getDisplayName());
+        PetLogCommand petLogCommand = new PetLogCommand();
+        PetLog petLog = getPetLog();
+
+        when(petLogBinder.bind(petLogCommand)).thenReturn(petLog);
+
+        assertThrows(BusinessException.class, () -> service.save(petLogCommand));
     }
 
     @Test
