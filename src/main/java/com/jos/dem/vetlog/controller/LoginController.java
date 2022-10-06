@@ -16,10 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.controller;
 
-import com.jos.dem.vetlog.service.LocaleService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -32,13 +29,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+@Slf4j
 @Controller
 public class LoginController {
-
-    @Autowired
-    private LocaleService localeService;
-
-    private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(method = GET, value = "/login")
     public ModelAndView login() {
