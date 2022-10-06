@@ -77,7 +77,8 @@ class PetBinderTest {
     petCommand.setBreed(1L);
 
     Breed breed = getBreed();
-    when(breedRepository.findById(1L)).thenReturn(Optional.of(breed));
+    Optional<Breed> optionalBreed = Optional.of(breed);
+    when(breedRepository.findById(1L)).thenReturn(optionalBreed);
     Pet result = petBinder.bindPet(petCommand);
 
     assertEquals(2L, result.getId());
