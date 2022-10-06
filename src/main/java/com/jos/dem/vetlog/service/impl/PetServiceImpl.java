@@ -59,10 +59,10 @@ public class PetServiceImpl implements PetService {
         recoveryImages(petCommand);
         Pet pet = petBinder.bindPet(petCommand);
         Optional<User> user = getUser(petCommand.getUser());
-        if (user.isPresent()) {
-            pet.setUser(user.get());
+        if (user.isEmpty()) {
+            throw new BusinessException("No user was found with id: " + petCommand.getUser());
         }
-        user.orElseThrow(() -> new BusinessException("No user was found with id: " + petCommand.getUser()));
+        pet.setUser(user.get());
         petImageService.attachFile(petCommand);
         petRepository.save(pet);
         return pet;
@@ -74,11 +74,10 @@ public class PetServiceImpl implements PetService {
 
     public Pet getPetById(Long id) {
         Optional<Pet> pet = petRepository.findById(id);
-        if (pet.isPresent()) {
-            return pet.get();
+        if (pet.isEmpty()) {
+            throw new BusinessException("No pet was found with id: " + id);
         }
-        pet.orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
-        return new Pet();
+        return pet.get();
     }
 
     public List<Pet> getPetsByUser(User user) {
@@ -94,10 +93,10 @@ public class PetServiceImpl implements PetService {
 
     private void recoveryImages(PetCommand command) {
         Optional<Pet> pet = petRepository.findById(command.getId());
-        if (pet.isPresent()) {
-            command.setImages(pet.get().getImages());
+        if (pet.isEmpty()) {
+            throw new BusinessException("No pet was found with id: " + command.getId());
         }
-        pet.orElseThrow(() -> new BusinessException("No pet was found with id: " + command.getId()));
+        command.setImages(pet.get().getImages());
     }
 
     private Optional<User> getUser(Long id) {
