@@ -50,9 +50,9 @@ public class PetBinder {
         pet.setStatus(PetStatus.OWNED);
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
         if (breed.isPresent()) {
-            pet.setBreed(breed.get());
+            throw new BusinessException("Breed was not found for pet: " + pet.getName());
         }
-        breed.orElseThrow(() -> new BusinessException("Breed was not found for pet: " + pet.getName()));
+        pet.setBreed(breed.get());
         return pet;
     }
 
