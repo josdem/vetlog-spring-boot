@@ -52,10 +52,10 @@ public class PetLogServiceImpl implements PetLogService {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         PetLog petLog = petLogBinder.bind(petLogCommand);
         Optional<Pet> pet = petRepository.findById(petLogCommand.getPet());
-        if (pet.isPresent()) {
-            petLog.setPet(pet.get());
+        if (pet.isEmpty()) {
+            throw new BusinessException("No pet was found under id: " + petLogCommand.getPet());
         }
-        pet.orElseThrow(() -> new BusinessException("No pet was found under id: " + petLogCommand.getPet()));
+        petLog.setPet(pet.get());
         petPrescriptionService.attachFile(petLogCommand);
         log.info("petLog: {}", petLogCommand);
         petLogRepository.save(petLog);
