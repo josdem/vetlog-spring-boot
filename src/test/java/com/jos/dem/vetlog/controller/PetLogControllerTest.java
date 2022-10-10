@@ -42,7 +42,7 @@ class PetLogControllerTest {
     @Test
     @DisplayName("listing pet logs")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldShowCreatePetForm(TestInfo testInfo) throws Exception {
+    void shouldListPetLogs(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         mockMvc
                 .perform(get("/petlog/list")
