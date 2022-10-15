@@ -12,14 +12,79 @@
 <br/><br/>
 <div class="container">
     <div class="row">
-        <div th:if="${pets.isEmpty()}">
-            <div align="center">
-                <p th:text="#{pet.list.empty}"/>
-                <a th:href="@{/pet/create}" class="btn btn-success"><p th:text="#{pet.register}"/></a>
-            </div>
-            <br/><br/>
-        </div>
-        <p>Hello World!</p>
+        <h2>Spa Packages</h2>
+        <br>
+        <h4>Bath and Brush</h4>
+        <ul>
+            <li>Bath and dry</li>
+            <li>Brush out</li>
+            <li>Ear cleaning</li>
+            <li>Pad shave</li>
+            <li>Nail clipping</li>
+            <li>Double dry</li>
+            <li>Fresh fragrance</li>
+        </ul>
+        <br>
+        <h5>Prices</h5>
+        <table style="width:400px">
+            <tr>
+                <th>Pet Size</th>
+                <th>Fur Size</th>
+                <th>Cost</th>
+            </tr>
+            <tr>
+                <td>Small</td>
+                <td>Short</td>
+                <td>$20 USD</td>
+            </tr>
+            <tr>
+                <td>Small</td>
+                <td>Long</td>
+                <td>$30 USD</td>
+            </tr>
+            <tr>
+                <td>Medium</td>
+                <td>Short</td>
+                <td>$25 USD</td>
+            </tr>
+            <tr>
+                <td>Medium</td>
+                <td>Long</td>
+                <td>$35 USD</td>
+            </tr>
+            <tr>
+                <td>Large</td>
+                <td>Short</td>
+                <td>$30 USD</td>
+            </tr>
+            <tr>
+                <td>Large</td>
+                <td>Long</td>
+                <td>$40 USD</td>
+            </tr>
+        </table>
+        <br>
+        <h5>Hair Cut $20 USD</h5>
+        <br>
+        <h5>Dry Bath and Brush</h5>
+        <table style="width:400px">
+            <tr>
+                <td>Small</td>
+                <td>Short-haired</td>
+                <td>$10 USD</td>
+            </tr>
+            <tr>
+                <td>Small</td>
+                <td>Long-haired</td>
+                <td>$15 USD</td>
+            </tr>
+            <tr>
+                <td>Medium</td>
+                <td>Short-haired</td>
+                <td>$20 USD</td>
+            </tr>
+        </table>
+        <br>
         </div>
     </div>
 </div>
