@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title th:text="#{pet.view.list.title}"></title>
+    <head th:insert="fragments/include"/>
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
+</head>
+<body>
+<div th:insert="fragments/header"/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<div class="container">
+    <div class="row">
+        <div th:if="${pets.isEmpty()}">
+            <div align="center">
+                <p th:text="#{pet.list.empty}"/>
+                <a th:href="@{/pet/create}" class="btn btn-success"><p th:text="#{pet.register}"/></a>
+            </div>
+            <br/><br/>
+        </div>
+        <p>Hello World!</p>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer"/>
+</body>
+</html>

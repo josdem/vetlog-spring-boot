@@ -14,20 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.model;
+package com.jos.dem.vetlog.controller;
 
-import com.jos.dem.vetlog.enums.FurSize;
-import com.jos.dem.vetlog.enums.PetAge;
-import com.jos.dem.vetlog.enums.PetSize;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-@Getter
-@Setter
-public class PetStructure {
+@Controller
+@RequestMapping("/service")
+public class ServicesController {
 
-    private PetSize petSize;
-    private FurSize furSize;
-    private PetAge age;
-
+    @GetMapping(value = "list")
+    public ModelAndView list() {
+        return new ModelAndView();
+    }
 }
