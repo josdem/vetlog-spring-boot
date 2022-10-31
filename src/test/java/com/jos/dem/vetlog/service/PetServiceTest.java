@@ -27,9 +27,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.mock;
 
 @Slf4j
 class PetServiceTest {
@@ -38,7 +38,7 @@ class PetServiceTest {
 
   @Mock private PetBinder petBinder;
   @Mock private PetRepository petRepository;
-  @Mock private PetPrescriptionService petImageService;
+  @Mock private PetImageService petImageService;
   @Mock private UserRepository userRepository;
 
   private User user;
@@ -65,7 +65,7 @@ class PetServiceTest {
 
   @Test
   @DisplayName("getting pet by uuid")
-  void shouldGetPetByUuid(TestInfo testInfo){
+  void shouldGetPetByUuid(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     when(petRepository.findByUuid("uuid")).thenReturn(pet);
     assertEquals(pet, service.getPetByUuid("uuid"));
@@ -73,7 +73,7 @@ class PetServiceTest {
 
   @Test
   @DisplayName("getting pet by id")
-  void shouldGetPetById(TestInfo testInfo){
+  void shouldGetPetById(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     Optional<Pet> optionalPet = Optional.of(pet);
     when(petRepository.findById(1L)).thenReturn(optionalPet);
@@ -82,7 +82,7 @@ class PetServiceTest {
 
   @Test
   @DisplayName("pet by id not found")
-  void shouldNotFoundPetById(TestInfo testInfo){
+  void shouldNotFoundPetById(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     assertThrows(BusinessException.class, () -> service.getPetById(1L));
   }
@@ -120,7 +120,7 @@ class PetServiceTest {
 
   @Test
   @DisplayName("getting pet by status")
-  void shouldGetPetByStatus(TestInfo testInfo){
+  void shouldGetPetByStatus(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     when(petRepository.findAllByStatus(PetStatus.OWNED)).thenReturn(pets);
     assertEquals(pets, service.getPetsByStatus(PetStatus.OWNED));
