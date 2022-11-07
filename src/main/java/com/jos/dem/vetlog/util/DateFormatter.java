@@ -24,8 +24,15 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class DateFormatter {
 
+  private DateTimeFormatter formatter;
+
   public String format(String dateToFormat) {
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yy, h:m a");
+    if(dateToFormat.contains(",")){
+      formatter = DateTimeFormatter.ofPattern("M/d/yy, h:m a");
+    } else {
+      formatter = DateTimeFormatter.ofPattern("M/d/yy h:m");
+    }
+
     LocalDate localDate = LocalDate.parse(dateToFormat, formatter);
     return localDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
   }

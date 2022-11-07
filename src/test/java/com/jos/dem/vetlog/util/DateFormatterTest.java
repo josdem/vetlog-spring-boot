@@ -25,4 +25,11 @@ class DateFormatterTest {
     log.info("Running: {}", testInfo.getDisplayName());
     assertEquals("08/06/2010", dateFormatter.format("8/6/10, 0:00 AM"));
   }
+
+  @Test
+  @DisplayName("formatting a date without semicolon")
+  void shouldFormatADateWithoutSemicolon(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    assertEquals("01/01/2020", dateFormatter.format("1/1/20 0:00"));
+  }
 }
