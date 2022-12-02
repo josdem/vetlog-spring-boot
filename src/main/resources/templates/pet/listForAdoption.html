@@ -17,7 +17,7 @@
             </div>
         </div>
         <div th:each="pet : ${pets}">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm">
                 <div class="thumbnail">
                     <img style="width:320px;height:240px;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
                     <div class="caption">
