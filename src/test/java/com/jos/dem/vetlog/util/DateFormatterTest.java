@@ -32,4 +32,11 @@ class DateFormatterTest {
     log.info("Running: {}", testInfo.getDisplayName());
     assertEquals("01/01/2020", dateFormatter.format("1/1/20 0:00"));
   }
+
+  @Test
+  @DisplayName("formatting a date in Spanish format")
+  void shouldFormatADateInSpanishFormat(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    assertEquals("04/17/2022", dateFormatter.format("17/4/22 0:00"));
+  }
 }

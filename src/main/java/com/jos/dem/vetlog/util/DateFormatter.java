@@ -27,10 +27,10 @@ public class DateFormatter {
   private DateTimeFormatter formatter;
 
   public String format(String dateToFormat) {
-    if(dateToFormat.contains(",")){
+    if (dateToFormat.contains(",")) {
       formatter = DateTimeFormatter.ofPattern("M/d/yy, h:m a");
     } else {
-      formatter = DateTimeFormatter.ofPattern("M/d/yy h:m");
+      formatter = DateTimeFormatter.ofPattern("d/M/yy h:m");
     }
 
     LocalDate localDate = LocalDate.parse(dateToFormat, formatter);
