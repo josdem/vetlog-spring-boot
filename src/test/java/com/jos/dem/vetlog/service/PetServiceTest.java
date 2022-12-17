@@ -83,6 +83,14 @@ class PetServiceTest {
   }
 
   @Test
+  @DisplayName("not update due to user not found")
+  void shouldNotUpdateDueToUserDoesNotExist(TestInfo testInfo){
+    log.info("Running: {}", testInfo.getDisplayName());
+    PetCommand command = mock(PetCommand.class);
+    assertThrows(BusinessException.class, () -> service.update(command));
+  }
+
+  @Test
   @DisplayName("getting pet by uuid")
   void shouldGetPetByUuid(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
