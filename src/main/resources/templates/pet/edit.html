@@ -94,7 +94,8 @@
                             <br/>
                             <label for="breed"><h4 th:text="#{pet.breed}"/></label>
                             <select id="breedSelector" name="breed" class="form-control">
-                                <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"/>
+                                <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"
+                                        th:selected="(${breed.id} == *{breed})"/>
                             </select>
                             <br/><br/>
                             <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
