@@ -2,6 +2,7 @@ package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.binder.PetBinder;
 import com.jos.dem.vetlog.command.Command;
+import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Pet;
@@ -60,6 +61,22 @@ class PetServiceTest {
     Command command = mock(Command.class);
     when(petBinder.bindPet(command)).thenReturn(pet);
     service.save(command, user);
+    verify(petRepository).save(Mockito.isA(Pet.class));
+  }
+
+  @Test
+  @DisplayName("updating a pet")
+  void shouldUpdatePet(TestInfo testInfo) throws IOException {
+    log.info("Running: {}", testInfo.getDisplayName());
+    PetCommand command = mock(PetCommand.class);
+    when(command.getId()).thenReturn(2L);
+    when(petRepository.findById(2L)).thenReturn(Optional.of(pet));
+    when(petBinder.bindPet(command)).thenReturn(pet);
+    when(command.getUser()).thenReturn(1L);
+    when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+    service.update(command);
+    assertEquals(user, pet.getUser());
+    verify(petImageService).attachFile(command);
     verify(petRepository).save(Mockito.isA(Pet.class));
   }
 
