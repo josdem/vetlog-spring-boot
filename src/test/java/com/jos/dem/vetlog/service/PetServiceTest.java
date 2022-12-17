@@ -68,6 +68,7 @@ class PetServiceTest {
   @DisplayName("updating a pet")
   void shouldUpdatePet(TestInfo testInfo) throws IOException {
     log.info("Running: {}", testInfo.getDisplayName());
+    pet.setImages(new ArrayList<>());
     PetCommand command = mock(PetCommand.class);
     when(command.getId()).thenReturn(2L);
     when(petRepository.findById(2L)).thenReturn(Optional.of(pet));
@@ -78,6 +79,7 @@ class PetServiceTest {
     assertEquals(user, pet.getUser());
     verify(petImageService).attachFile(command);
     verify(petRepository).save(Mockito.isA(Pet.class));
+    verify(command).setImages(Mockito.isA(List.class));
   }
 
   @Test
