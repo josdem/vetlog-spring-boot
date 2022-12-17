@@ -90,7 +90,7 @@ public class PetController {
     Pet pet = petService.getPetByUuid(uuid);
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.addObject("petCommand", petBinder.bindPet(pet));
-    modelAndView.addObject("breeds", breedService.getBreedsByType(PetType.DOG));
+    modelAndView.addObject("breeds", breedService.getBreedsByType(pet.getBreed().getType()));
     modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
     return modelAndView;
   }
