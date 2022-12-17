@@ -60,9 +60,6 @@ class PetControllerTest {
     mockMvc
         .perform(get("/pet/edit").param("uuid", "43443f72-68d5-473a-9158-729f0b9f70bb"))
         .andExpect(status().isOk())
-        .andExpect(model().attributeExists("petCommand"))
-        .andExpect(model().attributeExists("breeds"))
-        .andExpect(model().attributeExists("breedsByTypeUrl"))
-        .andExpect(view().name("pet/edit"));
+        .andExpect(view().name("error"));
   }
 }
