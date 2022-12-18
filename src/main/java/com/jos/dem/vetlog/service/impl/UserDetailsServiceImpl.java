@@ -16,6 +16,7 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service.impl;
 
+import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public org.springframework.security.core.userdetails.User loadUserByUsername(String username)
       throws UsernameNotFoundException {
     User user = userService.getByUsername(username);
+    if (user == null) {
+      throw new BusinessException("Invalid credentials");
+    }
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
     grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
     return new org.springframework.security.core.userdetails.User(

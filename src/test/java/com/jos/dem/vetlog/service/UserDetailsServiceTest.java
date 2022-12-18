@@ -1,6 +1,7 @@
 package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.enums.Role;
+import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.service.impl.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @Slf4j
@@ -49,5 +51,12 @@ class UserDetailsServiceTest {
     assertEquals(user.getUsername(), result.getUsername());
     assertEquals(user.getPassword(), result.getPassword());
     assertEquals(user.getEnabled(), result.isEnabled());
+  }
+
+  @Test
+  @DisplayName("not search for authorities since user does not exist")
+  void shouldNotSearchForAuthoritiesDueToUserNotFound(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    assertThrows(BusinessException.class, () -> service.loadUserByUsername("thisUserDoesNotExist"));
   }
 }
