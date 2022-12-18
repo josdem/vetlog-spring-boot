@@ -34,16 +34,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class LoginControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
-    @Test
-    @DisplayName("getting login page")
-    void shouldGetLogin(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc
-                .perform(get("/login"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("login/login"));
-    }
+  @Test
+  @DisplayName("getting login page")
+  void shouldGetLogin(TestInfo testInfo) throws Exception {
+    log.info("Running: {}", testInfo.getDisplayName());
+    mockMvc.perform(get("/login")).andExpect(status().isOk()).andExpect(view().name("login/login"));
+  }
+
+  @Test
+  @DisplayName("getting login error")
+  void shouldGetLoginErrorMessage(TestInfo testInfo) throws Exception {
+    log.info("Running: {}", testInfo.getDisplayName());
+    mockMvc
+        .perform(get("/login").param("error", "invalid credentials"))
+        .andExpect(status().isOk())
+        .andExpect(view().name("login/login"));
+  }
 }
