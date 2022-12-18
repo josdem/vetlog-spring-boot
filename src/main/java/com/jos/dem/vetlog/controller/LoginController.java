@@ -16,31 +16,43 @@ limitations under the License.
 
 package com.jos.dem.vetlog.controller;
 
+import com.jos.dem.vetlog.service.LocaleService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 @Slf4j
 @Controller
+@RequiredArgsConstructor
 public class LoginController {
 
-    @GetMapping(value = "/login")
-    public ModelAndView login() {
-        log.info("Calling login");
-        return new ModelAndView("login/login");
-    }
+  private final LocaleService localeService;
 
-    @GetMapping(value = "/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        new SecurityContextLogoutHandler().logout(request, response, auth);
-        return "redirect:/";
+  @GetMapping(value = "/login")
+  public ModelAndView login(@RequestParam Optional<String> error, HttpServletRequest request) {
+    log.info("Calling login");
+    ModelAndView modelAndView = new ModelAndView("login/login");
+    if (error.isPresent()) {
+      log.info("Invalid credentials");
+      modelAndView.addObject("message", localeService.getMessage("login.error", request));
     }
+    return modelAndView;
+  }
+
+  @GetMapping(value = "/logout")
+  public String logout(HttpServletRequest request, HttpServletResponse response) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    new SecurityContextLogoutHandler().logout(request, response, auth);
+    return "redirect:/";
+  }
 }
