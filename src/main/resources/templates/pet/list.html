@@ -2,11 +2,9 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title th:text="#{pet.view.list.title}"></title>
+    <head th:insert="fragments/include"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
-    <link rel="stylesheet" type="text/css"
-          href="/assets/servizi-dog-theme/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/servizi-dog-theme/css/style.css"/>
 </head>
 <body>
 <div th:insert="fragments/header"/>
@@ -36,17 +34,11 @@
 
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" role="listbox">
-                                <div class="item active">
-                                    <img src="https://storage.googleapis.com/vetlog-bucket/45087eff-0f29-488b-a2b6-603a9794a37e"
-                                         alt="Image one">
-                                    <div class="carousel-caption">
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <img src="https://storage.googleapis.com/vetlog-bucket/caa76bb5-a435-4637-9410-d37e74b64bf3"
-                                         alt="Image two">
-                                    <div class="carousel-caption">
-                                    </div>
+                                <div th:each="image : ${pet.images}" class="item"
+                                     th:classappend="|${pet.images.indexOf(image) == 0 ? 'active' : ''}|"
+                                     align="center">
+                                    <img style="width:350px;height:300px;"
+                                         th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
                                 </div>
                             </div>
 
