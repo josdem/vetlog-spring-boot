@@ -4,6 +4,7 @@
     <title th:text="#{pet.view.create.title}"/>
     <head th:insert="fragments/include"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/javascript/selector.js}"></script>
 </head>
 <body class="login">
@@ -43,7 +44,7 @@
                                         <div th:each="image : ${petCommand.images}" class="item"
                                              th:classappend="|${petCommand.images.indexOf(image) == 0 ? 'active' : ''}|"
                                              align="center">
-                                            <img style="width:320px;height:300px;"
+                                            <img style="width:350px;height:300px;"
                                                  th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
                                         </div>
                                     </div>
