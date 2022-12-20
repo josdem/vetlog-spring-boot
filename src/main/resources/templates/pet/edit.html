@@ -44,7 +44,7 @@
                                              th:classappend="|${petCommand.images.indexOf(image) == 0 ? 'active' : ''}|"
                                              align="center">
                                             <img style="width:320px;height:300px;"
-                                                 th:attr="src=@{${awsImageUrl} + ${image.uuid}}"/>
+                                                 th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
                                         </div>
                                     </div>
                                     <!-- Controls -->
