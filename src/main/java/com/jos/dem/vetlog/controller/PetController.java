@@ -91,6 +91,7 @@ public class PetController {
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.addObject("petCommand", petBinder.bindPet(pet));
     modelAndView.addObject("breeds", breedService.getBreedsByType(pet.getBreed().getType()));
+    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
     modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
     return modelAndView;
   }
