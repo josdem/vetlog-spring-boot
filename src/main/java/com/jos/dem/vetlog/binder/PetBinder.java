@@ -49,7 +49,7 @@ public class PetBinder {
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
-        if (breed.isEmpty()) {
+        if (!breed.isPresent()) {
             throw new BusinessException("Breed was not found for pet: " + pet.getName());
         }
         pet.setBreed(breed.get());
