@@ -108,6 +108,7 @@ public class PetController {
     }
     petService.update(petCommand);
     modelAndView.addObject("message", localeService.getMessage("pet.updated", request));
+    modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
     modelAndView.addObject("petCommand", petCommand);
     return fillModelAndView(modelAndView);
   }
