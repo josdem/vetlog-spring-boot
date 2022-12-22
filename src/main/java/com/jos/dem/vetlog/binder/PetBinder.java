@@ -47,7 +47,7 @@ public class PetBinder {
         pet.setSterilized(petCommand.getSterilized());
         pet.setVaccinated(petCommand.getVaccinated());
         pet.setImages(petCommand.getImages());
-        pet.setStatus(PetStatus.OWNED);
+        pet.setStatus(petCommand.getStatus());
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
         if (breed.isEmpty()) {
             throw new BusinessException("Breed was not found for pet: " + pet.getName());
