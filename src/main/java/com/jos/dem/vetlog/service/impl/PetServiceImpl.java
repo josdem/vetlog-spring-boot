@@ -74,7 +74,7 @@ public class PetServiceImpl implements PetService {
 
   public Pet getPetById(Long id) {
     Optional<Pet> pet = petRepository.findById(id);
-    if (pet.isEmpty()) {
+    if (!pet.isPresent()) {
       throw new BusinessException("No pet was found with id: " + id);
     }
     return pet.get();
@@ -93,7 +93,7 @@ public class PetServiceImpl implements PetService {
 
   private void recoveryImages(PetCommand command) {
     Optional<Pet> pet = petRepository.findById(command.getId());
-    if (pet.isEmpty()) {
+    if (!pet.isPresent()) {
       throw new BusinessException("No pet was found with id: " + command.getId());
     }
     command.setImages(pet.get().getImages());
