@@ -115,7 +115,6 @@ CREATE TABLE `pet` (
   `uuid` varchar(255) NOT NULL,
   `vaccinated` bit(1) NOT NULL,
   `adopter_id` bigint(20) DEFAULT NULL,
-  `pet_adoption_id` bigint(20) DEFAULT NULL,
   `breed_id` bigint(20) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),

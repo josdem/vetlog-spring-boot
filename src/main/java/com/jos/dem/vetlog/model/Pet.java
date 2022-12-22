@@ -78,7 +78,7 @@ public class Pet {
     private Breed breed;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "pet_adoption_id")
+    @JoinColumn(name = "pet_id")
     private PetAdoption adoption;
 
     @OneToOne(fetch = FetchType.LAZY)

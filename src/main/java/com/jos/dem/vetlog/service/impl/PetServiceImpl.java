@@ -59,7 +59,7 @@ public class PetServiceImpl implements PetService {
     recoveryImages(petCommand);
     Pet pet = petBinder.bindPet(petCommand);
     Optional<User> user = getUser(petCommand.getUser());
-    if (user.isEmpty()) {
+    if (!user.isPresent()) {
       throw new BusinessException("No user was found with id: " + petCommand.getUser());
     }
     pet.setUser(user.get());
