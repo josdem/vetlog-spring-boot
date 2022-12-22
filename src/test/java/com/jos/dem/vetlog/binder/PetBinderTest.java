@@ -73,6 +73,7 @@ class PetBinderTest {
         petCommand.setId(2L);
         petCommand.setName("Marla");
         petCommand.setBirthDate("2021-01-17T00:00");
+        petCommand.setStatus(PetStatus.IN_ADOPTION);
         petCommand.setDewormed(true);
         petCommand.setSterilized(true);
         petCommand.setVaccinated(true);
@@ -88,7 +89,7 @@ class PetBinderTest {
         assertEquals(36, result.getUuid().length());
         assertEquals("Marla", result.getName());
         assertEquals(LocalDateTime.of(2021, 01, 17, 0, 0), result.getBirthDate());
-        assertEquals(PetStatus.OWNED, result.getStatus());
+        assertEquals(PetStatus.IN_ADOPTION, result.getStatus());
         assertNotNull(result.getImages());
         assertEquals(breed, result.getBreed());
     }
