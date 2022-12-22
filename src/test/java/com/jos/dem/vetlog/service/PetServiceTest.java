@@ -6,7 +6,9 @@ import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Pet;
+import com.jos.dem.vetlog.model.PetAdoption;
 import com.jos.dem.vetlog.model.User;
+import com.jos.dem.vetlog.repository.AdoptionRepository;
 import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.impl.PetServiceImpl;
@@ -41,6 +43,7 @@ class PetServiceTest {
   @Mock private PetRepository petRepository;
   @Mock private PetImageService petImageService;
   @Mock private UserRepository userRepository;
+  @Mock private AdoptionRepository adoptionRepository;
 
   private User user;
   private Pet pet;
@@ -51,7 +54,9 @@ class PetServiceTest {
     MockitoAnnotations.openMocks(this);
     user = new User();
     pet = new Pet();
-    service = new PetServiceImpl(petBinder, petRepository, petImageService, userRepository);
+    service =
+        new PetServiceImpl(
+            petBinder, petRepository, petImageService, userRepository, adoptionRepository);
   }
 
   @Test
@@ -84,7 +89,7 @@ class PetServiceTest {
 
   @Test
   @DisplayName("not update due to user not found")
-  void shouldNotUpdateDueToUserDoesNotExist(TestInfo testInfo){
+  void shouldNotUpdateDueToUserDoesNotExist(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     PetCommand command = mock(PetCommand.class);
     when(petRepository.findById(2L)).thenReturn(Optional.of(pet));
@@ -93,7 +98,7 @@ class PetServiceTest {
 
   @Test
   @DisplayName("not update due to pet not found")
-  void shouldNotUpdateDueToPetDoesNotExist(TestInfo testInfo){
+  void shouldNotUpdateDueToPetDoesNotExist(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     PetCommand command = mock(PetCommand.class);
     assertThrows(BusinessException.class, () -> service.update(command));
@@ -160,5 +165,21 @@ class PetServiceTest {
     log.info("Running: {}", testInfo.getDisplayName());
     when(petRepository.findAllByStatus(PetStatus.OWNED)).thenReturn(pets);
     assertEquals(pets, service.getPetsByStatus(PetStatus.OWNED));
+  }
+
+  @Test
+  @DisplayName("Getting pet adoption information")
+  void shouldGetPetAdoption(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    PetAdoption petAdoption = new PetAdoption();
+    petAdoption.setId(1L);
+    petAdoption.setDescription("It is cute!");
+    Optional<PetAdoption> optional = Optional.of(petAdoption);
+    List<Pet> pets = Arrays.asList(pet);
+
+    when(adoptionRepository.findByPet(pet)).thenReturn(optional);
+
+    service.getPetsAdoption(pets);
+    assertEquals("It is cute!", pets.get(0).getAdoption().getDescription());
   }
 }

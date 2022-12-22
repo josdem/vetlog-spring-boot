@@ -22,7 +22,9 @@ import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Pet;
+import com.jos.dem.vetlog.model.PetAdoption;
 import com.jos.dem.vetlog.model.User;
+import com.jos.dem.vetlog.repository.AdoptionRepository;
 import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.PetImageService;
@@ -43,6 +45,7 @@ public class PetServiceImpl implements PetService {
   private final PetRepository petRepository;
   private final PetImageService petImageService;
   private final UserRepository userRepository;
+  private final AdoptionRepository adoptionRepository;
 
   @Transactional
   public Pet save(Command command, User user) throws IOException {
@@ -89,6 +92,16 @@ public class PetServiceImpl implements PetService {
 
   public List<Pet> getPetsByStatus(PetStatus status) {
     return petRepository.findAllByStatus(status);
+  }
+
+  @Override
+  public void getPetsAdoption(List<Pet> pets) {
+    pets.forEach(pet -> {
+      Optional<PetAdoption> optional = adoptionRepository.findByPet(pet);
+      if(optional.isPresent()){
+        pet.setAdoption(optional.get());
+      }
+    });
   }
 
   private void recoveryImages(PetCommand command) {
