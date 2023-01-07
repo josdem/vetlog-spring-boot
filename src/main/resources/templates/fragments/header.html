@@ -16,9 +16,6 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" th:href="@{/}"><p th:text="#{home.name}"/></a>
-                    </li>
-                    <li>
                         <a class="page-scroll" th:href="@{/login}"><p th:text="#{login.action}"/></a>
                     </li>
                     <li>
@@ -40,9 +37,6 @@
         <div sec:authorize="isAuthenticated()">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a class="page-scroll" th:href="@{/}"><p th:text="#{home.name}"/></a>
-                    </li>
                     <li>
                         <a class="page-scroll" th:href="@{/logout}"><p th:text="#{login.logout}"/></a>
                     </li>
