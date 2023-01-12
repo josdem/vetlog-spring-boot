@@ -66,6 +66,11 @@ public class PetServiceImpl implements PetService {
       throw new BusinessException("No user was found with id: " + petCommand.getUser());
     }
     pet.setUser(user.get());
+    Optional<User> adopter = getUser(petCommand.getAdopter());
+    if (adopter.isPresent()) {
+      pet.setAdopter(adopter.get());
+    }
+    pet.setUser(user.get());
     petImageService.attachFile(petCommand);
     petRepository.save(pet);
     return pet;

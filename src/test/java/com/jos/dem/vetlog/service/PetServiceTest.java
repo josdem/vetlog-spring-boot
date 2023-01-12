@@ -46,6 +46,7 @@ class PetServiceTest {
   @Mock private AdoptionRepository adoptionRepository;
 
   private User user;
+  private User adopter;
   private Pet pet;
   private List<Pet> pets = new ArrayList<>();
 
@@ -53,6 +54,7 @@ class PetServiceTest {
   void setup() {
     MockitoAnnotations.openMocks(this);
     user = new User();
+    adopter = new User();
     pet = new Pet();
     service =
         new PetServiceImpl(
@@ -79,9 +81,12 @@ class PetServiceTest {
     when(petRepository.findById(2L)).thenReturn(Optional.of(pet));
     when(petBinder.bindPet(command)).thenReturn(pet);
     when(command.getUser()).thenReturn(1L);
+    when(command.getAdopter()).thenReturn(3L);
     when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+    when(userRepository.findById(3L)).thenReturn(Optional.of(adopter));
     service.update(command);
     assertEquals(user, pet.getUser());
+    assertEquals(adopter, pet.getAdopter());
     verify(petImageService).attachFile(command);
     verify(petRepository).save(Mockito.isA(Pet.class));
     verify(command).setImages(Mockito.isA(List.class));
