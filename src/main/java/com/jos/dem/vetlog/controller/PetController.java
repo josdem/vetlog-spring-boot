@@ -89,7 +89,9 @@ public class PetController {
     log.info("Editing pet: {}", uuid);
     Pet pet = petService.getPetByUuid(uuid);
     ModelAndView modelAndView = new ModelAndView();
-    modelAndView.addObject("petCommand", petBinder.bindPet(pet));
+    final PetCommand petCommand = petBinder.bindPet(pet);
+    petCommand.setAdopter(pet.getAdopter().getId());
+    modelAndView.addObject("petCommand", petCommand);
     modelAndView.addObject("breeds", breedService.getBreedsByType(pet.getBreed().getType()));
     modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
     modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
