@@ -19,6 +19,7 @@ package com.jos.dem.vetlog.model;
 import com.jos.dem.vetlog.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,41 +32,50 @@ import java.util.Date;
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.AUTO;
 
-
 @Getter
 @Setter
 @Entity
+@ToString
 public class User implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = AUTO)
-    private Long id;
-    @Column(unique = true, nullable = false)
-    private String username;
-    @Column(nullable = false)
-    private String password;
-    @Column(nullable = true)
-    private String firstname;
-    @Column(nullable = true)
-    private String lastname;
-    @Column(nullable = true)
-    private String email;
-    @Column(nullable = true)
-    private String mobile;
-    @Column(nullable = false)
-    @Enumerated(STRING)
-    private Role role;
+  @Id
+  @GeneratedValue(strategy = AUTO)
+  private Long id;
 
-    @Column(nullable = false)
-    private Boolean enabled = true;
-    @Column(nullable = false)
-    private Boolean accountNonExpired = true;
-    @Column(nullable = false)
-    private Boolean credentialsNonExpired = true;
-    @Column(nullable = false)
-    private Boolean accountNonLocked = true;
-    @Column(nullable = false)
-    private Date dateCreated = new Date();
+  @Column(unique = true, nullable = false)
+  private String username;
 
+  @Column(nullable = false)
+  private String password;
+
+  @Column(nullable = true)
+  private String firstname;
+
+  @Column(nullable = true)
+  private String lastname;
+
+  @Column(nullable = true)
+  private String email;
+
+  @Column(nullable = true)
+  private String mobile;
+
+  @Column(nullable = false)
+  @Enumerated(STRING)
+  private Role role;
+
+  @Column(nullable = false)
+  private Boolean enabled = true;
+
+  @Column(nullable = false)
+  private Boolean accountNonExpired = true;
+
+  @Column(nullable = false)
+  private Boolean credentialsNonExpired = true;
+
+  @Column(nullable = false)
+  private Boolean accountNonLocked = true;
+
+  @Column(nullable = false)
+  private Date dateCreated = new Date();
 }
-
