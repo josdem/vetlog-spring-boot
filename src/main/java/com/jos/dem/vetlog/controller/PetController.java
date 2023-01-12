@@ -86,7 +86,7 @@ public class PetController {
 
   @GetMapping(value = "/edit")
   public ModelAndView edit(@RequestParam("uuid") String uuid) {
-    log.info("Editing pet: " + uuid);
+    log.info("Editing pet: {}", uuid);
     Pet pet = petService.getPetByUuid(uuid);
     ModelAndView modelAndView = new ModelAndView();
     modelAndView.addObject("petCommand", petBinder.bindPet(pet));
@@ -100,7 +100,7 @@ public class PetController {
   public ModelAndView update(
       @Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
       throws IOException {
-    log.info("Updating pet: " + petCommand.getName());
+    log.info("Updating pet: {}", petCommand.getName());
     ModelAndView modelAndView = new ModelAndView("pet/edit");
     if (bindingResult.hasErrors()) {
       modelAndView.addObject("petCommand", petCommand);
@@ -117,7 +117,7 @@ public class PetController {
   public ModelAndView save(
       @Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
       throws IOException {
-    log.info("Creating pet: " + petCommand.getName());
+    log.info("Creating pet: {}", petCommand.getName());
     ModelAndView modelAndView = new ModelAndView("pet/create");
     if (bindingResult.hasErrors()) {
       modelAndView.addObject("petCommand", petCommand);
