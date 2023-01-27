@@ -79,7 +79,8 @@ public class PetController {
   @GetMapping(value = "/create")
   public ModelAndView create(@RequestParam(value = "type", required = false) String type) {
     ModelAndView modelAndView = new ModelAndView("pet/create");
-    Command petCommand = new PetCommand();
+    PetCommand petCommand = new PetCommand();
+    petCommand.setStatus(PetStatus.OWNED);
     modelAndView.addObject("petCommand", petCommand);
     return fillModelAndView(modelAndView);
   }
