@@ -30,7 +30,7 @@ public class DateFormatter {
     if (dateToFormat.contains(",")) {
       formatter = DateTimeFormatter.ofPattern("M/d/yy, h:m a");
     } else {
-      formatter = DateTimeFormatter.ofPattern("d/M/yy h:m");
+      formatter = DateTimeFormatter.ofPattern("d/M/yy H:m");
     }
 
     LocalDate localDate = LocalDate.parse(dateToFormat, formatter);
