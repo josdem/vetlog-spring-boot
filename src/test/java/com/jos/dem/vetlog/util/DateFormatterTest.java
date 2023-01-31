@@ -39,4 +39,11 @@ class DateFormatterTest {
     log.info("Running: {}", testInfo.getDisplayName());
     assertEquals("04/17/2022", dateFormatter.format("17/4/22 0:00"));
   }
+
+  @Test
+  @DisplayName("formatting time in 24 hours format")
+  void shouldAcceptTwentyFourFormat(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    assertEquals("04/17/2022", dateFormatter.format("17/4/22 22:13"));
+  }
 }
