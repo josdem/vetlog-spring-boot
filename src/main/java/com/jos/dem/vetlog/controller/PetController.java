@@ -17,7 +17,6 @@ limitations under the License.
 package com.jos.dem.vetlog.controller;
 
 import com.jos.dem.vetlog.binder.PetBinder;
-import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.enums.PetType;
@@ -91,7 +90,10 @@ public class PetController {
     Pet pet = petService.getPetByUuid(uuid);
     ModelAndView modelAndView = new ModelAndView();
     final PetCommand petCommand = petBinder.bindPet(pet);
-    petCommand.setAdopter(pet.getAdopter().getId());
+    final User adopter = pet.getAdopter();
+    if (adopter != null) {
+      petCommand.setAdopter(pet.getAdopter().getId());
+    }
     modelAndView.addObject("petCommand", petCommand);
     modelAndView.addObject("breeds", breedService.getBreedsByType(pet.getBreed().getType()));
     modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
