@@ -101,12 +101,13 @@ public class PetServiceImpl implements PetService {
 
   @Override
   public void getPetsAdoption(List<Pet> pets) {
-    pets.forEach(pet -> {
-      Optional<PetAdoption> optional = adoptionRepository.findByPet(pet);
-      if(optional.isPresent()){
-        pet.setAdoption(optional.get());
-      }
-    });
+    pets.forEach(
+        pet -> {
+          Optional<PetAdoption> optional = adoptionRepository.findByPet(pet);
+          if (optional.isPresent()) {
+            pet.setAdoption(optional.get());
+          }
+        });
   }
 
   private void recoveryImages(PetCommand command) {
@@ -118,6 +119,6 @@ public class PetServiceImpl implements PetService {
   }
 
   private Optional<User> getUser(Long id) {
-    return userRepository.findById(id);
+    return id == null ? Optional.empty() : userRepository.findById(id);
   }
 }
