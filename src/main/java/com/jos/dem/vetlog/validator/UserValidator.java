@@ -19,20 +19,17 @@ package com.jos.dem.vetlog.validator;
 import com.jos.dem.vetlog.command.UserCommand;
 import com.jos.dem.vetlog.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserValidator implements Validator {
 
   private final UserService userService;
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
   @Override
   public boolean supports(Class<?> clazz) {
