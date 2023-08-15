@@ -49,10 +49,10 @@ public class User implements Serializable {
   private String password;
 
   @Column(nullable = true)
-  private String firstname;
+  private String firstName;
 
   @Column(nullable = true)
-  private String lastname;
+  private String lastName;
 
   @Column(nullable = true)
   private String email;

@@ -26,8 +26,8 @@ class UserBinderTest {
 
     assertEquals("josdem", result.getUsername());
     assertEquals(60, result.getPassword().length());
-    assertEquals("Jose", result.getFirstname());
-    assertEquals("Morales", result.getLastname());
+    assertEquals("Jose", result.getFirstName());
+    assertEquals("Morales", result.getLastName());
     assertEquals("contact@josdem.io", result.getEmail());
     assertEquals(Role.USER, result.getRole());
   }

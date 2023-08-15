@@ -73,9 +73,9 @@ public class TelephoneServiceImpl implements TelephoneService {
     messageCommand.setEmail(owner.getEmail());
     messageCommand.setName(pet.getName());
     StringBuilder sb = new StringBuilder();
-    sb.append(adopter.getFirstname());
+    sb.append(adopter.getFirstName());
     sb.append(" ");
-    sb.append(adopter.getLastname());
+    sb.append(adopter.getLastName());
     messageCommand.setContactName(sb.toString());
     messageCommand.setEmailContact(adopter.getEmail());
     messageCommand.setMessage(adopter.getMobile());

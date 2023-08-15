@@ -61,8 +61,8 @@ public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
       user.setPassword(new BCryptPasswordEncoder().encode(password));
       user.setEmail(email);
       user.setRole(authority);
-      user.setFirstname(username);
-      user.setLastname(username);
+      user.setFirstName(username);
+      user.setLastName(username);
       user.setEnabled(true);
       userRepository.save(user);
     }

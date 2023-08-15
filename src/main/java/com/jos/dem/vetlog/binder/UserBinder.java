@@ -32,8 +32,8 @@ public class UserBinder {
     user.setUsername(userCommand.getUsername());
     user.setPassword(new BCryptPasswordEncoder().encode(userCommand.getPassword()));
     user.setRole(Role.USER);
-    user.setFirstname(userCommand.getFirstname());
-    user.setLastname(userCommand.getLastname());
+    user.setFirstName(userCommand.getFirstname());
+    user.setLastName(userCommand.getLastname());
     user.setEmail(userCommand.getEmail());
     return user;
   }
