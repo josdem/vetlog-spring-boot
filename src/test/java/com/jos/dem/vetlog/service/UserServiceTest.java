@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.Authentication;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -43,7 +45,7 @@ class UserServiceTest {
   @DisplayName("getting user by username")
   void shouldGetUserByUsername(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    when(userRepository.findByUsername(USERNAME)).thenReturn(user);
+    when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
     User result = service.getByUsername(USERNAME);
     assertEquals(user, result);
   }
@@ -79,7 +81,7 @@ class UserServiceTest {
     Authentication authentication = mock(Authentication.class);
     when(authentication.getName()).thenReturn(USERNAME);
     when(provider.getAuthentication()).thenReturn(authentication);
-    when(userRepository.findByUsername(USERNAME)).thenReturn(user);
+    when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
     assertEquals(user, service.getCurrentUser());
   }
 }

@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     private final UserContextHolderProvider provider;
 
     public User getByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).get();
     }
 
     public User getByEmail(String email) {
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public User getCurrentUser() {
         Authentication auth = provider.getAuthentication();
         String username = auth.getName();
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).get();
     }
 
 }

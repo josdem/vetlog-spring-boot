@@ -35,7 +35,6 @@ public class LocaleResolver extends AcceptHeaderLocaleResolver {
     private static final Locale spanish = new Locale("es");
     private static final List<Locale> LOCALES = Arrays.asList(english, spanish);
 
-    @Override
     public Locale resolveLocale(HttpServletRequest request) {
         log.info("Accept Language: {}", request.getHeader("Accept-Language"));
         if (request.getHeader("Accept-Language") == null) {

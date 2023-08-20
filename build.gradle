@@ -8,7 +8,6 @@ plugins {
 }
 
 ext {
-    logbackVersion = '1.2.1'
     thymeleafSecurityVersion = '3.0.4.RELEASE'
     awsLambdaVersion = '1.1.0'
     awsJavaVersion = '1.11.98'
@@ -35,7 +34,6 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation "org.codehaus.groovy:groovy-all:3.0.11"
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation "org.springframework.cloud:spring-cloud-gcp-starter-storage:$gcpVersion"
@@ -46,16 +44,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation "javax.persistence:javax.persistence-api:$persistenceApiVersion"
-    compileOnly "javax.servlet:servlet-api:$servletApiVersion"
+    implementation "javax.servlet:servlet-api:$servletApiVersion"
     implementation "javax.transaction:javax.transaction-api:$javaxTransactionVersion"
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     implementation 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
     implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
     implementation group: 'org.hibernate', name: 'hibernate-validator', version: '7.0.4.Final'
-    implementation "ch.qos.logback:logback-classic:$logbackVersion"
-    implementation "ch.qos.logback:logback-core:$logbackVersion"
     implementation 'net.minidev:json-smart:2.3'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'
     testImplementation "cglib:cglib-nodep:3.2.4"
