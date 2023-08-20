@@ -29,14 +29,14 @@ import com.jos.dem.vetlog.service.PetService;
 import com.jos.dem.vetlog.service.RestService;
 import com.jos.dem.vetlog.service.TelephoneService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TelephoneServiceImpl implements TelephoneService {
@@ -51,8 +51,6 @@ public class TelephoneServiceImpl implements TelephoneService {
 
   @Value("${template.adoption.name}")
   private String adoptionTemplate;
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
   @Transactional
   public void save(Command command, User adopter) {

@@ -17,17 +17,15 @@ limitations under the License.
 package com.jos.dem.vetlog.advice;
 
 import com.jos.dem.vetlog.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Aspect
 @Component
 public class AfterThrowingAdvice {
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
   @AfterThrowing(pointcut = "execution(* com.jos.dem.vetlog.service..**.*(..))", throwing = "ex")
   public void doRecoveryActions(RuntimeException ex) {

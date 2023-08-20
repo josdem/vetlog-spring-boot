@@ -21,8 +21,7 @@ import com.jos.dem.vetlog.enums.Role;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.BreedRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
@@ -30,14 +29,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
   @Autowired private Environment environment;
   @Autowired private UserRepository userRepository;
   @Autowired private BreedRepository breedRepository;
-
-  private Logger log = LoggerFactory.getLogger(this.getClass());
 
   @Override
   public void onApplicationEvent(final ApplicationReadyEvent event) {
