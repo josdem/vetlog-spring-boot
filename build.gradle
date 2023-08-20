@@ -16,7 +16,7 @@ ext {
 }
 
 group = 'com.jos.dem.vetlog'
-version = '1.3.1.5'
+version = '1.3.2'
 
 configurations {
   compileOnly {
