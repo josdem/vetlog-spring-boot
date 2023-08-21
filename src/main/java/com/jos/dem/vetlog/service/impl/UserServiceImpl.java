@@ -18,6 +18,7 @@ package com.jos.dem.vetlog.service.impl;
 
 import com.jos.dem.vetlog.binder.UserBinder;
 import com.jos.dem.vetlog.command.Command;
+import com.jos.dem.vetlog.exception.UserNotFoundException;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.RecoveryService;
@@ -38,11 +39,11 @@ public class UserServiceImpl implements UserService {
     private final UserContextHolderProvider provider;
 
     public User getByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
     }
 
     public User getByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " not found"));
     }
 
     @Transactional
@@ -55,7 +56,7 @@ public class UserServiceImpl implements UserService {
     public User getCurrentUser() {
         Authentication auth = provider.getAuthentication();
         String username = auth.getName();
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
     }
 
 }

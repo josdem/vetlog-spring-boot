@@ -16,8 +16,10 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service;
 
+import java.util.Optional;
+
 public interface RegistrationService {
-    String findEmailByToken(String token);
+    Optional<String> findEmailByToken(String token);
 
     String generateToken(String email);
 }

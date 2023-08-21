@@ -19,9 +19,11 @@ package com.jos.dem.vetlog.repository;
 import com.jos.dem.vetlog.model.RegistrationCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface RegistrationCodeRepository extends JpaRepository<RegistrationCode, Long> {
 
-    RegistrationCode findByToken(String token);
+    Optional<RegistrationCode> findByToken(String token);
 
     RegistrationCode save(RegistrationCode registrationCode);
 

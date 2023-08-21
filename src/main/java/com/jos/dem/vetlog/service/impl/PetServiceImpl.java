@@ -77,7 +77,7 @@ public class PetServiceImpl implements PetService {
   }
 
   public Pet getPetByUuid(String uuid) {
-    return petRepository.findByUuid(uuid);
+    return petRepository.findByUuid(uuid).orElseThrow(() -> new BusinessException("No pet was found under uuid: " + uuid));
   }
 
   public Pet getPetById(Long id) {

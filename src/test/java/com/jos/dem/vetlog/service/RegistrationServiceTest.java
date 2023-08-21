@@ -11,6 +11,8 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
@@ -40,8 +42,8 @@ class RegistrationServiceTest {
         log.info("Running: {}", testInfo.getDisplayName());
         RegistrationCode registrationCode = new RegistrationCode();
         registrationCode.setEmail(EMAIL);
-        when(repository.findByToken(TOKEN)).thenReturn(registrationCode);
-        assertEquals(EMAIL, service.findEmailByToken(TOKEN));
+        when(repository.findByToken(TOKEN)).thenReturn(Optional.of(registrationCode));
+        assertEquals(EMAIL, service.findEmailByToken(TOKEN).get());
     }
 
     @Test

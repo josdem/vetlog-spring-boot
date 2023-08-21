@@ -70,19 +70,12 @@ public class RecoveryServiceImpl implements RecoveryService {
     }
 
     public User getUserByToken(String token) {
-        String email = registrationService.findEmailByToken(token);
-        if (email == null) {
-            throw new VetlogException(localeService.getMessage("exception.token.not.found"));
-        }
-        User user = userRepository.findByEmail(email);
-        return user;
+        String email = registrationService.findEmailByToken(token).orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
+        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(localeService.getMessage("exception.user.not.found")));
     }
 
     public void generateRegistrationCodeForEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user == null) {
-            throw new UserNotFoundException(localeService.getMessage("exception.user.not.found"));
-        }
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(localeService.getMessage("exception.user.not.found")));
         if (user.getEnabled() == false) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
