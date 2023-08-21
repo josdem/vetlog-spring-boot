@@ -19,6 +19,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.TestPropertySource;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -56,8 +57,8 @@ class RecoveryServiceTest {
   void shouldSendActivationAccountToken(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
 
-    when(registrationService.findEmailByToken(TOKEN)).thenReturn(EMAIL);
-    when(userRepository.findByEmail(EMAIL)).thenReturn(user);
+    when(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL));
+    when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
 
     service.confirmAccountForToken(TOKEN);
 
@@ -76,7 +77,7 @@ class RecoveryServiceTest {
   @DisplayName("not sending activation account token due to user not found")
   void shouldNotSendActivationAccountTokenDueUserNotFound(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    when(registrationService.findEmailByToken(TOKEN)).thenReturn(EMAIL);
+    when(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL));
     assertThrows(UserNotFoundException.class, () -> service.confirmAccountForToken(TOKEN));
   }
 
@@ -86,7 +87,7 @@ class RecoveryServiceTest {
     log.info("Running: {}", testInfo.getDisplayName());
 
     user.setEnabled(true);
-    when(userRepository.findByEmail(EMAIL)).thenReturn(user);
+    when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
     when(registrationService.generateToken(EMAIL)).thenReturn(TOKEN);
 
     service.generateRegistrationCodeForEmail(EMAIL);
@@ -106,7 +107,7 @@ class RecoveryServiceTest {
   void shouldNotSendChangePasswordTokenDueUserNotEnabled(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     user.setEnabled(false);
-    when(userRepository.findByEmail(EMAIL)).thenReturn(user);
+    when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
     assertThrows(VetlogException.class, () -> service.generateRegistrationCodeForEmail(EMAIL));
   }
 
@@ -114,7 +115,7 @@ class RecoveryServiceTest {
   @DisplayName("validating a token")
   void shouldValidateToken(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    when(repository.findByToken(TOKEN)).thenReturn(new RegistrationCode());
+    when(repository.findByToken(TOKEN)).thenReturn(Optional.of(new RegistrationCode()));
     assertTrue(service.validateToken(TOKEN));
   }
 
@@ -125,8 +126,8 @@ class RecoveryServiceTest {
     ChangePasswordCommand changePasswordCommand = new ChangePasswordCommand();
     changePasswordCommand.setToken(TOKEN);
     changePasswordCommand.setPassword("password");
-    when(registrationService.findEmailByToken(TOKEN)).thenReturn(EMAIL);
-    when(userRepository.findByEmail(EMAIL)).thenReturn(user);
+    when(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL));
+    when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
 
     service.changePassword(changePasswordCommand);
 

@@ -113,7 +113,7 @@ class PetServiceTest {
   @DisplayName("getting pet by uuid")
   void shouldGetPetByUuid(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
-    when(petRepository.findByUuid("uuid")).thenReturn(pet);
+    when(petRepository.findByUuid("uuid")).thenReturn(Optional.of(pet));
     assertEquals(pet, service.getPetByUuid("uuid"));
   }
 

@@ -24,6 +24,8 @@ import com.jos.dem.vetlog.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
@@ -31,12 +33,10 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final LocaleService localeService;
     private final RegistrationCodeRepository repository;
 
-    public String findEmailByToken(String token) {
-        RegistrationCode registrationCode = repository.findByToken(token);
-        if (registrationCode == null) {
-            throw new VetlogException(localeService.getMessage("exception.token.not.found"));
-        }
-        return registrationCode.getEmail();
+    public Optional<String> findEmailByToken(String token) {
+        RegistrationCode registrationCode = repository.findByToken(token).orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
+
+        return registrationCode.getEmail().describeConstable();
     }
 
     public String generateToken(String email) {
