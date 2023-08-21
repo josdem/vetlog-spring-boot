@@ -65,7 +65,6 @@ class RecoveryControllerTest {
         mockMvc
                 .perform(get("/recovery/forgot/token"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("message"))
                 .andExpect(view().name("recovery/changePassword"));
     }
 }

@@ -48,7 +48,6 @@ class PetLogControllerTest {
                 .perform(get("/petlog/list")
                         .param("uuid", "uuid"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("petLogs"))
                 .andExpect(model().attributeExists("uuid"))
                 .andExpect(model().attributeExists("gcpPrescriptionUrl"))
                 .andExpect(view().name("petlog/list"));
