@@ -42,7 +42,7 @@ class PetLogControllerTest {
     @Test
     @DisplayName("not listing pet logs due to uuid not found")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldListPetLogs(TestInfo testInfo) throws Exception {
+    void shouldNotListPetLogs(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         mockMvc
                 .perform(get("/petlog/list")
