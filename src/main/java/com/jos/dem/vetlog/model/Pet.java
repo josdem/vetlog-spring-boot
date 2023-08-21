@@ -31,8 +31,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.EnumType.STRING;
@@ -67,7 +67,7 @@ public class Pet {
     private Boolean vaccinated = false;
 
     @Column(nullable = false)
-    private Date dateCreated = new Date();
+    private LocalDateTime dateCreated = LocalDateTime.now();
 
     @Column(nullable = false)
     @Enumerated(STRING)

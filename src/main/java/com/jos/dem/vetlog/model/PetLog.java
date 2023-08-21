@@ -26,7 +26,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 
 import static javax.persistence.GenerationType.AUTO;
 
@@ -53,7 +54,7 @@ public class PetLog {
   private String uuid;
 
   @Column(nullable = false)
-  private Date dateCreated = new Date();
+  private LocalDateTime dateCreated = LocalDateTime.now();
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "pet_id")
