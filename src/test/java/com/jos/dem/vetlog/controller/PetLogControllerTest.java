@@ -40,7 +40,7 @@ class PetLogControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("listing pet logs")
+    @DisplayName("not listing pet logs due to uuid not found")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldListPetLogs(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
@@ -48,9 +48,7 @@ class PetLogControllerTest {
                 .perform(get("/petlog/list")
                         .param("uuid", "uuid"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("uuid"))
-                .andExpect(model().attributeExists("gcpPrescriptionUrl"))
-                .andExpect(view().name("petlog/list"));
+                .andExpect(view().name("error"));
     }
 
 }
