@@ -27,7 +27,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.AUTO;
@@ -77,5 +77,5 @@ public class User implements Serializable {
   private Boolean accountNonLocked = true;
 
   @Column(nullable = false)
-  private Date dateCreated = new Date();
+  private LocalDateTime dateCreated = LocalDateTime.now();
 }
