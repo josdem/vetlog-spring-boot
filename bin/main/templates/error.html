@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Vetlog Error page</title>
+    <head th:insert="fragments/include"/>
+</head>
+<style>
+.space-div {
+height: 200px;
+}
+</style>
+<body>
+<div th:insert="fragments/header"/>
+<br/><br/>
+<br/><br/>
+<div class="space-div">...</div>
+<div th:if="${data}">
+    <div align="center">
+        <h3 style="font-size:18px;" th:text="'Oops! ' + ${data.message}"/>
+        <br/><br/>
+    </div>
+</div>
+<div th:insert="fragments/footer"/>
+</body>
+</html>

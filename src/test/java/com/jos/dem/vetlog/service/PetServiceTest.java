@@ -187,4 +187,20 @@ class PetServiceTest {
     service.getPetsAdoption(pets);
     assertEquals("It is cute!", pets.get(0).getAdoption().getDescription());
   }
+
+  @Test
+  @DisplayName("deleting a pet")
+  void deletePetByIdSuccessufully(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
+    assertEquals("Pet deleted successfully!", service.deletePetById(1L));
+  }
+
+  @Test
+  @DisplayName("not deleting a pet due to not found")
+  void shouldNotDeletePetById(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    when(petRepository.findById(1L)).thenReturn(Optional.empty());
+    assertThrows(BusinessException.class, () -> service.deletePetById(1L));
+  }
 }

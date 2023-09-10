@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title th:text="#{pet.view.list.title}"></title>
+    <head th:insert="fragments/include"/>
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
+</head>
+<body>
+<div th:insert="fragments/header"/>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+<div class="container">
+    <div class="row">
+        <h2 th:text="#{service.spa.title}"></h2>
+        <br>
+        <h4 th:text="#{service.spa.bath.title}"></h4>
+        <ul>
+            <li th:text="#{service.spa.bath.dry}"></li>
+            <li th:text="#{service.spa.bath.brush}"></li>
+            <li th:text="#{service.spa.bath.ear}"></li>
+            <li th:text="#{service.spa.bath.pad}"></li>
+            <li th:text="#{service.spa.bath.nail}"></li>
+            <li th:text="#{service.spa.bath.double}"></li>
+            <li th:text="#{service.spa.bath.fresh}"></li>
+        </ul>
+        <br>
+        <h5 th:text="#{service.spa.prices.title}"></h5>
+        <table style="width:400px">
+            <tr>
+                <th th:text="#{service.spa.prices.pet.size}"></th>
+                <th th:text="#{service.spa.prices.fur.size}"></th>
+                <th th:text="#{service.spa.prices.cost}"></th>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.size.small}"></td>
+                <td th:text="#{service.spa.size.short}"></td>
+                <td th:text="#{service.spa.small.short}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.size.small}"></td>
+                <td th:text="#{service.spa.size.long}"></td>
+                <td th:text="#{service.spa.small.long}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.size.medium}"></td>
+                <td th:text="#{service.spa.size.short}"></td>
+                <td th:text="#{service.spa.medium.short}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.size.medium}"></td>
+                <td th:text="#{service.spa.size.long}"></td>
+                <td th:text="#{service.spa.medium.long}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.size.large}"></td>
+                <td th:text="#{service.spa.size.short}"></td>
+                <td th:text="#{service.spa.large.short}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.size.large}"></td>
+                <td th:text="#{service.spa.size.long}"></td>
+                <td th:text="#{service.spa.large.long}"></td>
+            </tr>
+        </table>
+        <br>
+        <h5 th:text="#{service.spa.hair.cut.title}"></h5>
+        <br>
+        <h5 th:text="#{service.spa.dry.bath.title}"></h5>
+        <table style="width:360px">
+            <tr>
+                <td th:text="#{service.spa.size.small}"></td>
+                <td th:text="#{service.spa.hair.short}"></td>
+                <td th:text="#{service.cut.small.short}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.size.small}"></td>
+                <td th:text="#{service.spa.hair.long}"></td>
+                <td th:text="#{service.cut.small.long}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.size.medium}"></td>
+                <td th:text="#{service.spa.hair.short}"></td>
+                <td th:text="#{service.cut.medium.short}"></td>
+            </tr>
+        </table>
+        <br>
+        <h5 th:text="#{service.spa.optional.title}"></h5>
+        <table style="width:340px">
+            <tr>
+                <td th:text="#{service.spa.optional.flea.shampoo}"></td>
+                <td th:text="#{service.spa.flea.shampoo}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.optional.flea.brush}"></td>
+                <td th:text="#{service.spa.flea.brush}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.spa.optional.medicated.shampoo}"></td>
+                <td th:text="#{service.spa.bath.shampoo}"></td>
+            </tr>
+        </table>
+        <p th:text="#{service.spa.optional.fleas.seventy}"></p>
+        <p th:text="#{service.spa.optional.fleas.ninety}"></p>
+        <br><br>
+        <h4 th:text="#{service.vaccine.title}"></h4>
+        <br>
+        <h5 th:text="#{service.vaccine.dog.puppy}"></h5>
+        <table style="width:400px">
+            <tr>
+                <td th:text="#{service.vaccine.deworming}"></td>
+                <td th:text="#{service.vaccine.dog.puppy.deworming}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.four}"></td>
+                <td th:text="#{service.vaccine.dog.puppy.four}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.booster}"></td>
+                <td th:text="#{service.vaccine.dog.puppy.booster}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.six}"></td>
+                <td th:text="#{service.vaccine.dog.puppy.six}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.rabies}"></td>
+                <td th:text="#{service.vaccine.dog.puppy.rabies}"></td>
+            </tr>
+        </table>
+        <br>
+        <h5 th:text="#{service.vaccine.dog.adult}"></h5>
+        <table style="width:380px">
+            <tr>
+                <td th:text="#{service.vaccine.deworming}"></td>
+                <td th:text="#{service.vaccine.dog.adult.deworming}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.six}"></td>
+                <td th:text="#{service.vaccine.dog.adult.six}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.rabies}"></td>
+                <td th:text="#{service.vaccine.dog.adult.rabies}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.giardia}"></td>
+                <td th:text="#{service.vaccine.dog.adult.giardia}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.bordetella}"></td>
+                <td th:text="#{service.vaccine.dog.adult.bordetella}"></td>
+            </tr>
+        </table>
+        <br>
+        <h5 th:text="#{service.vaccine.cat.puppy}"></h5>
+        <table style="width:400px">
+            <tr>
+                <td th:text="#{service.vaccine.deworming}"></td>
+                <td th:text="#{service.vaccine.cat.puppy.deworming}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.three}"></td>
+                <td th:text="#{service.vaccine.cat.puppy.three}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.booster}"></td>
+                <td th:text="#{service.vaccine.cat.puppy.booster}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.rabies}"></td>
+                <td th:text="#{service.vaccine.cat.puppy.rabies}"></td>
+            </tr>
+        </table>
+        <br>
+        <h5 th:text="#{service.vaccine.cat.adult}"></h5>
+        <table style="width:380px">
+            <tr>
+                <td th:text="#{service.vaccine.deworming}"></td>
+                <td th:text="#{service.vaccine.cat.adult.deworming}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.three}"></td>
+                <td th:text="#{service.vaccine.cat.adult.three}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.rabies}"></td>
+                <td th:text="#{service.vaccine.cat.adult.rabies}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.vaccine.leukemia}"></td>
+                <td th:text="#{service.vaccine.cat.adult.leukemia}"></td>
+            </tr>
+        </table>
+        <br>
+        <h4 th:text="#{service.medical.title}"></h4>
+        <br>
+        <h5 th:text="#{service.medical.pets.small}"></h5>
+        <table style="width:400px">
+            <tr>
+                <td th:text="#{service.medical.advice}"></td>
+                <td th:text="#{service.medical.small.advice}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.medical.dose}"></td>
+                <td th:text="#{service.medical.small.dose}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.medical.shelter}"></td>
+                <td th:text="#{service.medical.small.shelter}"></td>
+            </tr>
+        </table>
+        <br>
+        <h5 th:text="#{service.medical.medium.small}"></h5>
+        <table style="width:400px">
+            <tr>
+                <td th:text="#{service.medical.advice}"></td>
+                <td th:text="#{service.medical.medium.advice}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.medical.dose}"></td>
+                <td th:text="#{service.medical.medium.dose}"></td>
+            </tr>
+            <tr>
+                <td th:text="#{service.medical.shelter}"></td>
+                <td th:text="#{service.medical.medium.shelter}"></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <h4 th:text="#{service.surgery.title}"></h4>
+    <br>
+    <h5 th:text="#{service.surgery.sterilization}"></h5>
+    <br>
+    <table style="width:400px">
+        <tr>
+            <td th:text="#{service.surgery.eleven}"></td>
+            <td th:text="#{service.surgery.sterilization.eleven}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.twenty.two}"></td>
+            <td th:text="#{service.surgery.sterilization.twenty.two}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.forty.four}"></td>
+            <td th:text="#{service.surgery.sterilization.forty.four}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.sixty.six}"></td>
+            <td th:text="#{service.surgery.sterilization.sixty.six}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.sixty.seven}"></td>
+            <td th:text="#{service.surgery.sterilization.sixty.seven}"></td>
+        </tr>
+    </table>
+    <br>
+    <h5 th:text="#{service.surgery.gastrotomy}"></h5>
+    <br>
+    <table style="width:400px">
+        <tr>
+            <td th:text="#{service.surgery.eleven}"></td>
+            <td th:text="#{service.surgery.gastronomy.eleven}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.twenty.two}"></td>
+            <td th:text="#{service.surgery.gastronomy.twenty.two}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.forty.four}"></td>
+            <td th:text="#{service.surgery.gastronomy.forty.four}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.sixty.six}"></td>
+            <td th:text="#{service.surgery.gastronomy.sixty.six}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.sixty.seven}"></td>
+            <td th:text="#{service.surgery.gastronomy.sixty.seven}"></td>
+        </tr>
+    </table>
+    <br>
+    <h5 th:text="#{service.surgery.teeth}"></h5>
+    <br>
+    <table style="width:400px">
+        <tr>
+            <td th:text="#{service.surgery.eleven}"></td>
+            <td th:text="#{service.surgery.teeth.eleven}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.twenty.two}"></td>
+            <td th:text="#{service.surgery.teeth.twenty.two}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.forty.four}"></td>
+            <td th:text="#{service.surgery.teeth.forty.four}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.sixty.six}"></td>
+            <td th:text="#{service.surgery.teeth.sixty.six}"></td>
+        </tr>
+        <tr>
+            <td th:text="#{service.surgery.sixty.seven}"></td>
+            <td th:text="#{service.surgery.teeth.sixty.seven}"></td>
+        </tr>
+    </table>
+    <br>
+</div>
+</div>
+<div th:insert="fragments/footer"/>
+</body>
+</html>
