@@ -39,5 +39,5 @@ public interface PetService {
 
   void getPetsAdoption(List<Pet> pets);
 
-  String deletePetById(Long id);
+  void deletePetById(Long id);
 }

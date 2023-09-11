@@ -111,13 +111,9 @@ public class PetServiceImpl implements PetService {
   }
 
   @Override
-  public String deletePetById(Long id) {
-    return (String)this.petRepository.findById(id).map((pet) -> {
-      this.petRepository.delete(pet);
-      return "Pet deleted successfully!";
-    }).orElseThrow(() -> {
-      return new BusinessException("No pet was found with id: " + String.valueOf(id));
-    });
+  public void deletePetById(Long id) {
+    Pet pet = petRepository.findById(id).orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
+    petRepository.delete(pet);
   }
 
   private void recoveryImages(PetCommand command) {
