@@ -38,4 +38,6 @@ public interface PetService {
   List<Pet> getPetsByStatus(PetStatus status);
 
   void getPetsAdoption(List<Pet> pets);
+
+  void deletePetById(Long id);
 }

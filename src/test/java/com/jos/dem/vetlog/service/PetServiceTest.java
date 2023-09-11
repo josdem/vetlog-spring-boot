@@ -15,8 +15,9 @@ import com.jos.dem.vetlog.service.impl.PetServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -186,5 +187,25 @@ class PetServiceTest {
 
     service.getPetsAdoption(pets);
     assertEquals("It is cute!", pets.get(0).getAdoption().getDescription());
+  }
+
+  @Test
+  @DisplayName("deleting a pet")
+  void deletePetByIdSuccessufully(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    Mockito.when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
+    Assertions.assertDoesNotThrow(() -> {
+      service.deletePetById(1L);
+    });
+  }
+
+  @Test
+  @DisplayName("not deleting a pet due to not found")
+  void shouldNotDeletePetById(TestInfo testInfo) {
+    log.info("Running: {}", testInfo.getDisplayName());
+    Mockito.when(petRepository.findById(1L)).thenReturn(Optional.empty());
+    Assertions.assertThrows(BusinessException.class, () -> {
+      service.deletePetById(1L);
+    });
   }
 }
