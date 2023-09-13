@@ -16,37 +16,44 @@ limitations under the License.
 
 package com.jos.dem.vetlog.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@RequiredArgsConstructor
+public class SecurityConfig {
 
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain configure(HttpSecurity http) throws Exception{
         http
-                .authorizeRequests()
-                .antMatchers("/", "/assets/**", "/images/**", "/home/**", "/user/**", "/recovery/**", "/breed/list", "/pet/listForAdoption", "/service/list").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
+                .authorizeHttpRequests(authorizeHttp -> authorizeHttp
+                .requestMatchers("/", "/assets/**", "/images/**",
+                        "/home/**", "/user/**", "/recovery/**", "/breed/list",
+                        "/pet/listForAdoption", "/service/list")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .formLogin(formLogin -> formLogin
                 .loginPage("/login")
                 .usernameParameter("username")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .permitAll())
+                .logout(logout -> logout
+                        .permitAll());
+
+        return http.build();
     }
 
     @Autowired
