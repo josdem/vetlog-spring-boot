@@ -17,20 +17,20 @@ limitations under the License.
 package com.jos.dem.vetlog.model;
 
 import com.jos.dem.vetlog.enums.Role;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.GenerationType.AUTO;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.AUTO;
 
 @Getter
 @Setter

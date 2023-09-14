@@ -16,26 +16,24 @@ limitations under the License.
 
 package com.jos.dem.vetlog.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import static javax.persistence.GenerationType.AUTO;
+import static jakarta.persistence.GenerationType.AUTO;
 
 @Entity
 @Getter
 @Setter
 public class PetImage {
 
-    @Id
-    @GeneratedValue(strategy = AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = AUTO)
+  private Long id;
 
-    @Column(nullable = false)
-    private String uuid;
-
+  @Column(nullable = false)
+  private String uuid;
 }
