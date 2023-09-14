@@ -7,7 +7,7 @@ plugins {
 }
 
 ext {
-  gcpVersion = "1.2.8.RELEASE"
+  gcpVersion = "2.0.0"
   retrofitVersion = '2.9.0'
   mockitoInlineVersion = '4.8.0'
 }
@@ -29,7 +29,7 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.springframework.boot:spring-boot-starter-aop'
   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-  implementation "org.springframework.cloud:spring-cloud-gcp-starter-storage:$gcpVersion"
+  implementation "com.google.cloud:spring-cloud-gcp-starter-storage:$gcpVersion"
   implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
   implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
   implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
