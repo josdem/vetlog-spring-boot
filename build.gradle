@@ -7,7 +7,7 @@ plugins {
 }
 
 ext {
-  gcpVersion = "2.0.0"
+  gcpVersion = "4.7.1"
   retrofitVersion = '2.9.0'
   mockitoInlineVersion = '4.8.0'
 }
@@ -29,13 +29,14 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
   implementation 'org.springframework.boot:spring-boot-starter-aop'
   implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-  implementation "com.google.cloud:spring-cloud-gcp-starter-storage:$gcpVersion"
+  implementation "com.google.cloud:spring-cloud-gcp-starter-storage"
   implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
   implementation "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
   implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
   implementation 'org.springframework.boot:spring-boot-starter-security'
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.springframework.boot:spring-boot-starter-actuator'
+  implementation platform("com.google.cloud:spring-cloud-gcp-dependencies:$gcpVersion")
   compileOnly 'org.projectlombok:lombok'
   annotationProcessor 'org.projectlombok:lombok'
   runtimeOnly 'com.mysql:mysql-connector-j'

@@ -2,6 +2,7 @@ package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.helper.LocaleResolver;
 import com.jos.dem.vetlog.service.impl.LocaleServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.MessageSource;
 
-import javax.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
 
