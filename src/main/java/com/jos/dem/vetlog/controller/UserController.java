@@ -21,6 +21,7 @@ import com.jos.dem.vetlog.command.UserCommand;
 import com.jos.dem.vetlog.service.LocaleService;
 import com.jos.dem.vetlog.service.UserService;
 import com.jos.dem.vetlog.validator.UserValidator;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Slf4j
