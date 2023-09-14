@@ -16,41 +16,35 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service.impl;
 
-import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.User;
-import com.jos.dem.vetlog.service.UserService;
+import com.jos.dem.vetlog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  private final UserService userService;
+  private final UserRepository userRepository;
 
   @Override
-  public org.springframework.security.core.userdetails.User loadUserByUsername(String username)
-      throws UsernameNotFoundException {
-    User user = userService.getByUsername(username);
-    if (user == null) {
-      throw new BusinessException("Invalid credentials");
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    Optional<User> optional = userRepository.findByUsername(username);
+    if (optional.isPresent()) {
+      User user = optional.get();
+      return new org.springframework.security.core.userdetails.User(
+          user.getEmail(),
+          user.getPassword(),
+          Arrays.asList(new SimpleGrantedAuthority(user.getRole().name())));
+    } else {
+      throw new UsernameNotFoundException("User not found with username: " + username);
     }
-    Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-    grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
-    return new org.springframework.security.core.userdetails.User(
-        user.getUsername(),
-        user.getPassword(),
-        user.getEnabled(),
-        user.getAccountNonExpired(),
-        user.getCredentialsNonExpired(),
-        user.getAccountNonLocked(),
-        grantedAuthorities);
   }
 }
