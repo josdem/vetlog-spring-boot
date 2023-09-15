@@ -22,13 +22,11 @@ import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.repository.PetImageRepository;
 import com.jos.dem.vetlog.service.PetImageService;
-import com.jos.dem.vetlog.service.PetPrescriptionService;
 import com.jos.dem.vetlog.util.UuidGenerator;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -54,8 +52,8 @@ public class PetImageServiceImpl implements PetImageService {
         if (petCommand.getImage().getInputStream().available() > 0) {
             PetImage petImage = save();
             petCommand.getImages().add(petImage);
-            googleStorageWriter.uploadToBucket(bucket, petImage.getUuid(), petCommand.getImage().getInputStream(), CONTENT_TYPE);
+            googleStorageWriter.uploadToBucket(
+                    bucket, petImage.getUuid(), petCommand.getImage().getInputStream(), CONTENT_TYPE);
         }
     }
-
 }

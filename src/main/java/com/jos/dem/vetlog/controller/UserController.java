@@ -22,6 +22,7 @@ import com.jos.dem.vetlog.service.LocaleService;
 import com.jos.dem.vetlog.service.UserService;
 import com.jos.dem.vetlog.validator.UserValidator;
 import jakarta.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -33,45 +34,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-
 @Slf4j
 @Controller
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
-  private final UserValidator userValidator;
-  private final UserService userService;
-  private final LocaleService localeService;
+    private final UserValidator userValidator;
+    private final UserService userService;
+    private final LocaleService localeService;
 
-  @InitBinder("userCommand")
-  private void initBinder(WebDataBinder binder) {
-    binder.addValidators(userValidator);
-  }
-
-  @GetMapping(value = "/create")
-  public ModelAndView create() {
-    Command userCommand = new UserCommand();
-    return fillUserCommand(userCommand);
-  }
-
-  @PostMapping(value = "/save")
-  public ModelAndView save(
-      @Valid UserCommand userCommand, BindingResult bindingResult, HttpServletRequest request) {
-    log.info("Saving user: {}", userCommand.getUsername());
-    if (bindingResult.hasErrors()) {
-      return fillUserCommand(userCommand);
+    @InitBinder("userCommand")
+    private void initBinder(WebDataBinder binder) {
+        binder.addValidators(userValidator);
     }
-    userService.save(userCommand);
-    ModelAndView modelAndView = new ModelAndView("redirect:/");
-    modelAndView.addObject("message", localeService.getMessage("user.account.created", request));
-    return modelAndView;
-  }
 
-  private ModelAndView fillUserCommand(Command userCommand) {
-    ModelAndView modelAndView = new ModelAndView("user/create");
-    modelAndView.addObject("userCommand", userCommand);
-    return modelAndView;
-  }
+    @GetMapping(value = "/create")
+    public ModelAndView create() {
+        Command userCommand = new UserCommand();
+        return fillUserCommand(userCommand);
+    }
+
+    @PostMapping(value = "/save")
+    public ModelAndView save(@Valid UserCommand userCommand, BindingResult bindingResult, HttpServletRequest request) {
+        log.info("Saving user: {}", userCommand.getUsername());
+        if (bindingResult.hasErrors()) {
+            return fillUserCommand(userCommand);
+        }
+        userService.save(userCommand);
+        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        modelAndView.addObject("message", localeService.getMessage("user.account.created", request));
+        return modelAndView;
+    }
+
+    private ModelAndView fillUserCommand(Command userCommand) {
+        ModelAndView modelAndView = new ModelAndView("user/create");
+        modelAndView.addObject("userCommand", userCommand);
+        return modelAndView;
+    }
 }

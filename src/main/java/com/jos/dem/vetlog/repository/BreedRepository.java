@@ -16,18 +16,17 @@ limitations under the License.
 
 package com.jos.dem.vetlog.repository;
 
-import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.enums.PetType;
-import org.springframework.data.jpa.repository.JpaRepository;
-
+import com.jos.dem.vetlog.model.Breed;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BreedRepository extends JpaRepository<Breed,Long> {
+public interface BreedRepository extends JpaRepository<Breed, Long> {
 
-  Optional<Breed> findById(Long breed);
-  Breed save(Breed breed);
-  List<Breed> findByType(PetType type);
+    Optional<Breed> findById(Long breed);
 
+    Breed save(Breed breed);
+
+    List<Breed> findByType(PetType type);
 }
-

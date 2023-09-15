@@ -85,3 +85,5 @@ spotless {
     endWithNewline()
   }
 }
+
+test.dependsOn("spotlessApply")

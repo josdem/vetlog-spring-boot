@@ -26,15 +26,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserBinder {
 
-  public User bindUser(Command command) {
-    UserCommand userCommand = (UserCommand) command;
-    User user = new User();
-    user.setUsername(userCommand.getUsername());
-    user.setPassword(new BCryptPasswordEncoder().encode(userCommand.getPassword()));
-    user.setRole(Role.USER);
-    user.setFirstName(userCommand.getFirstname());
-    user.setLastName(userCommand.getLastname());
-    user.setEmail(userCommand.getEmail());
-    return user;
-  }
+    public User bindUser(Command command) {
+        UserCommand userCommand = (UserCommand) command;
+        User user = new User();
+        user.setUsername(userCommand.getUsername());
+        user.setPassword(new BCryptPasswordEncoder().encode(userCommand.getPassword()));
+        user.setRole(Role.USER);
+        user.setFirstName(userCommand.getFirstname());
+        user.setLastName(userCommand.getLastname());
+        user.setEmail(userCommand.getEmail());
+        return user;
+    }
 }

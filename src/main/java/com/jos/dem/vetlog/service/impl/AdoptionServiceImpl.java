@@ -31,18 +31,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AdoptionServiceImpl implements AdoptionService {
 
-  private final PetService petService;
-  private final PetRepository petRepository;
+    private final PetService petService;
+    private final PetRepository petRepository;
 
-  public PetAdoption save(Command command) {
-    AdoptionCommand adoptionCommand = (AdoptionCommand) command;
-    Pet pet = petService.getPetByUuid(adoptionCommand.getUuid());
-    PetAdoption petAdoption = new PetAdoption();
-    petAdoption.setPet(pet);
-    petAdoption.setDescription(adoptionCommand.getDescription());
-    pet.setStatus(PetStatus.IN_ADOPTION);
-    pet.setAdoption(petAdoption);
-    petRepository.save(pet);
-    return petAdoption;
-  }
+    public PetAdoption save(Command command) {
+        AdoptionCommand adoptionCommand = (AdoptionCommand) command;
+        Pet pet = petService.getPetByUuid(adoptionCommand.getUuid());
+        PetAdoption petAdoption = new PetAdoption();
+        petAdoption.setPet(pet);
+        petAdoption.setDescription(adoptionCommand.getDescription());
+        pet.setStatus(PetStatus.IN_ADOPTION);
+        pet.setAdoption(petAdoption);
+        petRepository.save(pet);
+        return petAdoption;
+    }
 }

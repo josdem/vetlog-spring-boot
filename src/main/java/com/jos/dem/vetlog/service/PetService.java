@@ -20,24 +20,23 @@ import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
-
 import java.io.IOException;
 import java.util.List;
 
 public interface PetService {
-  Pet save(Command command, User user) throws IOException;
+    Pet save(Command command, User user) throws IOException;
 
-  Pet update(Command command) throws IOException;
+    Pet update(Command command) throws IOException;
 
-  Pet getPetByUuid(String uuid);
+    Pet getPetByUuid(String uuid);
 
-  Pet getPetById(Long id);
+    Pet getPetById(Long id);
 
-  List<Pet> getPetsByUser(User user);
+    List<Pet> getPetsByUser(User user);
 
-  List<Pet> getPetsByStatus(PetStatus status);
+    List<Pet> getPetsByStatus(PetStatus status);
 
-  void getPetsAdoption(List<Pet> pets);
+    void getPetsAdoption(List<Pet> pets);
 
-  void deletePetById(Long id);
+    void deletePetById(Long id);
 }

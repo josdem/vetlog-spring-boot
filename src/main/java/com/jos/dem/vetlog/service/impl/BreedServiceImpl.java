@@ -20,18 +20,17 @@ import com.jos.dem.vetlog.enums.PetType;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.repository.BreedRepository;
 import com.jos.dem.vetlog.service.BreedService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BreedServiceImpl implements BreedService {
 
-  private final BreedRepository breedRepository;
+    private final BreedRepository breedRepository;
 
-  public List<Breed> getBreedsByType(PetType type) {
-    return breedRepository.findByType(type);
-  }
+    public List<Breed> getBreedsByType(PetType type) {
+        return breedRepository.findByType(type);
+    }
 }

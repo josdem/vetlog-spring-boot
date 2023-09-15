@@ -18,15 +18,12 @@ package com.jos.dem.vetlog.repository;
 
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetLog;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PetLogRepository extends JpaRepository<PetLog, Long> {
 
     PetLog save(PetLog petLog);
 
     List<PetLog> getAllByPet(Pet pet);
-
 }
-

@@ -18,19 +18,15 @@ package com.jos.dem.vetlog.service.impl;
 
 import com.jos.dem.vetlog.command.MessageCommand;
 import com.jos.dem.vetlog.service.RestService;
-import lombok.Getter;
+import java.io.IOException;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.http.Body;
-
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 
 @Slf4j
 @Service

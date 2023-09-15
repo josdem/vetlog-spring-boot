@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserContextHolderProvider {
 
-  public Authentication getAuthentication() {
-    return SecurityContextHolder.getContext().getAuthentication();
-  }
+    public Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
 }

@@ -1,5 +1,9 @@
 package com.jos.dem.vetlog.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.jos.dem.vetlog.command.AdoptionCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.model.Pet;
@@ -14,50 +18,49 @@ import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 @Slf4j
 public class AdoptionServiceTest {
 
-  private AdoptionService service;
+    private AdoptionService service;
 
-  @Mock private PetService petService;
-  @Mock private PetRepository petRepository;
+    @Mock
+    private PetService petService;
 
-  @BeforeEach
-  void setup() {
-    MockitoAnnotations.openMocks(this);
-    service = new AdoptionServiceImpl(petService, petRepository);
-  }
+    @Mock
+    private PetRepository petRepository;
 
-  @Test
-  @DisplayName("saving a pet in adoption")
-  void shouldSaveAPetInAdoption(TestInfo testInfo) {
-    log.info("Running: {}", testInfo.getDisplayName());
-    AdoptionCommand adoptionCommand = getAdoptionCommand();
-    Pet pet = getPet();
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.openMocks(this);
+        service = new AdoptionServiceImpl(petService, petRepository);
+    }
 
-    when(petService.getPetByUuid("uuid")).thenReturn(pet);
-    PetAdoption result = service.save(adoptionCommand);
+    @Test
+    @DisplayName("saving a pet in adoption")
+    void shouldSaveAPetInAdoption(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        AdoptionCommand adoptionCommand = getAdoptionCommand();
+        Pet pet = getPet();
 
-    verify(petRepository).save(pet);
-    assertEquals(PetStatus.IN_ADOPTION, pet.getStatus());
-    assertEquals(pet, result.getPet());
-    assertEquals("description", result.getDescription());
-  }
+        when(petService.getPetByUuid("uuid")).thenReturn(pet);
+        PetAdoption result = service.save(adoptionCommand);
 
-  private Pet getPet() {
-    Pet pet = new Pet();
-    pet.setStatus(PetStatus.OWNED);
-    return pet;
-  }
+        verify(petRepository).save(pet);
+        assertEquals(PetStatus.IN_ADOPTION, pet.getStatus());
+        assertEquals(pet, result.getPet());
+        assertEquals("description", result.getDescription());
+    }
 
-  private AdoptionCommand getAdoptionCommand() {
-    AdoptionCommand adoptionCommand = new AdoptionCommand();
-    adoptionCommand.setUuid("uuid");
-    adoptionCommand.setDescription("description");
-    return adoptionCommand;
-  }
+    private Pet getPet() {
+        Pet pet = new Pet();
+        pet.setStatus(PetStatus.OWNED);
+        return pet;
+    }
+
+    private AdoptionCommand getAdoptionCommand() {
+        AdoptionCommand adoptionCommand = new AdoptionCommand();
+        adoptionCommand.setUuid("uuid");
+        adoptionCommand.setDescription("description");
+        return adoptionCommand;
+    }
 }

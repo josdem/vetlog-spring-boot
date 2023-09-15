@@ -19,24 +19,23 @@ package com.jos.dem.vetlog.service.impl;
 import com.jos.dem.vetlog.helper.LocaleResolver;
 import com.jos.dem.vetlog.service.LocaleService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-
-import java.util.Locale;
 
 @Service
 @RequiredArgsConstructor
 public class LocaleServiceImpl implements LocaleService {
 
-  private final MessageSource messageSource;
-  private final LocaleResolver localeResolver;
+    private final MessageSource messageSource;
+    private final LocaleResolver localeResolver;
 
-  public String getMessage(String code, HttpServletRequest request) {
-    return messageSource.getMessage(code, null, localeResolver.resolveLocale(request));
-  }
+    public String getMessage(String code, HttpServletRequest request) {
+        return messageSource.getMessage(code, null, localeResolver.resolveLocale(request));
+    }
 
-  public String getMessage(String code) {
-    return messageSource.getMessage(code, null, new Locale("en"));
-  }
+    public String getMessage(String code) {
+        return messageSource.getMessage(code, null, new Locale("en"));
+    }
 }

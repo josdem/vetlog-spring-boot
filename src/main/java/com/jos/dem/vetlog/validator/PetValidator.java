@@ -17,31 +17,29 @@ limitations under the License.
 package com.jos.dem.vetlog.validator;
 
 import com.jos.dem.vetlog.command.PetCommand;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import java.time.LocalDateTime;
-
 @Component
 public class PetValidator implements Validator {
 
-  @Override
-  public boolean supports(Class<?> clazz) {
-    return PetCommand.class.equals(clazz);
-  }
-
-  @Override
-  public void validate(Object target, Errors errors) {
-    PetCommand petCommand = (PetCommand) target;
-    validateBirthdate(errors, petCommand);
-  }
-
-  private void validateBirthdate(Errors errors, PetCommand petCommand) {
-    LocalDateTime now = LocalDateTime.now();
-    if (now.isBefore(LocalDateTime.parse(petCommand.getBirthDate()))) {
-      errors.rejectValue("birthDate", "pet.error.birthDate.past");
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return PetCommand.class.equals(clazz);
     }
-  }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        PetCommand petCommand = (PetCommand) target;
+        validateBirthdate(errors, petCommand);
+    }
+
+    private void validateBirthdate(Errors errors, PetCommand petCommand) {
+        LocalDateTime now = LocalDateTime.now();
+        if (now.isBefore(LocalDateTime.parse(petCommand.getBirthDate()))) {
+            errors.rejectValue("birthDate", "pet.error.birthDate.past");
+        }
+    }
 }

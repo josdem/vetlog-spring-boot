@@ -19,10 +19,9 @@ package com.jos.dem.vetlog.repository;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PetRepository extends JpaRepository<Pet, Long> {
     Pet save(Pet pet);
@@ -37,4 +36,3 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
     List<Pet> findAllByStatus(PetStatus status);
 }
-

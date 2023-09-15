@@ -16,41 +16,40 @@ limitations under the License.
 
 package com.jos.dem.vetlog.model;
 
+import static jakarta.persistence.GenerationType.AUTO;
+
 import com.jos.dem.vetlog.enums.RegistrationCodeStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
-
-import static jakarta.persistence.GenerationType.AUTO;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
 public class RegistrationCode {
 
-  @Id
-  @GeneratedValue(strategy = AUTO)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
-  @Column(nullable = false)
-  private String email;
+    @Column(nullable = false)
+    private String email;
 
-  @Column(nullable = false)
-  private LocalDateTime dateCreated = LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime dateCreated = LocalDateTime.now();
 
-  @Column(nullable = false)
-  private String token = UUID.randomUUID().toString();
+    @Column(nullable = false)
+    private String token = UUID.randomUUID().toString();
 
-  @Column(nullable = false)
-  private RegistrationCodeStatus status = RegistrationCodeStatus.VALID;
+    @Column(nullable = false)
+    private RegistrationCodeStatus status = RegistrationCodeStatus.VALID;
 
-  public Boolean isValid() {
-    return status == RegistrationCodeStatus.VALID ? true : false;
-  }
+    public Boolean isValid() {
+        return status == RegistrationCodeStatus.VALID ? true : false;
+    }
 }

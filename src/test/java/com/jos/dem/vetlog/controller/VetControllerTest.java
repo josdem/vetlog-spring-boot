@@ -16,6 +16,11 @@ limitations under the License.
 
 package com.jos.dem.vetlog.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,11 +30,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @Slf4j
 @SpringBootTest
@@ -44,11 +44,9 @@ class VetControllerTest {
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowCreateVetForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc
-                .perform(get("/vet/form"))
+        mockMvc.perform(get("/vet/form"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("usernameCommand"))
                 .andExpect(view().name("vet/form"));
     }
-
 }

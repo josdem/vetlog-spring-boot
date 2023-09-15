@@ -19,6 +19,7 @@ package com.jos.dem.vetlog.controller;
 import com.jos.dem.vetlog.service.LocaleService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -29,30 +30,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Optional;
-
 @Slf4j
 @Controller
 @RequiredArgsConstructor
 public class LoginController {
 
-  private final LocaleService localeService;
+    private final LocaleService localeService;
 
-  @GetMapping(value = "/login")
-  public ModelAndView login(@RequestParam Optional<String> error, HttpServletRequest request) {
-    log.info("Calling login");
-    ModelAndView modelAndView = new ModelAndView("login/login");
-    if (error.isPresent()) {
-      log.info("Invalid credentials");
-      modelAndView.addObject("message", localeService.getMessage("login.error", request));
+    @GetMapping(value = "/login")
+    public ModelAndView login(@RequestParam Optional<String> error, HttpServletRequest request) {
+        log.info("Calling login");
+        ModelAndView modelAndView = new ModelAndView("login/login");
+        if (error.isPresent()) {
+            log.info("Invalid credentials");
+            modelAndView.addObject("message", localeService.getMessage("login.error", request));
+        }
+        return modelAndView;
     }
-    return modelAndView;
-  }
 
-  @GetMapping(value = "/logout")
-  public String logout(HttpServletRequest request, HttpServletResponse response) {
-    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    new SecurityContextLogoutHandler().logout(request, response, auth);
-    return "redirect:/";
-  }
+    @GetMapping(value = "/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        new SecurityContextLogoutHandler().logout(request, response, auth);
+        return "redirect:/";
+    }
 }

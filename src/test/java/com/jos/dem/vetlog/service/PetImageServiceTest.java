@@ -1,10 +1,17 @@
 package com.jos.dem.vetlog.service;
 
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.repository.PetImageRepository;
 import com.jos.dem.vetlog.service.impl.PetImageServiceImpl;
+import java.io.IOException;
+import java.io.InputStream;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,24 +22,19 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-
 @Slf4j
 class PetImageServiceTest {
 
     private PetImageService service;
 
-    @Mock private PetImageRepository petImageRepository;
-    @Mock private GoogleStorageWriter googleStorageWriter;
+    @Mock
+    private PetImageRepository petImageRepository;
+
+    @Mock
+    private GoogleStorageWriter googleStorageWriter;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         MockitoAnnotations.openMocks(this);
         service = new PetImageServiceImpl(petImageRepository, googleStorageWriter);
     }

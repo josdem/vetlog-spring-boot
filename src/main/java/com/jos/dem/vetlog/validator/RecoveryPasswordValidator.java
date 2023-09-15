@@ -24,13 +24,13 @@ import org.springframework.validation.Validator;
 @Component
 public class RecoveryPasswordValidator implements Validator {
 
-  @Override
-  public boolean supports(Class<?> clazz) {
-    return RecoveryPasswordCommand.class.equals(clazz);
-  }
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return RecoveryPasswordCommand.class.equals(clazz);
+    }
 
-  @Override
-  public void validate(Object target, Errors errors) {
-    RecoveryPasswordCommand command = (RecoveryPasswordCommand) target;
-  }
+    @Override
+    public void validate(Object target, Errors errors) {
+        RecoveryPasswordCommand command = (RecoveryPasswordCommand) target;
+    }
 }
