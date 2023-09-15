@@ -85,3 +85,5 @@ tasks.named('test') {
 bootRun {
   systemProperties = System.properties
 }
+
+bootRun.dependsOn("flywayMigrate")
