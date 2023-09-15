@@ -27,43 +27,42 @@ import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.service.PetLogService;
 import com.jos.dem.vetlog.service.PetPrescriptionService;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class PetLogServiceImpl implements PetLogService {
 
-  private final PetLogBinder petLogBinder;
-  private final PetLogRepository petLogRepository;
-  private final PetRepository petRepository;
+    private final PetLogBinder petLogBinder;
+    private final PetLogRepository petLogRepository;
+    private final PetRepository petRepository;
 
-  private final PetPrescriptionService petPrescriptionService;
+    private final PetPrescriptionService petPrescriptionService;
 
-  @Override
-  @Transactional
-  public PetLog save(Command command) throws IOException {
-    PetLogCommand petLogCommand = (PetLogCommand) command;
-    PetLog petLog = petLogBinder.bind(petLogCommand);
-    Optional<Pet> pet = petRepository.findById(petLogCommand.getPet());
-    if (pet.isEmpty()) {
-      throw new BusinessException("No pet was found under id: " + petLogCommand.getPet());
+    @Override
+    @Transactional
+    public PetLog save(Command command) throws IOException {
+        PetLogCommand petLogCommand = (PetLogCommand) command;
+        PetLog petLog = petLogBinder.bind(petLogCommand);
+        Optional<Pet> pet = petRepository.findById(petLogCommand.getPet());
+        if (pet.isEmpty()) {
+            throw new BusinessException("No pet was found under id: " + petLogCommand.getPet());
+        }
+        petLog.setPet(pet.get());
+        petPrescriptionService.attachFile(petLogCommand);
+        log.info("petLog: {}", petLogCommand);
+        petLogRepository.save(petLog);
+        return petLog;
     }
-    petLog.setPet(pet.get());
-    petPrescriptionService.attachFile(petLogCommand);
-    log.info("petLog: {}", petLogCommand);
-    petLogRepository.save(petLog);
-    return petLog;
-  }
 
-  @Override
-  public List<PetLog> getPetLogsByPet(Pet pet) {
-    return petLogRepository.getAllByPet(pet);
-  }
+    @Override
+    public List<PetLog> getPetLogsByPet(Pet pet) {
+        return petLogRepository.getAllByPet(pet);
+    }
 }

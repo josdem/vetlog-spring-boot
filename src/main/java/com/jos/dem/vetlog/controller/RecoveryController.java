@@ -24,6 +24,7 @@ import com.jos.dem.vetlog.service.RecoveryService;
 import com.jos.dem.vetlog.validator.ChangePasswordValidator;
 import com.jos.dem.vetlog.validator.RecoveryPasswordValidator;
 import jakarta.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -36,87 +37,80 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-
 @Slf4j
 @Controller
 @RequestMapping("/recovery")
 @RequiredArgsConstructor
 public class RecoveryController {
 
-  private final RecoveryService recoveryService;
-  private final RecoveryPasswordValidator recoveryPasswordValidator;
-  private final ChangePasswordValidator changePasswordValidator;
-  private final LocaleService localeService;
+    private final RecoveryService recoveryService;
+    private final RecoveryPasswordValidator recoveryPasswordValidator;
+    private final ChangePasswordValidator changePasswordValidator;
+    private final LocaleService localeService;
 
-  @InitBinder("recoveryPassword")
-  private void initPasswordBinder(WebDataBinder binder) {
-    binder.addValidators(recoveryPasswordValidator);
-  }
-
-  @InitBinder("changePassword")
-  private void initChangeBinder(WebDataBinder binder) {
-    binder.addValidators(changePasswordValidator);
-  }
-
-  @GetMapping(value = "/activate/{token}")
-  public String create(@PathVariable String token) {
-    log.info("Calling activate token");
-    recoveryService.confirmAccountForToken(token);
-    return "login/login";
-  }
-
-  @PostMapping(value = "/password")
-  public ModelAndView generateTokenToChangePassword(
-      @Valid RecoveryPasswordCommand command,
-      BindingResult bindingResult,
-      HttpServletRequest request) {
-    log.info("Calling generate token for changing password");
-    if (bindingResult.hasErrors()) {
-      return new ModelAndView("recovery/recoveryPassword");
+    @InitBinder("recoveryPassword")
+    private void initPasswordBinder(WebDataBinder binder) {
+        binder.addValidators(recoveryPasswordValidator);
     }
-    ModelAndView modelAndView = new ModelAndView("login/login");
-    modelAndView.addObject("message", localeService.getMessage("recovery.email.sent", request));
-    recoveryService.generateRegistrationCodeForEmail(command.getEmail());
-    return modelAndView;
-  }
 
-  @GetMapping(value = "/password")
-  public ModelAndView recoveryPassword() {
-    log.info("Calling recovery password");
-    ModelAndView modelAndView = new ModelAndView("recovery/recoveryPassword");
-    Command recoveryPasswordCommand = new RecoveryPasswordCommand();
-    modelAndView.addObject("recoveryPasswordCommand", recoveryPasswordCommand);
-    return modelAndView;
-  }
-
-  @GetMapping(value = "/forgot/{token}")
-  public ModelAndView changePassword(@PathVariable String token, HttpServletRequest request) {
-    log.info("Calling change password");
-    ModelAndView modelAndView = new ModelAndView("recovery/changePassword");
-    Boolean valid = recoveryService.validateToken(token);
-    if (!valid) {
-      modelAndView.addObject("message", localeService.getMessage("recovery.token.error", request));
+    @InitBinder("changePassword")
+    private void initChangeBinder(WebDataBinder binder) {
+        binder.addValidators(changePasswordValidator);
     }
-    ChangePasswordCommand changePasswordCommand = new ChangePasswordCommand();
-    changePasswordCommand.setToken(token);
-    modelAndView.addObject("changePasswordCommand", changePasswordCommand);
-    return modelAndView;
-  }
 
-  @PostMapping(value = "/change")
-  public ModelAndView generateTokenToChangePassword(
-      @Valid ChangePasswordCommand command,
-      BindingResult bindingResult,
-      HttpServletRequest request) {
-    log.info("Calling save and changing password");
-    if (bindingResult.hasErrors()) {
-      return new ModelAndView("recovery/changePassword");
+    @GetMapping(value = "/activate/{token}")
+    public String create(@PathVariable String token) {
+        log.info("Calling activate token");
+        recoveryService.confirmAccountForToken(token);
+        return "login/login";
     }
-    ModelAndView modelAndView = new ModelAndView("login/login");
-    modelAndView.addObject(
-        "message", localeService.getMessage("recovery.password.changed", request));
-    recoveryService.changePassword(command);
-    return modelAndView;
-  }
+
+    @PostMapping(value = "/password")
+    public ModelAndView generateTokenToChangePassword(
+            @Valid RecoveryPasswordCommand command, BindingResult bindingResult, HttpServletRequest request) {
+        log.info("Calling generate token for changing password");
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("recovery/recoveryPassword");
+        }
+        ModelAndView modelAndView = new ModelAndView("login/login");
+        modelAndView.addObject("message", localeService.getMessage("recovery.email.sent", request));
+        recoveryService.generateRegistrationCodeForEmail(command.getEmail());
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/password")
+    public ModelAndView recoveryPassword() {
+        log.info("Calling recovery password");
+        ModelAndView modelAndView = new ModelAndView("recovery/recoveryPassword");
+        Command recoveryPasswordCommand = new RecoveryPasswordCommand();
+        modelAndView.addObject("recoveryPasswordCommand", recoveryPasswordCommand);
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/forgot/{token}")
+    public ModelAndView changePassword(@PathVariable String token, HttpServletRequest request) {
+        log.info("Calling change password");
+        ModelAndView modelAndView = new ModelAndView("recovery/changePassword");
+        Boolean valid = recoveryService.validateToken(token);
+        if (!valid) {
+            modelAndView.addObject("message", localeService.getMessage("recovery.token.error", request));
+        }
+        ChangePasswordCommand changePasswordCommand = new ChangePasswordCommand();
+        changePasswordCommand.setToken(token);
+        modelAndView.addObject("changePasswordCommand", changePasswordCommand);
+        return modelAndView;
+    }
+
+    @PostMapping(value = "/change")
+    public ModelAndView generateTokenToChangePassword(
+            @Valid ChangePasswordCommand command, BindingResult bindingResult, HttpServletRequest request) {
+        log.info("Calling save and changing password");
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("recovery/changePassword");
+        }
+        ModelAndView modelAndView = new ModelAndView("login/login");
+        modelAndView.addObject("message", localeService.getMessage("recovery.password.changed", request));
+        recoveryService.changePassword(command);
+        return modelAndView;
+    }
 }

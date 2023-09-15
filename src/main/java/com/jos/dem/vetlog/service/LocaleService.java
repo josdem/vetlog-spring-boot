@@ -19,7 +19,7 @@ package com.jos.dem.vetlog.service;
 import jakarta.servlet.http.HttpServletRequest;
 
 public interface LocaleService {
-  String getMessage(String code);
+    String getMessage(String code);
 
-  String getMessage(String code, HttpServletRequest request);
+    String getMessage(String code, HttpServletRequest request);
 }

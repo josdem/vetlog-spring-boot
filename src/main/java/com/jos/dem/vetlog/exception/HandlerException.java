@@ -18,27 +18,26 @@ package com.jos.dem.vetlog.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Component
 public class HandlerException implements HandlerExceptionResolver {
 
-  private Log log = LogFactory.getLog(this.getClass());
+    private Log log = LogFactory.getLog(this.getClass());
 
-  public ModelAndView resolveException(
-      HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-    log.info(ex.getMessage());
-    Map<String, String> data = new HashMap<>();
-    data.put("message", ex.getMessage());
-    ModelAndView modelAndView = new ModelAndView("error");
-    modelAndView.addObject("data", data);
-    return modelAndView;
-  }
+    public ModelAndView resolveException(
+            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        log.info(ex.getMessage());
+        Map<String, String> data = new HashMap<>();
+        data.put("message", ex.getMessage());
+        ModelAndView modelAndView = new ModelAndView("error");
+        modelAndView.addObject("data", data);
+        return modelAndView;
+    }
 }

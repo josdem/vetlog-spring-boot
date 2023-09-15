@@ -20,5 +20,5 @@ import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.model.PetAdoption;
 
 public interface AdoptionService {
-  PetAdoption save(Command command);
+    PetAdoption save(Command command);
 }

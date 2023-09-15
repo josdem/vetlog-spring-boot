@@ -20,5 +20,5 @@ import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.model.User;
 
 public interface TelephoneService {
-  void save(Command command, User adopter);
+    void save(Command command, User adopter);
 }

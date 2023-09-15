@@ -16,24 +16,23 @@ limitations under the License.
 
 package com.jos.dem.vetlog.util;
 
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import org.springframework.stereotype.Component;
 
 @Component
 public class DateFormatter {
 
-  private DateTimeFormatter formatter;
+    private DateTimeFormatter formatter;
 
-  public String format(String dateToFormat) {
-    if (dateToFormat.contains(",")) {
-      formatter = DateTimeFormatter.ofPattern("M/d/yy, h:m a");
-    } else {
-      formatter = DateTimeFormatter.ofPattern("d/M/yy H:m");
+    public String format(String dateToFormat) {
+        if (dateToFormat.contains(",")) {
+            formatter = DateTimeFormatter.ofPattern("M/d/yy, h:m a");
+        } else {
+            formatter = DateTimeFormatter.ofPattern("d/M/yy H:m");
+        }
+
+        LocalDate localDate = LocalDate.parse(dateToFormat, formatter);
+        return localDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
     }
-
-    LocalDate localDate = LocalDate.parse(dateToFormat, formatter);
-    return localDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
-  }
 }

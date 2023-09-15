@@ -14,16 +14,13 @@ limitations under the License.
 package com.jos.dem.vetlog.command;
 
 import com.jos.dem.vetlog.util.UuidGenerator;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

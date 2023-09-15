@@ -22,6 +22,8 @@ import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.service.AdoptionService;
 import com.jos.dem.vetlog.service.PetService;
 import com.jos.dem.vetlog.validator.AdoptionValidator;
+import java.util.List;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,9 +35,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.Valid;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -81,8 +80,7 @@ public class AdoptionController {
         return modelAndView;
     }
 
-    private ModelAndView fillPetAndAdoptionCommand(
-            ModelAndView modelAndView, AdoptionCommand adoptionCommand) {
+    private ModelAndView fillPetAndAdoptionCommand(ModelAndView modelAndView, AdoptionCommand adoptionCommand) {
         Pet pet = petService.getPetByUuid(adoptionCommand.getUuid());
         modelAndView.addObject("pet", pet);
         modelAndView.addObject("adoptionCommand", adoptionCommand);

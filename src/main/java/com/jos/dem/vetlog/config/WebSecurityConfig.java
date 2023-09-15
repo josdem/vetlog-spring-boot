@@ -32,37 +32,34 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-  private final UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(
-            (requests) ->
-                requests
-                    .requestMatchers(
-                        "/",
-                        "/assets/**",
-                        "/images/**",
-                        "/home/**",
-                        "/user/**",
-                        "/recovery/**",
-                        "/breed/list",
-                        "/pet/listForAdoption",
-                        "/service/list")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated())
-        .formLogin((form) -> form.loginPage("/login").permitAll())
-        .logout((logout) -> logout.permitAll());
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests((requests) -> requests.requestMatchers(
+                                "/",
+                                "/assets/**",
+                                "/images/**",
+                                "/home/**",
+                                "/user/**",
+                                "/recovery/**",
+                                "/breed/list",
+                                "/pet/listForAdoption",
+                                "/service/list")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .formLogin((form) -> form.loginPage("/login").permitAll())
+                .logout((logout) -> logout.permitAll());
 
-    return http.build();
-  }
+        return http.build();
+    }
 
-  @Bean
-  public AuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-    authenticationProvider.setUserDetailsService(userDetailsService);
-    authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
-    return authenticationProvider;
-  }
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+        return authenticationProvider;
+    }
 }

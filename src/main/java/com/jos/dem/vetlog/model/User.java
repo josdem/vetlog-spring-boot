@@ -16,21 +16,20 @@ limitations under the License.
 
 package com.jos.dem.vetlog.model;
 
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.AUTO;
+
 import com.jos.dem.vetlog.enums.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.AUTO;
 
 @Getter
 @Setter
@@ -38,44 +37,44 @@ import static jakarta.persistence.GenerationType.AUTO;
 @ToString
 public class User implements Serializable {
 
-  @Id
-  @GeneratedValue(strategy = AUTO)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
-  @Column(unique = true, nullable = false)
-  private String username;
+    @Column(unique = true, nullable = false)
+    private String username;
 
-  @Column(nullable = false)
-  private String password;
+    @Column(nullable = false)
+    private String password;
 
-  @Column(nullable = true)
-  private String firstName;
+    @Column(nullable = true)
+    private String firstName;
 
-  @Column(nullable = true)
-  private String lastName;
+    @Column(nullable = true)
+    private String lastName;
 
-  @Column(nullable = true)
-  private String email;
+    @Column(nullable = true)
+    private String email;
 
-  @Column(nullable = true)
-  private String mobile;
+    @Column(nullable = true)
+    private String mobile;
 
-  @Column(nullable = false)
-  @Enumerated(STRING)
-  private Role role;
+    @Column(nullable = false)
+    @Enumerated(STRING)
+    private Role role;
 
-  @Column(nullable = false)
-  private Boolean enabled = true;
+    @Column(nullable = false)
+    private Boolean enabled = true;
 
-  @Column(nullable = false)
-  private Boolean accountNonExpired = true;
+    @Column(nullable = false)
+    private Boolean accountNonExpired = true;
 
-  @Column(nullable = false)
-  private Boolean credentialsNonExpired = true;
+    @Column(nullable = false)
+    private Boolean credentialsNonExpired = true;
 
-  @Column(nullable = false)
-  private Boolean accountNonLocked = true;
+    @Column(nullable = false)
+    private Boolean accountNonLocked = true;
 
-  @Column(nullable = false)
-  private LocalDateTime dateCreated = LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime dateCreated = LocalDateTime.now();
 }

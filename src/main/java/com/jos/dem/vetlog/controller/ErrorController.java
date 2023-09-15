@@ -25,9 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ErrorController {
 
-  @GetMapping("/error")
-  public ModelAndView index() {
-    ModelAndView modelAndView = new ModelAndView("error");
-    return modelAndView;
-  }
+    @GetMapping("/error")
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("error");
+        return modelAndView;
+    }
 }

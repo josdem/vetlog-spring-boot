@@ -39,11 +39,15 @@ public class UserServiceImpl implements UserService {
     private final UserContextHolderProvider provider;
 
     public User getByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
+        return userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
     }
 
     public User getByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User with email: " + email + " not found"));
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("User with email: " + email + " not found"));
     }
 
     @Transactional
@@ -56,7 +60,8 @@ public class UserServiceImpl implements UserService {
     public User getCurrentUser() {
         Authentication auth = provider.getAuthentication();
         String username = auth.getName();
-        return userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
+        return userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
     }
-
 }

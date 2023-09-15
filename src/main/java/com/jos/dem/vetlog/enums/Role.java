@@ -17,6 +17,6 @@ limitations under the License.
 package com.jos.dem.vetlog.enums;
 
 public enum Role {
-    USER, ADMIN
+    USER,
+    ADMIN
 }
-

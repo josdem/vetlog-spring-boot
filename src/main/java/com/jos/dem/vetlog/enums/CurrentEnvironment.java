@@ -17,17 +17,17 @@ limitations under the License.
 package com.jos.dem.vetlog.enums;
 
 public enum CurrentEnvironment {
+    DEVELOPMENT("development"),
+    STAGE("stage"),
+    PRODUCTION("production");
 
-  DEVELOPMENT("development"), STAGE("stage"), PRODUCTION("production");
+    private String description;
 
-  private String description;
+    CurrentEnvironment(String description) {
+        this.description = description;
+    }
 
-  CurrentEnvironment(String description){
-    this.description = description;
-  }
-
-  public String getDescription(){
-    return description;
-  }
-
+    public String getDescription() {
+        return description;
+    }
 }

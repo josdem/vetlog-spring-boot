@@ -20,12 +20,10 @@ import com.jos.dem.vetlog.client.GoogleStorageWriter;
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetLogCommand;
 import com.jos.dem.vetlog.service.PetPrescriptionService;
-import com.jos.dem.vetlog.util.UuidGenerator;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -37,12 +35,14 @@ public class PetPrescriptionServiceImpl implements PetPrescriptionService {
     @Value("${prescriptionBucket}")
     private String bucket;
 
-
     public void attachFile(Command command) throws IOException {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         if (petLogCommand.getAttachment().getInputStream().available() > 0) {
-            googleStorageWriter.uploadToBucket(bucket, petLogCommand.getUuid(), petLogCommand.getAttachment().getInputStream(), CONTENT_TYPE);
+            googleStorageWriter.uploadToBucket(
+                    bucket,
+                    petLogCommand.getUuid(),
+                    petLogCommand.getAttachment().getInputStream(),
+                    CONTENT_TYPE);
         }
     }
-
 }

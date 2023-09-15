@@ -21,10 +21,9 @@ import com.jos.dem.vetlog.model.RegistrationCode;
 import com.jos.dem.vetlog.repository.RegistrationCodeRepository;
 import com.jos.dem.vetlog.service.LocaleService;
 import com.jos.dem.vetlog.service.RegistrationService;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +33,9 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final RegistrationCodeRepository repository;
 
     public Optional<String> findEmailByToken(String token) {
-        RegistrationCode registrationCode = repository.findByToken(token).orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
+        RegistrationCode registrationCode = repository
+                .findByToken(token)
+                .orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
 
         return registrationCode.getEmail().describeConstable();
     }
@@ -45,5 +46,4 @@ public class RegistrationServiceImpl implements RegistrationService {
         repository.save(registrationCode);
         return registrationCode.getToken();
     }
-
 }

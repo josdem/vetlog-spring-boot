@@ -17,13 +17,11 @@ limitations under the License.
 package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.command.MessageCommand;
+import java.io.IOException;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-
-import java.io.IOException;
-
 
 public interface RestService {
     @POST("message")
