@@ -14,26 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.jos.dem.vetlog.model;
+package com.jos.dem.vetlog.controller;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import static jakarta.persistence.GenerationType.AUTO;
+@Slf4j
+@Controller
+public class ErrorController {
 
-@Entity
-@Getter
-@Setter
-public class PetImage {
-
-  @Id
-  @GeneratedValue(strategy = AUTO)
-  private Long id;
-
-  @Column(nullable = false)
-  private String uuid;
+  @GetMapping("/error")
+  public ModelAndView index() {
+    ModelAndView modelAndView = new ModelAndView("error");
+    return modelAndView;
+  }
 }

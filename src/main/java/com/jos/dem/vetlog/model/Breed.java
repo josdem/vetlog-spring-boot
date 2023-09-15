@@ -17,20 +17,19 @@ limitations under the License.
 package com.jos.dem.vetlog.model;
 
 import com.jos.dem.vetlog.enums.PetType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
 import java.time.LocalDateTime;
 
-import static javax.persistence.EnumType.STRING;
-import static javax.persistence.GenerationType.AUTO;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.AUTO;
 
 @Getter
 @Setter
@@ -38,15 +37,17 @@ import static javax.persistence.GenerationType.AUTO;
 @ToString
 public class Breed {
 
-    @Id
-    @GeneratedValue(strategy = AUTO)
-    private Long id;
-    @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
-    @Enumerated(STRING)
-    private PetType type;
-    @Column(nullable = false)
-    private LocalDateTime dateCreated = LocalDateTime.now();
+  @Id
+  @GeneratedValue(strategy = AUTO)
+  private Long id;
 
+  @Column(nullable = false)
+  private String name;
+
+  @Column(nullable = false)
+  @Enumerated(STRING)
+  private PetType type;
+
+  @Column(nullable = false)
+  private LocalDateTime dateCreated = LocalDateTime.now();
 }

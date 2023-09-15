@@ -14,11 +14,6 @@
         <div class="col-md-4 col-md-offset-4">
             <div class="portlet portlet-green">
                 <div class="portlet-body">
-                    <div th:if="${message}">
-                        <div align="center">
-                            <p th:text="${message}"/>
-                        </div>
-                    </div>
                     <form th:action="@{/login}" method='POST' id='loginForm' class='cssform' autocomplete='off'>
                         <fieldset>
                             <label for="username"><h4 th:text="#{login.username}"/></label>

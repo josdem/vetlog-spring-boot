@@ -17,13 +17,13 @@ limitations under the License.
 package com.jos.dem.vetlog.client;
 
 import com.google.api.gax.core.CredentialsProvider;
+import com.google.cloud.spring.core.GcpProjectIdProvider;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.jos.dem.vetlog.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cloud.gcp.core.GcpProjectIdProvider;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;

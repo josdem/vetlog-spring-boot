@@ -1,11 +1,11 @@
 package com.jos.dem.vetlog.helper;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +28,7 @@ class LocaleResolverTest {
 
   @Test
   @DisplayName("getting english from headers")
-  void shouldGetEnglishFromHeaders(TestInfo testInfo){
+  void shouldGetEnglishFromHeaders(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     when(request.getHeader("Accept-Language")).thenReturn("en-US,en;q=0.8");
     Locale result = localeResolver.resolveLocale(request);
@@ -37,7 +37,7 @@ class LocaleResolverTest {
 
   @Test
   @DisplayName("getting spanish from headers")
-  void shouldGetSpanishFromHeaders(TestInfo testInfo){
+  void shouldGetSpanishFromHeaders(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     when(request.getHeader("Accept-Language")).thenReturn("es-MX,en-US;q=0.7,en;q=0.3");
     Locale result = localeResolver.resolveLocale(request);
@@ -46,7 +46,7 @@ class LocaleResolverTest {
 
   @Test
   @DisplayName("getting english when unknown language")
-  void shouldGetEnglishWhenUnknownLanguage(TestInfo testInfo){
+  void shouldGetEnglishWhenUnknownLanguage(TestInfo testInfo) {
     log.info("Running: {}", testInfo.getDisplayName());
     when(request.getHeader("Accept-Language")).thenReturn("zh-cn,zh-tw");
     Locale result = localeResolver.resolveLocale(request);

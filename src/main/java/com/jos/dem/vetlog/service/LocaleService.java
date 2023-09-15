@@ -16,10 +16,10 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface LocaleService {
-    String getMessage(String code);
+  String getMessage(String code);
 
-    String getMessage(String code, HttpServletRequest request);
+  String getMessage(String code, HttpServletRequest request);
 }

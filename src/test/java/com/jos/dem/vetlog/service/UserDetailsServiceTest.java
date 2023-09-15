@@ -3,6 +3,7 @@ package com.jos.dem.vetlog.service;
 import com.jos.dem.vetlog.enums.Role;
 import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.User;
+import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.impl.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -23,12 +27,12 @@ class UserDetailsServiceTest {
 
   private UserDetailsServiceImpl service;
 
-  @Mock private UserService userService;
+  @Mock private UserRepository userRepository;
 
   @BeforeEach
   void setup() {
     MockitoAnnotations.openMocks(this);
-    service = new UserDetailsServiceImpl(userService);
+    service = new UserDetailsServiceImpl(userRepository);
   }
 
   @Test
@@ -43,10 +47,9 @@ class UserDetailsServiceTest {
     user.setAccountNonLocked(true);
     user.setCredentialsNonExpired(true);
     user.setRole(Role.USER);
-    when(userService.getByUsername(USERNAME)).thenReturn(user);
+    when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
 
-    org.springframework.security.core.userdetails.User result =
-        service.loadUserByUsername(USERNAME);
+    UserDetails result = service.loadUserByUsername(USERNAME);
 
     assertEquals(user.getUsername(), result.getUsername());
     assertEquals(user.getPassword(), result.getPassword());
