@@ -25,9 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class VetlogController {
 
-  @GetMapping("/")
-  public ModelAndView index() {
-    ModelAndView modelAndView = new ModelAndView("home/home");
-    return modelAndView;
-  }
+    @GetMapping("/")
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("home/home");
+        return modelAndView;
+    }
 }

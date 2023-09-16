@@ -1,5 +1,12 @@
 package com.jos.dem.vetlog.binder;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
 import com.jos.dem.vetlog.command.PetCommand;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.enums.PetType;
@@ -9,6 +16,9 @@ import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetImage;
 import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.BreedRepository;
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,17 +27,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 @Slf4j
 class PetBinderTest {

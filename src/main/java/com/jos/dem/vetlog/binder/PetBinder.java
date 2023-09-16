@@ -18,17 +18,15 @@ package com.jos.dem.vetlog.binder;
 
 import com.jos.dem.vetlog.command.Command;
 import com.jos.dem.vetlog.command.PetCommand;
-import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.exception.BusinessException;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.repository.BreedRepository;
 import com.jos.dem.vetlog.util.UuidGenerator;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

@@ -14,6 +14,7 @@ plugins {
   id "org.sonarqube" version "3.3"
   id 'jacoco'
   id 'java'
+  id 'com.diffplug.spotless' version '6.21.0'
 }
 
 ext {
@@ -38,6 +39,20 @@ repositories {
 
 flyway {
   url = 'jdbc:mysql://localhost:3306/vetlog'
+}
+
+spotless {
+  java {
+    target fileTree('.') {
+      include '**/*.java'
+      exclude '**/build/**', '**/build-*/**'
+    }
+    toggleOffOn()
+    palantirJavaFormat()
+    removeUnusedImports()
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
 }
 
 dependencies {
@@ -86,4 +101,5 @@ bootRun {
   systemProperties = System.properties
 }
 
+test.dependsOn("spotlessApply")
 bootRun.dependsOn("flywayMigrate")

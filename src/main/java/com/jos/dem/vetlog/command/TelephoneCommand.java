@@ -13,9 +13,8 @@ limitations under the License.
 
 package com.jos.dem.vetlog.command;
 
-import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
-
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,6 +25,6 @@ public class TelephoneCommand implements Command {
     private String uuid;
 
     @NotNull
-    @Size(min=10, max=10)
+    @Size(min = 10, max = 10)
     private String mobile;
 }

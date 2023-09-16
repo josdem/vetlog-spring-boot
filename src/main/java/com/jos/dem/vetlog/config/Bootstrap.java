@@ -33,36 +33,40 @@ import org.springframework.stereotype.Component;
 @Component
 public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
-  @Autowired private Environment environment;
-  @Autowired private UserRepository userRepository;
-  @Autowired private BreedRepository breedRepository;
+    @Autowired
+    private Environment environment;
 
-  @Override
-  public void onApplicationEvent(final ApplicationReadyEvent event) {
-    if (environment.getActiveProfiles()[0].equals(
-        CurrentEnvironment.DEVELOPMENT.getDescription())) {
-      log.info("Loading development environment");
-      createDefaultUsers();
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private BreedRepository breedRepository;
+
+    @Override
+    public void onApplicationEvent(final ApplicationReadyEvent event) {
+        if (environment.getActiveProfiles()[0].equals(CurrentEnvironment.DEVELOPMENT.getDescription())) {
+            log.info("Loading development environment");
+            createDefaultUsers();
+        }
     }
-  }
 
-  void createDefaultUsers() {
-    createUserWithRole("josdem", "12345678", "joseluis.delacruz@gmail.com", Role.USER);
-    createUserWithRole("miriam", "12345678", "miriam@gmail.com", Role.USER);
-    createUserWithRole("admin", "12345678", "admin@email.com", Role.ADMIN);
-  }
-
-  void createUserWithRole(String username, String password, String email, Role authority) {
-    if (userRepository.findByUsername(username) == null) {
-      User user = new User();
-      user.setUsername(username);
-      user.setPassword(new BCryptPasswordEncoder().encode(password));
-      user.setEmail(email);
-      user.setRole(authority);
-      user.setFirstName(username);
-      user.setLastName(username);
-      user.setEnabled(true);
-      userRepository.save(user);
+    void createDefaultUsers() {
+        createUserWithRole("josdem", "12345678", "joseluis.delacruz@gmail.com", Role.USER);
+        createUserWithRole("miriam", "12345678", "miriam@gmail.com", Role.USER);
+        createUserWithRole("admin", "12345678", "admin@email.com", Role.ADMIN);
     }
-  }
+
+    void createUserWithRole(String username, String password, String email, Role authority) {
+        if (userRepository.findByUsername(username) == null) {
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(new BCryptPasswordEncoder().encode(password));
+            user.setEmail(email);
+            user.setRole(authority);
+            user.setFirstName(username);
+            user.setLastName(username);
+            user.setEnabled(true);
+            userRepository.save(user);
+        }
+    }
 }

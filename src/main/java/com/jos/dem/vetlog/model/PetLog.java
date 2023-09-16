@@ -16,6 +16,8 @@ limitations under the License.
 
 package com.jos.dem.vetlog.model;
 
+import static jakarta.persistence.GenerationType.AUTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -23,39 +25,37 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-
-import static jakarta.persistence.GenerationType.AUTO;
 
 @Getter
 @Setter
 @Entity
 public class PetLog {
 
-  @Id
-  @GeneratedValue(strategy = AUTO)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
-  @Column private String vetName;
+    @Column
+    private String vetName;
 
-  @Column(nullable = false)
-  private String signs;
+    @Column(nullable = false)
+    private String signs;
 
-  @Column(nullable = false)
-  private String diagnosis;
+    @Column(nullable = false)
+    private String diagnosis;
 
-  private String medicine;
+    private String medicine;
 
-  @Column(nullable = false)
-  private String uuid;
+    @Column(nullable = false)
+    private String uuid;
 
-  @Column(nullable = false)
-  private LocalDateTime dateCreated = LocalDateTime.now();
+    @Column(nullable = false)
+    private LocalDateTime dateCreated = LocalDateTime.now();
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "pet_id")
-  private Pet pet;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
 }

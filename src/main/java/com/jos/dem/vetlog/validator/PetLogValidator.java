@@ -24,13 +24,13 @@ import org.springframework.validation.Validator;
 @Component
 public class PetLogValidator implements Validator {
 
-  @Override
-  public boolean supports(Class<?> clazz) {
-    return PetLogCommand.class.equals(clazz);
-  }
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return PetLogCommand.class.equals(clazz);
+    }
 
-  @Override
-  public void validate(Object target, Errors errors) {
-    PetLogCommand petLogCommand = (PetLogCommand) target;
-  }
+    @Override
+    public void validate(Object target, Errors errors) {
+        PetLogCommand petLogCommand = (PetLogCommand) target;
+    }
 }

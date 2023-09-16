@@ -16,11 +16,10 @@ limitations under the License.
 
 package com.jos.dem.vetlog.service;
 
-import  com.jos.dem.vetlog.model.Breed;
-import  com.jos.dem.vetlog.enums.PetType;
-
+import com.jos.dem.vetlog.enums.PetType;
+import com.jos.dem.vetlog.model.Breed;
 import java.util.List;
 
 public interface BreedService {
-  List<Breed> getBreedsByType(PetType type);
+    List<Breed> getBreedsByType(PetType type);
 }

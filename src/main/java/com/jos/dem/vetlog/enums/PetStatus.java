@@ -17,7 +17,7 @@ limitations under the License.
 package com.jos.dem.vetlog.enums;
 
 public enum PetStatus {
-  OWNED,
-  IN_ADOPTION,
-  ADOPTED
+    OWNED,
+    IN_ADOPTION,
+    ADOPTED
 }

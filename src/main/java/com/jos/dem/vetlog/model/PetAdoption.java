@@ -16,6 +16,8 @@ limitations under the License.
 
 package com.jos.dem.vetlog.model;
 
+import static jakarta.persistence.GenerationType.AUTO;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,22 +29,20 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import static jakarta.persistence.GenerationType.AUTO;
-
 @Getter
 @Setter
 @Entity
 @ToString
 public class PetAdoption {
 
-  @Id
-  @GeneratedValue(strategy = AUTO)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = AUTO)
+    private Long id;
 
-  @Column(nullable = false, columnDefinition = "text")
-  private String description;
+    @Column(nullable = false, columnDefinition = "text")
+    private String description;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "pet_id")
-  private Pet pet;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
 }

@@ -20,6 +20,7 @@ import com.jos.dem.vetlog.enums.PetType;
 import com.jos.dem.vetlog.model.Breed;
 import com.jos.dem.vetlog.service.BreedService;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,23 +29,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
 @Slf4j
 @Controller
 @RequestMapping("/breed")
 @RequiredArgsConstructor
 public class BreedController {
 
-  private final BreedService breedService;
+    private final BreedService breedService;
 
-  @GetMapping(value = "/list")
-  @ResponseBody
-  public List<Breed> listByType(@RequestParam String type, HttpServletResponse response) {
-    log.info("Listing Pets by type: " + type);
+    @GetMapping(value = "/list")
+    @ResponseBody
+    public List<Breed> listByType(@RequestParam String type, HttpServletResponse response) {
+        log.info("Listing Pets by type: " + type);
 
-    response.addHeader("Allow-Control-Allow-Methods", "GET");
-    response.addHeader("Access-Control-Allow-Origin", "*");
-    return breedService.getBreedsByType(PetType.getPetTypeByValue(type));
-  }
+        response.addHeader("Allow-Control-Allow-Methods", "GET");
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        return breedService.getBreedsByType(PetType.getPetTypeByValue(type));
+    }
 }

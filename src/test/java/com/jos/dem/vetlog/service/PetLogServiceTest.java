@@ -1,5 +1,10 @@
 package com.jos.dem.vetlog.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.jos.dem.vetlog.binder.PetLogBinder;
 import com.jos.dem.vetlog.command.PetLogCommand;
 import com.jos.dem.vetlog.exception.BusinessException;
@@ -8,6 +13,10 @@ import com.jos.dem.vetlog.model.PetLog;
 import com.jos.dem.vetlog.repository.PetLogRepository;
 import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.service.impl.PetLogServiceImpl;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,16 +25,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @Slf4j
 class PetLogServiceTest {
@@ -36,8 +35,10 @@ class PetLogServiceTest {
 
     @Mock
     private PetLogBinder petLogBinder;
+
     @Mock
     private PetLogRepository petLogRepository;
+
     @Mock
     private PetRepository petRepository;
 
@@ -65,7 +66,6 @@ class PetLogServiceTest {
         service.save(petLogCommand);
         verify(petLogRepository).save(petLog);
     }
-
 
     @Test
     @DisplayName("should not find a pet log")

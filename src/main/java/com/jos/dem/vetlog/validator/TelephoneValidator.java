@@ -24,13 +24,13 @@ import org.springframework.validation.Validator;
 @Component
 public class TelephoneValidator implements Validator {
 
-  @Override
-  public boolean supports(Class<?> clazz) {
-    return TelephoneCommand.class.equals(clazz);
-  }
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return TelephoneCommand.class.equals(clazz);
+    }
 
-  @Override
-  public void validate(Object target, Errors errors) {
-    TelephoneCommand telephoneCommand = (TelephoneCommand) target;
-  }
+    @Override
+    public void validate(Object target, Errors errors) {
+        TelephoneCommand telephoneCommand = (TelephoneCommand) target;
+    }
 }

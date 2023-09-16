@@ -27,5 +27,4 @@ public class BusinessException extends NestedRuntimeException {
     public BusinessException(String msg, Throwable cause) {
         super(msg, cause);
     }
-
 }

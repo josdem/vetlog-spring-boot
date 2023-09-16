@@ -17,14 +17,13 @@ limitations under the License.
 package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.command.Command;
-import  com.jos.dem.vetlog.model.Pet;
-import  com.jos.dem.vetlog.model.PetLog;
-
+import com.jos.dem.vetlog.model.Pet;
+import com.jos.dem.vetlog.model.PetLog;
 import java.io.IOException;
 import java.util.List;
 
 public interface PetLogService {
-  PetLog save(Command command) throws IOException;
-  List<PetLog> getPetLogsByPet(Pet pet);
-}
+    PetLog save(Command command) throws IOException;
 
+    List<PetLog> getPetLogsByPet(Pet pet);
+}

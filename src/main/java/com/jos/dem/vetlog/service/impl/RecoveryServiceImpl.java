@@ -29,12 +29,11 @@ import com.jos.dem.vetlog.service.LocaleService;
 import com.jos.dem.vetlog.service.RecoveryService;
 import com.jos.dem.vetlog.service.RegistrationService;
 import com.jos.dem.vetlog.service.RestService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -48,14 +47,19 @@ public class RecoveryServiceImpl implements RecoveryService {
 
     @Value("${baseUrl}")
     private String baseUrl;
+
     @Value("${token}")
     private String clientToken;
+
     @Value("${template.register.name}")
     private String registerTemplate;
+
     @Value("${template.register.path}")
     private String registerPath;
+
     @Value("${template.forgot.name}")
     private String forgotTemplate;
+
     @Value("${template.forgot.path}")
     private String forgotPath;
 
@@ -70,12 +74,18 @@ public class RecoveryServiceImpl implements RecoveryService {
     }
 
     public User getUserByToken(String token) {
-        String email = registrationService.findEmailByToken(token).orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
-        return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(localeService.getMessage("exception.user.not.found")));
+        String email = registrationService
+                .findEmailByToken(token)
+                .orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage("exception.user.not.found")));
     }
 
     public void generateRegistrationCodeForEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(localeService.getMessage("exception.user.not.found")));
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage("exception.user.not.found")));
         if (user.getEnabled() == false) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
@@ -103,5 +113,4 @@ public class RecoveryServiceImpl implements RecoveryService {
         userRepository.save(user);
         return user;
     }
-
 }

@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class VetlogApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(VetlogApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(VetlogApplication.class, args);
+    }
 }

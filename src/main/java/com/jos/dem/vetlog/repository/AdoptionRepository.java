@@ -18,14 +18,12 @@ package com.jos.dem.vetlog.repository;
 
 import com.jos.dem.vetlog.model.Pet;
 import com.jos.dem.vetlog.model.PetAdoption;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AdoptionRepository extends JpaRepository<PetAdoption, Long> {
 
     PetAdoption save(PetAdoption petAdoption);
+
     Optional<PetAdoption> findByPet(Pet pet);
-
 }
-

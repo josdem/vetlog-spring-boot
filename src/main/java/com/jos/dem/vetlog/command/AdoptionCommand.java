@@ -13,11 +13,10 @@ limitations under the License.
 
 package com.jos.dem.vetlog.command;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -27,6 +26,6 @@ public class AdoptionCommand implements Command {
     private String uuid;
 
     @NotNull
-    @Size(min=1, max=1000)
+    @Size(min = 1, max = 1000)
     private String description;
 }

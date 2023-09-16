@@ -28,62 +28,61 @@ import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.PetService;
 import com.jos.dem.vetlog.service.RestService;
 import com.jos.dem.vetlog.service.TelephoneService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class TelephoneServiceImpl implements TelephoneService {
 
-  private final PetService petService;
-  private final RestService restService;
-  private final UserRepository userRepository;
-  private final PetRepository petRepository;
+    private final PetService petService;
+    private final RestService restService;
+    private final UserRepository userRepository;
+    private final PetRepository petRepository;
 
-  @Value("${token}")
-  private String clientToken;
+    @Value("${token}")
+    private String clientToken;
 
-  @Value("${template.adoption.name}")
-  private String adoptionTemplate;
+    @Value("${template.adoption.name}")
+    private String adoptionTemplate;
 
-  @Transactional
-  public void save(Command command, User adopter) {
-    TelephoneCommand telephoneCommand = (TelephoneCommand) command;
-    Pet pet = petService.getPetByUuid(telephoneCommand.getUuid());
-    pet.setStatus(PetStatus.ADOPTED);
-    adopter.setMobile(telephoneCommand.getMobile());
-    pet.setAdopter(adopter);
-    petRepository.save(pet);
-    userRepository.save(adopter);
-    createAdoptionDataMessage(command, pet);
-  }
-
-  private void createAdoptionDataMessage(Command command, Pet pet) {
-    User owner = pet.getUser();
-    User adopter = pet.getAdopter();
-    MessageCommand messageCommand = new MessageCommand();
-    messageCommand.setEmail(owner.getEmail());
-    messageCommand.setName(pet.getName());
-    StringBuilder sb = new StringBuilder();
-    sb.append(adopter.getFirstName());
-    sb.append(" ");
-    sb.append(adopter.getLastName());
-    messageCommand.setContactName(sb.toString());
-    messageCommand.setEmailContact(adopter.getEmail());
-    messageCommand.setMessage(adopter.getMobile());
-    messageCommand.setToken(clientToken);
-    messageCommand.setTemplate(adoptionTemplate);
-    log.info("Command: " + messageCommand);
-    try {
-      restService.sendMessage(messageCommand);
-    } catch (IOException ioe) {
-      throw new BusinessException(ioe.getMessage());
+    @Transactional
+    public void save(Command command, User adopter) {
+        TelephoneCommand telephoneCommand = (TelephoneCommand) command;
+        Pet pet = petService.getPetByUuid(telephoneCommand.getUuid());
+        pet.setStatus(PetStatus.ADOPTED);
+        adopter.setMobile(telephoneCommand.getMobile());
+        pet.setAdopter(adopter);
+        petRepository.save(pet);
+        userRepository.save(adopter);
+        createAdoptionDataMessage(command, pet);
     }
-  }
+
+    private void createAdoptionDataMessage(Command command, Pet pet) {
+        User owner = pet.getUser();
+        User adopter = pet.getAdopter();
+        MessageCommand messageCommand = new MessageCommand();
+        messageCommand.setEmail(owner.getEmail());
+        messageCommand.setName(pet.getName());
+        StringBuilder sb = new StringBuilder();
+        sb.append(adopter.getFirstName());
+        sb.append(" ");
+        sb.append(adopter.getLastName());
+        messageCommand.setContactName(sb.toString());
+        messageCommand.setEmailContact(adopter.getEmail());
+        messageCommand.setMessage(adopter.getMobile());
+        messageCommand.setToken(clientToken);
+        messageCommand.setTemplate(adoptionTemplate);
+        log.info("Command: " + messageCommand);
+        try {
+            restService.sendMessage(messageCommand);
+        } catch (IOException ioe) {
+            throw new BusinessException(ioe.getMessage());
+        }
+    }
 }

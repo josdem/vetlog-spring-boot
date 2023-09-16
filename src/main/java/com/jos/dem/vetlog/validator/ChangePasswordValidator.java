@@ -24,20 +24,20 @@ import org.springframework.validation.Validator;
 @Component
 public class ChangePasswordValidator implements Validator {
 
-  @Override
-  public boolean supports(Class<?> clazz) {
-    return ChangePasswordCommand.class.equals(clazz);
-  }
-
-  @Override
-  public void validate(Object target, Errors errors) {
-    ChangePasswordCommand command = (ChangePasswordCommand) target;
-    validatePasswords(errors, command);
-  }
-
-  private void validatePasswords(Errors errors, ChangePasswordCommand command) {
-    if (!command.getPassword().equals(command.getPasswordConfirmation())) {
-      errors.rejectValue("password", "user.error.password.equals");
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return ChangePasswordCommand.class.equals(clazz);
     }
-  }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        ChangePasswordCommand command = (ChangePasswordCommand) target;
+        validatePasswords(errors, command);
+    }
+
+    private void validatePasswords(Errors errors, ChangePasswordCommand command) {
+        if (!command.getPassword().equals(command.getPasswordConfirmation())) {
+            errors.rejectValue("password", "user.error.password.equals");
+        }
+    }
 }

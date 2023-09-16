@@ -21,5 +21,4 @@ public class VetlogException extends RuntimeException {
     public VetlogException(String message) {
         super(message);
     }
-
 }

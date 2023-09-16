@@ -16,16 +16,15 @@ package com.jos.dem.vetlog.command;
 import com.jos.dem.vetlog.enums.PetStatus;
 import com.jos.dem.vetlog.enums.PetType;
 import com.jos.dem.vetlog.model.PetImage;
+import java.util.ArrayList;
+import java.util.List;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -35,7 +34,7 @@ public class PetCommand implements Command {
     private Long id;
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min = 1, max = 50)
     private String name;
 
     @NotNull
@@ -70,5 +69,4 @@ public class PetCommand implements Command {
     private MultipartFile image;
 
     private List<PetImage> images = new ArrayList<>();
-
 }

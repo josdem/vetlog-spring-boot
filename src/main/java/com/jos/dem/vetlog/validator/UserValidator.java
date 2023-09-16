@@ -29,36 +29,36 @@ import org.springframework.validation.Validator;
 @RequiredArgsConstructor
 public class UserValidator implements Validator {
 
-  private final UserService userService;
+    private final UserService userService;
 
-  @Override
-  public boolean supports(Class<?> clazz) {
-    return UserCommand.class.equals(clazz);
-  }
-
-  @Override
-  public void validate(Object target, Errors errors) {
-    UserCommand userCommand = (UserCommand) target;
-    validatePasswords(errors, userCommand);
-    validateUsername(errors, userCommand);
-    validateEmail(errors, userCommand);
-  }
-
-  private void validatePasswords(Errors errors, UserCommand command) {
-    if (!command.getPassword().equals(command.getPasswordConfirmation())) {
-      errors.rejectValue("password", "user.error.password.equals");
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return UserCommand.class.equals(clazz);
     }
-  }
 
-  private void validateUsername(Errors errors, UserCommand command) {
-    if (userService.getByUsername(command.getUsername()) != null) {
-      errors.rejectValue("username", "user.error.duplicated.username");
+    @Override
+    public void validate(Object target, Errors errors) {
+        UserCommand userCommand = (UserCommand) target;
+        validatePasswords(errors, userCommand);
+        validateUsername(errors, userCommand);
+        validateEmail(errors, userCommand);
     }
-  }
 
-  public void validateEmail(Errors errors, UserCommand command) {
-    if (userService.getByEmail(command.getEmail()) != null) {
-      errors.rejectValue("email", "user.error.duplicated.email");
+    private void validatePasswords(Errors errors, UserCommand command) {
+        if (!command.getPassword().equals(command.getPasswordConfirmation())) {
+            errors.rejectValue("password", "user.error.password.equals");
+        }
     }
-  }
+
+    private void validateUsername(Errors errors, UserCommand command) {
+        if (userService.getByUsername(command.getUsername()) != null) {
+            errors.rejectValue("username", "user.error.duplicated.username");
+        }
+    }
+
+    public void validateEmail(Errors errors, UserCommand command) {
+        if (userService.getByEmail(command.getEmail()) != null) {
+            errors.rejectValue("email", "user.error.duplicated.email");
+        }
+    }
 }

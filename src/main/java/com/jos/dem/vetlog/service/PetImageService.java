@@ -17,7 +17,6 @@ limitations under the License.
 package com.jos.dem.vetlog.service;
 
 import com.jos.dem.vetlog.command.Command;
-
 import java.io.IOException;
 
 public interface PetImageService {

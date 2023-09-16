@@ -23,12 +23,11 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.jos.dem.vetlog.exception.BusinessException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
+import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -40,18 +39,22 @@ public class GoogleStorageWriter {
 
     @PostConstruct
     void setup() throws IOException {
-        storage = StorageOptions.newBuilder().setProjectId(gcpProjectIdProvider.getProjectId()).setCredentials(credentialsProvider.getCredentials()).build().getService();
+        storage = StorageOptions.newBuilder()
+                .setProjectId(gcpProjectIdProvider.getProjectId())
+                .setCredentials(credentialsProvider.getCredentials())
+                .build()
+                .getService();
     }
 
-    public void uploadToBucket(String bucket, String fileName, InputStream inputStream, String contentType) throws IOException {
+    public void uploadToBucket(String bucket, String fileName, InputStream inputStream, String contentType)
+            throws IOException {
         BlobId blobId = BlobId.of(bucket, fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType(contentType).build();
+        BlobInfo blobInfo =
+                BlobInfo.newBuilder(blobId).setContentType(contentType).build();
         try {
             storage.create(blobInfo, inputStream.readAllBytes());
         } catch (IllegalStateException iee) {
             throw new BusinessException(iee.getMessage());
         }
-
     }
-
 }
