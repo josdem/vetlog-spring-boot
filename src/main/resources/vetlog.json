@@ -1,9 +1,9 @@
 {
   "type": "service_account",
-  "project_id": "project_id",
+  "project_id": "vetlog-357216",
   "private_key_id": "private_key_id",
-  "private_key": "private_key",
-  "client_email": "client_email",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCcOKi+f0eRHo43\nCF5GAqXXO5CtqeMnbNc8HPD2Rt5EZEgyLbvxVn3INGnA2UMLWKkoRbTY6HoHPRSF\nzRQ691zqdnApu6hpTyFrRqzNUUXjJZU0x/W7nq0QtjOJ2lz8F2blGN1B1JKVbzPI\nGQboLsJUuDkl0kO4oPg1o/DQOtQemovuzUQuu3yin/YyTyaeKpLuKun3ZMGem8/I\nZ0qybtGuMg2Jo2yY1IZkPkVegYssy4o+Hlnwi+H+8/RU8VD93F0SW05Q9xAPD1Uj\nFdCrYaM/vN4gLCj08iouzzp1r//DXzf0O1C4C9M7Dvq2elMrenqYlN0Y10wyZs1c\nVD5riaXFAgMBAAECggEAF9Ih6kOhMjUnt/zcLIO8gv3FBAjAJ45WoYbDjWIQA/tg\nm4TSwCw762+74m6ej60vb1cgX496BVQ10WiMhFNHWpnAZPSwQOKSiiI8OOXYKMMz\nJa8J6YJ6tEN8HLHsdM94CUifJanCx5YtyKixn2zQhWI+leWicurZ/jU8g/E8eq/s\nHT7uUE4eJVctoS774dEPbj/wNvGz8OKmrAFRUKN2AyEc/JupPbiOjQwvVtEir64n\n2DKapIEcW03RPObPvRvjj8uQJytIaZ3hm2NsAF9OhSdah50LJYFrlx5a0uTDjADk\naQQ1XnSy+ojkOKH2p/6LpU5NFE8dgy+j0pX/uF2i7wKBgQDRPgUL4yzXLtRie12N\nuvHHWKGEqW9b9eAtpDyKXAgoirgwc3FDUO2uCGx3xVd28uUPh2JcF9/fEH1jnlDP\njsEygBYzeGrxg7qowtu4m0zgGlGWm+nL7UnWKIpHR1sWxd3o1YAjWony3/ujvOrf\nBbDzDdQO2rSh/UA+AjKaAkouXwKBgQC/IYGq8uNj6B/ijlh6zhAyrrAazIyycOj4\nehARFtqffcQXdYTnx6lSb6vcusrR+tEl2vV0q58OjATnUyg+saPaSAknFuFx4oVc\nunoGejcO78Mc4aRGf4DH537eSa4uG6QysyOM1U5MFqVeu2hWP7Cc47Pn6JxTtOfO\nLofdhTEWWwKBgGHU76MZOrP5r0/Egn9r8vPT2uEeH3UNxx1P9wZx9VaPVYNB1qk0\nw4xlX+G4ISb6dmMGV9TbTM8M9LOJKBuDkY09GiRCny4A+1tAkF8GLbFyXMdgarXw\nYl+BYPXmxQ4mwZTFjj35bRpj41IxWFeiX5Ok2YuAcohy0oCromEjxO9dAoGAZBxR\nxc+5CQBxiwJSF+jNFS7osPDJFUIM1PFibwEQfA+s4Ti954VuC+7QDyqLx5ZfbDuW\n64hlJIJ0oxGsd8Il99RZbu8OIM+sWNiXx8LGCf3NrdgGaqKoOoznp9jh8eaqh5/L\nFB46B6Ko9cilqt9rS5H9DpCJKVMNQ7KdmYsFHhcCgYBFZJpOoBOT+ICbwFFBtt73\ngvojjyk2nO49/eyFRxa/SbkPfBOIhw5CuqVYbUuaRkIW+IyvWcJ0k2s6PLT8b14j\nGVaQdWbrG8KJx+tmQB6dKom9LUkiyl6HRsU7lbWxSzZuZSp+0ItqznfchCntqmf8\nmbtOqp/cvE2Jp5/lCkGo8B==\n-----END PRIVATE KEY-----\n",
+  "client_email": "client_email@vetlog-357216.iam.gserviceaccount.com",
   "client_id": "client_id",
   "auth_uri": "auth_uri",
   "token_uri": "token_uri",
