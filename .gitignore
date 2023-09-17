@@ -7,4 +7,3 @@
 *.log
 bower.json
 **package-lock.json
-**vetlog.json
