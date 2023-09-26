@@ -19,10 +19,9 @@ package com.jos.dem.vetlog.config;
 import com.jos.dem.vetlog.enums.CurrentEnvironment;
 import com.jos.dem.vetlog.enums.Role;
 import com.jos.dem.vetlog.model.User;
-import com.jos.dem.vetlog.repository.BreedRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.Environment;
@@ -31,16 +30,11 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
 
-    @Autowired
-    private Environment environment;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private BreedRepository breedRepository;
+    private final Environment environment;
+    private final UserRepository userRepository;
 
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
@@ -57,7 +51,8 @@ public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
     }
 
     void createUserWithRole(String username, String password, String email, Role authority) {
-        if (userRepository.findByUsername(username) == null) {
+        if (userRepository.findByUsername(username).isEmpty()) {
+            log.info("Creating user: {}", username);
             User user = new User();
             user.setUsername(username);
             user.setPassword(new BCryptPasswordEncoder().encode(password));
