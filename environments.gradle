@@ -1,0 +1,11 @@
+ext {
+    configurationDir = "${HOME}/.vetlog"
+}
+
+def filesToInclude = ["vetlog.json"]
+def toDirectory = 'src/main/resources/'
+task settingEnvironment(type:Copy){
+    from configurationDir
+    into toDirectory
+    include filesToInclude
+}
