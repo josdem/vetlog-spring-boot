@@ -1,7 +1,4 @@
-ext {
-    configurationDir = "${HOME}/.vetlog"
-}
-
+def configurationDir = "${HOME}/.vetlog"
 def filesToInclude = ["vetlog.json"]
 def toDirectory = 'src/main/resources/'
 task settingEnvironment(type:Copy){
