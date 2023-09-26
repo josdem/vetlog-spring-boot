@@ -29,8 +29,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Slf4j
 @Component
 public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
@@ -59,8 +57,7 @@ public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
     }
 
     void createUserWithRole(String username, String password, String email, Role authority) {
-        Optional<User> optional = userRepository.findByUsername(username);
-        if (optional.isEmpty()) {
+        if (userRepository.findByUsername(username) == null) {
             User user = new User();
             user.setUsername(username);
             user.setPassword(new BCryptPasswordEncoder().encode(password));
