@@ -8,7 +8,8 @@ import static org.mockito.Mockito.when;
 
 import com.jos.dem.vetlog.command.UserCommand;
 import com.jos.dem.vetlog.model.User;
-import com.jos.dem.vetlog.service.UserService;
+import com.jos.dem.vetlog.repository.UserRepository;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,12 +26,12 @@ class UserValidatorTest {
     private Errors errors = mock(Errors.class);
 
     @Mock
-    private UserService userService;
+    private UserRepository userRepository;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        validator = new UserValidator(userService);
+        validator = new UserValidator(userRepository);
     }
 
     @Test
@@ -90,7 +91,7 @@ class UserValidatorTest {
     void shouldNotDuplicateUsers(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         UserCommand userCommand = getUserCommand();
-        when(userService.getByUsername("josdem")).thenReturn(new User());
+        when(userRepository.findByUsername("josdem")).thenReturn(Optional.of(new User()));
         validator.validate(userCommand, errors);
         verify(errors).rejectValue("username", "user.error.duplicated.username");
     }
@@ -100,7 +101,7 @@ class UserValidatorTest {
     void shouldNotDuplicateUsersByEmail(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         UserCommand userCommand = getUserCommand();
-        when(userService.getByEmail("contact@josdem.io")).thenReturn(new User());
+        when(userRepository.findByEmail("contact@josdem.io")).thenReturn(Optional.of(new User()));
         validator.validate(userCommand, errors);
         verify(errors).rejectValue("email", "user.error.duplicated.email");
     }

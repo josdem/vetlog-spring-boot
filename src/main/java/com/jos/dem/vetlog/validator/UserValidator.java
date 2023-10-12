@@ -17,6 +17,7 @@ limitations under the License.
 package com.jos.dem.vetlog.validator;
 
 import com.jos.dem.vetlog.command.UserCommand;
+import com.jos.dem.vetlog.repository.UserRepository;
 import com.jos.dem.vetlog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,7 @@ import org.springframework.validation.Validator;
 public class UserValidator implements Validator {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
