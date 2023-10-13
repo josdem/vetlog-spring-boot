@@ -17,7 +17,9 @@ limitations under the License.
 package com.jos.dem.vetlog.validator;
 
 import com.jos.dem.vetlog.command.UserCommand;
-import com.jos.dem.vetlog.service.UserService;
+import com.jos.dem.vetlog.model.User;
+import com.jos.dem.vetlog.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -29,7 +31,7 @@ import org.springframework.validation.Validator;
 @RequiredArgsConstructor
 public class UserValidator implements Validator {
 
-    private final UserService userService;
+    private final UserRepository userRepository;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -51,13 +53,15 @@ public class UserValidator implements Validator {
     }
 
     private void validateUsername(Errors errors, UserCommand command) {
-        if (userService.getByUsername(command.getUsername()) != null) {
+        Optional<User> optional = userRepository.findByUsername(command.getUsername());
+        if (optional.isPresent()) {
             errors.rejectValue("username", "user.error.duplicated.username");
         }
     }
 
     public void validateEmail(Errors errors, UserCommand command) {
-        if (userService.getByEmail(command.getEmail()) != null) {
+        Optional<User> optional = userRepository.findByEmail(command.getEmail());
+        if (optional.isPresent()) {
             errors.rejectValue("email", "user.error.duplicated.email");
         }
     }
