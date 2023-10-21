@@ -2,10 +2,10 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title th:text="#{pet.view.list.title}"></title>
-    <head th:insert="fragments/include"/>
+    <head th:insert="~{fragments/include}"/>
 </head>
 <body>
-<div th:insert="fragments/header"/>
+<div th:insert="~{fragments/header}"/>
 <br/><br/>
 <br/><br/>
 <br/><br/>
@@ -47,6 +47,6 @@
     </div>
 </div>
 <br/><br/><br/><br/>
-<div th:insert="fragments/footer"/>
+<div th:insert="~{fragments/footer}"/>
 </body>
 </html>

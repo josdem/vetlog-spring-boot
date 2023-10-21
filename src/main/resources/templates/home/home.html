@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title th:text="#{app.title}"/>
-    <head th:insert="fragments/include"/>
+    <head th:insert="~{fragments/include}"/>
 </head>
 <style>
 .space-div {
@@ -19,7 +19,7 @@ background-color: #faf6e6;
         <br/><br/>
     </div>
 </div>
-<div th:insert="fragments/header"/>
+<div th:insert="~{fragments/header}"/>
 <header id="home">
     <div id="owl-demo">
         <div class="item" style="background:url('/images/slider1.png'); background-size:cover;">
@@ -215,7 +215,7 @@ background-color: #faf6e6;
         </div>
     </div>
 </section>
-<div th:insert="fragments/footer"/>
+<div th:insert="~{fragments/footer}"/>
 <script src="assets/servizi-dog-theme/js/jquery-2.1.0.min.js"></script>
 <script src="assets/servizi-dog-theme/js/jquery.easing.js"></script>
 <script src="assets/servizi-dog-theme/js/smoothScroll.js"></script>

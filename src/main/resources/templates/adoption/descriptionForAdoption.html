@@ -1,11 +1,11 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <title th:text="#{pet.view.list.title}"></title>
-    <head th:insert="fragments/include"/>
+    <head th:insert="~{fragments/include}"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
 </head>
 <body>
-<div th:insert="fragments/header"/>
+<div th:insert="~{fragments/header}"/>
 <br/><br/>
 <br/><br/>
 <br/><br/>
@@ -40,6 +40,6 @@
     </div>
 </div>
 <br/><br/><br/><br/>
-<div th:insert="fragments/footer"/>
+<div th:insert="~{fragments/footer}"/>
 </body>
 </html>
