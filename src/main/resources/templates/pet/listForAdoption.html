@@ -19,7 +19,7 @@
             </div>
         </div>
         <div th:each="pet : ${pets}">
-            <div class="col-sm">
+            <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
                     <div th:if="${!pet.images.isEmpty()}">
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
