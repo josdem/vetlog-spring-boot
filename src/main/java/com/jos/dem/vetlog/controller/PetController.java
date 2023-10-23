@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -166,6 +167,13 @@ public class PetController {
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         return modelAndView;
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ModelAndView delete(@RequestParam("uuid") String uuid) {
+        log.info("Deleting pet: {}", uuid);
+        ModelAndView modelAndView = new ModelAndView("pet/list");
+        return fillPetAndImageUrl(modelAndView);
     }
 
     private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView) {
