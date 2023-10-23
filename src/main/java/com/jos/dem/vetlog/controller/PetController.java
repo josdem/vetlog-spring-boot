@@ -168,6 +168,15 @@ public class PetController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/delete")
+    public ModelAndView delete(@RequestParam("uuid") String uuid) {
+        log.info("Deleting pet: {}", uuid);
+        Pet pet = petService.getPetByUuid(uuid);
+        petService.deletePetById(pet.getId());
+        ModelAndView modelAndView = new ModelAndView("pet/list");
+        return fillPetAndImageUrl(modelAndView);
+    }
+
     private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView) {
         User user = userService.getCurrentUser();
         List<Pet> pets = petService.getPetsByUser(user);
