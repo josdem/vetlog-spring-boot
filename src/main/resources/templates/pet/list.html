@@ -21,7 +21,7 @@
             <br/><br/>
         </div>
         <div th:each="pet : ${pets}">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6">
                 <div class="thumbnail">
                     <div th:if="${!pet.images.isEmpty()}">
                         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -37,7 +37,7 @@
                                 <div th:each="image : ${pet.images}" class="item"
                                      th:classappend="|${pet.images.indexOf(image) == 0 ? 'active' : ''}|"
                                      align="center">
-                                    <img style="width:350px;height:300px;"
+                                    <img style="width:650px;height:400px;"
                                          th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
                                 </div>
                             </div>
@@ -71,13 +71,13 @@
                         </p>
                         <br/>
                         <center>
-                            <a th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-success">
+                            <a th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-primary">
                                 <p th:text="#{petlog.list}"/>
                             </a>
                             <a th:href="@{/pet/edit(uuid=${pet.uuid})}" class="btn btn-success">
                                 <p th:text="#{pet.edit}"/>
                             </a>
-                            <a th:href="@{/pet/delete(uuid=${pet.uuid})}" class="btn btn-success">
+                            <a th:href="@{/pet/delete(uuid=${pet.uuid})}" class="btn btn-danger">
                                 <p th:text="#{pet.delete}"/>
                             </a>
                         </center>
