@@ -97,6 +97,10 @@ tasks.named('test') {
   systemProperties = System.properties
 }
 
+springBoot {
+  buildInfo()
+}
+
 bootRun {
   systemProperties = System.properties
 }
