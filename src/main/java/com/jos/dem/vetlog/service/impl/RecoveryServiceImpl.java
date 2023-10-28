@@ -93,6 +93,7 @@ public class RecoveryServiceImpl implements RecoveryService {
             String token = registrationService.generateToken(email);
             MessageCommand command = new MessageCommand();
             command.setEmail(email);
+            command.setName(email);
             command.setTemplate(forgotTemplate);
             command.setMessage(baseUrl + forgotPath + token);
             command.setToken(clientToken);
