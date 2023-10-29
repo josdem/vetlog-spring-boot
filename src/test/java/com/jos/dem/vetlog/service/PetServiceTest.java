@@ -54,6 +54,9 @@ class PetServiceTest {
     @Mock
     private AdoptionRepository adoptionRepository;
 
+    @Mock
+    private LocaleService localeService;
+
     private User user;
     private User adopter;
     private Pet pet;
@@ -65,7 +68,8 @@ class PetServiceTest {
         user = new User();
         adopter = new User();
         pet = new Pet();
-        service = new PetServiceImpl(petBinder, petRepository, petImageService, userRepository, adoptionRepository);
+        service = new PetServiceImpl(
+                petBinder, petRepository, petImageService, userRepository, adoptionRepository, localeService);
     }
 
     @Test
@@ -213,5 +217,18 @@ class PetServiceTest {
         Assertions.assertThrows(BusinessException.class, () -> {
             service.deletePetById(1L);
         });
+    }
+
+    @Test
+    @DisplayName("not deleting a pet due to IN_ADOPTION status")
+    void shouldNotDeletePetInAdoption(TestInfo testInfo) {
+        // given
+        log.info("Running: {}", testInfo.getDisplayName());
+        var petInAdoption = new Pet();
+        petInAdoption.setStatus(PetStatus.IN_ADOPTION);
+        Mockito.when(petRepository.findById(1L)).thenReturn(Optional.of(petInAdoption));
+
+        // when
+        Assertions.assertThrows(BusinessException.class, () -> service.deletePetById(1L));
     }
 }

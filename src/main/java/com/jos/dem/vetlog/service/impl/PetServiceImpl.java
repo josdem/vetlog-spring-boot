@@ -27,6 +27,7 @@ import com.jos.dem.vetlog.model.User;
 import com.jos.dem.vetlog.repository.AdoptionRepository;
 import com.jos.dem.vetlog.repository.PetRepository;
 import com.jos.dem.vetlog.repository.UserRepository;
+import com.jos.dem.vetlog.service.LocaleService;
 import com.jos.dem.vetlog.service.PetImageService;
 import com.jos.dem.vetlog.service.PetService;
 import java.io.IOException;
@@ -45,6 +46,7 @@ public class PetServiceImpl implements PetService {
     private final PetImageService petImageService;
     private final UserRepository userRepository;
     private final AdoptionRepository adoptionRepository;
+    private final LocaleService localeService;
 
     @Transactional
     public Pet save(Command command, User user) throws IOException {
@@ -114,6 +116,9 @@ public class PetServiceImpl implements PetService {
     public void deletePetById(Long id) {
         Pet pet =
                 petRepository.findById(id).orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
+        if (pet.getStatus() == PetStatus.IN_ADOPTION) {
+            throw new BusinessException(localeService.getMessage("pet.delete.error.inAdoption"));
+        }
         petRepository.delete(pet);
     }
 
