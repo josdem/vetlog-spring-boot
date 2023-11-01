@@ -1,5 +1,6 @@
 package com.jos.dem.vetlog.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -204,7 +205,7 @@ class PetServiceTest {
     void deletePetByIdSuccessufully(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
-        Assertions.assertDoesNotThrow(() -> service.deletePetById(1L));
+        assertDoesNotThrow(() -> service.deletePetById(1L));
     }
 
     @Test
