@@ -17,9 +17,12 @@ limitations under the License.
 package com.jos.dem.vetlog.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 public interface LocaleService {
     String getMessage(String code);
+
+    String getMessage(String code, Locale locale);
 
     String getMessage(String code, HttpServletRequest request);
 }

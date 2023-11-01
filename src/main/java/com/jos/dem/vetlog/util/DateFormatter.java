@@ -16,14 +16,21 @@ limitations under the License.
 
 package com.jos.dem.vetlog.util;
 
+import com.jos.dem.vetlog.service.LocaleService;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class DateFormatter {
 
-    public String format(LocalDateTime dateToFormat) {
-        return dateToFormat.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+    private final LocaleService localeService;
+
+    public String formatToDate(LocalDateTime dateToFormat, Locale locale) {
+        var format = localeService.getMessage("format.date", locale);
+        return dateToFormat.format(DateTimeFormatter.ofPattern(format));
     }
 }
