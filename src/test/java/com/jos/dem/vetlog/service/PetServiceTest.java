@@ -1,5 +1,6 @@
 package com.jos.dem.vetlog.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -25,7 +26,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -203,20 +203,16 @@ class PetServiceTest {
     @DisplayName("deleting a pet")
     void deletePetByIdSuccessufully(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        Mockito.when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
-        Assertions.assertDoesNotThrow(() -> {
-            service.deletePetById(1L);
-        });
+        when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
+        assertDoesNotThrow(() -> service.deletePetById(1L));
     }
 
     @Test
     @DisplayName("not deleting a pet due to not found")
     void shouldNotDeletePetById(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        Mockito.when(petRepository.findById(1L)).thenReturn(Optional.empty());
-        Assertions.assertThrows(BusinessException.class, () -> {
-            service.deletePetById(1L);
-        });
+        when(petRepository.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(BusinessException.class, () -> service.deletePetById(1L));
     }
 
     @Test
@@ -226,9 +222,9 @@ class PetServiceTest {
         log.info("Running: {}", testInfo.getDisplayName());
         var petInAdoption = new Pet();
         petInAdoption.setStatus(PetStatus.IN_ADOPTION);
-        Mockito.when(petRepository.findById(1L)).thenReturn(Optional.of(petInAdoption));
+        when(petRepository.findById(1L)).thenReturn(Optional.of(petInAdoption));
 
         // when
-        Assertions.assertThrows(BusinessException.class, () -> service.deletePetById(1L));
+        assertThrows(BusinessException.class, () -> service.deletePetById(1L));
     }
 }

@@ -59,7 +59,7 @@
                         <h3 th:text="${pet.name}"></h3>
                         <p>
                         <ul>
-                            <li th:text="${@dateFormatter.format(pet.birthDate)}"/>
+                            <li th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                             <li th:text="${pet.breed.name}"/>
                             <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                             <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
