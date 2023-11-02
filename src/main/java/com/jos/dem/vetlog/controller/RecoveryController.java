@@ -109,7 +109,7 @@ public class RecoveryController {
             return new ModelAndView("recovery/changePassword");
         }
         ModelAndView modelAndView = new ModelAndView("login/login");
-        modelAndView.addObject("message", localeService.getMessage("recovery.password.changed", request));
+        modelAndView.addObject("change", localeService.getMessage("recovery.password.changed", request));
         recoveryService.changePassword(command);
         return modelAndView;
     }
