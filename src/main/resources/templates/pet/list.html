@@ -5,6 +5,7 @@
     <head th:insert="~{fragments/include}"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/javascript/delete.js}"></script>
 </head>
 <body>
 <div th:insert="~{fragments/header}"/>
@@ -101,7 +102,7 @@
                     Are you sure?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="delete">Delete</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="delete" onclick="deletePet('hello')">Delete</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
