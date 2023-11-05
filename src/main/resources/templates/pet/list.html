@@ -92,11 +92,11 @@
                                         <h4 class="modal-title" id="modalLabel">Delete a Pet</h4>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure?
+                                        <p th:text="#{pet.delete.warning}"/>
                                     </div>
                                     <div class="modal-footer">
                                         <a th:href="@{/pet/delete(uuid=${pet.uuid})}" class="btn btn-danger"><p th:text="#{pet.delete}"/></a>
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><p th:text="#{pet.delete.close}"/></button>
                                     </div>
                                 </div>
                             </div>
