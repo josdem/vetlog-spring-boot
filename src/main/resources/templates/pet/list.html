@@ -77,16 +77,38 @@
                             <a th:href="@{/pet/edit(uuid=${pet.uuid})}" class="btn btn-success">
                                 <p th:text="#{pet.edit}"/>
                             </a>
-                            <a th:href="@{/pet/delete(uuid=${pet.uuid})}" class="btn btn-danger">
+                            <a class="btn btn-danger" data-toggle="modal" data-target="#flipFlop">
                                 <p th:text="#{pet.delete}"/>
                             </a>
                         </center>
+                        <!-- The modal -->
+                        <div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="modalLabel"><p th:text="#{pet.delete.title}"/></h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p th:text="#{pet.delete.warning}"/>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a th:href="@{/pet/delete(uuid=${pet.uuid})}" class="btn btn-danger"><p th:text="#{pet.delete}"/></a>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><p th:text="#{pet.delete.close}"/></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <br/><br/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+  </div>
 </div>
 <div th:insert="~{fragments/footer}"/>
 </body>
