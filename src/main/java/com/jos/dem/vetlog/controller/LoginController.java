@@ -38,13 +38,9 @@ public class LoginController {
     private final LocaleService localeService;
 
     @GetMapping(value = "/login")
-    public ModelAndView login(@RequestParam Optional<String> error, HttpServletRequest request) {
+    public ModelAndView login(@RequestParam Optional<String> error) {
         log.info("Calling login");
         ModelAndView modelAndView = new ModelAndView("login/login");
-        if (error.isPresent()) {
-            log.info("Invalid credentials");
-            modelAndView.addObject("message", localeService.getMessage("login.error", request));
-        }
         return modelAndView;
     }
 

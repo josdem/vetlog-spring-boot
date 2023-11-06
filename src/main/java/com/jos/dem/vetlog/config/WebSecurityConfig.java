@@ -37,20 +37,21 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((requests) -> requests.requestMatchers(
-                "/",
-                "/actuator/**",
-                "/assets/**",
-                "/images/**",
-                "/home/**",
-                "/user/**",
-                "/recovery/**",
-                "/breed/list",
-                "/pet/listForAdoption",
-                "/service/list")
-                .permitAll()
-                .anyRequest()
-                .authenticated())
-                .formLogin((form) -> form.loginPage("/login").failureUrl("/login?error=true").permitAll())
+                                "/",
+                                "/actuator/**",
+                                "/assets/**",
+                                "/images/**",
+                                "/home/**",
+                                "/user/**",
+                                "/recovery/**",
+                                "/breed/list",
+                                "/pet/listForAdoption",
+                                "/service/list")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .formLogin((form) ->
+                        form.loginPage("/login").failureUrl("/login?error=true").permitAll())
                 .logout((logout) -> logout.permitAll());
 
         return http.build();
