@@ -16,7 +16,6 @@ limitations under the License.
 
 package com.jos.dem.vetlog.model;
 
-import static jakarta.persistence.GenerationType.AUTO;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 import jakarta.persistence.Column;

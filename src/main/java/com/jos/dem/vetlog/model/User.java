@@ -17,7 +17,7 @@ limitations under the License.
 package com.jos.dem.vetlog.model;
 
 import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.AUTO;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 import com.jos.dem.vetlog.enums.Role;
 import jakarta.persistence.Column;
@@ -38,7 +38,7 @@ import lombok.ToString;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(unique = true, nullable = false)
