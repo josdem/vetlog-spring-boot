@@ -17,7 +17,7 @@ limitations under the License.
 package com.jos.dem.vetlog.model;
 
 import static jakarta.persistence.EnumType.STRING;
-import static jakarta.persistence.GenerationType.AUTO;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 import com.jos.dem.vetlog.enums.PetStatus;
 import jakarta.persistence.CascadeType;
@@ -43,7 +43,7 @@ import lombok.ToString;
 public class Pet {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @Column(nullable = false)
