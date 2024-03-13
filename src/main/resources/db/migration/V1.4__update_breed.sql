@@ -1,1 +1,0 @@
-UPDATE `breed` set name='Mixed Breed' where id=2;
