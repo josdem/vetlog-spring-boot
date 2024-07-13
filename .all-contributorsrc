@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "marki2121",
+      "name": "Marko Maruna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44497571?v=4",
+      "profile": "https://github.com/marki2121",
+      "contributions": [
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "vetlog-spring-boot",
+  "projectOwner": "josdem"
+}
