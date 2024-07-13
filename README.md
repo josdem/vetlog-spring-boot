@@ -38,7 +38,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/marki2121"><img src="https://avatars.githubusercontent.com/u/44497571?v=4?s=100" width="100px;" alt="Marko Maruna"/><br /><sub><b>Marko Maruna</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/pulls?q=is%3Apr+reviewed-by%3Amarki2121" title="Reviewed Pull Requests">👀</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kirillsinyuk"><img src="https://avatars.githubusercontent.com/u/51965753?v=4?s=100" width="100px;" alt="Kirill"/><br /><sub><b>Kirill</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/pulls?q=is%3Apr+reviewed-by%3Akirillsinyuk" title="Reviewed Pull Requests">👀</a> <a href="#translation-kirillsinyuk" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kirillsinyuk"><img src="https://avatars.githubusercontent.com/u/51965753?v=4?s=100" width="100px;" alt="Kirill"/><br /><sub><b>Kirill</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/pulls?q=is%3Apr+reviewed-by%3Akirillsinyuk" title="Reviewed Pull Requests">👀</a> <a href="#translation-kirillsinyuk" title="Translation">🌍</a> <a href="https://github.com/josdem/vetlog-spring-boot/commits?author=kirillsinyuk" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
