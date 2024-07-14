@@ -1,6 +1,6 @@
 Vetlog Spring Boot
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ---------------------------------------
 [![Quality Gate Status](https://sonar.josdem.io/api/project_badges/measure?project=com.jos.dem.vetlog%3Avetlog-spring-boot&metric=alert_status)](https://sonar.josdem.io/dashboard?id=com.jos.dem.vetlog%3Avetlog-spring-boot)
@@ -39,6 +39,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/marki2121"><img src="https://avatars.githubusercontent.com/u/44497571?v=4?s=100" width="100px;" alt="Marko Maruna"/><br /><sub><b>Marko Maruna</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/pulls?q=is%3Apr+reviewed-by%3Amarki2121" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/josdem/vetlog-spring-boot/commits?author=marki2121" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kirillsinyuk"><img src="https://avatars.githubusercontent.com/u/51965753?v=4?s=100" width="100px;" alt="Kirill"/><br /><sub><b>Kirill</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/pulls?q=is%3Apr+reviewed-by%3Akirillsinyuk" title="Reviewed Pull Requests">👀</a> <a href="#translation-kirillsinyuk" title="Translation">🌍</a> <a href="https://github.com/josdem/vetlog-spring-boot/commits?author=kirillsinyuk" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/tarun18tk"><img src="https://avatars.githubusercontent.com/u/97531399?v=4?s=100" width="100px;" alt="tarun18tk"/><br /><sub><b>tarun18tk</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=tarun18tk" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
