@@ -45,6 +45,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "sindhunaydu",
+      "name": "Sindhu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1637811?v=4",
+      "profile": "https://www.linkedin.com/in/sindhu-murthy",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

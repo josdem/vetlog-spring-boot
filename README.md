@@ -1,6 +1,6 @@
 Vetlog Spring Boot
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 ---------------------------------------
 [![Quality Gate Status](https://sonar.josdem.io/api/project_badges/measure?project=com.jos.dem.vetlog%3Avetlog-spring-boot&metric=alert_status)](https://sonar.josdem.io/dashboard?id=com.jos.dem.vetlog%3Avetlog-spring-boot)
@@ -41,6 +41,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kirillsinyuk"><img src="https://avatars.githubusercontent.com/u/51965753?v=4?s=100" width="100px;" alt="Kirill"/><br /><sub><b>Kirill</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/pulls?q=is%3Apr+reviewed-by%3Akirillsinyuk" title="Reviewed Pull Requests">👀</a> <a href="#translation-kirillsinyuk" title="Translation">🌍</a> <a href="https://github.com/josdem/vetlog-spring-boot/commits?author=kirillsinyuk" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tarun18tk"><img src="https://avatars.githubusercontent.com/u/97531399?v=4?s=100" width="100px;" alt="tarun18tk"/><br /><sub><b>tarun18tk</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=tarun18tk" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/uhdf823f"><img src="https://avatars.githubusercontent.com/u/143468270?v=4?s=100" width="100px;" alt="uhdf823f"/><br /><sub><b>uhdf823f</b></sub></a><br /><a href="#translation-uhdf823f" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/sindhu-murthy"><img src="https://avatars.githubusercontent.com/u/1637811?v=4?s=100" width="100px;" alt="Sindhu"/><br /><sub><b>Sindhu</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=sindhunaydu" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
