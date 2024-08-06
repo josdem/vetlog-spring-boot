@@ -1,7 +1,7 @@
 Vetlog Spring Boot
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=josdem_vetlog-spring-boot&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=josdem_vetlog-spring-boot)
 ---------------------------------------
 Maintain your pet's history organized.
 
