@@ -16,7 +16,9 @@ limitations under the License.
 
 package com.josdem.vetlog.service;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.service.impl.RestServiceImpl;
@@ -28,7 +30,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -51,7 +52,7 @@ class RestServiceTest {
     @DisplayName("sending message")
     void shouldSendMessage(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
-        RestService restService = Mockito.mock(RestService.class);
+        RestService restService = mock(RestService.class);
         MessageCommand messageCommand = mock(MessageCommand.class);
         Call<ResponseBody> call = mock(Call.class);
 
