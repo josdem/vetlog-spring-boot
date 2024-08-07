@@ -23,8 +23,8 @@ ext {
   mockitoInlineVersion = '4.8.0'
 }
 
-group = 'com.jos.dem.vetlog'
-version = '1.6.1'
+group = 'com.josdem.vetlog'
+version = '1.6.2'
 
 configurations {
   compileOnly {
