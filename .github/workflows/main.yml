@@ -39,11 +39,11 @@ jobs:
             role varchar(255) NOT NULL,
             username varchar(255) NOT NULL,
             PRIMARY KEY (id)
-        );" -u$USER -p$PASSWORD -D$DATABASE
-        echo "Creating users"
-        mysql -e "INSERT INTO user VALUES(1, 0, 0, 0,'2024-04-21 20:08:51','contact@josdem.io', 1,'jose','morales',NULL,'password','USER','josdem');" -u$USER -p$PASSWORD -D$DATABASE
-        mysql -e "INSERT INTO user VALUES(2, 0, 0, 0,'2024-04-21 20:08:52','contact@josdem.io', 1,'jose','morales',NULL,'password','USER','johndoe');" -u$USER -p$PASSWORD -D$DATABASE
-        mysql -e "INSERT INTO user VALUES(3, 0, 0, 0,'2024-04-21 20:08:53','contact@josdem.io', 1,'jose','morales',NULL,'password','USER','NHUQfuLarRMDj');" -u$USER -p$PASSWORD -D$DATABASE
-        mysql -e "INSERT INTO user VALUES(4, 0, 0, 0,'2024-04-21 20:08:54','contact@josdem.io', 1,'jose','morales',NULL,'password','USER','rJVyFMNsmXhPUvG');" -u$USER -p$PASSWORD -D$DATABASE
+          );" -u$USER -p$PASSWORD -D$DATABASE
+          echo "Creating users"
+          mysql -e "INSERT INTO user VALUES(1, 0, 0, 0,'2024-04-21 20:08:51','contact@josdem.io', 1,'jose','morales',NULL,'password','USER','josdem');" -u$USER -p$PASSWORD -D$DATABASE
+          mysql -e "INSERT INTO user VALUES(2, 0, 0, 0,'2024-04-21 20:08:52','contact@josdem.io', 1,'jose','morales',NULL,'password','USER','johndoe');" -u$USER -p$PASSWORD -D$DATABASE
+          mysql -e "INSERT INTO user VALUES(3, 0, 0, 0,'2024-04-21 20:08:53','contact@josdem.io', 1,'jose','morales',NULL,'password','USER','NHUQfuLarRMDj');" -u$USER -p$PASSWORD -D$DATABASE
+          mysql -e "INSERT INTO user VALUES(4, 0, 0, 0,'2024-04-21 20:08:54','contact@josdem.io', 1,'jose','morales',NULL,'password','USER','rJVyFMNsmXhPUvG');" -u$USER -p$PASSWORD -D$DATABASE
       - name: Build with Gradle
         run: ./gradlew test
