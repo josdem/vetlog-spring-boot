@@ -28,4 +28,4 @@ jobs:
       - name: Set up MySQL
         run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD -Dflyway.baselineOnMigrate=true flywayMigrate -i
       - name: Build with Gradle
-        run: ./gradlew test
+        run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD test
