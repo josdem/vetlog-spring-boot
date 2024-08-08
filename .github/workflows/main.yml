@@ -26,6 +26,6 @@ jobs:
           sudo /etc/init.d/mysql start
           mysql -e "CREATE DATABASE $DATABASE;" -u$USER -p$PASSWORD
       - name: Set up MySQL
-        - ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD -Dflyway.baselineOnMigrate=true flywayMigrate -i`
+        run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD -Dflyway.baselineOnMigrate=true flywayMigrate -i`
       - name: Build with Gradle
         run: ./gradlew test
