@@ -19,7 +19,7 @@ plugins {
 
 ext {
   gcpVersion = "4.7.1"
-  retrofitVersion = '2.9.0'
+  retrofitVersion = '2.11.0'
   mockitoInlineVersion = '4.8.0'
 }
 
