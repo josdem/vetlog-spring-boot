@@ -20,6 +20,10 @@ import java.util.UUID;
 
 public class UuidGenerator {
 
+    private UuidGenerator() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String generateUuid() {
         return UUID.randomUUID().toString();
     }
