@@ -82,7 +82,7 @@ public class PetController {
         ModelAndView modelAndView = new ModelAndView("pet/create");
         PetCommand petCommand = new PetCommand();
         petCommand.setStatus(PetStatus.OWNED);
-        modelAndView.addObject("petCommand", petCommand);
+        modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
     }
 
@@ -96,7 +96,7 @@ public class PetController {
         if (adopter != null) {
             petCommand.setAdopter(pet.getAdopter().getId());
         }
-        modelAndView.addObject("petCommand", petCommand);
+        modelAndView.addObject(PET_COMMAND, petCommand);
         modelAndView.addObject(
                 "breeds", breedService.getBreedsByType(pet.getBreed().getType()));
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
@@ -115,8 +115,8 @@ public class PetController {
         }
         petService.update(petCommand);
         modelAndView.addObject("message", localeService.getMessage("pet.updated", request));
-        modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
-        modelAndView.addObject("petCommand", petCommand);
+        modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
+        modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
     }
 
@@ -133,7 +133,7 @@ public class PetController {
         petService.save(petCommand, user);
         modelAndView.addObject("message", localeService.getMessage("pet.created", request));
         petCommand = new PetCommand();
-        modelAndView.addObject("petCommand", petCommand);
+        modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
     }
 
@@ -167,7 +167,7 @@ public class PetController {
         }
         petService.getPetsAdoption(pets);
         modelAndView.addObject("pets", pets);
-        modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
+        modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         return modelAndView;
     }
 
@@ -184,7 +184,7 @@ public class PetController {
         User user = userService.getCurrentUser();
         List<Pet> pets = petService.getPetsByUser(user);
         modelAndView.addObject("pets", pets);
-        modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
+        modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;
     }
