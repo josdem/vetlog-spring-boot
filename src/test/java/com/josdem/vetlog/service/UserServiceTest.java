@@ -83,7 +83,6 @@ class UserServiceTest {
     void shouldSaveAnUser(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         Command command = mock(Command.class);
-        final User user = new User();
         user.setEmail(EMAIL);
         when(userBinder.bindUser(command)).thenReturn(user);
 
