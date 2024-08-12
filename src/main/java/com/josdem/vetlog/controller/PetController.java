@@ -51,6 +51,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class PetController {
 
     public static final String PET_COMMAND = "petCommand";
+    public static final String GCP_IMAGE_URL = "gcpImageUrl";
 
     private final BreedService breedService;
     private final PetService petService;
@@ -98,7 +99,7 @@ public class PetController {
         modelAndView.addObject("petCommand", petCommand);
         modelAndView.addObject(
                 "breeds", breedService.getBreedsByType(pet.getBreed().getType()));
-        modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
+        modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
         return modelAndView;
     }

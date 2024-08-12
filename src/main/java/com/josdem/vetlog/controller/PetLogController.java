@@ -49,6 +49,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class PetLogController {
 
+    public static final String PET_LOG_COMMAND = "petLogCommand";
+
     private final PetLogValidator petLogValidator;
     private final PetService petService;
     private final PetLogService petLogService;
@@ -94,7 +96,7 @@ public class PetLogController {
         petLogService.save(petLogCommand);
         modelAndView.addObject("message", localeService.getMessage("petlog.created", request));
         petLogCommand = new PetLogCommand();
-        modelAndView.addObject("petLogCommand", petLogCommand);
+        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
         return fillModelAndView(modelAndView, pets, request);
     }
 
