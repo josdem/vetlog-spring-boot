@@ -27,7 +27,6 @@ public class VetlogController {
 
     @GetMapping("/")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("home/home");
-        return modelAndView;
+        return new ModelAndView("home/home");
     }
 }
