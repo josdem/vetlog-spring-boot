@@ -31,6 +31,6 @@ public class AdoptionValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        AdoptionCommand adoptionCommand = (AdoptionCommand) target;
+        assert target != null;
     }
 }
