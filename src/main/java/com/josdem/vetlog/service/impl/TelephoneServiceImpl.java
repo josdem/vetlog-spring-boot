@@ -60,10 +60,10 @@ public class TelephoneServiceImpl implements TelephoneService {
         pet.setAdopter(adopter);
         petRepository.save(pet);
         userRepository.save(adopter);
-        createAdoptionDataMessage(command, pet);
+        createAdoptionDataMessage(pet);
     }
 
-    private void createAdoptionDataMessage(Command command, Pet pet) {
+    private void createAdoptionDataMessage(Pet pet) {
         User owner = pet.getUser();
         User adopter = pet.getAdopter();
         MessageCommand messageCommand = new MessageCommand();
