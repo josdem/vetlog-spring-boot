@@ -50,6 +50,6 @@ public class RegistrationCode {
     private RegistrationCodeStatus status = RegistrationCodeStatus.VALID;
 
     public Boolean isValid() {
-        return status == RegistrationCodeStatus.VALID ? true : false;
+        return status == RegistrationCodeStatus.VALID;
     }
 }
