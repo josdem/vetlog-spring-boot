@@ -21,7 +21,6 @@ import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.UserRepository;
-import com.josdem.vetlog.service.RecoveryService;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.util.UserContextHolderProvider;
 import lombok.RequiredArgsConstructor;

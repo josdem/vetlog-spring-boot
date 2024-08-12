@@ -52,15 +52,12 @@ class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    private RecoveryService recoveryService;
-
-    @Mock
     private UserContextHolderProvider provider;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        service = new UserServiceImpl(userBinder, userRepository, recoveryService, provider);
+        service = new UserServiceImpl(userBinder, userRepository, provider);
     }
 
     @Test
