@@ -67,7 +67,7 @@ public class RecoveryController {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("recovery/recoveryPassword");
         }
-        ModelAndView modelAndView = new ModelAndView("login/login");
+        ModelAndView modelAndView = new ModelAndView(LOGIN_VIEW);
         modelAndView.addObject("message", localeService.getMessage("recovery.email.sent", request));
         recoveryService.generateRegistrationCodeForEmail(command.getEmail());
         return modelAndView;
@@ -103,7 +103,7 @@ public class RecoveryController {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("recovery/changePassword");
         }
-        ModelAndView modelAndView = new ModelAndView("login/login");
+        ModelAndView modelAndView = new ModelAndView(LOGIN_VIEW);
         modelAndView.addObject("change", localeService.getMessage("recovery.password.changed", request));
         recoveryService.changePassword(command);
         return modelAndView;

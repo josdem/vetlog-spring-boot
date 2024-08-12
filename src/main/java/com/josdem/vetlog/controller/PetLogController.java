@@ -64,7 +64,7 @@ public class PetLogController {
         log.info("Pet uuid: " + uuid);
         ModelAndView modelAndView = new ModelAndView("petlog/create");
         Command petLogCommand = new PetLogCommand();
-        modelAndView.addObject("petLogCommand", petLogCommand);
+        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
         Pet pet = petService.getPetByUuid(uuid);
         User currentUser = userService.getCurrentUser();
         List<Pet> pets = getPetsFromUser(pet, currentUser);
@@ -81,7 +81,7 @@ public class PetLogController {
         User currentUser = userService.getCurrentUser();
         List<Pet> pets = getPetsFromUser(pet, currentUser);
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("petLogCommand", petLogCommand);
+            modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
             return fillModelAndView(modelAndView, pets, request);
         }
         petLogService.save(petLogCommand);
