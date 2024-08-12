@@ -40,8 +40,7 @@ public class LoginController {
     @GetMapping(value = "/login")
     public ModelAndView login(@RequestParam Optional<String> error) {
         log.info("Calling login");
-        ModelAndView modelAndView = new ModelAndView("login/login");
-        return modelAndView;
+        return new ModelAndView("login/login");
     }
 
     @GetMapping(value = "/logout")

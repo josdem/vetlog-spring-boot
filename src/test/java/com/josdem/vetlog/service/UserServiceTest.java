@@ -52,15 +52,12 @@ class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    private RecoveryService recoveryService;
-
-    @Mock
     private UserContextHolderProvider provider;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        service = new UserServiceImpl(userBinder, userRepository, recoveryService, provider);
+        service = new UserServiceImpl(userBinder, userRepository, provider);
     }
 
     @Test
@@ -86,7 +83,6 @@ class UserServiceTest {
     void shouldSaveAnUser(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         Command command = mock(Command.class);
-        final User user = new User();
         user.setEmail(EMAIL);
         when(userBinder.bindUser(command)).thenReturn(user);
 

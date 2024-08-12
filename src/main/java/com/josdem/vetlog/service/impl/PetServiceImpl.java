@@ -41,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PetServiceImpl implements PetService {
 
+    public static final String NO_USER_WAS_FOUND_WITH_ID = "No user was found with id: ";
     private final PetBinder petBinder;
     private final PetRepository petRepository;
     private final PetImageService petImageService;
@@ -64,7 +65,7 @@ public class PetServiceImpl implements PetService {
         Pet pet = petBinder.bindPet(petCommand);
         Optional<User> user = getUser(petCommand.getUser());
         if (!user.isPresent()) {
-            throw new BusinessException("No user was found with id: " + petCommand.getUser());
+            throw new BusinessException(NO_USER_WAS_FOUND_WITH_ID + petCommand.getUser());
         }
         pet.setUser(user.get());
         Optional<User> adopter = getUser(petCommand.getAdopter());

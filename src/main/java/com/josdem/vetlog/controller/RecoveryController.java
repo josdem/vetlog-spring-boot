@@ -22,7 +22,6 @@ import com.josdem.vetlog.command.RecoveryPasswordCommand;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.RecoveryService;
 import com.josdem.vetlog.validator.ChangePasswordValidator;
-import com.josdem.vetlog.validator.RecoveryPasswordValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -43,15 +42,11 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class RecoveryController {
 
+    public static final String LOGIN_VIEW = "login/login";
+
     private final RecoveryService recoveryService;
-    private final RecoveryPasswordValidator recoveryPasswordValidator;
     private final ChangePasswordValidator changePasswordValidator;
     private final LocaleService localeService;
-
-    @InitBinder("recoveryPassword")
-    private void initPasswordBinder(WebDataBinder binder) {
-        binder.addValidators(recoveryPasswordValidator);
-    }
 
     @InitBinder("changePassword")
     private void initChangeBinder(WebDataBinder binder) {
@@ -62,7 +57,7 @@ public class RecoveryController {
     public String create(@PathVariable String token) {
         log.info("Calling activate token");
         recoveryService.confirmAccountForToken(token);
-        return "login/login";
+        return LOGIN_VIEW;
     }
 
     @PostMapping(value = "/password")
@@ -72,7 +67,7 @@ public class RecoveryController {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("recovery/recoveryPassword");
         }
-        ModelAndView modelAndView = new ModelAndView("login/login");
+        ModelAndView modelAndView = new ModelAndView(LOGIN_VIEW);
         modelAndView.addObject("message", localeService.getMessage("recovery.email.sent", request));
         recoveryService.generateRegistrationCodeForEmail(command.getEmail());
         return modelAndView;
@@ -91,7 +86,7 @@ public class RecoveryController {
     public ModelAndView changePassword(@PathVariable String token, HttpServletRequest request) {
         log.info("Calling change password");
         ModelAndView modelAndView = new ModelAndView("recovery/changePassword");
-        Boolean valid = recoveryService.validateToken(token);
+        boolean valid = recoveryService.validateToken(token);
         if (!valid) {
             modelAndView.addObject("message", localeService.getMessage("recovery.token.error", request));
         }
@@ -108,7 +103,7 @@ public class RecoveryController {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("recovery/changePassword");
         }
-        ModelAndView modelAndView = new ModelAndView("login/login");
+        ModelAndView modelAndView = new ModelAndView(LOGIN_VIEW);
         modelAndView.addObject("change", localeService.getMessage("recovery.password.changed", request));
         recoveryService.changePassword(command);
         return modelAndView;

@@ -25,7 +25,6 @@ import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.PetLogService;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
-import com.josdem.vetlog.validator.PetLogValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
@@ -35,9 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,7 +46,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class PetLogController {
 
-    private final PetLogValidator petLogValidator;
+    public static final String PET_LOG_COMMAND = "petLogCommand";
+
     private final PetService petService;
     private final PetLogService petLogService;
     private final UserService userService;
@@ -61,17 +59,12 @@ public class PetLogController {
     @Value("${prescriptionBucket}")
     private String prescriptionBucket;
 
-    @InitBinder
-    private void initBinder(WebDataBinder binder) {
-        binder.addValidators(petLogValidator);
-    }
-
     @GetMapping(value = "/create")
     public ModelAndView create(@RequestParam("uuid") String uuid, HttpServletRequest request) {
         log.info("Pet uuid: " + uuid);
         ModelAndView modelAndView = new ModelAndView("petlog/create");
         Command petLogCommand = new PetLogCommand();
-        modelAndView.addObject("petLogCommand", petLogCommand);
+        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
         Pet pet = petService.getPetByUuid(uuid);
         User currentUser = userService.getCurrentUser();
         List<Pet> pets = getPetsFromUser(pet, currentUser);
@@ -88,13 +81,13 @@ public class PetLogController {
         User currentUser = userService.getCurrentUser();
         List<Pet> pets = getPetsFromUser(pet, currentUser);
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("petLogCommand", petLogCommand);
+            modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
             return fillModelAndView(modelAndView, pets, request);
         }
         petLogService.save(petLogCommand);
         modelAndView.addObject("message", localeService.getMessage("petlog.created", request));
         petLogCommand = new PetLogCommand();
-        modelAndView.addObject("petLogCommand", petLogCommand);
+        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
         return fillModelAndView(modelAndView, pets, request);
     }
 

@@ -207,7 +207,7 @@ class PetServiceTest {
         petAdoption.setId(1L);
         petAdoption.setDescription("It is cute!");
         Optional<PetAdoption> optional = Optional.of(petAdoption);
-        List<Pet> pets = Arrays.asList(pet);
+        pets.add(pet);
 
         when(adoptionRepository.findByPet(pet)).thenReturn(optional);
 

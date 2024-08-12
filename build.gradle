@@ -24,7 +24,7 @@ ext {
 }
 
 group = 'com.josdem.vetlog'
-version = '1.6.3'
+version = '1.6.4'
 
 configurations {
   compileOnly {

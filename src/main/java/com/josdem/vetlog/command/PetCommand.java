@@ -67,7 +67,7 @@ public class PetCommand implements Command {
 
     private PetStatus status;
 
-    private MultipartFile image;
+    private transient MultipartFile image;
 
-    private List<PetImage> images = new ArrayList<>();
+    private transient List<PetImage> images = new ArrayList<>();
 }
