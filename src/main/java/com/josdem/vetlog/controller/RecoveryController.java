@@ -22,7 +22,6 @@ import com.josdem.vetlog.command.RecoveryPasswordCommand;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.RecoveryService;
 import com.josdem.vetlog.validator.ChangePasswordValidator;
-import com.josdem.vetlog.validator.RecoveryPasswordValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,14 +45,8 @@ public class RecoveryController {
     public static final String LOGIN_VIEW = "login/login";
 
     private final RecoveryService recoveryService;
-    private final RecoveryPasswordValidator recoveryPasswordValidator;
     private final ChangePasswordValidator changePasswordValidator;
     private final LocaleService localeService;
-
-    @InitBinder("recoveryPassword")
-    private void initPasswordBinder(WebDataBinder binder) {
-        binder.addValidators(recoveryPasswordValidator);
-    }
 
     @InitBinder("changePassword")
     private void initChangeBinder(WebDataBinder binder) {
