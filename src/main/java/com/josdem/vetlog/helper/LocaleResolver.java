@@ -39,7 +39,7 @@ public class LocaleResolver extends AcceptHeaderLocaleResolver {
     @Override
     public Locale resolveLocale(HttpServletRequest request) {
         log.info("Accept Language: {}", request.getHeader(ACCEPT_LANGUAGE));
-        if (request.getHeader("Accept-Language") == null) {
+        if (request.getHeader(ACCEPT_LANGUAGE) == null) {
             return english;
         }
         List<Locale.LanguageRange> list = Locale.LanguageRange.parse(request.getHeader(ACCEPT_LANGUAGE));
