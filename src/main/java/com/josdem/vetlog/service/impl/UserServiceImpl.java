@@ -33,21 +33,22 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    public static final String NOT_FOUND = " not found";
+
     private final UserBinder userBinder;
     private final UserRepository userRepository;
-    private final RecoveryService recoveryService;
     private final UserContextHolderProvider provider;
 
     public User getByUsername(String username) {
         return userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + NOT_FOUND));
     }
 
     public User getByEmail(String email) {
         return userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("User with email: " + email + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with email: " + email + NOT_FOUND));
     }
 
     @Transactional
@@ -62,6 +63,6 @@ public class UserServiceImpl implements UserService {
         String username = auth.getName();
         return userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + " not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + NOT_FOUND));
     }
 }
