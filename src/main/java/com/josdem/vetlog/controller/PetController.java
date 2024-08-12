@@ -50,6 +50,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class PetController {
 
+    public static final String PET_COMMAND = "petCommand";
+
     private final BreedService breedService;
     private final PetService petService;
     private final UserService userService;
@@ -107,7 +109,7 @@ public class PetController {
         log.info("Updating pet: {}", petCommand.getName());
         ModelAndView modelAndView = new ModelAndView("pet/edit");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("petCommand", petCommand);
+            modelAndView.addObject(PET_COMMAND, petCommand);
             return fillModelAndView(modelAndView);
         }
         petService.update(petCommand);
