@@ -39,6 +39,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RecoveryServiceImpl implements RecoveryService {
 
+    public static final String EXCEPTION_USER_NOT_FOUND = "exception.user.not.found";
+
     private final RestService restService;
     private final RegistrationService registrationService;
     private final UserRepository userRepository;
@@ -66,7 +68,7 @@ public class RecoveryServiceImpl implements RecoveryService {
     public User confirmAccountForToken(String token) {
         User user = getUserByToken(token);
         if (user == null) {
-            throw new UserNotFoundException(localeService.getMessage("exception.user.not.found"));
+            throw new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND));
         }
         user.setEnabled(true);
         userRepository.save(user);
@@ -79,13 +81,13 @@ public class RecoveryServiceImpl implements RecoveryService {
                 .orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
         return userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage("exception.user.not.found")));
+                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND)));
     }
 
     public void generateRegistrationCodeForEmail(String email) {
         User user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage("exception.user.not.found")));
+                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND)));
         if (user.getEnabled() == false) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
