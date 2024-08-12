@@ -23,7 +23,6 @@ import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.TelephoneService;
 import com.josdem.vetlog.service.UserService;
-import com.josdem.vetlog.validator.TelephoneValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -48,18 +45,12 @@ public class TelephoneController {
     private final UserService userService;
     private final LocaleService localeService;
     private final TelephoneService telephoneService;
-    private final TelephoneValidator telephoneValidator;
 
     @Value("${gcpUrl}")
     private String gcpUrl;
 
     @Value("${imageBucket}")
     private String imageBucket;
-
-    @InitBinder("telephoneCommand")
-    private void initBinder(WebDataBinder binder) {
-        binder.addValidators(telephoneValidator);
-    }
 
     @PostMapping(value = "/save")
     public ModelAndView save(
