@@ -36,7 +36,7 @@ public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
     private final Environment environment;
     private final UserRepository userRepository;
 
-    private final String PASSWORD = "12345678";
+    private static final String SECRET = "12345678";
 
     @Override
     public void onApplicationEvent(final ApplicationReadyEvent event) {
@@ -47,9 +47,9 @@ public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
     }
 
     void createDefaultUsers() {
-        createUserWithRole("josdem", PASSWORD, "joseluis.delacruz@gmail.com", Role.USER);
-        createUserWithRole("miriam", PASSWORD, "miriam@gmail.com", Role.USER);
-        createUserWithRole("admin", PASSWORD, "admin@email.com", Role.ADMIN);
+        createUserWithRole("josdem", SECRET, "joseluis.delacruz@gmail.com", Role.USER);
+        createUserWithRole("miriam", SECRET, "miriam@gmail.com", Role.USER);
+        createUserWithRole("admin", SECRET, "admin@email.com", Role.ADMIN);
     }
 
     void createUserWithRole(String username, String password, String email, Role authority) {
