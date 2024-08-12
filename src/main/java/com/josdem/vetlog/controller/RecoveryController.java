@@ -93,7 +93,7 @@ public class RecoveryController {
     public ModelAndView changePassword(@PathVariable String token, HttpServletRequest request) {
         log.info("Calling change password");
         ModelAndView modelAndView = new ModelAndView("recovery/changePassword");
-        Boolean valid = recoveryService.validateToken(token);
+        boolean valid = recoveryService.validateToken(token);
         if (!valid) {
             modelAndView.addObject("message", localeService.getMessage("recovery.token.error", request));
         }
