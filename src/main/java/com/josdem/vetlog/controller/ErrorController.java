@@ -27,7 +27,6 @@ public class ErrorController {
 
     @GetMapping("/error")
     public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("error");
-        return modelAndView;
+        return new ModelAndView("error");
     }
 }
