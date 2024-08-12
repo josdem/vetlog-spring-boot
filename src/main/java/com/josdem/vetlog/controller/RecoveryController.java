@@ -43,6 +43,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class RecoveryController {
 
+    public static final String LOGIN_VIEW = "login/login";
+
     private final RecoveryService recoveryService;
     private final RecoveryPasswordValidator recoveryPasswordValidator;
     private final ChangePasswordValidator changePasswordValidator;
@@ -62,7 +64,7 @@ public class RecoveryController {
     public String create(@PathVariable String token) {
         log.info("Calling activate token");
         recoveryService.confirmAccountForToken(token);
-        return "login/login";
+        return LOGIN_VIEW;
     }
 
     @PostMapping(value = "/password")
