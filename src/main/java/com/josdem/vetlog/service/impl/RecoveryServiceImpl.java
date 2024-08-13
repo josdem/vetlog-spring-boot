@@ -106,7 +106,7 @@ public class RecoveryServiceImpl implements RecoveryService {
     }
 
     public Boolean validateToken(String token) {
-        return repository.findByToken(token) != null;
+        return repository.findByToken(token).isPresent();
     }
 
     public User changePassword(Command command) {
