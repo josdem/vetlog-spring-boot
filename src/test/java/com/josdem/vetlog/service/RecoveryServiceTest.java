@@ -17,6 +17,7 @@ limitations under the License.
 package com.josdem.vetlog.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.isA;
@@ -138,6 +139,13 @@ class RecoveryServiceTest {
         log.info("Running: {}", testInfo.getDisplayName());
         when(repository.findByToken(TOKEN)).thenReturn(Optional.of(new RegistrationCode()));
         assertTrue(service.validateToken(TOKEN));
+    }
+
+    @Test
+    @DisplayName("finding an invalid token")
+    void shouldFindInvalidToken(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        assertFalse(service.validateToken(TOKEN));
     }
 
     @Test
