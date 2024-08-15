@@ -88,7 +88,7 @@
                             <label for="type"><h4 th:text="#{pet.type}"/></label>
                             <select id="typeSelector" name="type" th:field="*{type}" class="form-control"
                                     onchange="updateBreedType()">
-                                <option th:each=" type : ${T(com.jos.dem.vetlog.enums.PetType).values()}"
+                                <option th:each=" type : ${T(com.josdem.vetlog.enums.PetType).values()}"
                                         th:value="${type}" th:text="${type.value}" th:selected="(${type} == *{type})"/>
                             </select>
                             <br/>

@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AfterThrowingAdvice {
 
-    @AfterThrowing(pointcut = "execution(* com.jos.dem.vetlog.service..**.*(..))", throwing = "ex")
+    @AfterThrowing(pointcut = "execution(* com.josdem.vetlog.service..**.*(..))", throwing = "ex")
     public void doRecoveryActions(RuntimeException ex) {
         log.info("Wrapping exception: " + ex.getMessage());
         throw new BusinessException(ex.getMessage(), ex);
