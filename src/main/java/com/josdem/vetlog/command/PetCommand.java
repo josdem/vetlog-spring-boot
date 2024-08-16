@@ -19,9 +19,10 @@ import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.model.PetImage;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,23 +35,18 @@ public class PetCommand implements Command {
 
     private Long id;
 
-    @NotNull
     @Size(min = 1, max = 50)
     private String name;
 
     @NotNull
     private String birthDate;
 
-    @NotNull
     private Boolean dewormed = false;
 
-    @NotNull
     private Boolean sterilized = false;
 
-    @NotNull
     private Boolean vaccinated = false;
 
-    @NotNull
     @Min(1L)
     private Long breed;
 
