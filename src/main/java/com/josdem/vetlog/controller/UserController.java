@@ -62,7 +62,7 @@ public class UserController {
             return fillUserCommand(userCommand);
         }
         userService.save(userCommand);
-        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        ModelAndView modelAndView = new ModelAndView("login/login");
         modelAndView.addObject("message", localeService.getMessage("user.account.created", request));
         return modelAndView;
     }
