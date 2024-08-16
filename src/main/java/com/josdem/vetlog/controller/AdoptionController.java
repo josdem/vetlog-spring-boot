@@ -22,7 +22,8 @@ import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.AdoptionService;
 import com.josdem.vetlog.service.PetService;
 import java.util.List;
-import javax.validation.Valid;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

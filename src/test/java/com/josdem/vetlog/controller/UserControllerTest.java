@@ -39,7 +39,7 @@ class UserControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("showing create user form")
+    @DisplayName("registering an user")
     void shouldShowCreateUserForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         mockMvc.perform(get("/user/create"))
