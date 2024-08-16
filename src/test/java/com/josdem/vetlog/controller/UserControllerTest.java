@@ -16,8 +16,7 @@ limitations under the License.
 
 package com.josdem.vetlog.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -42,9 +41,14 @@ class UserControllerTest {
     @DisplayName("registering an user")
     void shouldShowCreateUserForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(get("/user/create"))
+        mockMvc.perform(post("/user/save")
+                        .param("username", "vetlog")
+                        .param("password", "12345678")
+                        .param("passwordConfirmation", "12345678")
+                        .param("firstname", "vetlog")
+                        .param("lastname", "organization")
+                        .param("email", "contact@josdem.io"))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("userCommand"))
-                .andExpect(view().name("user/create"));
+                .andExpect(view().name("/"));
     }
 }

@@ -26,5 +26,4 @@ public class RecoveryPasswordCommand implements Command {
     @Email
     @Size(min = 6, max = 200)
     private String email;
-
 }
