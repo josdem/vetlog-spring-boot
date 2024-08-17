@@ -22,7 +22,7 @@ import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.validator.UserValidator;
 import jakarta.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -62,7 +62,7 @@ public class UserController {
             return fillUserCommand(userCommand);
         }
         userService.save(userCommand);
-        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        ModelAndView modelAndView = new ModelAndView("login/login");
         modelAndView.addObject("message", localeService.getMessage("user.account.created", request));
         return modelAndView;
     }

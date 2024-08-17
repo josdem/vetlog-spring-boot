@@ -15,9 +15,8 @@ limitations under the License.
 package com.josdem.vetlog.command;
 
 import com.josdem.vetlog.util.UuidGenerator;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,11 +29,9 @@ public class PetLogCommand implements Command {
     @Size(max = 200)
     private String vetName;
 
-    @NotNull
     @Size(min = 1, max = 1000)
     private String signs;
 
-    @NotNull
     @Size(min = 1, max = 1000)
     private String diagnosis;
 
@@ -43,7 +40,6 @@ public class PetLogCommand implements Command {
 
     private String uuid = UuidGenerator.generateUuid();
 
-    @NotNull
     @Min(1L)
     private Long pet;
 
