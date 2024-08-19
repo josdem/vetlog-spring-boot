@@ -35,7 +35,7 @@ class AdoptionCommandValidatorTest {
 
     @Test
     @DisplayName("rejecting adoption command with invalid uuid")
-    void shouldSupportAdoptionCommand(TestInfo testInfo) {
+    void shouldRejectDueToInvalidUuid(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         AdoptionCommand adoptionCommand = new AdoptionCommand();
         Errors errors = mock(Errors.class);
