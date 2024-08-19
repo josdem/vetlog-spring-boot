@@ -34,7 +34,7 @@ public class AdoptionValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         AdoptionCommand adoptionCommand = (AdoptionCommand) target;
-        if(!adoptionCommand.getUuid().matches(REGEX)){
+        if (!adoptionCommand.getUuid().matches(REGEX)) {
             errors.rejectValue("uuid", "adoption.error.uuid.invalid");
         }
     }
