@@ -30,7 +30,7 @@ import org.springframework.validation.Errors;
 @Slf4j
 class AdoptionCommandValidatorTest {
 
-    private final String UUID = "21740c48-13f9-4bf4-a8a2-ef61b7d3cdc3";
+    private static final String UUID = "21740c48-13f9-4bf4-a8a2-ef61b7d3cdc3";
     private final AdoptionValidator adoptionValidator = new AdoptionValidator();
 
     @Test
