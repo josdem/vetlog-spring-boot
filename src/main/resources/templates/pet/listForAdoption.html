@@ -5,6 +5,13 @@
     <head th:insert="~{fragments/include}"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <style>
+        .thumbnail {
+            width: 350px;
+            height: 750px;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
 <div th:insert="~{fragments/header}"/>
@@ -13,13 +20,11 @@
 <br/><br/>
 <div class="container">
     <div class="row">
+        <div align="center">
         <div th:if="${pets.isEmpty()}">
-            <div align="center">
-                <p th:text="#{pet.list.empty}"/>
-            </div>
+            <p th:text="#{pet.list.empty}"/>
         </div>
         <div th:each="pet : ${pets}">
-            <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
                     <div th:if="${!pet.images.isEmpty()}">
                         <div th:id="carousel-example-generic + ${pet.id}"  class="carousel slide" data-ride="carousel">
@@ -55,15 +60,13 @@
                     </div>
                     <div class="caption">
                         <h3 th:text="${pet.name}"></h3>
-                        <p>
-                        <ul>
-                            <li th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
-                            <li th:text="${pet.breed.name}"/>
-                            <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
-                            <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
-                            <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
-                        </ul>
-                        </p>
+
+                            <p th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
+                            <p th:text="${pet.breed.name}"/>
+                            <p th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
+                            <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
+                            <p th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
+
                         <p th:text="${pet.adoption?.description}"/>
                         <br/>
                         <center>
@@ -73,7 +76,7 @@
                         </center>
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
     </div>
 </div>
