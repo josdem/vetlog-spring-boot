@@ -11,6 +11,7 @@
         height: 750px;
         margin: 10px;
       }
+
     </style>
 </head>
 <body>
@@ -21,18 +22,21 @@
 <div class="container">
     <div class="row">
         <div align="center">
-        <div th:if="${pets.isEmpty()}">
-            <p th:text="#{pet.list.empty}"/>
-        </div>
-        <div th:each="pet : ${pets}">
+            <div th:if="${pets.isEmpty()}">
+                <p th:text="#{pet.list.empty}"/>
+            </div>
+            <div th:each="pet : ${pets}">
                 <div class="thumbnail">
                     <div th:if="${!pet.images.isEmpty()}">
-                        <div th:id="carousel-example-generic + ${pet.id}"  class="carousel slide" data-ride="carousel">
+                        <div th:id="carousel-example-generic + ${pet.id}" class="carousel slide" data-ride="carousel">
                             <!-- Indicators -->
                             <ol class="carousel-indicators">
-                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}" data-slide-to="0" class="active"></li>
-                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}" data-slide-to="1"></li>
-                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}" data-slide-to="2"></li>
+                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}" data-slide-to="0"
+                                    class="active"></li>
+                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}"
+                                    data-slide-to="1"></li>
+                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}"
+                                    data-slide-to="2"></li>
                             </ol>
 
                             <!-- Wrapper for slides -->
@@ -46,12 +50,14 @@
                             </div>
 
                             <!-- Controls -->
-                            <a class="left carousel-control" th:href="@{'#carousel-example-generic' + ${pet.id}}" role="button"
+                            <a class="left carousel-control" th:href="@{'#carousel-example-generic' + ${pet.id}}"
+                               role="button"
                                data-slide="prev">
                                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                                 <span class="sr-only">Previous</span>
                             </a>
-                            <a class="right carousel-control" th:href="@{'#carousel-example-generic' + ${pet.id}}" role="button"
+                            <a class="right carousel-control" th:href="@{'#carousel-example-generic' + ${pet.id}}"
+                               role="button"
                                data-slide="next">
                                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
@@ -60,13 +66,11 @@
                     </div>
                     <div class="caption">
                         <h3 th:text="${pet.name}"></h3>
-
-                            <p th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
-                            <p th:text="${pet.breed.name}"/>
-                            <p th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
-                            <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
-                            <p th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
-
+                        <p th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
+                        <p th:text="${pet.breed.name}"/>
+                        <p th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
+                        <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
+                        <p th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
                         <p th:text="${pet.adoption?.description}"/>
                         <br/>
                         <center>
@@ -76,7 +80,7 @@
                         </center>
                     </div>
                 </div>
-        </div>
+            </div>
         </div>
     </div>
 </div>
