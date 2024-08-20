@@ -14,7 +14,6 @@ limitations under the License.
 
 package com.josdem.vetlog.command;
 
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +22,6 @@ import lombok.Setter;
 @Setter
 public class AdoptionCommand implements Command {
 
-    @NotNull
     private String uuid;
 
     @Size(min = 1, max = 1000)

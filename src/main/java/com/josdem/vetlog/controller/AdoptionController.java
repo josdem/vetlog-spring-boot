@@ -21,6 +21,7 @@ import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.AdoptionService;
 import com.josdem.vetlog.service.PetService;
+import com.josdem.vetlog.validator.AdoptionValidator;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -41,12 +44,18 @@ public class AdoptionController {
 
     private final PetService petService;
     private final AdoptionService adoptionService;
+    private final AdoptionValidator adoptionValidator;
 
     @Value("${gcpUrl}")
     private String gcpUrl;
 
     @Value("${imageBucket}")
     private String imageBucket;
+
+    @InitBinder("adoptionCommand")
+    private void initBinder(WebDataBinder binder) {
+        binder.addValidators(adoptionValidator);
+    }
 
     @GetMapping(value = "/descriptionForAdoption")
     public ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand) {
