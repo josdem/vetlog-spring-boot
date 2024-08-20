@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" th:lang="${#locale.language}">
 <head>
     <title th:text="#{pet.view.list.title}"></title>
     <head th:insert="~{fragments/include}"/>
@@ -11,6 +11,7 @@
         height: 750px;
         margin: 10px;
       }
+
 
     </style>
 </head>
@@ -31,21 +32,16 @@
                         <div th:id="carousel-example-generic + ${pet.id}" class="carousel slide" data-ride="carousel">
                             <!-- Indicators -->
                             <ol class="carousel-indicators">
-                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}" data-slide-to="0"
-                                    class="active"></li>
-                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}"
-                                    data-slide-to="1"></li>
-                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}"
-                                    data-slide-to="2"></li>
+                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}" data-slide-to="0" class="active"></li>
+                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}" data-slide-to="1"></li>
+                                <li th:attr="data-target='#carousel-example-generic' + ${pet.id}" data-slide-to="2"></li>
                             </ol>
 
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner" role="listbox">
                                 <div th:each="image : ${pet.images}" class="item"
-                                     th:classappend="|${pet.images.indexOf(image) == 0 ? 'active' : ''}|"
-                                     align="center">
-                                    <img style="width:350px;height:300px;"
-                                         th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
+                                     th:classappend="|${pet.images.indexOf(image) == 0 ? 'active' : ''}|">
+                                    <img style="width:350px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${image.uuid}}" th:alt="pet"/>
                                 </div>
                             </div>
 
@@ -73,11 +69,9 @@
                         <p th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
                         <p th:text="${pet.adoption?.description}"/>
                         <br/>
-                        <center>
-                            <a th:href="@{/telephone/adopt(uuid=${pet.uuid})}" class="btn btn-success">
-                                <p th:text="#{pet.adoption.interested}"/>
-                            </a>
-                        </center>
+                        <a th:href="@{/telephone/adopt(uuid=${pet.uuid})}" class="btn btn-success">
+                            <p th:text="#{pet.adoption.interested}"/>
+                        </a>
                     </div>
                 </div>
             </div>
