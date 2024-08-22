@@ -49,6 +49,9 @@ public class PetImageServiceImpl implements PetImageService {
 
     public void attachFile(Command command) throws IOException {
         PetCommand petCommand = (PetCommand) command;
+        if (petCommand.getImage() == null) {
+            return;
+        }
         if (petCommand.getImage().getInputStream().available() > 0) {
             PetImage petImage = save();
             petCommand.getImages().add(petImage);
