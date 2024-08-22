@@ -63,7 +63,7 @@ class PetControllerTest {
     @Test
     @DisplayName("registering a pet")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldShowCreatePetForm(TestInfo testInfo) throws Exception {
+    void shouldRegisterNewPet(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
                         .file(image)
