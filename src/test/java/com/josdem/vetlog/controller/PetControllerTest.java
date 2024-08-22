@@ -69,6 +69,7 @@ class PetControllerTest {
                         .file(image)
                         .with(csrf())
                         .param("name", "Cremita")
+                        .param("uuid", "5acd03eb-2795-4e92-85d0-92e142c44170")
                         .param("birthDate", "2024-08-22T09:28:00")
                         .param("dewormed", "true")
                         .param("vaccinated", "true")
