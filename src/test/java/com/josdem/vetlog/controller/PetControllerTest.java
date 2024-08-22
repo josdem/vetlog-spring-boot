@@ -16,7 +16,9 @@ limitations under the License.
 
 package com.josdem.vetlog.controller;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -31,6 +33,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
+
 @Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,15 +44,15 @@ class PetControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("showing create pet form")
+    @DisplayName("registering a pet")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowCreatePetForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(get("/pet/create"))
+        mockMvc.perform(post("/pet/save")
+                .with(csrf())
+                .param("name", "Cremita")
+                .param("birthday", LocalDate.now().toString()))
                 .andExpect(status().isOk())
-                .andExpect(model().attributeExists("petCommand"))
-                .andExpect(model().attributeExists("breeds"))
-                .andExpect(model().attributeExists("breedsByTypeUrl"))
                 .andExpect(view().name("pet/create"));
     }
 
