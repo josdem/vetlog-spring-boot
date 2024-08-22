@@ -29,3 +29,8 @@ jobs:
         run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD -Dflyway.baselineOnMigrate=true flywayMigrate -i
       - name: Build with Gradle
         run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: build/reports/tests/test/
+          retention-days: 30
