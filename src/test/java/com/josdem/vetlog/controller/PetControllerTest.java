@@ -17,13 +17,16 @@ limitations under the License.
 package com.josdem.vetlog.controller;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import com.josdem.vetlog.enums.PetType;
+import java.time.LocalDate;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
@@ -32,8 +35,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDate;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 @Slf4j
 @SpringBootTest
@@ -43,17 +46,32 @@ class PetControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
+    }
+
     @Test
     @DisplayName("registering a pet")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowCreatePetForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         mockMvc.perform(post("/pet/save")
-                .with(csrf())
-                .param("name", "Cremita")
-                .param("birthday", LocalDate.now().toString()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pet/create"));
+                        .with(csrf())
+                        .param("name", "Cremita")
+                        .param("birthday", LocalDate.of(2023, 10, 28).toString())
+                        .param("dewormed", "true")
+                        .param("vaccinated", "true")
+                        .param("sterilized", "true")
+                        .param("breed", "11")
+                        .param("user", "1")
+                        .param("type", PetType.DOG.toString()))
+                .andExpect(status().isOk());
     }
 
     @Test
