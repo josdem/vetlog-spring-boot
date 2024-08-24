@@ -17,7 +17,26 @@ limitations under the License.
 package com.josdem.vetlog.enums;
 
 public enum PetStatus {
-    OWNED,
-    IN_ADOPTION,
-    ADOPTED
+    OWNED("Owned"),
+    IN_ADOPTION("In Adoption"),
+    ADOPTED("Adopted");
+
+    private final String value;
+
+    PetStatus(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public static PetStatus getPetStatusByValue(String value) {
+        for (PetStatus status : PetStatus.values()) {
+            if (value.equals(status.value)) {
+                return status;
+            }
+        }
+        return null;
+    }
 }
