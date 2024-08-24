@@ -1,5 +1,6 @@
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:lang="${#locale.language}">
 <head>
     <title th:text="#{pet.view.create.title}"/>
     <head th:insert="~{fragments/include}"/>
@@ -25,6 +26,7 @@
                     <form id="register" th:action="@{/pet/update}" th:object="${petCommand}" method="post"
                           class="form-horizontal" enctype="multipart/form-data">
                         <fieldset>
+                            <legend th:text="#{pet.edit}"/>
                             <label for="name"><h4 th:text="#{pet.name}"/></label>
                             <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name"
                                    id='name'/>
@@ -44,7 +46,7 @@
                                         <div th:each="image : ${petCommand.images}" class="item"
                                              th:classappend="|${petCommand.images.indexOf(image) == 0 ? 'active' : ''}|"
                                              align="center">
-                                            <img style="width:350px;height:300px;"
+                                            <img th:alt="image" style="width:350px;height:300px;"
                                                  th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
                                         </div>
                                     </div>
@@ -86,19 +88,20 @@
                             <br/>
                             <br/>
                             <div sec:authorize="hasAuthority('ADMIN')">
-                                <label for="type"><h4 th:text="#{pet.status}"/></label>
-                                <select id="statusSelector" name="status" th:field="*{status}" class="form-control">
-                                    <option th:each=" status : ${T(com.josdem.vetlog.enums.PetStatus).values()}"
-                                        th:value="${status}" th:text="${status.value}" th:selected="(${status} == *{status})"/>
-                                </select>
+                                <label for="status"><h4 th:text="#{pet.status}"/>
+                                    <select id="statusSelector" name="status" th:field="*{status}" class="form-control">
+                                        <option th:each=" status : ${T(com.josdem.vetlog.enums.PetStatus).values()}"
+                                            th:value="${status}" th:text="${status.value}" th:selected="(${status} == *{status})"/>
+                                    </select>
+                                </label>
                             <br/>
                             </div>
-                            <label for="type"><h4 th:text="#{pet.type}"/></label>
-                            <select id="typeSelector" name="type" th:field="*{type}" class="form-control"
-                                    onchange="updateBreedType()">
-                                <option th:each=" type : ${T(com.josdem.vetlog.enums.PetType).values()}"
-                                        th:value="${type}" th:text="${type.value}" th:selected="(${type} == *{type})"/>
-                            </select>
+                            <label for="type"><h4 th:text="#{pet.type}"/>
+                                <select id="typeSelector" name="type" th:field="*{type}" class="form-control" onchange="updateBreedType()">
+                                    <option th:each=" type : ${T(com.josdem.vetlog.enums.PetType).values()}"
+                                            th:value="${type}" th:text="${type.value}" th:selected="(${type} == *{type})"/>
+                                </select>
+                            </label>
                             <br/>
                             <label for="breed"><h4 th:text="#{pet.breed}"/></label>
                             <select id="breedSelector" name="breed" class="form-control">
