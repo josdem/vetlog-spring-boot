@@ -39,6 +39,9 @@ public class PetBinder {
         Pet pet = new Pet();
         pet.setId(petCommand.getId());
         pet.setUuid(UuidGenerator.generateUuid());
+        if (petCommand.getUuid() != null) {
+            pet.setUuid(petCommand.getUuid());
+        }
         pet.setName(petCommand.getName());
         pet.setBirthDate(LocalDateTime.parse(petCommand.getBirthDate()));
         pet.setDewormed(petCommand.getDewormed());
