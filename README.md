@@ -40,6 +40,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tarun18tk"><img src="https://avatars.githubusercontent.com/u/97531399?v=4?s=100" width="100px;" alt="tarun18tk"/><br /><sub><b>tarun18tk</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=tarun18tk" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/uhdf823f"><img src="https://avatars.githubusercontent.com/u/143468270?v=4?s=100" width="100px;" alt="uhdf823f"/><br /><sub><b>uhdf823f</b></sub></a><br /><a href="#translation-uhdf823f" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/sindhu-murthy"><img src="https://avatars.githubusercontent.com/u/1637811?v=4?s=100" width="100px;" alt="Sindhu"/><br /><sub><b>Sindhu</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=sindhunaydu" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kaminuma"><img src="https://avatars.githubusercontent.com/u/33448874?v=4?s=100" width="100px;" alt="T.H(kaminuma)"/><br /><sub><b>T.H(kaminuma)</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=kaminuma" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
