@@ -19,11 +19,13 @@ package com.josdem.vetlog.model;
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-import com.josdem.vetlog.enums.PetType;
-import jakarta.persistence.*;
-
+import com.josdem.vetlog.enums.VaccinationStatus;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -44,14 +46,10 @@ public class Vaccination {
     @Column(nullable = false)
     private LocalDate date;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     @Column(nullable = false)
-    private Status status;
+    private VaccinationStatus status;
 
-    public enum Status {
-        PENDING,
-        APPLIED
-    }
 }
 
 
