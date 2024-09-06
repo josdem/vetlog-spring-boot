@@ -51,5 +51,3 @@ public class Vaccination {
     private VaccinationStatus status;
 
 }
-
-
