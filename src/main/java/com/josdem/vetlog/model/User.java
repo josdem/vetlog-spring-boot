@@ -54,6 +54,12 @@ public class User implements Serializable {
     private String lastName;
 
     @Column(nullable = true)
+    private String phone;
+
+    @Column(nullable = true)
+    private String countryCode;
+
+    @Column(nullable = true)
     private String email;
 
     @Column(nullable = true)
