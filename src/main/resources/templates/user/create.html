@@ -3,6 +3,27 @@
 <head>
     <title th:text="#{user.view.create.title}"></title>
     <head th:insert="~{fragments/include}"/>
+    <style>
+        .phone-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .country-code, .phone-number {
+            flex: 1;
+            height: 34px;
+            box-sizing: border-box;
+        }
+
+        .country-code {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .phone-number {
+            flex: 9;
+        }
+    </style>
 </head>
 <body class="login">
 <div th:insert="~{fragments/header}"/>
@@ -42,6 +63,15 @@
                             <input type="text" name='lastname' th:field="*{lastname}" class="form-control"
                                    placeholder="lastname" id='lastname'/>
                             <label th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></label>
+                            <br/>
+                            <label for="phone"><h4 th:text="#{user.phone}"/></label>
+                            <div class="phone-container">
+                                <input type="text" name="countryCode" value="+52" id="countryCode" class="country-code" />
+                                <input type="text" name="phone" th:field="*{phone}" class="form-control phone-number"
+                                       placeholder="phone number" id="phone"
+                                       pattern="\d{10}" title="Phone number must be 10 digits only" required />
+                            </div>
+                            <label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></label>
                             <br/>
                             <label for="email"><h4 th:text="#{user.email}"/></label>
                             <input type="text" name='email' th:field="*{email}" class="form-control" placeholder="email"
