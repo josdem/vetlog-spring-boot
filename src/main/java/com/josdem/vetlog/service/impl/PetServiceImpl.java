@@ -64,13 +64,12 @@ public class PetServiceImpl implements PetService {
         recoveryImages(petCommand);
         Pet pet = petBinder.bindPet(petCommand);
         Optional<User> user = getUser(petCommand.getUser());
-        if (user.isEmpty()) {
+        user.ifPresentOrElse(value -> pet.setUser(value), () -> {
             throw new BusinessException(NO_USER_WAS_FOUND_WITH_ID + petCommand.getUser());
-        }
-        pet.setUser(user.get());
+        });
         Optional<User> adopter = getUser(petCommand.getAdopter());
-        adopter.ifPresent(user -> {
-            pet.setAdopter(user.get());
+        adopter.ifPresent(adopterUser -> {
+            pet.setAdopter(adopterUser);
         });
         pet.setUser(user.get());
         petImageService.attachFile(petCommand);
@@ -86,10 +85,7 @@ public class PetServiceImpl implements PetService {
 
     public Pet getPetById(Long id) {
         Optional<Pet> pet = petRepository.findById(id);
-        if (pet.isEmpty()) {
-            throw new BusinessException("No pet was found with id: " + id);
-        }
-        return pet.get();
+        return pet.orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
     }
 
     public List<Pet> getPetsByUser(User user) {
@@ -108,7 +104,7 @@ public class PetServiceImpl implements PetService {
         pets.forEach(pet -> {
             Optional<PetAdoption> optional = adoptionRepository.findByPet(pet);
             optional.ifPresent(petAdoption -> {
-                pet.setAdoption(petAdoption.get());
+                pet.setAdoption(petAdoption);
             });
         });
     }
@@ -125,10 +121,9 @@ public class PetServiceImpl implements PetService {
 
     private void recoveryImages(PetCommand command) {
         Optional<Pet> pet = petRepository.findById(command.getId());
-        if (pet.isEmpty()) {
+        pet.ifPresentOrElse(value -> command.setImages(value.getImages()), () -> {
             throw new BusinessException("No pet was found with id: " + command.getId());
-        }
-        command.setImages(pet.get().getImages());
+        });
     }
 
     private Optional<User> getUser(Long id) {
