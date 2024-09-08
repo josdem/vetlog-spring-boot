@@ -67,9 +67,6 @@ public class RecoveryServiceImpl implements RecoveryService {
 
     public User confirmAccountForToken(String token) {
         User user = getUserByToken(token);
-        if (user == null) {
-            throw new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND));
-        }
         user.setEnabled(true);
         userRepository.save(user);
         return user;
