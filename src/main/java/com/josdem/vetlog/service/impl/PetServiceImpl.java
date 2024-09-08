@@ -64,14 +64,14 @@ public class PetServiceImpl implements PetService {
         recoveryImages(petCommand);
         Pet pet = petBinder.bindPet(petCommand);
         Optional<User> user = getUser(petCommand.getUser());
-        if (!user.isPresent()) {
+        if (user.isEmpty()) {
             throw new BusinessException(NO_USER_WAS_FOUND_WITH_ID + petCommand.getUser());
         }
         pet.setUser(user.get());
         Optional<User> adopter = getUser(petCommand.getAdopter());
-        if (adopter.isPresent()) {
-            pet.setAdopter(adopter.get());
-        }
+        adopter.ifPresent(user -> {
+            pet.setAdopter(user.get());
+        });
         pet.setUser(user.get());
         petImageService.attachFile(petCommand);
         petRepository.save(pet);
@@ -86,7 +86,7 @@ public class PetServiceImpl implements PetService {
 
     public Pet getPetById(Long id) {
         Optional<Pet> pet = petRepository.findById(id);
-        if (!pet.isPresent()) {
+        if (pet.isEmpty()) {
             throw new BusinessException("No pet was found with id: " + id);
         }
         return pet.get();
@@ -107,9 +107,9 @@ public class PetServiceImpl implements PetService {
     public void getPetsAdoption(List<Pet> pets) {
         pets.forEach(pet -> {
             Optional<PetAdoption> optional = adoptionRepository.findByPet(pet);
-            if (optional.isPresent()) {
-                pet.setAdoption(optional.get());
-            }
+            optional.ifPresent(petAdoption -> {
+                pet.setAdoption(petAdoption.get());
+            });
         });
     }
 
@@ -125,7 +125,7 @@ public class PetServiceImpl implements PetService {
 
     private void recoveryImages(PetCommand command) {
         Optional<Pet> pet = petRepository.findById(command.getId());
-        if (!pet.isPresent()) {
+        if (pet.isEmpty()) {
             throw new BusinessException("No pet was found with id: " + command.getId());
         }
         command.setImages(pet.get().getImages());
