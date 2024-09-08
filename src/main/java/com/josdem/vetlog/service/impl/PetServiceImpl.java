@@ -64,13 +64,11 @@ public class PetServiceImpl implements PetService {
         recoveryImages(petCommand);
         Pet pet = petBinder.bindPet(petCommand);
         Optional<User> user = getUser(petCommand.getUser());
-        user.ifPresentOrElse(value -> pet.setUser(value), () -> {
+        user.ifPresentOrElse(pet::setUser, () -> {
             throw new BusinessException(NO_USER_WAS_FOUND_WITH_ID + petCommand.getUser());
         });
         Optional<User> adopter = getUser(petCommand.getAdopter());
-        adopter.ifPresent(adopterUser -> {
-            pet.setAdopter(adopterUser);
-        });
+        adopter.ifPresent(pet::setAdopter);
         pet.setUser(user.get());
         petImageService.attachFile(petCommand);
         petRepository.save(pet);
@@ -103,9 +101,7 @@ public class PetServiceImpl implements PetService {
     public void getPetsAdoption(List<Pet> pets) {
         pets.forEach(pet -> {
             Optional<PetAdoption> optional = adoptionRepository.findByPet(pet);
-            optional.ifPresent(petAdoption -> {
-                pet.setAdoption(petAdoption);
-            });
+            optional.ifPresent(pet::setAdoption);
         });
     }
 
