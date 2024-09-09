@@ -7,7 +7,7 @@ CREATE TABLE `vaccination` (
   `name` varchar(255) NOT NULL,
   `status` enum('APPLIED','PENDING') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
