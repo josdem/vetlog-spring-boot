@@ -82,6 +82,8 @@ class UserControllerTest {
                         .param("passwordConfirmation", "12345678")
                         .param("firstname", "vetlog")
                         .param("lastname", "organization")
+                        .param("countryCode", "+52")
+                        .param("mobile", "1234567890")
                         .param("email", "contact"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("user/create"))
