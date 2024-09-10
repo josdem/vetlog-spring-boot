@@ -47,7 +47,7 @@ class UserControllerTest {
     private WebApplicationContext webApplicationContext;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
                 .build();
@@ -64,6 +64,8 @@ class UserControllerTest {
                         .param("passwordConfirmation", "12345678")
                         .param("firstname", "vetlog")
                         .param("lastname", "organization")
+                        .param("countryCode", "+52")
+                        .param("mobile", "1234567890")
                         .param("email", "contact@josdem.io"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login/login"));
