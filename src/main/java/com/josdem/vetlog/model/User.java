@@ -57,10 +57,10 @@ public class User implements Serializable {
     private String countryCode;
 
     @Column
-    private String email;
+    private String mobile;
 
     @Column
-    private String mobile;
+    private String email;
 
     @Column(nullable = false)
     @Enumerated(STRING)
