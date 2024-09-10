@@ -34,7 +34,7 @@ public class UserBinder {
         user.setRole(Role.USER);
         user.setFirstName(userCommand.getFirstname());
         user.setLastName(userCommand.getLastname());
-        user.setMobile(userCommand.getPhone());
+        user.setMobile(userCommand.getMobile());
         user.setEmail(userCommand.getEmail());
         return user;
     }
