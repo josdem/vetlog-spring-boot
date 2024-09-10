@@ -63,7 +63,8 @@
       "contributions": [
         "code",
         "content",
-        "review"
+        "review",
+        "bug"
       ]
     },
     {
