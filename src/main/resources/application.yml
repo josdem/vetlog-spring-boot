@@ -18,9 +18,8 @@ spring:
     template:
     cache: false
   jpa:
-    generateDdl: true
     hibernate:
-      DdlAuto: update
+      DdlAuto: validate
   profiles:
     include: development
   messages:

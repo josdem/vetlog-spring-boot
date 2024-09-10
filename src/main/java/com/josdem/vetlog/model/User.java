@@ -47,22 +47,19 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = true)
+    @Column
     private String firstName;
 
-    @Column(nullable = true)
+    @Column
     private String lastName;
 
-    @Column(nullable = true)
-    private String phone;
-
-    @Column(nullable = true)
+    @Column
     private String countryCode;
 
-    @Column(nullable = true)
+    @Column
     private String email;
 
-    @Column(nullable = true)
+    @Column
     private String mobile;
 
     @Column(nullable = false)
