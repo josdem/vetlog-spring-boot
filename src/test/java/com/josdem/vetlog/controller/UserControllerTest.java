@@ -89,4 +89,23 @@ class UserControllerTest {
                 .andExpect(view().name("user/create"))
                 .andExpect(model().attributeHasFieldErrors("userCommand", "email"));
     }
+
+    @Test
+    @DisplayName("not saving user due to invalid mobile")
+    void shouldNotSaveUserWithInvalidMobile(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+        mockMvc.perform(post("/user/save")
+                        .with(csrf())
+                        .param("username", "vetlog")
+                        .param("password", "12345678")
+                        .param("passwordConfirmation", "12345678")
+                        .param("firstname", "vetlog")
+                        .param("lastname", "organization")
+                        .param("countryCode", "+52")
+                        .param("mobile", "notValidMobile")
+                        .param("email", "contact"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("user/create"))
+                .andExpect(model().attributeHasFieldErrors("userCommand", "mobile"));
+    }
 }
