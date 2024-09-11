@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,6 +55,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("registering an user")
     void shouldShowCreateUserForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
@@ -72,9 +74,21 @@ class UserControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("not saving user due to invalid email")
     void shouldNotSaveUserWithInvalidEmail(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
+        // Set up data before the test
+        mockMvc.perform(post("/user/save")
+                .with(csrf())
+                .param("username", "vetlog")
+                .param("password", "12345678")
+                .param("passwordConfirmation", "12345678")
+                .param("firstname", "vetlog")
+                .param("lastname", "organization")
+                .param("email", "contact@josdem.io"));
+
+        // Save test
         mockMvc.perform(post("/user/save")
                         .with(csrf())
                         .param("username", "vetlog")
