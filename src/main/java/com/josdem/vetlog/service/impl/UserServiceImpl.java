@@ -24,7 +24,6 @@ import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.util.UserContextHolderProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
