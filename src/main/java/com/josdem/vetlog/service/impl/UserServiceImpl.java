@@ -52,14 +52,14 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public User save(Command command) {
-        User user = userBinder.bindUser(command);
+        var user = userBinder.bindUser(command);
         userRepository.save(user);
         return user;
     }
 
     public User getCurrentUser() {
-        Authentication auth = provider.getAuthentication();
-        String username = auth.getName();
+        var auth = provider.getAuthentication();
+        var username = auth.getName();
         return userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username: " + username + NOT_FOUND));
