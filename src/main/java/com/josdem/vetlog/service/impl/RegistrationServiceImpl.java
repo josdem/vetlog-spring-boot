@@ -33,7 +33,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final RegistrationCodeRepository repository;
 
     public Optional<String> findEmailByToken(String token) {
-        RegistrationCode registrationCode = repository
+        var registrationCode = repository
                 .findByToken(token)
                 .orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
 
@@ -41,7 +41,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     public String generateToken(String email) {
-        RegistrationCode registrationCode = new RegistrationCode();
+        var registrationCode = new RegistrationCode();
         registrationCode.setEmail(email);
         repository.save(registrationCode);
         return registrationCode.getToken();
