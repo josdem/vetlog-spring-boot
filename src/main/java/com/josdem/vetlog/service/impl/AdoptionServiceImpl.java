@@ -19,7 +19,6 @@ package com.josdem.vetlog.service.impl;
 import com.josdem.vetlog.command.AdoptionCommand;
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.enums.PetStatus;
-import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.PetAdoption;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.service.AdoptionService;
