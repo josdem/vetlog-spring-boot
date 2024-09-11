@@ -43,7 +43,7 @@ public class RestServiceImpl implements RestService {
 
     @Override
     public Call<ResponseBody> sendMessage(@Body MessageCommand command) throws IOException {
-        Call<ResponseBody> call = restService.sendMessage(command);
+        var call = restService.sendMessage(command);
         call.execute();
         return call;
     }
