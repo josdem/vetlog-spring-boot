@@ -17,10 +17,8 @@ limitations under the License.
 package com.josdem.vetlog.service.impl;
 
 import com.josdem.vetlog.exception.BusinessException;
-import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.UserRepository;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optional = userRepository.findByUsername(username);
+        var optional = userRepository.findByUsername(username);
         return optional.map(user -> new org.springframework.security.core.userdetails.User(
                         user.getUsername(),
                         user.getPassword(),
