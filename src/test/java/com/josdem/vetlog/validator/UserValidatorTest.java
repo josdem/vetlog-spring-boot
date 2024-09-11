@@ -122,6 +122,16 @@ class UserValidatorTest {
         verify(errors).rejectValue("email", "user.error.duplicated.email");
     }
 
+    @Test
+    @DisplayName("rejecting an user since mobile format is not valid")
+    void shouldRejectUserSinceInvalidMobile(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        UserCommand userCommand = getUserCommand();
+        userCommand.setMobile("notValidPhoneNumber");
+        validator.validate(userCommand, errors);
+        verify(errors).rejectValue("mobile", "user.error.mobile");
+    }
+
     private UserCommand getUserCommand() {
         UserCommand userCommand = new UserCommand();
         userCommand.setUsername("josdem");
@@ -130,6 +140,7 @@ class UserValidatorTest {
         userCommand.setFirstname("Jose");
         userCommand.setLastname("Morales");
         userCommand.setEmail("contact@josdem.io");
+        userCommand.setMobile("1234567890");
         return userCommand;
     }
 }

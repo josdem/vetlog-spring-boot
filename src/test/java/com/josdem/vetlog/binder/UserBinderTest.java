@@ -30,7 +30,7 @@ import org.junit.jupiter.api.TestInfo;
 @Slf4j
 class UserBinderTest {
 
-    private UserBinder binder = new UserBinder();
+    private final UserBinder binder = new UserBinder();
 
     @Test
     @DisplayName("binding an user")
@@ -44,6 +44,8 @@ class UserBinderTest {
         assertEquals(60, result.getPassword().length());
         assertEquals("Jose", result.getFirstName());
         assertEquals("Morales", result.getLastName());
+        assertEquals("1234567890", result.getMobile());
+        assertEquals("+52", result.getCountryCode());
         assertEquals("contact@josdem.io", result.getEmail());
         assertEquals(Role.USER, result.getRole());
     }
@@ -56,6 +58,8 @@ class UserBinderTest {
         userCommand.setPasswordConfirmation("password");
         userCommand.setFirstname("Jose");
         userCommand.setLastname("Morales");
+        userCommand.setCountryCode("+52");
+        userCommand.setMobile("1234567890");
         userCommand.setEmail("contact@josdem.io");
         return userCommand;
     }

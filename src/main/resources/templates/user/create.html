@@ -4,12 +4,12 @@
     <title th:text="#{user.view.create.title}"></title>
     <head th:insert="~{fragments/include}"/>
     <style>
-        .phone-container {
+        .mobile-container {
             display: flex;
             align-items: center;
         }
 
-        .country-code, .phone-number {
+        .country-code, .mobile-number {
             flex: 1;
             height: 34px;
             box-sizing: border-box;
@@ -20,7 +20,7 @@
             margin-right: 10px;
         }
 
-        .phone-number {
+        .mobile-number {
             flex: 9;
         }
     </style>
@@ -64,14 +64,14 @@
                                    placeholder="lastname" id='lastname'/>
                             <label th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></label>
                             <br/>
-                            <label for="phone"><h4 th:text="#{user.phone}"/></label>
-                            <div class="phone-container">
+                            <label for="mobile"><h4 th:text="#{user.mobile}"/></label>
+                            <div class="mobile-container">
                                 <input type="text" name="countryCode" value="+52" id="countryCode" class="country-code" />
-                                <input type="text" name="phone" th:field="*{phone}" class="form-control phone-number"
-                                       placeholder="phone number" id="phone"
+                                <input type="text" name="mobile" th:field="*{mobile}" class="form-control mobile-number"
+                                       placeholder="phone number" id="mobile"
                                        pattern="\d{10}" title="Phone number must be 10 digits only" required />
                             </div>
-                            <label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></label>
+                            <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
                             <br/>
                             <label for="email"><h4 th:text="#{user.email}"/></label>
                             <input type="text" name='email' th:field="*{email}" class="form-control" placeholder="email"
