@@ -152,7 +152,7 @@ class RecoveryServiceTest {
     @DisplayName("changing password")
     void shouldChangePassword(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        ChangePasswordCommand changePasswordCommand = new ChangePasswordCommand();
+        var changePasswordCommand = new ChangePasswordCommand();
         changePasswordCommand.setToken(TOKEN);
         changePasswordCommand.setPassword("password");
         when(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL));

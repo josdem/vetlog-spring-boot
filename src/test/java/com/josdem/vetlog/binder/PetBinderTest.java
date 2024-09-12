@@ -62,10 +62,10 @@ class PetBinderTest {
     @DisplayName("binding a pet")
     void shouldBindPet(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        Breed breed = getBreed();
-        Pet pet = getPet(breed);
+        var breed = getBreed();
+        var pet = getPet(breed);
 
-        PetCommand result = petBinder.bindPet(pet);
+        var result = petBinder.bindPet(pet);
 
         assertEquals(1L, result.getId());
         assertEquals("1b211410-320b-11ed-a261-0242ac120002", result.getUuid());
@@ -84,7 +84,7 @@ class PetBinderTest {
     @DisplayName("binging a pet from command")
     void shouldBindPetFromCommand(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetCommand petCommand = new PetCommand();
+        var petCommand = new PetCommand();
         petCommand.setId(2L);
         petCommand.setName("Marla");
         petCommand.setBirthDate("2021-01-17T00:00");
@@ -95,10 +95,10 @@ class PetBinderTest {
         petCommand.setImages(Arrays.asList(new PetImage()));
         petCommand.setBreed(1L);
 
-        Breed breed = getBreed();
-        Optional<Breed> optionalBreed = Optional.of(breed);
+        var breed = getBreed();
+        var optionalBreed = Optional.of(breed);
         when(breedRepository.findById(1L)).thenReturn(optionalBreed);
-        Pet result = petBinder.bindPet(petCommand);
+        var result = petBinder.bindPet(petCommand);
 
         assertEquals(2L, result.getId());
         assertEquals(36, result.getUuid().length());
@@ -113,14 +113,14 @@ class PetBinderTest {
     @DisplayName("not binging a pet from command due to breed not found")
     void shouldNotBindPetFromCommandDueToBreedNotFound(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetCommand petCommand = new PetCommand();
+        var petCommand = new PetCommand();
         petCommand.setBirthDate("2021-01-17T00:00");
         assertThrows(BusinessException.class, () -> petBinder.bindPet(petCommand));
     }
 
     @NotNull
     private Pet getPet(Breed breed) {
-        Pet pet = new Pet();
+        var pet = new Pet();
         pet.setId(1L);
         pet.setUuid("1b211410-320b-11ed-a261-0242ac120002");
         pet.setName("Frida");
@@ -136,14 +136,14 @@ class PetBinderTest {
 
     @NotNull
     private User getUser() {
-        User user = new User();
+        var user = new User();
         user.setId(2L);
         return user;
     }
 
     @NotNull
     private Breed getBreed() {
-        Breed breed = new Breed();
+        var breed = new Breed();
         breed.setId(5L);
         breed.setName("Ragdoll");
         breed.setType(PetType.CAT);

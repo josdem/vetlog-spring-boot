@@ -31,7 +31,6 @@ import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.service.impl.PetLogServiceImpl;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -71,10 +70,10 @@ class PetLogServiceTest {
     @DisplayName("saving a pet log")
     void shouldSavePetLog(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetLogCommand petLogCommand = new PetLogCommand();
+        var petLogCommand = new PetLogCommand();
         petLogCommand.setPet(1L);
-        PetLog petLog = getPetLog();
-        Optional<Pet> optionalPet = Optional.of(pet);
+        var petLog = getPetLog();
+        var optionalPet = Optional.of(pet);
 
         when(petLogBinder.bind(petLogCommand)).thenReturn(petLog);
         when(petRepository.findById(1L)).thenReturn(optionalPet);
@@ -87,8 +86,8 @@ class PetLogServiceTest {
     @DisplayName("should not find a pet log")
     void shouldNotFindPetLog(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetLogCommand petLogCommand = new PetLogCommand();
-        PetLog petLog = getPetLog();
+        var petLogCommand = new PetLogCommand();
+        var petLog = getPetLog();
 
         when(petLogBinder.bind(petLogCommand)).thenReturn(petLog);
 
@@ -99,15 +98,15 @@ class PetLogServiceTest {
     @DisplayName("getting logs by pet")
     void shouldGetPetLogsByPet(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetLog petLog = getPetLog();
+        var petLog = getPetLog();
         when(petLogRepository.getAllByPet(pet)).thenReturn(Arrays.asList(petLog));
-        List<PetLog> result = service.getPetLogsByPet(pet);
+        var result = service.getPetLogsByPet(pet);
         assertEquals(Arrays.asList(petLog), result);
     }
 
     @NotNull
     private PetLog getPetLog() {
-        PetLog petLog = new PetLog();
+        var petLog = new PetLog();
         petLog.setPet(pet);
         return petLog;
     }

@@ -25,8 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
-import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -113,8 +111,8 @@ class PetControllerTest {
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldUpdatePet(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-        User user = userRepository.findByUsername("josdem").orElseThrow(() -> new RuntimeException("User not found"));
-        Pet cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
+        var user = userRepository.findByUsername("josdem").orElseThrow(() -> new RuntimeException("User not found"));
+        var cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
         mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/update")
                         .file(image)
                         .with(csrf())
