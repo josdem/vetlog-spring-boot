@@ -74,21 +74,9 @@ class UserControllerTest {
     }
 
     @Test
-    @Transactional
     @DisplayName("not saving user due to invalid email")
     void shouldNotSaveUserWithInvalidEmail(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-        // Set up data before the test
-        mockMvc.perform(post("/user/save")
-                .with(csrf())
-                .param("username", "vetlog")
-                .param("password", "12345678")
-                .param("passwordConfirmation", "12345678")
-                .param("firstname", "vetlog")
-                .param("lastname", "organization")
-                .param("email", "contact@josdem.io"));
-
-        // Save test
         mockMvc.perform(post("/user/save")
                         .with(csrf())
                         .param("username", "vetlog")
