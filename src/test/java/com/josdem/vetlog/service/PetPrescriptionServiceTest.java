@@ -55,9 +55,9 @@ class PetPrescriptionServiceTest {
     @DisplayName("saving a pet image")
     void shouldSavePetImage(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetLogCommand petLogCommand = new PetLogCommand();
-        MultipartFile multiPartFile = mock(MultipartFile.class);
-        InputStream inputStream = mock(InputStream.class);
+        var petLogCommand = new PetLogCommand();
+        var multiPartFile = mock(MultipartFile.class);
+        var inputStream = mock(InputStream.class);
         when(inputStream.available()).thenReturn(1000);
         when(multiPartFile.getInputStream()).thenReturn(inputStream);
         petLogCommand.setAttachment(multiPartFile);

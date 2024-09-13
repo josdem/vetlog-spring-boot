@@ -33,7 +33,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.userdetails.UserDetails;
 
 @Slf4j
 class UserDetailsServiceTest {
@@ -55,7 +54,7 @@ class UserDetailsServiceTest {
     @DisplayName("loading user by username")
     void shouldLoadUserByUsername(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        User user = new User();
+        var user = new User();
         user.setUsername(USERNAME);
         user.setPassword("password");
         user.setEnabled(true);
@@ -65,7 +64,7 @@ class UserDetailsServiceTest {
         user.setRole(Role.USER);
         when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
 
-        UserDetails result = service.loadUserByUsername(USERNAME);
+        var result = service.loadUserByUsername(USERNAME);
 
         assertEquals(user.getUsername(), result.getUsername());
         assertEquals(user.getPassword(), result.getPassword());

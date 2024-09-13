@@ -19,7 +19,6 @@ package com.josdem.vetlog.binder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.josdem.vetlog.command.PetLogCommand;
-import com.josdem.vetlog.model.PetLog;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
@@ -35,9 +34,9 @@ class PetLogBinderTest {
     @DisplayName("binding a pet log command")
     void shouldBindPetLogCommand(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetLogCommand petLogCommand = getPetLogCommand();
+        var petLogCommand = getPetLogCommand();
 
-        PetLog result = binder.bind(petLogCommand);
+        var result = binder.bind(petLogCommand);
 
         assertEquals("Margarita Morales", result.getVetName());
         assertEquals("Digestion issues", result.getSigns());
@@ -47,7 +46,7 @@ class PetLogBinderTest {
 
     @NotNull
     private PetLogCommand getPetLogCommand() {
-        PetLogCommand petLogCommand = new PetLogCommand();
+        var petLogCommand = new PetLogCommand();
         petLogCommand.setVetName("Margarita Morales");
         petLogCommand.setSigns("Digestion issues");
         petLogCommand.setDiagnosis("Constipation");

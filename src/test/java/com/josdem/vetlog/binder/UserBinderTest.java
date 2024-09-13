@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.josdem.vetlog.command.UserCommand;
 import com.josdem.vetlog.enums.Role;
-import com.josdem.vetlog.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
@@ -36,9 +35,9 @@ class UserBinderTest {
     @DisplayName("binding an user")
     void shouldBindAnUser(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
 
-        User result = binder.bindUser(userCommand);
+        var result = binder.bindUser(userCommand);
 
         assertEquals("josdem", result.getUsername());
         assertEquals(60, result.getPassword().length());
@@ -52,7 +51,7 @@ class UserBinderTest {
 
     @NotNull
     private UserCommand getUserCommand() {
-        UserCommand userCommand = new UserCommand();
+        var userCommand = new UserCommand();
         userCommand.setUsername("josdem");
         userCommand.setPassword("password");
         userCommand.setPasswordConfirmation("password");

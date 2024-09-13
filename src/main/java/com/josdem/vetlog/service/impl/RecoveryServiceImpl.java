@@ -66,14 +66,14 @@ public class RecoveryServiceImpl implements RecoveryService {
     private String forgotPath;
 
     public User confirmAccountForToken(String token) {
-        User user = getUserByToken(token);
+        var user = getUserByToken(token);
         user.setEnabled(true);
         userRepository.save(user);
         return user;
     }
 
     public User getUserByToken(String token) {
-        String email = registrationService
+        var email = registrationService
                 .findEmailByToken(token)
                 .orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
         return userRepository
@@ -82,15 +82,15 @@ public class RecoveryServiceImpl implements RecoveryService {
     }
 
     public void generateRegistrationCodeForEmail(String email) {
-        User user = userRepository
+        var user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND)));
         if (!user.getEnabled()) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
         try {
-            String token = registrationService.generateToken(email);
-            MessageCommand command = new MessageCommand();
+            var token = registrationService.generateToken(email);
+            var command = new MessageCommand();
             command.setEmail(email);
             command.setName(email);
             command.setTemplate(forgotTemplate);
@@ -107,8 +107,8 @@ public class RecoveryServiceImpl implements RecoveryService {
     }
 
     public User changePassword(Command command) {
-        ChangePasswordCommand changePasswordCommand = (ChangePasswordCommand) command;
-        User user = getUserByToken(changePasswordCommand.getToken());
+        var changePasswordCommand = (ChangePasswordCommand) command;
+        var user = getUserByToken(changePasswordCommand.getToken());
         user.setPassword(new BCryptPasswordEncoder().encode(changePasswordCommand.getPassword()));
         userRepository.save(user);
         return user;
