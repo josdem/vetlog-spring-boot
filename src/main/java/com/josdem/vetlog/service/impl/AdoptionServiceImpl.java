@@ -19,7 +19,6 @@ package com.josdem.vetlog.service.impl;
 import com.josdem.vetlog.command.AdoptionCommand;
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.enums.PetStatus;
-import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.PetAdoption;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.service.AdoptionService;
@@ -35,9 +34,9 @@ public class AdoptionServiceImpl implements AdoptionService {
     private final PetRepository petRepository;
 
     public PetAdoption save(Command command) {
-        AdoptionCommand adoptionCommand = (AdoptionCommand) command;
-        Pet pet = petService.getPetByUuid(adoptionCommand.getUuid());
-        PetAdoption petAdoption = new PetAdoption();
+        var adoptionCommand = (AdoptionCommand) command;
+        var pet = petService.getPetByUuid(adoptionCommand.getUuid());
+        var petAdoption = new PetAdoption();
         petAdoption.setPet(pet);
         petAdoption.setDescription(adoptionCommand.getDescription());
         pet.setStatus(PetStatus.IN_ADOPTION);

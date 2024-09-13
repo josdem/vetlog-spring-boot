@@ -54,7 +54,7 @@ class UserValidatorTest {
     @DisplayName("validating an user")
     void shouldValidateAnUser(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
         validator.validate(userCommand, errors);
         verify(errors, never()).rejectValue(anyString(), anyString());
     }
@@ -63,7 +63,7 @@ class UserValidatorTest {
     @DisplayName("rejecting an user since passwords do not match")
     void shouldRejectUserSincePasswordDoesNotMatch(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
         userCommand.setPasswordConfirmation("passwords");
         validator.validate(userCommand, errors);
         verify(errors).rejectValue("password", "user.error.password.equals");
@@ -73,7 +73,7 @@ class UserValidatorTest {
     @DisplayName("accepting dash in password")
     void shouldAcceptDashCharacterInPassword(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
         userCommand.setPassword("pass-word");
         userCommand.setPasswordConfirmation("pass-word");
         validator.validate(userCommand, errors);
@@ -84,7 +84,7 @@ class UserValidatorTest {
     @DisplayName("accepting underscore in password")
     void shouldAcceptUnderscoreCharacterInPassword(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
         userCommand.setPassword("pass_word");
         userCommand.setPasswordConfirmation("pass_word");
         validator.validate(userCommand, errors);
@@ -95,7 +95,7 @@ class UserValidatorTest {
     @DisplayName("accepting dot in password")
     void shouldAcceptDotCharacterInPassword(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
         userCommand.setPassword("password.");
         userCommand.setPasswordConfirmation("password.");
         validator.validate(userCommand, errors);
@@ -106,7 +106,7 @@ class UserValidatorTest {
     @DisplayName("not duplicating users")
     void shouldNotDuplicateUsers(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
         when(userRepository.findByUsername("josdem")).thenReturn(Optional.of(new User()));
         validator.validate(userCommand, errors);
         verify(errors).rejectValue("username", "user.error.duplicated.username");
@@ -116,7 +116,7 @@ class UserValidatorTest {
     @DisplayName("not duplicating users by email")
     void shouldNotDuplicateUsersByEmail(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
         when(userRepository.findByEmail("contact@josdem.io")).thenReturn(Optional.of(new User()));
         validator.validate(userCommand, errors);
         verify(errors).rejectValue("email", "user.error.duplicated.email");
@@ -126,14 +126,14 @@ class UserValidatorTest {
     @DisplayName("rejecting an user since mobile format is not valid")
     void shouldRejectUserSinceInvalidMobile(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        UserCommand userCommand = getUserCommand();
+        var userCommand = getUserCommand();
         userCommand.setMobile("notValidPhoneNumber");
         validator.validate(userCommand, errors);
         verify(errors).rejectValue("mobile", "user.error.mobile");
     }
 
     private UserCommand getUserCommand() {
-        UserCommand userCommand = new UserCommand();
+        var userCommand = new UserCommand();
         userCommand.setUsername("josdem");
         userCommand.setPassword("password");
         userCommand.setPasswordConfirmation("password");

@@ -25,8 +25,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
-import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -152,8 +150,8 @@ class PetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("pet/create"));
 
-        User user = userRepository.findByUsername("josdem").orElseThrow(() -> new RuntimeException("User not found"));
-        Pet cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
+        var user = userRepository.findByUsername("josdem").orElseThrow(() -> new RuntimeException("User not found"));
+        var cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
 
         // Update test
         mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/update")
