@@ -23,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,6 +55,7 @@ class UserControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("registering an user")
     void shouldShowCreateUserForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
