@@ -63,7 +63,7 @@ public class UserController {
         }
         userService.save(userCommand);
         ModelAndView modelAndView = new ModelAndView("login/login");
-        modelAndView.addObject("message", localeService.getMessage("user.account.created", request));
+        modelAndView.addObject("userAccountCreatedMessage", localeService.getMessage("user.account.created", request));
         return modelAndView;
     }
 
