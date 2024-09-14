@@ -43,6 +43,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kaminuma"><img src="https://avatars.githubusercontent.com/u/33448874?v=4?s=100" width="100px;" alt="T.H(kaminuma)"/><br /><sub><b>T.H(kaminuma)</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=kaminuma" title="Code">💻</a> <a href="#content-kaminuma" title="Content">🖋</a> <a href="https://github.com/josdem/vetlog-spring-boot/pulls?q=is%3Apr+reviewed-by%3Akaminuma" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/josdem/vetlog-spring-boot/issues?q=author%3Akaminuma" title="Bug reports">🐛</a> <a href="#question-kaminuma" title="Answering Questions">💬</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yashudhlani"><img src="https://avatars.githubusercontent.com/u/44999427?v=4?s=100" width="100px;" alt="Yash Udhlani"/><br /><sub><b>Yash Udhlani</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=yashudhlani" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Prathyusha287"><img src="https://avatars.githubusercontent.com/u/120239903?v=4?s=100" width="100px;" alt="Prathyusha287"/><br /><sub><b>Prathyusha287</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Prathyusha287" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
