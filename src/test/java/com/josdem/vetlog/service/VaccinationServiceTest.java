@@ -58,4 +58,15 @@ class VaccinationServiceTest {
         verify(vaccinationRepository, times(2))
                 .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
     }
+
+    @Test
+    @DisplayName("saving second vaccination")
+    void shouldSaveSecondVaccination(TestInfo testInfo) {
+        log.info("Test: {}", testInfo.getDisplayName());
+        pet.getBreed().setType(PetType.DOG);
+        pet.setBirthDate(LocalDateTime.now().minusWeeks(10));
+        vaccinationService.save(pet);
+        verify(vaccinationRepository, times(3))
+                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
+    }
 }
