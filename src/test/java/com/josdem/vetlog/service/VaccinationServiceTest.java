@@ -106,7 +106,7 @@ class VaccinationServiceTest {
         pet.setBirthDate(LocalDateTime.now().minusWeeks(20));
         vaccinationService.save(pet);
         verify(vaccinationRepository, times(5))
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING ,pet));
+                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
     }
 
     @Test

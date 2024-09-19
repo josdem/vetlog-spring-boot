@@ -35,6 +35,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VaccinationServiceImpl implements VaccinationService {
 
+    private static final String DA2PP = "DA2PP";
+    private static final String DEWORMING = "Deworming";
+    private static final String LEPTOSPIROSIS = "Leptospirosis";
+    private static final String RABIES = "Rabies";
+
     private final VaccinationRepository vaccinationRepository;
 
     @Override
@@ -49,28 +54,28 @@ public class VaccinationServiceImpl implements VaccinationService {
             case 0, 1, 2, 3, 4, 5 -> log.info("No vaccination needed");
             case 6, 7, 8, 9 -> {
                 log.info("First vaccination");
-                registerVaccination("DA2PP", pet);
-                registerVaccination("Deworming", pet);
+                registerVaccination(DA2PP, pet);
+                registerVaccination(DEWORMING, pet);
             }
             case 10, 11, 12, 13 -> {
                 log.info("Second vaccination");
-                registerVaccination("DA2PP", pet);
-                registerVaccination("Deworming", pet);
-                registerVaccination("Leptospirosis", pet);
+                registerVaccination(DA2PP, pet);
+                registerVaccination(DEWORMING, pet);
+                registerVaccination(LEPTOSPIROSIS, pet);
             }
             case 14, 15, 16 -> {
                 log.info("Third vaccination");
-                registerVaccination("DA2PP", pet);
-                registerVaccination("Deworming", pet);
-                registerVaccination("Leptospirosis", pet);
-                registerVaccination("Rabies", pet);
+                registerVaccination(DA2PP, pet);
+                registerVaccination(DEWORMING, pet);
+                registerVaccination(LEPTOSPIROSIS, pet);
+                registerVaccination(RABIES, pet);
             }
             default -> {
                 log.info("Annual vaccination");
-                registerVaccination("DA2PP", pet);
-                registerVaccination("Deworming", pet);
-                registerVaccination("Leptospirosis", pet);
-                registerVaccination("Rabies", pet);
+                registerVaccination(DA2PP, pet);
+                registerVaccination(DEWORMING, pet);
+                registerVaccination(LEPTOSPIROSIS, pet);
+                registerVaccination(RABIES, pet);
                 registerVaccination("Canine influenza", pet);
             }
         }
