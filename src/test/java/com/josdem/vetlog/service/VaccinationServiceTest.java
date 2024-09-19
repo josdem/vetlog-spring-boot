@@ -73,7 +73,7 @@ class VaccinationServiceTest {
         pet.setBirthDate(LocalDateTime.now().minusWeeks(6));
         vaccinationService.save(pet);
         verify(vaccinationRepository, times(2))
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
+                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
     }
 
     @Test
@@ -84,7 +84,7 @@ class VaccinationServiceTest {
         pet.setBirthDate(LocalDateTime.now().minusWeeks(10));
         vaccinationService.save(pet);
         verify(vaccinationRepository, times(3))
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
+                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
     }
 
     @Test
@@ -95,7 +95,7 @@ class VaccinationServiceTest {
         pet.setBirthDate(LocalDateTime.now().minusWeeks(14));
         vaccinationService.save(pet);
         verify(vaccinationRepository, times(4))
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
+                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
     }
 
     @Test
@@ -106,7 +106,7 @@ class VaccinationServiceTest {
         pet.setBirthDate(LocalDateTime.now().minusWeeks(20));
         vaccinationService.save(pet);
         verify(vaccinationRepository, times(5))
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
+                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING ,pet));
     }
 
     @Test
@@ -117,6 +117,6 @@ class VaccinationServiceTest {
         pet.setBirthDate(LocalDateTime.now().minusWeeks(1));
         vaccinationService.save(pet);
         verify(vaccinationRepository, never())
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
+                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
     }
 }
