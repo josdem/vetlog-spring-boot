@@ -2,6 +2,7 @@ package com.josdem.vetlog.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -89,6 +90,17 @@ class VaccinationServiceTest {
         pet.setBirthDate(LocalDateTime.now().minusWeeks(20));
         vaccinationService.save(pet);
         verify(vaccinationRepository, times(5))
+                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
+    }
+
+    @Test
+    @DisplayName("not saving vaccination due is not old enough")
+    void shouldNotSaveVaccinationDueToNotOldEnough(TestInfo testInfo) {
+        log.info("Test: {}", testInfo.getDisplayName());
+        pet.getBreed().setType(PetType.DOG);
+        pet.setBirthDate(LocalDateTime.now().minusWeeks(1));
+        vaccinationService.save(pet);
+        verify(vaccinationRepository, never())
                 .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING));
     }
 }
