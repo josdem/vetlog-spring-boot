@@ -73,6 +73,9 @@ class PetServiceTest {
     @Mock
     private LocaleService localeService;
 
+    @Mock
+    private VaccinationService vaccinationService;
+
     private User user;
     private User adopter;
     private Pet pet;
@@ -85,7 +88,13 @@ class PetServiceTest {
         adopter = new User();
         pet = new Pet();
         service = new PetServiceImpl(
-                petBinder, petRepository, petImageService, userRepository, adoptionRepository, localeService);
+                petBinder,
+                petRepository,
+                petImageService,
+                userRepository,
+                adoptionRepository,
+                localeService,
+                vaccinationService);
     }
 
     @Test
@@ -96,6 +105,7 @@ class PetServiceTest {
         when(petBinder.bindPet(command)).thenReturn(pet);
         service.save(command, user);
         verify(petRepository).save(Mockito.isA(Pet.class));
+        verify(vaccinationService).save(Mockito.isA(Pet.class));
     }
 
     @Test

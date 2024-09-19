@@ -29,6 +29,7 @@ import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.PetImageService;
 import com.josdem.vetlog.service.PetService;
+import com.josdem.vetlog.service.VaccinationService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +48,7 @@ public class PetServiceImpl implements PetService {
     private final UserRepository userRepository;
     private final AdoptionRepository adoptionRepository;
     private final LocaleService localeService;
+    private final VaccinationService vaccinationService;
 
     @Transactional
     public Pet save(Command command, User user) throws IOException {
@@ -54,6 +56,7 @@ public class PetServiceImpl implements PetService {
         pet.setUser(user);
         petImageService.attachFile(command);
         petRepository.save(pet);
+        vaccinationService.save(pet);
         return pet;
     }
 
