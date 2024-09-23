@@ -16,10 +16,14 @@ limitations under the License.
 
 package com.josdem.vetlog.repository;
 
+import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VaccinationRepository extends JpaRepository<Vaccination, Long> {
 
     Vaccination save(Vaccination vaccination);
+
+    List<Vaccination> findAllByPet(Pet pet);
 }

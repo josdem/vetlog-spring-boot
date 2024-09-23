@@ -26,6 +26,7 @@ import com.josdem.vetlog.service.VaccinationService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -83,5 +84,10 @@ public class VaccinationServiceImpl implements VaccinationService {
 
     private void registerVaccination(String name, Pet pet) {
         vaccinationRepository.save(new Vaccination(null, name, LocalDate.now(), VaccinationStatus.PENDING, pet));
+    }
+
+    @Override
+    public List<Vaccination> getVaccinationsByPet(Pet pet) {
+        return vaccinationRepository.findAllByPet(pet);
     }
 }
