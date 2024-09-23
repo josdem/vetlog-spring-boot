@@ -17,7 +17,11 @@ limitations under the License.
 package com.josdem.vetlog.service;
 
 import com.josdem.vetlog.model.Pet;
+import com.josdem.vetlog.model.Vaccination;
+import java.util.List;
 
 public interface VaccinationService {
     void save(Pet pet);
+
+    List<Vaccination> getVaccinationsByPet(Pet pet);
 }
