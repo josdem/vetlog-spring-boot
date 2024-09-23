@@ -26,6 +26,7 @@ import com.josdem.vetlog.service.BreedService;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
+import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.validator.PetValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -59,6 +60,7 @@ public class PetController {
     private final LocaleService localeService;
     private final PetBinder petBinder;
     private final PetValidator petValidator;
+    private final VaccinationService vaccinationService;
 
     @Value("${breedsByTypeUrl}")
     private String breedsByTypeUrl;
@@ -183,6 +185,7 @@ public class PetController {
     private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView) {
         User user = userService.getCurrentUser();
         List<Pet> pets = petService.getPetsByUser(user);
+        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinationsByPet(pet)));
         modelAndView.addObject("pets", pets);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);

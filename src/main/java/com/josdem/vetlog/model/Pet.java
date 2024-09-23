@@ -30,6 +30,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
@@ -90,4 +91,7 @@ public class Pet {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_image_id")
     private List<PetImage> images;
+
+    @Transient
+    private List<Vaccination> vaccines;
 }
