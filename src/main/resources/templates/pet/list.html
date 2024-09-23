@@ -77,7 +77,12 @@
                                 </ul>
                             </div>
                             <table border="1" th:if="${!pet.vaccines.isEmpty()}">
-                                <!-- Loop through the products list -->
+                                <thead>
+                                    <tr>
+                                        <th th:text="#{pet.table.header.vaccines}"></th>
+                                        <th th:text="#{pet.table.header.status}"></th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                 <tr th:each="vaccination : ${pet.vaccines}">
                                     <td th:text="${vaccination.name}"></td>
