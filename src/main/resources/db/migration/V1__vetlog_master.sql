@@ -117,7 +117,7 @@ CREATE TABLE `pet` (
   `adopter_id` bigint(20) DEFAULT NULL,
   `breed_id` bigint(20) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  `pet_id` bigint DEFAULT NULL;
+  `pet_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKj3j9664ee510hnt2pkd7on7dl` (`adopter_id`),
   KEY `FKiqbjbaml7gtwulqptktmsi5dc` (`breed_id`),
