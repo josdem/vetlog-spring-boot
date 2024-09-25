@@ -55,7 +55,7 @@ public class TelephoneController {
     @PostMapping(value = "/save")
     public ModelAndView save(
             @Valid TelephoneCommand telephoneCommand, BindingResult bindingResult, HttpServletRequest request) {
-        log.info("Saving adoption for pet: " + telephoneCommand.getUuid());
+        log.info("Saving adoption for pet: {}", telephoneCommand.getUuid());
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("telephone/adopt");
             return fillPetAndTelephoneCommand(modelAndView, telephoneCommand);
@@ -69,7 +69,7 @@ public class TelephoneController {
 
     @GetMapping(value = "/adopt")
     public ModelAndView adopt(TelephoneCommand telephoneCommand) {
-        log.info("Adoption to pet with uuid: " + telephoneCommand.getUuid());
+        log.info("Adoption to pet with uuid: {}", telephoneCommand.getUuid());
         ModelAndView modelAndView = new ModelAndView("telephone/adopt");
         return fillPetAndTelephoneCommand(modelAndView, telephoneCommand);
     }

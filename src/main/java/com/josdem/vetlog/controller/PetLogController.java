@@ -61,7 +61,7 @@ public class PetLogController {
 
     @GetMapping(value = "/create")
     public ModelAndView create(@RequestParam("uuid") String uuid, HttpServletRequest request) {
-        log.info("Pet uuid: " + uuid);
+        log.info("Pet uuid: {}", uuid);
         ModelAndView modelAndView = new ModelAndView("petlog/create");
         Command petLogCommand = new PetLogCommand();
         modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
@@ -75,7 +75,7 @@ public class PetLogController {
     public ModelAndView save(
             @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
-        log.info("Creating petLog: " + petLogCommand.getPet());
+        log.info("Creating petLog: {}", petLogCommand.getPet());
         ModelAndView modelAndView = new ModelAndView("petlog/create");
         Pet pet = petService.getPetById(petLogCommand.getPet());
         User currentUser = userService.getCurrentUser();
