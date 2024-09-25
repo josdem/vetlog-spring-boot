@@ -16,7 +16,8 @@
                 <img style="width:320px;height:240px;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
                 <div class="caption" align="center">
                     <h3 th:text="${pet.name}"></h3>
-                    <p th:text="${pet.birthDate}"/>
+                    <!-- Formatting birthDate to MM-dd-YYYY -->
+                    <p th:text="${#dates.format(pet.birthDate, 'MM-dd-yyyy')}"/>
                     <p th:text="${pet.breed.name}"/>
                     <p th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                     <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
@@ -43,3 +44,4 @@
 <div th:insert="~{fragments/footer}"/>
 </body>
 </html>
+
