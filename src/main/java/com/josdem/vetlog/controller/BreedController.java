@@ -40,7 +40,7 @@ public class BreedController {
     @GetMapping(value = "/list")
     @ResponseBody
     public List<Breed> listByType(@RequestParam String type, HttpServletResponse response) {
-        log.info("Listing Pets by type: " + type);
+        log.info("Listing Pets by type: {}", type);
 
         response.addHeader("Allow-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", "*");

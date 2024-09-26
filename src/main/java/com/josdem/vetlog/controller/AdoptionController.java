@@ -59,14 +59,14 @@ public class AdoptionController {
 
     @GetMapping(value = "/descriptionForAdoption")
     public ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand) {
-        log.info("Adding description to pet with uuid: " + adoptionCommand.getUuid());
+        log.info("Adding description to pet with uuid: {}", adoptionCommand.getUuid());
         ModelAndView modelAndView = new ModelAndView();
         return fillPetAndAdoptionCommand(modelAndView, adoptionCommand);
     }
 
     @PostMapping(value = "/save")
     public ModelAndView save(@Valid AdoptionCommand adoptionCommand, BindingResult bindingResult) {
-        log.info("Creating adoption description for pet: " + adoptionCommand.getUuid());
+        log.info("Creating adoption description for pet: {}", adoptionCommand.getUuid());
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("adoption/descriptionForAdoption");
             fillPetAndAdoptionCommand(modelAndView, adoptionCommand);
