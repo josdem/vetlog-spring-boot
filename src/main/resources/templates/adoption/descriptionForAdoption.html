@@ -16,8 +16,8 @@
                 <img style="width:320px;height:240px;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
                 <div class="caption" align="center">
                     <h3 th:text="${pet.name}"></h3>
-                    <!-- Formatting birthDate to MM-dd-YYYY -->
-                    <p th:text="${#dates.format(pet.birthDate, 'MM-dd-yyyy')}"/>
+                    <!-- Using custom dateFormatter to format birthDate -->
+                    <li th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                     <p th:text="${pet.breed.name}"/>
                     <p th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                     <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
@@ -28,7 +28,7 @@
                         <fieldset>
                             <label for="description"><h4 th:text="#{pet.description}"/></label>
                             <textarea name="description" th:field="*{description}" rows="8" class="form-control"
-                                      placeholder="Description" id='description'/>
+                                      placeholder="Description" id='description'></textarea>
                             <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
                             <input type="hidden" th:value="${adoptionCommand.uuid}" name="uuid"/>
                             <br/><br/>
