@@ -24,7 +24,6 @@ import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.service.impl.BreedServiceImpl;
 import java.util.Arrays;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,7 +51,7 @@ class BreedServiceTest {
     void shouldGetBreedsByType(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         when(breedRepository.findByType(PetType.DOG)).thenReturn(Arrays.asList(new Breed()));
-        List<Breed> breeds = service.getBreedsByType(PetType.DOG);
+        var breeds = service.getBreedsByType(PetType.DOG);
         assertFalse(breeds.isEmpty(), "should have a breed");
     }
 }

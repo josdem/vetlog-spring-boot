@@ -65,13 +65,13 @@ class TelephoneServiceTest {
     @DisplayName("sending adopter contact information to the pet owner")
     void shouldSendAdopterInformation(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
-        TelephoneCommand telephoneCommand = new TelephoneCommand();
+        var telephoneCommand = new TelephoneCommand();
         telephoneCommand.setUuid("uuid");
         telephoneCommand.setMobile("7346041832");
 
-        User owner = getUser("contact@josdem.io");
-        User adopter = getUser("athena@gmail.com");
-        Pet pet = getPet(owner, adopter);
+        var owner = getUser("contact@josdem.io");
+        var adopter = getUser("athena@gmail.com");
+        var pet = getPet(owner, adopter);
 
         when(petService.getPetByUuid("uuid")).thenReturn(pet);
         service.save(telephoneCommand, adopter);
@@ -84,7 +84,7 @@ class TelephoneServiceTest {
     }
 
     private Pet getPet(User owner, User adopter) {
-        Pet pet = new Pet();
+        var pet = new Pet();
         pet.setName("Cinnamon");
         pet.setUser(owner);
         pet.setAdopter(adopter);
@@ -92,7 +92,7 @@ class TelephoneServiceTest {
     }
 
     private User getUser(String email) {
-        User user = new User();
+        var user = new User();
         user.setEmail(email);
         return user;
     }

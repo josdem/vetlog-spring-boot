@@ -117,6 +117,7 @@ CREATE TABLE `pet` (
   `adopter_id` bigint(20) DEFAULT NULL,
   `breed_id` bigint(20) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
+  `pet_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FKj3j9664ee510hnt2pkd7on7dl` (`adopter_id`),
   KEY `FKiqbjbaml7gtwulqptktmsi5dc` (`breed_id`),
@@ -199,6 +200,7 @@ CREATE TABLE `pet_log` (
   `signs` varchar(1000) NOT NULL,
   `vet_name` varchar(255) DEFAULT NULL,
   `pet_id` bigint(20) DEFAULT NULL,
+  `uuid` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK6qt0o586ujuoupfj1gnnw3yjp` (`pet_id`),
   CONSTRAINT `FK6qt0o586ujuoupfj1gnnw3yjp` FOREIGN KEY (`pet_id`) REFERENCES `pet` (`id`)

@@ -24,7 +24,6 @@ import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.service.impl.RestServiceImpl;
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.ResponseBody;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,9 +51,9 @@ class RestServiceTest {
     @DisplayName("sending message")
     void shouldSendMessage(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
-        RestService restService = mock(RestService.class);
-        MessageCommand messageCommand = mock(MessageCommand.class);
-        Call<ResponseBody> call = mock(Call.class);
+        var restService = mock(RestService.class);
+        var messageCommand = mock(MessageCommand.class);
+        var call = mock(Call.class);
 
         when(retrofit.create(RestService.class)).thenReturn(restService);
         when(restService.sendMessage(messageCommand)).thenReturn(call);

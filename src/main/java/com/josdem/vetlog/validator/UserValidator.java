@@ -31,6 +31,8 @@ import org.springframework.validation.Validator;
 @RequiredArgsConstructor
 public class UserValidator implements Validator {
 
+    private static final String NUMERIC_REGEX = "\\d+";
+
     private final UserRepository userRepository;
 
     @Override
@@ -43,7 +45,14 @@ public class UserValidator implements Validator {
         UserCommand userCommand = (UserCommand) target;
         validatePasswords(errors, userCommand);
         validateUsername(errors, userCommand);
+        validateMobile(errors, userCommand);
         validateEmail(errors, userCommand);
+    }
+
+    private void validateMobile(Errors errors, UserCommand command) {
+        if (!command.getMobile().matches(NUMERIC_REGEX)) {
+            errors.rejectValue("mobile", "user.error.mobile");
+        }
     }
 
     private void validatePasswords(Errors errors, UserCommand command) {

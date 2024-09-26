@@ -23,7 +23,6 @@ import static org.mockito.Mockito.when;
 import com.josdem.vetlog.command.AdoptionCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.PetAdoption;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.service.impl.AdoptionServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +34,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 @Slf4j
-public class AdoptionServiceTest {
+class AdoptionServiceTest {
 
     private AdoptionService service;
 
@@ -55,11 +54,11 @@ public class AdoptionServiceTest {
     @DisplayName("saving a pet in adoption")
     void shouldSaveAPetInAdoption(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        AdoptionCommand adoptionCommand = getAdoptionCommand();
-        Pet pet = getPet();
+        var adoptionCommand = getAdoptionCommand();
+        var pet = getPet();
 
         when(petService.getPetByUuid("uuid")).thenReturn(pet);
-        PetAdoption result = service.save(adoptionCommand);
+        var result = service.save(adoptionCommand);
 
         verify(petRepository).save(pet);
         assertEquals(PetStatus.IN_ADOPTION, pet.getStatus());
@@ -68,13 +67,13 @@ public class AdoptionServiceTest {
     }
 
     private Pet getPet() {
-        Pet pet = new Pet();
+        var pet = new Pet();
         pet.setStatus(PetStatus.OWNED);
         return pet;
     }
 
     private AdoptionCommand getAdoptionCommand() {
-        AdoptionCommand adoptionCommand = new AdoptionCommand();
+        var adoptionCommand = new AdoptionCommand();
         adoptionCommand.setUuid("uuid");
         adoptionCommand.setDescription("description");
         return adoptionCommand;

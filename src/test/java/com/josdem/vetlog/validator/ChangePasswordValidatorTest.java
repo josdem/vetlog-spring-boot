@@ -35,11 +35,11 @@ class ChangePasswordValidatorTest {
     @DisplayName("not validating since password does not match")
     void shouldRejectSincePasswordsAreNotEquals(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        ChangePasswordCommand command = new ChangePasswordCommand();
+        var command = new ChangePasswordCommand();
         command.setToken("token");
         command.setPassword("password");
         command.setPasswordConfirmation("passwords");
-        Errors errors = mock(Errors.class);
+        var errors = mock(Errors.class);
         validator.validate(command, errors);
         verify(errors).rejectValue("password", "user.error.password.equals");
     }
