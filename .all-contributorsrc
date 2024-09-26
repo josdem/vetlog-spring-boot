@@ -62,7 +62,10 @@
       "profile": "https://github.com/kaminuma",
       "contributions": [
         "code",
-        "content"
+        "content",
+        "review",
+        "bug",
+        "question"
       ]
     },
     {
@@ -73,6 +76,24 @@
       "contributions": [
         "code",
         "mentoring"
+      ]
+    },
+    {
+      "login": "Prathyusha287",
+      "name": "Prathyusha287",
+      "avatar_url": "https://avatars.githubusercontent.com/u/120239903?v=4",
+      "profile": "https://github.com/Prathyusha287",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ghadyg",
+      "name": "ghadyg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/136957334?v=4",
+      "profile": "https://github.com/ghadyg",
+      "contributions": [
+        "code"
       ]
     }
   ],

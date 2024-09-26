@@ -29,7 +29,6 @@ import com.josdem.vetlog.service.PetPrescriptionService;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,9 +47,9 @@ public class PetLogServiceImpl implements PetLogService {
     @Override
     @Transactional
     public PetLog save(Command command) throws IOException {
-        PetLogCommand petLogCommand = (PetLogCommand) command;
-        PetLog petLog = petLogBinder.bind(petLogCommand);
-        Optional<Pet> pet = petRepository.findById(petLogCommand.getPet());
+        var petLogCommand = (PetLogCommand) command;
+        var petLog = petLogBinder.bind(petLogCommand);
+        var pet = petRepository.findById(petLogCommand.getPet());
         if (pet.isEmpty()) {
             throw new BusinessException("No pet was found under id: " + petLogCommand.getPet());
         }

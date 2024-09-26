@@ -15,6 +15,7 @@
             <div class="portlet portlet-green">
                 <div class="portlet-body">
 
+                    <div th:if="${userAccountCreatedMessage}" class="alert alert-success" th:text="#{user.account.created}"/>
                     <div th:if="${message}" class="alert alert-success" th:text="#{recovery.email.sent}"/>
                     <div th:if="${change}" class="alert alert-success" th:text="#{recovery.password.changed}"/>
                     <div th:if="${param.error}" class="alert alert-danger" th:text="#{login.error.message}"/>

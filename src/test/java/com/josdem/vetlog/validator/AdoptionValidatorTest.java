@@ -37,8 +37,8 @@ class AdoptionValidatorTest {
     @DisplayName("rejecting adoption command with invalid uuid")
     void shouldRejectDueToInvalidUuid(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        AdoptionCommand adoptionCommand = new AdoptionCommand();
-        Errors errors = mock(Errors.class);
+        var adoptionCommand = new AdoptionCommand();
+        var errors = mock(Errors.class);
         adoptionCommand.setUuid("uuid");
         adoptionValidator.validate(adoptionCommand, errors);
         verify(errors).rejectValue("uuid", "adoption.error.uuid.invalid");
@@ -48,8 +48,8 @@ class AdoptionValidatorTest {
     @DisplayName("validating adoption command with valid uuid")
     void shouldValidateWithValidUuid(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        AdoptionCommand adoptionCommand = new AdoptionCommand();
-        Errors errors = mock(Errors.class);
+        var adoptionCommand = new AdoptionCommand();
+        var errors = mock(Errors.class);
         adoptionCommand.setUuid(UUID);
         adoptionValidator.validate(adoptionCommand, errors);
         verify(errors, never()).rejectValue("uuid", "adoption.error.uuid.invalid");

@@ -56,7 +56,7 @@ class RegistrationServiceTest {
     @DisplayName("getting user by token")
     void shouldGetUserByToken(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        RegistrationCode registrationCode = new RegistrationCode();
+        var registrationCode = new RegistrationCode();
         registrationCode.setEmail(EMAIL);
         when(repository.findByToken(TOKEN)).thenReturn(Optional.of(registrationCode));
         assertEquals(EMAIL, service.findEmailByToken(TOKEN).get());
@@ -66,7 +66,7 @@ class RegistrationServiceTest {
     @DisplayName("generating token")
     void shouldGenerateToken(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        String token = service.generateToken(EMAIL);
+        var token = service.generateToken(EMAIL);
         assertEquals(36, token.length());
         verify(repository).save(isA(RegistrationCode.class));
     }

@@ -73,6 +73,9 @@ class PetServiceTest {
     @Mock
     private LocaleService localeService;
 
+    @Mock
+    private VaccinationService vaccinationService;
+
     private User user;
     private User adopter;
     private Pet pet;
@@ -85,17 +88,24 @@ class PetServiceTest {
         adopter = new User();
         pet = new Pet();
         service = new PetServiceImpl(
-                petBinder, petRepository, petImageService, userRepository, adoptionRepository, localeService);
+                petBinder,
+                petRepository,
+                petImageService,
+                userRepository,
+                adoptionRepository,
+                localeService,
+                vaccinationService);
     }
 
     @Test
     @DisplayName("saving a pet")
     void shouldSavePet(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
-        Command command = mock(Command.class);
+        var command = mock(Command.class);
         when(petBinder.bindPet(command)).thenReturn(pet);
         service.save(command, user);
         verify(petRepository).save(Mockito.isA(Pet.class));
+        verify(vaccinationService).save(Mockito.isA(Pet.class));
     }
 
     @Test
@@ -103,7 +113,7 @@ class PetServiceTest {
     void shouldUpdatePet(TestInfo testInfo) throws IOException {
         log.info("Running: {}", testInfo.getDisplayName());
         pet.setImages(new ArrayList<>());
-        PetCommand command = mock(PetCommand.class);
+        var command = mock(PetCommand.class);
         when(command.getId()).thenReturn(2L);
         when(petRepository.findById(2L)).thenReturn(Optional.of(pet));
         when(petBinder.bindPet(command)).thenReturn(pet);
@@ -123,7 +133,7 @@ class PetServiceTest {
     @DisplayName("not update due to user not found")
     void shouldNotUpdateDueToUserDoesNotExist(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetCommand command = mock(PetCommand.class);
+        var command = mock(PetCommand.class);
         when(petRepository.findById(2L)).thenReturn(Optional.of(pet));
         assertThrows(BusinessException.class, () -> service.update(command));
     }
@@ -132,7 +142,7 @@ class PetServiceTest {
     @DisplayName("not update due to pet not found")
     void shouldNotUpdateDueToPetDoesNotExist(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetCommand command = mock(PetCommand.class);
+        var command = mock(PetCommand.class);
         assertThrows(BusinessException.class, () -> service.update(command));
     }
 
@@ -148,7 +158,7 @@ class PetServiceTest {
     @DisplayName("getting pet by id")
     void shouldGetPetById(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        Optional<Pet> optionalPet = Optional.of(pet);
+        var optionalPet = Optional.of(pet);
         when(petRepository.findById(1L)).thenReturn(optionalPet);
         assertEquals(pet, service.getPetById(1L));
     }
@@ -203,10 +213,10 @@ class PetServiceTest {
     @DisplayName("Getting pet adoption information")
     void shouldGetPetAdoption(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        PetAdoption petAdoption = new PetAdoption();
+        var petAdoption = new PetAdoption();
         petAdoption.setId(1L);
         petAdoption.setDescription("It is cute!");
-        Optional<PetAdoption> optional = Optional.of(petAdoption);
+        var optional = Optional.of(petAdoption);
         pets.add(pet);
 
         when(adoptionRepository.findByPet(pet)).thenReturn(optional);

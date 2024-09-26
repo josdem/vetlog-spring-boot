@@ -56,7 +56,7 @@ class LocaleServiceTest {
     @DisplayName("getting message by request")
     void shouldGetMessageByRequest(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        HttpServletRequest request = mock(HttpServletRequest.class);
+        var request = mock(HttpServletRequest.class);
         when(messageSource.getMessage(code, null, localeResolver.resolveLocale(request)))
                 .thenReturn("message");
         assertEquals("message", service.getMessage(code, request));

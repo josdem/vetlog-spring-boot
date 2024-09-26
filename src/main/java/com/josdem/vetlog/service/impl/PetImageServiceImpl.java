@@ -41,19 +41,19 @@ public class PetImageServiceImpl implements PetImageService {
     private String bucket;
 
     private PetImage save() {
-        PetImage petImage = new PetImage();
+        var petImage = new PetImage();
         petImage.setUuid(UuidGenerator.generateUuid());
         petImageRepository.save(petImage);
         return petImage;
     }
 
     public void attachFile(Command command) throws IOException {
-        PetCommand petCommand = (PetCommand) command;
+        var petCommand = (PetCommand) command;
         if (petCommand.getImage() == null) {
             return;
         }
         if (petCommand.getImage().getInputStream().available() > 0) {
-            PetImage petImage = save();
+            var petImage = save();
             petCommand.getImages().add(petImage);
             googleStorageWriter.uploadToBucket(
                     bucket, petImage.getUuid(), petCommand.getImage().getInputStream(), CONTENT_TYPE);
