@@ -41,6 +41,14 @@ flyway {
   url = 'jdbc:mysql://localhost:3306/vetlog'
 }
 
+sonar {
+  properties {
+    property "sonar.projectKey", "josdem_vetlog-spring-boot"
+    property "sonar.organization", "josdem-io"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+
 spotless {
   java {
     target fileTree('.') {
