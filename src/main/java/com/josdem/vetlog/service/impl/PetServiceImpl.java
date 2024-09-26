@@ -22,7 +22,6 @@ import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.PetAdoption;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.AdoptionRepository;
 import com.josdem.vetlog.repository.PetRepository;
@@ -51,7 +50,7 @@ public class PetServiceImpl implements PetService {
 
     @Transactional
     public Pet save(Command command, User user) throws IOException {
-        Pet pet = petBinder.bindPet(command);
+        var pet = petBinder.bindPet(command);
         pet.setUser(user);
         petImageService.attachFile(command);
         petRepository.save(pet);
@@ -60,18 +59,15 @@ public class PetServiceImpl implements PetService {
 
     @Transactional
     public Pet update(Command command) throws IOException {
-        PetCommand petCommand = (PetCommand) command;
+        var petCommand = (PetCommand) command;
         recoveryImages(petCommand);
-        Pet pet = petBinder.bindPet(petCommand);
-        Optional<User> user = getUser(petCommand.getUser());
-        if (!user.isPresent()) {
+        var pet = petBinder.bindPet(petCommand);
+        var user = getUser(petCommand.getUser());
+        user.ifPresentOrElse(pet::setUser, () -> {
             throw new BusinessException(NO_USER_WAS_FOUND_WITH_ID + petCommand.getUser());
-        }
-        pet.setUser(user.get());
-        Optional<User> adopter = getUser(petCommand.getAdopter());
-        if (adopter.isPresent()) {
-            pet.setAdopter(adopter.get());
-        }
+        });
+        var adopter = getUser(petCommand.getAdopter());
+        adopter.ifPresent(pet::setAdopter);
         pet.setUser(user.get());
         petImageService.attachFile(petCommand);
         petRepository.save(pet);
@@ -85,15 +81,12 @@ public class PetServiceImpl implements PetService {
     }
 
     public Pet getPetById(Long id) {
-        Optional<Pet> pet = petRepository.findById(id);
-        if (!pet.isPresent()) {
-            throw new BusinessException("No pet was found with id: " + id);
-        }
-        return pet.get();
+        var pet = petRepository.findById(id);
+        return pet.orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
     }
 
     public List<Pet> getPetsByUser(User user) {
-        List<Pet> result = petRepository.findAllByUser(user);
+        var result = petRepository.findAllByUser(user);
         result.removeAll(petRepository.findAllByStatus(PetStatus.ADOPTED));
         result.addAll(petRepository.findAllByAdopter(user));
         return result;
@@ -106,16 +99,14 @@ public class PetServiceImpl implements PetService {
     @Override
     public void getPetsAdoption(List<Pet> pets) {
         pets.forEach(pet -> {
-            Optional<PetAdoption> optional = adoptionRepository.findByPet(pet);
-            if (optional.isPresent()) {
-                pet.setAdoption(optional.get());
-            }
+            var optional = adoptionRepository.findByPet(pet);
+            optional.ifPresent(pet::setAdoption);
         });
     }
 
     @Override
     public void deletePetById(Long id) {
-        Pet pet =
+        var pet =
                 petRepository.findById(id).orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
         if (pet.getStatus() == PetStatus.IN_ADOPTION) {
             throw new BusinessException(localeService.getMessage("pet.delete.error.inAdoption"));
@@ -124,11 +115,10 @@ public class PetServiceImpl implements PetService {
     }
 
     private void recoveryImages(PetCommand command) {
-        Optional<Pet> pet = petRepository.findById(command.getId());
-        if (!pet.isPresent()) {
+        var pet = petRepository.findById(command.getId());
+        pet.ifPresentOrElse(value -> command.setImages(value.getImages()), () -> {
             throw new BusinessException("No pet was found with id: " + command.getId());
-        }
-        command.setImages(pet.get().getImages());
+        });
     }
 
     private Optional<User> getUser(Long id) {

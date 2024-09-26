@@ -61,6 +61,28 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/33448874?v=4",
       "profile": "https://github.com/kaminuma",
       "contributions": [
+        "code",
+        "content",
+        "review",
+        "bug",
+        "question"
+      ]
+    },
+    {
+      "login": "yashudhlani",
+      "name": "Yash Udhlani",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44999427?v=4",
+      "profile": "https://github.com/yashudhlani",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Prathyusha287",
+      "name": "Prathyusha287",
+      "avatar_url": "https://avatars.githubusercontent.com/u/120239903?v=4",
+      "profile": "https://github.com/Prathyusha287",
+      "contributions": [
         "code"
       ]
     }

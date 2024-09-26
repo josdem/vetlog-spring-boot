@@ -25,10 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
-import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -74,6 +73,7 @@ class PetControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("registering a pet")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldRegisterNewPet(TestInfo testInfo) throws Exception {
@@ -96,10 +96,29 @@ class PetControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("showing edit pet form")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowEditPetForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
+        // Set up data before the test
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
+                        .file(image)
+                        .with(csrf())
+                        .param("name", "Cremita")
+                        .param("uuid", PET_UUID)
+                        .param("birthDate", "2024-08-22T09:28:00")
+                        .param("dewormed", "true")
+                        .param("vaccinated", "true")
+                        .param("sterilized", "true")
+                        .param("breed", "11")
+                        .param("user", "1")
+                        .param("status", PetStatus.IN_ADOPTION.toString())
+                        .param("type", PetType.DOG.toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pet/create"));
+
+        // Edit test
         mockMvc.perform(get("/pet/edit").param("uuid", PET_UUID))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("petCommand"))
@@ -109,12 +128,32 @@ class PetControllerTest {
     }
 
     @Test
+    @Transactional
     @DisplayName("updating pet status")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldUpdatePet(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-        User user = userRepository.findByUsername("josdem").orElseThrow(() -> new RuntimeException("User not found"));
-        Pet cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
+        // Set up data before the test
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
+                        .file(image)
+                        .with(csrf())
+                        .param("name", "Cremita")
+                        .param("uuid", PET_UUID)
+                        .param("birthDate", "2024-08-22T09:28:00")
+                        .param("dewormed", "true")
+                        .param("vaccinated", "true")
+                        .param("sterilized", "true")
+                        .param("breed", "11")
+                        .param("user", "1")
+                        .param("status", PetStatus.IN_ADOPTION.toString())
+                        .param("type", PetType.DOG.toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pet/create"));
+
+        var user = userRepository.findByUsername("josdem").orElseThrow(() -> new RuntimeException("User not found"));
+        var cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
+
+        // Update test
         mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/update")
                         .file(image)
                         .with(csrf())

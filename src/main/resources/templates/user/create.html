@@ -3,6 +3,27 @@
 <head>
     <title th:text="#{user.view.create.title}"></title>
     <head th:insert="~{fragments/include}"/>
+    <style>
+        .mobile-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .country-code, .mobile-number {
+            flex: 1;
+            height: 34px;
+            box-sizing: border-box;
+        }
+
+        .country-code {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .mobile-number {
+            flex: 9;
+        }
+    </style>
 </head>
 <body class="login">
 <div th:insert="~{fragments/header}"/>
@@ -46,60 +67,56 @@
 
                             <!-- Phone number section with country code dropdown -->
                             <label for="phone"><h4>Phone Number</h4></label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <select name="countryCode" class="form-control">
-                                        <option value="+52" selected>+52 (Mexico)</option>
-                                        <option value="+1">+1 (USA, Canada)</option>
-                                        <option value="+44">+44 (UK)</option>
-                                        <option value="+91">+91 (India)</option>
-                                        <option value="+61">+61 (Australia)</option>
-                                        <option value="+81">+81 (Japan)</option>
-                                        <option value="+49">+49 (Germany)</option>
-                                        <option value="+86">+86 (China)</option>
-                                        <option value="+33">+33 (France)</option>
-                                        <option value="+39">+39 (Italy)</option>
-                                        <option value="+7">+7 (Russia)</option>
-                                        <option value="+55">+55 (Brazil)</option>
-                                        <option value="+34">+34 (Spain)</option>
-                                        <option value="+82">+82 (South Korea)</option>
-                                        <option value="+62">+62 (Indonesia)</option>
-                                        <option value="+27">+27 (South Africa)</option>
-                                        <option value="+971">+971 (UAE)</option>
-                                        <option value="+30">+30 (Greece)</option>
-                                        <option value="+47">+47 (Norway)</option>
-                                        <option value="+32">+32 (Belgium)</option>
-                                        <option value="+46">+46 (Sweden)</option>
-                                        <option value="+31">+31 (Netherlands)</option>
-                                        <option value="+64">+64 (New Zealand)</option>
-                                        <option value="+63">+63 (Philippines)</option>
-                                        <option value="+41">+41 (Switzerland)</option>
-                                        <option value="+51">+51 (Peru)</option>
-                                        <option value="+48">+48 (Poland)</option>
-                                        <option value="+65">+65 (Singapore)</option>
-                                        <option value="+60">+60 (Malaysia)</option>
-                                        <option value="+34">+34 (Spain)</option>
-                                        <option value="+356">+356 (Malta)</option>
-                                        <option value="+20">+20 (Egypt)</option>
-                                        <option value="+234">+234 (Nigeria)</option>
-                                        <option value="+66">+66 (Thailand)</option>
-                                        <option value="+45">+45 (Denmark)</option>
-                                        <option value="+98">+98 (Iran)</option>
-                                        <option value="+972">+972 (Israel)</option>
-                                        <option value="+90">+90 (Turkey)</option>
-                                        <option value="+62">+62 (Indonesia)</option>
-                                        <option value="+353">+353 (Ireland)</option>
-                                        <option value="+351">+351 (Portugal)</option>
-                                        <option value="+43">+43 (Austria)</option>
-                                        <option value="+36">+36 (Hungary)</option>
-                                        <option value="+358">+358 (Finland)</option>
-                                        <option value="+852">+852 (Hong Kong)</option>
-                                        <option value="+886">+886 (Taiwan)</option>
-                                        <option value="+373">+373 (Moldova)</option>
-                                        <!-- Add more country codes as needed -->
-                                    </select>
-                                </span>
-                                <input type="text" name="phone" th:field="*{phone}" class="form-control" 
+                            <div class="mobile-container">
+                                <select id="countryCode" name="countryCode" class="country-code">
+                                    <option value="+52" selected>+52 (Mexico)</option>
+                                    <option value="+1">+1 (USA, Canada)</option>
+                                    <option value="+44">+44 (UK)</option>
+                                    <option value="+91">+91 (India)</option>
+                                    <option value="+61">+61 (Australia)</option>
+                                    <option value="+81">+81 (Japan)</option>
+                                    <option value="+49">+49 (Germany)</option>
+                                    <option value="+86">+86 (China)</option>
+                                    <option value="+33">+33 (France)</option>
+                                    <option value="+39">+39 (Italy)</option>
+                                    <option value="+7">+7 (Russia)</option>
+                                    <option value="+55">+55 (Brazil)</option>
+                                    <option value="+34">+34 (Spain)</option>
+                                    <option value="+82">+82 (South Korea)</option>
+                                    <option value="+62">+62 (Indonesia)</option>
+                                    <option value="+27">+27 (South Africa)</option>
+                                    <option value="+971">+971 (UAE)</option>
+                                    <option value="+30">+30 (Greece)</option>
+                                    <option value="+47">+47 (Norway)</option>
+                                    <option value="+32">+32 (Belgium)</option>
+                                    <option value="+46">+46 (Sweden)</option>
+                                    <option value="+31">+31 (Netherlands)</option>
+                                    <option value="+64">+64 (New Zealand)</option>
+                                    <option value="+63">+63 (Philippines)</option>
+                                    <option value="+41">+41 (Switzerland)</option>
+                                    <option value="+51">+51 (Peru)</option>
+                                    <option value="+48">+48 (Poland)</option>
+                                    <option value="+65">+65 (Singapore)</option>
+                                    <option value="+60">+60 (Malaysia)</option>
+                                    <option value="+356">+356 (Malta)</option>
+                                    <option value="+20">+20 (Egypt)</option>
+                                    <option value="+234">+234 (Nigeria)</option>
+                                    <option value="+66">+66 (Thailand)</option>
+                                    <option value="+45">+45 (Denmark)</option>
+                                    <option value="+98">+98 (Iran)</option>
+                                    <option value="+972">+972 (Israel)</option>
+                                    <option value="+90">+90 (Turkey)</option>
+                                    <option value="+353">+353 (Ireland)</option>
+                                    <option value="+351">+351 (Portugal)</option>
+                                    <option value="+43">+43 (Austria)</option>
+                                    <option value="+36">+36 (Hungary)</option>
+                                    <option value="+358">+358 (Finland)</option>
+                                    <option value="+852">+852 (Hong Kong)</option>
+                                    <option value="+886">+886 (Taiwan)</option>
+                                    <option value="+373">+373 (Moldova)</option>
+                                    <!-- Add more country codes as needed -->
+                                </select>
+                                <input type="text" name="phone" th:field="*{phone}" class="form-control mobile-number"
                                        placeholder="Enter 10-digit phone number" id="phone" 
                                        pattern="\d{10}" title="Enter a valid 10-digit phone number"/>
                             </div>

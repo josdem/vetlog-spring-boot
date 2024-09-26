@@ -38,6 +38,12 @@ public class UserCommand implements Command {
     @Size(min = 1, max = 100)
     private String lastname;
 
+    @Size(min = 10, max = 10)
+    private String mobile;
+
+    @Size(min = 1, max = 5)
+    private String countryCode;
+
     @Email
     @Size(min = 1, max = 250)
     private String email;

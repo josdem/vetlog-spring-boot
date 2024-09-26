@@ -65,7 +65,7 @@ class UserServiceTest {
     void shouldGetUserByUsername(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.ofNullable(user));
-        User result = service.getByUsername(USERNAME);
+        var result = service.getByUsername(USERNAME);
         assertEquals(user, result);
     }
 
@@ -74,7 +74,7 @@ class UserServiceTest {
     void shouldGetUserByEmail(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
-        User result = service.getByEmail(EMAIL);
+        var result = service.getByEmail(EMAIL);
         assertEquals(user, result);
     }
 
@@ -82,7 +82,7 @@ class UserServiceTest {
     @DisplayName("saving an user")
     void shouldSaveAnUser(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        Command command = mock(Command.class);
+        var command = mock(Command.class);
         user.setEmail(EMAIL);
         when(userBinder.bindUser(command)).thenReturn(user);
 
@@ -96,7 +96,7 @@ class UserServiceTest {
     @DisplayName("getting current user")
     void shouldGetCurrentUser(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        Authentication authentication = mock(Authentication.class);
+        var authentication = mock(Authentication.class);
         when(authentication.getName()).thenReturn(USERNAME);
         when(provider.getAuthentication()).thenReturn(authentication);
         when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.ofNullable(user));

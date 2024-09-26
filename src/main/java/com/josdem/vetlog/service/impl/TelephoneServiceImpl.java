@@ -53,8 +53,8 @@ public class TelephoneServiceImpl implements TelephoneService {
 
     @Transactional
     public void save(Command command, User adopter) {
-        TelephoneCommand telephoneCommand = (TelephoneCommand) command;
-        Pet pet = petService.getPetByUuid(telephoneCommand.getUuid());
+        var telephoneCommand = (TelephoneCommand) command;
+        var pet = petService.getPetByUuid(telephoneCommand.getUuid());
         pet.setStatus(PetStatus.ADOPTED);
         adopter.setMobile(telephoneCommand.getMobile());
         pet.setAdopter(adopter);
@@ -64,12 +64,12 @@ public class TelephoneServiceImpl implements TelephoneService {
     }
 
     private void createAdoptionDataMessage(Pet pet) {
-        User owner = pet.getUser();
-        User adopter = pet.getAdopter();
-        MessageCommand messageCommand = new MessageCommand();
+        var owner = pet.getUser();
+        var adopter = pet.getAdopter();
+        var messageCommand = new MessageCommand();
         messageCommand.setEmail(owner.getEmail());
         messageCommand.setName(pet.getName());
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.append(adopter.getFirstName());
         sb.append(" ");
         sb.append(adopter.getLastName());

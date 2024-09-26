@@ -24,7 +24,6 @@ import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.util.UserContextHolderProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,14 +51,14 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public User save(Command command) {
-        User user = userBinder.bindUser(command);
+        var user = userBinder.bindUser(command);
         userRepository.save(user);
         return user;
     }
 
     public User getCurrentUser() {
-        Authentication auth = provider.getAuthentication();
-        String username = auth.getName();
+        var auth = provider.getAuthentication();
+        var username = auth.getName();
         return userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("User with username: " + username + NOT_FOUND));
