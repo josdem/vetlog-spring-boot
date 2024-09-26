@@ -9,6 +9,7 @@ env:
   DATABASE: vetlog
   USER: ${{ secrets.USERNAME }}
   PASSWORD: ${{ secrets.PASSWORD }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest
