@@ -83,6 +83,11 @@ dependencies {
   testImplementation "org.mockito:mockito-inline:$mockitoInlineVersion"
 }
 
+jacoco {
+  toolVersion = "0.8.11"
+  reportsDirectory = layout.buildDirectory.dir('jacoco')
+}
+
 jacocoTestReport {
   reports {
     xml.required = true
