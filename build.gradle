@@ -93,14 +93,11 @@ dependencies {
 
 jacoco {
   toolVersion = "0.8.11"
-  reportsDirectory = layout.buildDirectory.dir('jacoco')
 }
 
 jacocoTestReport {
   reports {
     xml.required = true
-    html.required = true
-    html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
   }
 }
 
