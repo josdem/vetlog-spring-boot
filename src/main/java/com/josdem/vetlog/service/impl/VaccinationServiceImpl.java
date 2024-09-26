@@ -17,16 +17,14 @@ limitations under the License.
 package com.josdem.vetlog.service.impl;
 
 import com.josdem.vetlog.enums.PetType;
-import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.service.VaccinationService;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
+import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,54 +34,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VaccinationServiceImpl implements VaccinationService {
 
-    private static final String DA2PP = "DA2PP";
-    private static final String DEWORMING = "Deworming";
-    private static final String LEPTOSPIROSIS = "Leptospirosis";
-    private static final String RABIES = "Rabies";
-
     private final VaccinationRepository vaccinationRepository;
+
+    private final Map<PetType, VaccinationStrategy> vaccinationStrategies;
 
     @Override
     public void save(Pet pet) {
-        if (pet.getBreed().getType() != PetType.DOG) {
-            throw new BusinessException("Only dogs are allowed");
+        VaccinationStrategy strategy = vaccinationStrategies.get(pet.getBreed().getType());
+        if (strategy == null) {
+            throw new BusinessException("No vaccination strategy found for pet type: "
+                    + pet.getBreed().getType());
         }
-
-        Long weeks = ChronoUnit.WEEKS.between(pet.getBirthDate(), LocalDateTime.now());
-
-        switch (weeks.intValue()) {
-            case 0, 1, 2, 3, 4, 5 -> log.info("No vaccination needed");
-            case 6, 7, 8, 9 -> {
-                log.info("First vaccination");
-                registerVaccination(DA2PP, pet);
-                registerVaccination(DEWORMING, pet);
-            }
-            case 10, 11, 12, 13 -> {
-                log.info("Second vaccination");
-                registerVaccination(DA2PP, pet);
-                registerVaccination(DEWORMING, pet);
-                registerVaccination(LEPTOSPIROSIS, pet);
-            }
-            case 14, 15, 16 -> {
-                log.info("Third vaccination");
-                registerVaccination(DA2PP, pet);
-                registerVaccination(DEWORMING, pet);
-                registerVaccination(LEPTOSPIROSIS, pet);
-                registerVaccination(RABIES, pet);
-            }
-            default -> {
-                log.info("Annual vaccination");
-                registerVaccination(DA2PP, pet);
-                registerVaccination(DEWORMING, pet);
-                registerVaccination(LEPTOSPIROSIS, pet);
-                registerVaccination(RABIES, pet);
-                registerVaccination("Canine influenza", pet);
-            }
-        }
-    }
-
-    private void registerVaccination(String name, Pet pet) {
-        vaccinationRepository.save(new Vaccination(null, name, LocalDate.now(), VaccinationStatus.PENDING, pet));
+        strategy.vaccinate(pet);
     }
 
     @Override
