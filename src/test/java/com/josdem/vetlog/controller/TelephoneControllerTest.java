@@ -4,7 +4,6 @@ import static com.josdem.vetlog.controller.PetControllerTest.PET_UUID;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -30,7 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 @Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
-class AdoptionControllerTest {
+class TelephoneControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -50,36 +49,19 @@ class AdoptionControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("showing description for adoption form")
+    @DisplayName("showing adopting form")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldShowDescriptionForAdoptionForm() throws Exception {
+    void shouldShowAdoptingForm(TestInfo testInfo) throws Exception {
 
         registerPet();
 
-        mockMvc.perform(get("/adoption/descriptionForAdoption").param("uuid", PET_UUID))
-                .andExpect(status().isOk())
-                .andExpect(view().name("adoption/descriptionForAdoption"))
-                .andExpect(model().attributeExists("pet"))
-                .andExpect(model().attributeExists("adoptionCommand"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("saving adoption description")
-    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldSaveAdoptionDescription(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-
-        registerPet();
-
-        mockMvc.perform(post("/adoption/save")
-                        .with(csrf())
-                        .param("uuid", PET_UUID)
-                        .param("description", "Cremita is a lovely dog")
-                        .param("status", PetStatus.IN_ADOPTION.toString()))
+        mockMvc.perform(get("/telephone/adopt").param("uuid", PET_UUID))
                 .andExpect(status().isOk())
-                .andExpect(view().name("pet/listForAdoption"));
+                .andExpect(view().name("telephone/adopt"))
+                .andExpect(model().attributeExists("pet"))
+                .andExpect(model().attributeExists("telephoneCommand"))
+                .andExpect(status().isOk());
     }
 
     private void registerPet() throws Exception {
