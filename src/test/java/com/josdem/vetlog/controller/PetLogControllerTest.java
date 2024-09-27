@@ -16,19 +16,31 @@ limitations under the License.
 
 package com.josdem.vetlog.controller;
 
+import static com.josdem.vetlog.controller.PetControllerTest.PET_UUID;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import com.josdem.vetlog.enums.PetStatus;
+import com.josdem.vetlog.enums.PetType;
+import com.josdem.vetlog.repository.PetRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 @Slf4j
 @SpringBootTest
@@ -37,6 +49,59 @@ class PetLogControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private PetRepository petRepository;
+
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    private final MockMultipartFile image =
+            new MockMultipartFile("mockImage", "image.jpg", "image/jpeg", "image".getBytes());
+
+    @BeforeEach
+    public void setUp() {
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("registering a pet log")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldRegisterPetLog(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
+                        .file(image)
+                        .with(csrf())
+                        .param("name", "Cremita")
+                        .param("uuid", PET_UUID)
+                        .param("birthDate", "2024-08-22T09:28:00")
+                        .param("dewormed", "true")
+                        .param("vaccinated", "true")
+                        .param("sterilized", "true")
+                        .param("breed", "11")
+                        .param("user", "1")
+                        .param("status", PetStatus.OWNED.toString())
+                        .param("type", PetType.DOG.toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pet/create"));
+
+        var cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/petlog/save")
+                        .with(csrf())
+                        .param("pet", cremita.getId().toString())
+                        .param("uuid", PET_UUID)
+                        .param("date", "2024-09-27T09:28:00")
+                        .param("description", "description")
+                        .param("diagnosis", "diagnosis")
+                        .param("signs", "signs"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("petlog/create"));
+    }
 
     @Test
     @DisplayName("not listing pet logs due to uuid not found")
