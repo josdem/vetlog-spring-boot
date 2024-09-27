@@ -184,4 +184,15 @@ class PetControllerTest {
                 .andExpect(model().attributeExists("defaultImage"))
                 .andExpect(view().name("pet/list"));
     }
+
+    @Test
+    @DisplayName("listing for adoption")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldListForAdoption(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+        mockMvc.perform(get("/pet/listForAdoption"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("pets"))
+                .andExpect(view().name("pet/listForAdoption"));
+    }
 }
