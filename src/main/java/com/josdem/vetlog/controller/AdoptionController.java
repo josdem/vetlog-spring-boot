@@ -82,6 +82,7 @@ public class AdoptionController {
 
     private ModelAndView fillPetAndAdoptionCommand(ModelAndView modelAndView, AdoptionCommand adoptionCommand) {
         Pet pet = petService.getPetByUuid(adoptionCommand.getUuid());
+        log.info("pet: {}", pet);
         modelAndView.addObject("pet", pet);
         modelAndView.addObject("adoptionCommand", adoptionCommand);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
