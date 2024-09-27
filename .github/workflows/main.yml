@@ -9,6 +9,7 @@ env:
   DATABASE: vetlog
   USER: ${{ secrets.USERNAME }}
   PASSWORD: ${{ secrets.PASSWORD }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +29,7 @@ jobs:
       - name: Set up MySQL
         run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD -Dflyway.baselineOnMigrate=true flywayMigrate -i
       - name: Build with Gradle
-        run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD test
+        run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD test jacocoTestReport sonar
       - uses: actions/upload-artifact@v4
         with:
           name: test-results
