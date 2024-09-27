@@ -71,7 +71,7 @@ public class PetServiceImpl implements PetService {
         });
         var adopter = getUser(petCommand.getAdopter());
         adopter.ifPresent(pet::setAdopter);
-        pet.setUser(user.get());
+        user.ifPresent(pet::setUser);
         petImageService.attachFile(petCommand);
         petRepository.save(pet);
         return pet;
