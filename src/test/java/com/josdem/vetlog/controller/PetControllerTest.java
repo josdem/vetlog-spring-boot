@@ -78,21 +78,7 @@ class PetControllerTest {
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldRegisterNewPet(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
-                        .file(image)
-                        .with(csrf())
-                        .param("name", "Cremita")
-                        .param("uuid", PET_UUID)
-                        .param("birthDate", "2024-08-22T09:28:00")
-                        .param("dewormed", "true")
-                        .param("vaccinated", "true")
-                        .param("sterilized", "true")
-                        .param("breed", "11")
-                        .param("user", "1")
-                        .param("status", PetStatus.IN_ADOPTION.toString())
-                        .param("type", PetType.DOG.toString()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pet/create"));
+        registerPet();
     }
 
     @Test
@@ -102,21 +88,7 @@ class PetControllerTest {
     void shouldShowEditPetForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         // Set up data before the test
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
-                        .file(image)
-                        .with(csrf())
-                        .param("name", "Cremita")
-                        .param("uuid", PET_UUID)
-                        .param("birthDate", "2024-08-22T09:28:00")
-                        .param("dewormed", "true")
-                        .param("vaccinated", "true")
-                        .param("sterilized", "true")
-                        .param("breed", "11")
-                        .param("user", "1")
-                        .param("status", PetStatus.IN_ADOPTION.toString())
-                        .param("type", PetType.DOG.toString()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pet/create"));
+        registerPet();
 
         // Edit test
         mockMvc.perform(get("/pet/edit").param("uuid", PET_UUID))
@@ -134,21 +106,7 @@ class PetControllerTest {
     void shouldUpdatePet(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         // Set up data before the test
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
-                        .file(image)
-                        .with(csrf())
-                        .param("name", "Cremita")
-                        .param("uuid", PET_UUID)
-                        .param("birthDate", "2024-08-22T09:28:00")
-                        .param("dewormed", "true")
-                        .param("vaccinated", "true")
-                        .param("sterilized", "true")
-                        .param("breed", "11")
-                        .param("user", "1")
-                        .param("status", PetStatus.IN_ADOPTION.toString())
-                        .param("type", PetType.DOG.toString()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pet/create"));
+        registerPet();
 
         var user = userRepository.findByUsername("josdem").orElseThrow(() -> new RuntimeException("User not found"));
         var cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
@@ -206,5 +164,23 @@ class PetControllerTest {
                 .andExpect(model().attributeExists("pets"))
                 .andExpect(model().attributeExists("defaultImage"))
                 .andExpect(view().name("pet/giveForAdoption"));
+    }
+
+    private void registerPet() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
+                        .file(image)
+                        .with(csrf())
+                        .param("name", "Cremita")
+                        .param("uuid", PET_UUID)
+                        .param("birthDate", "2024-08-22T09:28:00")
+                        .param("dewormed", "true")
+                        .param("vaccinated", "true")
+                        .param("sterilized", "true")
+                        .param("breed", "11")
+                        .param("user", "1")
+                        .param("status", PetStatus.IN_ADOPTION.toString())
+                        .param("type", PetType.DOG.toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pet/create"));
     }
 }
