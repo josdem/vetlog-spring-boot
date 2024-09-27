@@ -25,6 +25,7 @@ import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -40,12 +41,13 @@ public class VaccinationServiceImpl implements VaccinationService {
 
     @Override
     public void save(Pet pet) {
-        VaccinationStrategy strategy = vaccinationStrategies.get(pet.getBreed().getType());
-        if (strategy == null) {
+        Optional<VaccinationStrategy> strategy =
+                Optional.ofNullable(vaccinationStrategies.get(pet.getBreed().getType()));
+        if (strategy.isEmpty()) {
             throw new BusinessException("No vaccination strategy found for pet type: "
                     + pet.getBreed().getType());
         }
-        strategy.vaccinate(pet);
+        strategy.get().vaccinate(pet);
     }
 
     @Override
