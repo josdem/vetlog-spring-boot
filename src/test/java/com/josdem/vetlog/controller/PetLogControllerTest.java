@@ -74,21 +74,7 @@ class PetLogControllerTest {
     void shouldShowCreatePetLogForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
-                        .file(image)
-                        .with(csrf())
-                        .param("name", "Cremita")
-                        .param("uuid", PET_UUID)
-                        .param("birthDate", "2024-08-22T09:28:00")
-                        .param("dewormed", "true")
-                        .param("vaccinated", "true")
-                        .param("sterilized", "true")
-                        .param("breed", "11")
-                        .param("user", "1")
-                        .param("status", PetStatus.OWNED.toString())
-                        .param("type", PetType.DOG.toString()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pet/create"));
+        registerPet();
 
         mockMvc.perform(get("/petlog/create").param("uuid", PET_UUID))
                 .andExpect(status().isOk())
@@ -103,21 +89,7 @@ class PetLogControllerTest {
     void shouldRegisterPetLog(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
 
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
-                        .file(image)
-                        .with(csrf())
-                        .param("name", "Cremita")
-                        .param("uuid", PET_UUID)
-                        .param("birthDate", "2024-08-22T09:28:00")
-                        .param("dewormed", "true")
-                        .param("vaccinated", "true")
-                        .param("sterilized", "true")
-                        .param("breed", "11")
-                        .param("user", "1")
-                        .param("status", PetStatus.OWNED.toString())
-                        .param("type", PetType.DOG.toString()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pet/create"));
+        registerPet();
 
         var cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
 
@@ -141,5 +113,23 @@ class PetLogControllerTest {
         mockMvc.perform(get("/petlog/list").param("uuid", "uuid"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("error"));
+    }
+
+    private void registerPet() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
+                        .file(image)
+                        .with(csrf())
+                        .param("name", "Cremita")
+                        .param("uuid", PET_UUID)
+                        .param("birthDate", "2024-08-22T09:28:00")
+                        .param("dewormed", "true")
+                        .param("vaccinated", "true")
+                        .param("sterilized", "true")
+                        .param("breed", "11")
+                        .param("user", "1")
+                        .param("status", PetStatus.OWNED.toString())
+                        .param("type", PetType.DOG.toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pet/create"));
     }
 }
