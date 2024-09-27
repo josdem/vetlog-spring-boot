@@ -20,6 +20,7 @@ import static com.josdem.vetlog.controller.PetControllerTest.PET_UUID;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -64,6 +65,35 @@ class PetLogControllerTest {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
                 .build();
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("showing create pet log form")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldShowCreatePetLogForm(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
+                        .file(image)
+                        .with(csrf())
+                        .param("name", "Cremita")
+                        .param("uuid", PET_UUID)
+                        .param("birthDate", "2024-08-22T09:28:00")
+                        .param("dewormed", "true")
+                        .param("vaccinated", "true")
+                        .param("sterilized", "true")
+                        .param("breed", "11")
+                        .param("user", "1")
+                        .param("status", PetStatus.OWNED.toString())
+                        .param("type", PetType.DOG.toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pet/create"));
+
+        mockMvc.perform(get("/petlog/create").param("uuid", PET_UUID))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("petLogCommand"))
+                .andExpect(view().name("petlog/create"));
     }
 
     @Test
