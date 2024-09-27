@@ -30,8 +30,13 @@ import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.service.impl.VaccinationServiceImpl;
+import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
+import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy;
+import com.josdem.vetlog.strategy.vaccination.impl.DogVaccinationStrategy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -48,20 +53,34 @@ class VaccinationServiceTest {
     @Mock
     private VaccinationRepository vaccinationRepository;
 
+    private DogVaccinationStrategy dogVaccinationStrategy;
+
+    private CatVaccinationStrategy catVaccinationStrategy;
+
+    private Map<PetType, VaccinationStrategy> vaccinationStrategies;
+
     private final Pet pet = new Pet();
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        vaccinationService = new VaccinationServiceImpl(vaccinationRepository);
+
+        dogVaccinationStrategy = new DogVaccinationStrategy(vaccinationRepository);
+        catVaccinationStrategy = new CatVaccinationStrategy(vaccinationRepository);
+
+        vaccinationStrategies = new HashMap<>();
+        vaccinationStrategies.put(PetType.DOG, dogVaccinationStrategy);
+        vaccinationStrategies.put(PetType.CAT, catVaccinationStrategy);
+
+        vaccinationService = new VaccinationServiceImpl(vaccinationRepository, vaccinationStrategies);
         pet.setBreed(new Breed());
     }
 
     @Test
-    @DisplayName("not saving a pet if it is not a dog")
-    void shouldNotSavePetIfItIsNotADog(TestInfo testInfo) {
+    @DisplayName("not saving a pet if it is not a dog or cat")
+    void shouldNotSavePetIfItIsNotADogOrCat(TestInfo testInfo) {
         log.info("Test: {}", testInfo.getDisplayName());
-        pet.getBreed().setType(PetType.CAT);
+        pet.getBreed().setType(PetType.BIRD);
         assertThrows(BusinessException.class, () -> vaccinationService.save(pet));
     }
 
