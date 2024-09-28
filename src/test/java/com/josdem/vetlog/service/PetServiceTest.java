@@ -130,6 +130,22 @@ class PetServiceTest {
     }
 
     @Test
+    @DisplayName("not updating a pet due to user not found")
+    void shouldNotUpdatePet(TestInfo testInfo) throws IOException {
+        log.info("Running: {}", testInfo.getDisplayName());
+        pet.setImages(new ArrayList<>());
+        var command = mock(PetCommand.class);
+        when(command.getId()).thenReturn(2L);
+        when(petRepository.findById(2L)).thenReturn(Optional.of(pet));
+        when(petBinder.bindPet(command)).thenReturn(pet);
+        when(command.getUser()).thenReturn(1L);
+        when(command.getAdopter()).thenReturn(3L);
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(BusinessException.class, () -> service.update(command));
+    }
+
+    @Test
     @DisplayName("not update due to user not found")
     void shouldNotUpdateDueToUserDoesNotExist(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());

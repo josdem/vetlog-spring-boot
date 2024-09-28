@@ -1,19 +1,3 @@
-/*
-Copyright 2024 Jose Morales contact@josdem.io
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
-
 package com.josdem.vetlog.controller;
 
 import static com.josdem.vetlog.controller.PetControllerTest.PET_UUID;
@@ -26,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
-import com.josdem.vetlog.repository.PetRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,13 +29,10 @@ import org.springframework.web.context.WebApplicationContext;
 @Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
-class PetLogControllerTest {
+class TelephoneControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private PetRepository petRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -69,50 +49,19 @@ class PetLogControllerTest {
 
     @Test
     @Transactional
-    @DisplayName("showing create pet log form")
+    @DisplayName("showing adopting form")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldShowCreatePetLogForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+    void shouldShowAdoptingForm(TestInfo testInfo) throws Exception {
 
         registerPet();
 
-        mockMvc.perform(get("/petlog/create").param("uuid", PET_UUID))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("petLogCommand"))
-                .andExpect(view().name("petlog/create"));
-    }
-
-    @Test
-    @Transactional
-    @DisplayName("registering a pet log")
-    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldRegisterPetLog(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-
-        registerPet();
-
-        var cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
-
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/petlog/save")
-                        .with(csrf())
-                        .param("pet", cremita.getId().toString())
-                        .param("uuid", PET_UUID)
-                        .param("date", "2024-09-27T09:28:00")
-                        .param("description", "description")
-                        .param("diagnosis", "diagnosis")
-                        .param("signs", "signs"))
+        mockMvc.perform(get("/telephone/adopt").param("uuid", PET_UUID))
                 .andExpect(status().isOk())
-                .andExpect(view().name("petlog/create"));
-    }
-
-    @Test
-    @DisplayName("not listing pet logs due to uuid not found")
-    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldNotListPetLogs(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(get("/petlog/list").param("uuid", "uuid"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("error"));
+                .andExpect(view().name("telephone/adopt"))
+                .andExpect(model().attributeExists("pet"))
+                .andExpect(model().attributeExists("telephoneCommand"))
+                .andExpect(status().isOk());
     }
 
     private void registerPet() throws Exception {

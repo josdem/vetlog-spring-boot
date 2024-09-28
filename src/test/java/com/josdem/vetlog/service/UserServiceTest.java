@@ -17,12 +17,14 @@ limitations under the License.
 package com.josdem.vetlog.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.binder.UserBinder;
 import com.josdem.vetlog.command.Command;
+import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.impl.UserServiceImpl;
@@ -42,8 +44,9 @@ class UserServiceTest {
 
     private static final String USERNAME = "josdem";
     private static final String EMAIL = "contact@josdem.io";
+    private final User user = new User();
+
     private UserService service;
-    private User user = new User();
 
     @Mock
     private UserBinder userBinder;
@@ -70,12 +73,28 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("not finding user by username")
+    void shouldNotGetUserByUsername(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty());
+        assertThrows(UserNotFoundException.class, () -> service.getByUsername(USERNAME));
+    }
+
+    @Test
     @DisplayName("getting user by email")
     void shouldGetUserByEmail(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
         var result = service.getByEmail(EMAIL);
         assertEquals(user, result);
+    }
+
+    @Test
+    @DisplayName("not finding user by email")
+    void shouldNotGetUserByEmail(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.empty());
+        assertThrows(UserNotFoundException.class, () -> service.getByEmail(EMAIL));
     }
 
     @Test
@@ -101,5 +120,16 @@ class UserServiceTest {
         when(provider.getAuthentication()).thenReturn(authentication);
         when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.ofNullable(user));
         assertEquals(user, service.getCurrentUser());
+    }
+
+    @Test
+    @DisplayName("not finding current user")
+    void shouldNotGetCurrentUser(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        var authentication = mock(Authentication.class);
+        when(authentication.getName()).thenReturn(USERNAME);
+        when(provider.getAuthentication()).thenReturn(authentication);
+        when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty());
+        assertThrows(UserNotFoundException.class, () -> service.getCurrentUser());
     }
 }
