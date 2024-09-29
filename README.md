@@ -46,6 +46,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Prathyusha287"><img src="https://avatars.githubusercontent.com/u/120239903?v=4?s=100" width="100px;" alt="Prathyusha287"/><br /><sub><b>Prathyusha287</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Prathyusha287" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ghadyg"><img src="https://avatars.githubusercontent.com/u/136957334?v=4?s=100" width="100px;" alt="ghadyg"/><br /><sub><b>ghadyg</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=ghadyg" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/JoseFRH17"><img src="https://avatars.githubusercontent.com/u/64493634?v=4?s=100" width="100px;" alt="José Fco Rodríguez Hernández"/><br /><sub><b>José Fco Rodríguez Hernández</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/issues?q=author%3AJoseFRH17" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
