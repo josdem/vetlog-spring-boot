@@ -96,6 +96,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "JoseFRH17",
+      "name": "José Fco Rodríguez Hernández",
+      "avatar_url": "https://avatars.githubusercontent.com/u/64493634?v=4",
+      "profile": "https://github.com/JoseFRH17",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
