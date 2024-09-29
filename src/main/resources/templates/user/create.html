@@ -64,7 +64,9 @@
                                    placeholder="lastname" id='lastname'/>
                             <label th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></label>
                             <br/>
-                            <label for="mobile"><h4 th:text="#{user.mobile}"/></label>
+
+                            <!-- Phone number section with country code dropdown -->
+                            <label for="phone"><h4>Phone Number</h4></label>
                             <div class="mobile-container">
                                 <select id="countryCode" name="countryCode" class="country-code">
                                     <option value="+52" selected>+52 (Mexico)</option>
@@ -96,7 +98,6 @@
                                     <option value="+48">+48 (Poland)</option>
                                     <option value="+65">+65 (Singapore)</option>
                                     <option value="+60">+60 (Malaysia)</option>
-                                    <option value="+34">+34 (Spain)</option>
                                     <option value="+356">+356 (Malta)</option>
                                     <option value="+20">+20 (Egypt)</option>
                                     <option value="+234">+234 (Nigeria)</option>
@@ -105,7 +106,6 @@
                                     <option value="+98">+98 (Iran)</option>
                                     <option value="+972">+972 (Israel)</option>
                                     <option value="+90">+90 (Turkey)</option>
-                                    <option value="+62">+62 (Indonesia)</option>
                                     <option value="+353">+353 (Ireland)</option>
                                     <option value="+351">+351 (Portugal)</option>
                                     <option value="+43">+43 (Austria)</option>
@@ -116,12 +116,13 @@
                                     <option value="+373">+373 (Moldova)</option>
                                     <!-- Add more country codes as needed -->
                                 </select>
-                                <input type="text" name="mobile" th:field="*{mobile}" class="form-control mobile-number"
-                                       placeholder="phone number" id="mobile"
-                                       pattern="\d{10}" title="Phone number must be 10 digits only" required />
+                                <input type="text" name="phone" th:field="*{phone}" class="form-control mobile-number"
+                                       placeholder="Enter 10-digit phone number" id="phone" 
+                                       pattern="\d{10}" title="Enter a valid 10-digit phone number"/>
                             </div>
-                            <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
+                            <label th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></label>
                             <br/>
+
                             <label for="email"><h4 th:text="#{user.email}"/></label>
                             <input type="text" name='email' th:field="*{email}" class="form-control" placeholder="email"
                                    id='email'/>

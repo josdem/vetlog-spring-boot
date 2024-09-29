@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.josdem.vetlog.model;
+ package com.josdem.vetlog.model;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -30,7 +30,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import jakarta.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
@@ -88,10 +87,11 @@ public class Pet {
     @JoinColumn(name = "adopter_id")
     private User adopter;
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "pet_id")
+    private List<VaccinationRecord> vaccinationRecords;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_image_id")
     private List<PetImage> images;
-
-    @Transient
-    private List<Vaccination> vaccines;
 }
