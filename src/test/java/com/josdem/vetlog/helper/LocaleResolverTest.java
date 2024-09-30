@@ -26,12 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 @Slf4j
 class LocaleResolverTest {
 
-    private LocaleResolver localeResolver = new LocaleResolver();
-    private HttpServletRequest request = mock(HttpServletRequest.class);
+    private final LocaleResolver localeResolver = new LocaleResolver();
+    private final HttpServletRequest request = mock(HttpServletRequest.class);
 
     @Test
     @DisplayName("getting default locale")
@@ -41,11 +43,12 @@ class LocaleResolverTest {
         assertEquals(Locale.of("en"), result);
     }
 
-    @Test
     @DisplayName("getting english from headers")
-    void shouldGetEnglishFromHeaders(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
-        when(request.getHeader("Accept-Language")).thenReturn("en-US,en;q=0.8");
+    @ParameterizedTest
+    @ValueSource(strings = {"en-US,en;q=0.8", "zh-cn,zh-tw"})
+    void shouldGetLocaleFromHeaders(String headers) {
+        log.info("Running: getting english from headers");
+        when(request.getHeader("Accept-Language")).thenReturn(headers);
         var result = localeResolver.resolveLocale(request);
         assertEquals(Locale.of("en"), result);
     }
@@ -56,15 +59,6 @@ class LocaleResolverTest {
         log.info("Running: {}", testInfo.getDisplayName());
         when(request.getHeader("Accept-Language")).thenReturn("es-MX,en-US;q=0.7,en;q=0.3");
         var result = localeResolver.resolveLocale(request);
-        assertEquals(Locale.of("es"), result);
-    }
-
-    @Test
-    @DisplayName("getting english when unknown language")
-    void shouldGetEnglishWhenUnknownLanguage(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
-        when(request.getHeader("Accept-Language")).thenReturn("zh-cn,zh-tw");
-        var result = localeResolver.resolveLocale(request);
-        assertEquals(Locale.of("en"), result);
+        assertEquals(new Locale("es"), result);
     }
 }
