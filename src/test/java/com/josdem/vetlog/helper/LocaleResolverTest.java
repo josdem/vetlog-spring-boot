@@ -38,7 +38,7 @@ class LocaleResolverTest {
     void shouldGetDefaultLocale(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         var result = localeResolver.resolveLocale(request);
-        assertEquals(new Locale("en"), result);
+        assertEquals(Locale.of("en"), result);
     }
 
     @Test
@@ -47,7 +47,7 @@ class LocaleResolverTest {
         log.info("Running: {}", testInfo.getDisplayName());
         when(request.getHeader("Accept-Language")).thenReturn("en-US,en;q=0.8");
         var result = localeResolver.resolveLocale(request);
-        assertEquals(new Locale("en"), result);
+        assertEquals(Locale.of("en"), result);
     }
 
     @Test
@@ -56,7 +56,7 @@ class LocaleResolverTest {
         log.info("Running: {}", testInfo.getDisplayName());
         when(request.getHeader("Accept-Language")).thenReturn("es-MX,en-US;q=0.7,en;q=0.3");
         var result = localeResolver.resolveLocale(request);
-        assertEquals(new Locale("es"), result);
+        assertEquals(Locale.of("es"), result);
     }
 
     @Test
@@ -65,6 +65,6 @@ class LocaleResolverTest {
         log.info("Running: {}", testInfo.getDisplayName());
         when(request.getHeader("Accept-Language")).thenReturn("zh-cn,zh-tw");
         var result = localeResolver.resolveLocale(request);
-        assertEquals(new Locale("en"), result);
+        assertEquals(Locale.of("en"), result);
     }
 }
