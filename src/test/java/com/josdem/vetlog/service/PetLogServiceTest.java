@@ -46,7 +46,7 @@ class PetLogServiceTest {
 
     private PetLogService service;
 
-    private Pet pet = new Pet();
+    private final Pet pet = new Pet();
 
     @Mock
     private PetLogBinder petLogBinder;
@@ -61,7 +61,7 @@ class PetLogServiceTest {
     private PetPrescriptionService petPrescriptionService;
 
     @BeforeEach
-    void setup(TestInfo testInfo) {
+    void setup() {
         MockitoAnnotations.openMocks(this);
         service = new PetLogServiceImpl(petLogBinder, petLogRepository, petRepository, petPrescriptionService);
     }
@@ -84,7 +84,7 @@ class PetLogServiceTest {
 
     @Test
     @DisplayName("should not find a pet log")
-    void shouldNotFindPetLog(TestInfo testInfo) throws IOException {
+    void shouldNotFindPetLog(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         var petLogCommand = new PetLogCommand();
         var petLog = getPetLog();
