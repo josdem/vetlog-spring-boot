@@ -30,7 +30,6 @@ import com.josdem.vetlog.repository.PetLogRepository;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.service.impl.PetLogServiceImpl;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;

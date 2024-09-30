@@ -42,6 +42,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -84,47 +86,15 @@ class VaccinationServiceTest {
         assertThrows(BusinessException.class, () -> vaccinationService.save(pet));
     }
 
-    @Test
-    @DisplayName("saving first vaccination")
-    void shouldSaveFirstVaccination(TestInfo testInfo) {
-        log.info("Test: {}", testInfo.getDisplayName());
+    @DisplayName("saving vaccines")
+    @ParameterizedTest
+    @CsvSource({"6, 2", "10, 3", "14, 4", "20, 5"})
+    void shouldSaveVaccines(int weeks, int times) {
+        log.info("Test: saving vaccines");
         pet.getBreed().setType(PetType.DOG);
-        pet.setBirthDate(LocalDateTime.now().minusWeeks(6));
+        pet.setBirthDate(LocalDateTime.now().minusWeeks(weeks));
         vaccinationService.save(pet);
-        verify(vaccinationRepository, times(2))
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
-    }
-
-    @Test
-    @DisplayName("saving second vaccination")
-    void shouldSaveSecondVaccination(TestInfo testInfo) {
-        log.info("Test: {}", testInfo.getDisplayName());
-        pet.getBreed().setType(PetType.DOG);
-        pet.setBirthDate(LocalDateTime.now().minusWeeks(10));
-        vaccinationService.save(pet);
-        verify(vaccinationRepository, times(3))
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
-    }
-
-    @Test
-    @DisplayName("saving third vaccination")
-    void shouldSaveThirdVaccination(TestInfo testInfo) {
-        log.info("Test: {}", testInfo.getDisplayName());
-        pet.getBreed().setType(PetType.DOG);
-        pet.setBirthDate(LocalDateTime.now().minusWeeks(14));
-        vaccinationService.save(pet);
-        verify(vaccinationRepository, times(4))
-                .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
-    }
-
-    @Test
-    @DisplayName("saving annual vaccination")
-    void shouldSaveAnnualVaccination(TestInfo testInfo) {
-        log.info("Test: {}", testInfo.getDisplayName());
-        pet.getBreed().setType(PetType.DOG);
-        pet.setBirthDate(LocalDateTime.now().minusWeeks(20));
-        vaccinationService.save(pet);
-        verify(vaccinationRepository, times(5))
+        verify(vaccinationRepository, times(times))
                 .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
     }
 
