@@ -67,7 +67,7 @@ public class User implements Serializable {
     private Role role;
 
     @Column(nullable = false)
-    private Boolean enabled = true;
+    private boolean enabled = true;
 
     @Column(nullable = false)
     private Boolean accountNonExpired = true;
