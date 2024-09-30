@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:lang="${#locale.language}">
 <head>
-    <title th:text="#{pet.view.create.title}"/>
+    <title th:text="#{pet.view.create.title}"></title>
     <head th:insert="~{fragments/include}"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
     <script th:src="@{/javascript/selector.js}"></script>
 </head>
 <body class="login">
-<div th:insert="~{fragments/header}"/>
+<div th:insert="~{fragments/header}"></div>
 <br/><br/>
 <br/><br/>
 <br/><br/>
@@ -20,28 +20,25 @@
                 <div class="portlet-body">
                     <div th:if="${message}">
                         <div align="center">
-                            <p style="color:blue;font-size:18px;" th:text="${message}"/>
+                            <p style="color:blue;font-size:18px;" th:text="${message}"></p>
                         </div>
                     </div>
                     <form id="register" th:action="@{/pet/update}" th:object="${petCommand}" method="post"
                           class="form-horizontal" enctype="multipart/form-data">
                         <fieldset>
-                            <legend th:text="#{pet.edit}"/>
-                            <label for="name"><h4 th:text="#{pet.name}"/></label>
-                            <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name"
-                                   id='name'/>
+                            <legend th:text="#{pet.edit}"></legend>
+                            <label for="name"><h4 th:text="#{pet.name}"></h4></label>
+                            <input type="text" name="name" th:field="*{name}" class="form-control" placeholder="name"
+                                   id="name"/>
                             <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
                             <br/>
                             <div th:if="${!petCommand.images.isEmpty()}">
                                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                     <ol class="carousel-indicators">
-                                        <li data-target="#carousel-example-generic" data-slide-to="0"
-                                            class="active"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
                                         <li data-target="#carousel-example-generic" data-slide-to="1"></li>
                                         <li data-target="#carousel-example-generic" data-slide-to="2"></li>
                                     </ol>
-
-                                    <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
                                         <div th:each="image : ${petCommand.images}" class="item"
                                              th:classappend="|${petCommand.images.indexOf(image) == 0 ? 'active' : ''}|"
@@ -50,7 +47,6 @@
                                                  th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
                                         </div>
                                     </div>
-                                    <!-- Controls -->
                                     <a class="left carousel-control" href="#carousel-example-generic" role="button"
                                        data-slide="prev">
                                         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -64,48 +60,66 @@
                                 </div>
                             </div>
                             <br/>
-                            <label for="image"><h4 th:text="#{pet.image}"/></label>
+                            <label for="image"><h4 th:text="#{pet.image}"></h4></label>
                             <input type="file" name="image"/>
                             <br/>
-                            <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
+                            <label for="birthDate"><h4 th:text="#{pet.birthDate}"></h4></label>
                             <input type="datetime-local" id="birthDate" name="birthDate" th:field="*{birthDate}">
                             <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
                             <br/>
-                            <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
-                            <input type="checkbox" name='dewormed' th:field="*{dewormed}" class="form-control"
-                                   placeholder="dewormed" id='dewormed'/>
+                            <label for="dewormed"><h4 th:text="#{pet.dewormed}"></h4></label>
+                            <input type="checkbox" name="dewormed" th:field="*{dewormed}" class="form-control"
+                                   id="dewormed"/>
                             <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
                             <br/>
-                            <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
-                            <input type="checkbox" name='sterilized' th:field="*{sterilized}" class="form-control"
-                                   placeholder="sterilized" id='sterilized'/>
+                            <label for="sterilized"><h4 th:text="#{pet.sterilized}"></h4></label>
+                            <input type="checkbox" name="sterilized" th:field="*{sterilized}" class="form-control"
+                                   id="sterilized"/>
                             <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
                             <br/>
-                            <label for="vaccinated"><h4 th:text="#{pet.vaccinated}"/></label>
-                            <input type="checkbox" name='vaccinated' th:field="*{vaccinated}" class="form-control"
-                                   placeholder="vaccinated" id='vaccinated'/>
-                            <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
-                            <br/>
+                            <!-- Vaccination Records Table -->
+                            <label><h4 th:text="#{pet.vaccinationRecords}"></h4></label>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Vaccination</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="vaccination : ${petCommand.vaccinations}">
+                                        <td th:text="${vaccination.name}"></td>
+                                        <td>
+                                            <select th:field="*{vaccinations[__${vaccination.index}__].status}">
+                                                <option value="PENDING" th:text="#{status.pending}"></option>
+                                                <option value="APPLIED" th:text="#{status.applied}"></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <br/>
                             <div sec:authorize="hasAuthority('ADMIN')">
-                                <label for="status"><h4 th:text="#{pet.status}"/></label>
+                                <label for="status"><h4 th:text="#{pet.status}"></h4></label>
                                 <select id="statusSelector" name="status" th:field="*{status}" class="form-control">
-                                    <option th:each=" status : ${T(com.josdem.vetlog.enums.PetStatus).values()}"
-                                        th:value="${status}" th:text="${status.value}" th:selected="(${status} == *{status})"/>
+                                    <option th:each="status : ${T(com.josdem.vetlog.enums.PetStatus).values()}"
+                                        th:value="${status}" th:text="${status.value}"
+                                        th:selected="(${status} == *{status})"></option>
                                 </select>
-                            <br/>
+                                <br/>
                             </div>
-                            <label for="type"><h4 th:text="#{pet.type}"/></label>
+                            <label for="type"><h4 th:text="#{pet.type}"></h4></label>
                             <select id="typeSelector" name="type" th:field="*{type}" class="form-control"
                                     onchange="updateBreedType()">
-                                <option th:each=" type : ${T(com.josdem.vetlog.enums.PetType).values()}"
-                                        th:value="${type}" th:text="${type.value}" th:selected="(${type} == *{type})"/>
+                                <option th:each="type : ${T(com.josdem.vetlog.enums.PetType).values()}"
+                                        th:value="${type}" th:text="${type.value}"
+                                        th:selected="(${type} == *{type})"></option>
                             </select>
                             <br/>
-                            <label for="breed"><h4 th:text="#{pet.breed}"/></label>
+                            <label for="breed"><h4 th:text="#{pet.breed}"></h4></label>
                             <select id="breedSelector" name="breed" class="form-control">
                                 <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"
-                                        th:selected="(${breed.id} == *{breed})"/>
+                                        th:selected="(${breed.id} == *{breed})"></option>
                             </select>
                             <br/><br/>
                             <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
@@ -123,6 +137,6 @@
     </div>
 </div>
 <br/><br/>
-<div th:insert="~{fragments/footer}"/>
+<div th:insert="~{fragments/footer}"></div>
 </body>
 </html>

@@ -14,14 +14,49 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.josdem.vetlog.service;
+ package com.josdem.vetlog.service;
 
-import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.Vaccination;
-import java.util.List;
-
-public interface VaccinationService {
-    void save(Pet pet);
-
-    List<Vaccination> getVaccinationsByPet(Pet pet);
-}
+ import com.josdem.vetlog.model.Pet;
+ import com.josdem.vetlog.model.Vaccination;
+ import java.util.List;
+ 
+ public interface VaccinationService {
+     
+     /**
+      * Saves a vaccination record.
+      *
+      * @param vaccination the Vaccination entity to be saved.
+      */
+     void saveVaccination(Vaccination vaccination);
+ 
+     /**
+      * Updates an existing vaccination record.
+      *
+      * @param vaccination the Vaccination entity with updated data.
+      */
+     void updateVaccination(Vaccination vaccination);
+ 
+     /**
+      * Deletes a vaccination record by its ID.
+      *
+      * @param vaccinationId the ID of the Vaccination to be deleted.
+      */
+     void deleteVaccination(Long vaccinationId);
+ 
+     /**
+      * Retrieves a list of vaccinations for a specific pet.
+      *
+      * @param pet the Pet entity whose vaccinations are to be retrieved.
+      * @return a list of Vaccination records for the given pet.
+      */
+     List<Vaccination> getVaccinationsByPet(Pet pet);
+ 
+     /**
+      * Retrieves a vaccination by its ID.
+      *
+      * @param vaccinationId the ID of the Vaccination to be retrieved.
+      * @return the Vaccination entity if found, otherwise null.
+      */
+     Vaccination getVaccinationById(Long vaccinationId);
+ }
+ 

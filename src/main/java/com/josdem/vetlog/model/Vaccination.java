@@ -58,6 +58,6 @@ public class Vaccination {
     private VaccinationStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_id")
+    @JoinColumn(name = "pet_id", nullable = false) // Ensure pet_id is not nullable
     private Pet pet;
 }
