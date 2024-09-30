@@ -59,6 +59,6 @@ class LocaleResolverTest {
         log.info("Running: {}", testInfo.getDisplayName());
         when(request.getHeader("Accept-Language")).thenReturn("es-MX,en-US;q=0.7,en;q=0.3");
         var result = localeResolver.resolveLocale(request);
-        assertEquals(new Locale("es"), result);
+        assertEquals(Locale.of("es"), result);
     }
 }
