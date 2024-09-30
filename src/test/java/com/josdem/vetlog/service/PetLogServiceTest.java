@@ -31,6 +31,7 @@ import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.service.impl.PetLogServiceImpl;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -99,9 +100,9 @@ class PetLogServiceTest {
     void shouldGetPetLogsByPet(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         var petLog = getPetLog();
-        when(petLogRepository.getAllByPet(pet)).thenReturn(Arrays.asList(petLog));
+        when(petLogRepository.getAllByPet(pet)).thenReturn(List.of(petLog));
         var result = service.getPetLogsByPet(pet);
-        assertEquals(Arrays.asList(petLog), result);
+        assertEquals(List.of(petLog), result);
     }
 
     @NotNull
