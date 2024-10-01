@@ -44,7 +44,7 @@ class LocaleServiceTest {
     @Mock
     private LocaleResolver localeResolver;
 
-    private String code = "code";
+    private final String code = "code";
 
     @BeforeEach
     void setup() {
@@ -66,7 +66,7 @@ class LocaleServiceTest {
     @DisplayName("getting message by code")
     void shouldGetMessageByCode(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
-        when(messageSource.getMessage(code, null, new Locale("en"))).thenReturn("message");
+        when(messageSource.getMessage(code, null, Locale.of("en"))).thenReturn("message");
         assertEquals("message", service.getMessage(code));
     }
 }

@@ -85,7 +85,7 @@ class RecoveryServiceTest {
 
         service.confirmAccountForToken(TOKEN);
 
-        assertTrue(user.getEnabled());
+        assertTrue(user.isEnabled());
         verify(userRepository).save(user);
     }
 

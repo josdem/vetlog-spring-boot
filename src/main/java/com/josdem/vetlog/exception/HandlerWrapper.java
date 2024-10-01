@@ -21,17 +21,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Component
-public class HandlerException implements HandlerExceptionResolver {
+public class HandlerWrapper implements HandlerExceptionResolver {
 
     public ModelAndView resolveException(
-            HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        log.info("Handling exception: {}", ex);
+            @NotNull HttpServletRequest request, @NotNull HttpServletResponse response, Object handler, Exception ex) {
+        log.warn("Handling exception: {}", ex.getMessage());
         Map<String, String> data = new HashMap<>();
         data.put("message", ex.getMessage());
         ModelAndView modelAndView = new ModelAndView("error");

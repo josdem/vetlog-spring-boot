@@ -85,7 +85,7 @@ public class RecoveryServiceImpl implements RecoveryService {
         var user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND)));
-        if (!user.getEnabled()) {
+        if (!user.isEnabled()) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
         try {

@@ -17,11 +17,11 @@ limitations under the License.
 package com.josdem.vetlog.helper;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
@@ -30,20 +30,21 @@ import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 @RequiredArgsConstructor
 public class LocaleResolver extends AcceptHeaderLocaleResolver {
 
-    private static final Locale english = new Locale("en");
-    private static final Locale spanish = new Locale("es");
-    private static final List<Locale> LOCALES = Arrays.asList(english, spanish);
+    private static final Locale ENGLISH = Locale.of("en");
+    private static final Locale SPANISH = Locale.of("es");
+    private static final List<Locale> LOCALES = List.of(ENGLISH, SPANISH);
 
     public static final String ACCEPT_LANGUAGE = "Accept-Language";
 
+    @NotNull
     @Override
     public Locale resolveLocale(HttpServletRequest request) {
         log.info("Accept Language: {}", request.getHeader(ACCEPT_LANGUAGE));
         if (request.getHeader(ACCEPT_LANGUAGE) == null) {
-            return english;
+            return ENGLISH;
         }
         List<Locale.LanguageRange> list = Locale.LanguageRange.parse(request.getHeader(ACCEPT_LANGUAGE));
         Locale locale = Locale.lookup(list, LOCALES);
-        return locale != null ? locale : english;
+        return locale != null ? locale : ENGLISH;
     }
 }
