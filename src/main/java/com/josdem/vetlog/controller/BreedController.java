@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class BreedController {
 
+    public static final String DOMAIN = "vetlog.org";
     private final BreedService breedService;
 
     @GetMapping(value = "/list")
@@ -41,7 +42,7 @@ public class BreedController {
         log.info("Listing Pets by type: {}", type);
 
         response.addHeader("Allow-Control-Allow-Methods", "GET");
-        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Origin", DOMAIN);
         return breedService.getBreedsByType(PetType.getPetTypeByValue(type));
     }
 }
