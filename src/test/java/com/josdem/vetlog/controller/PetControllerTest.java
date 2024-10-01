@@ -66,7 +66,7 @@ class PetControllerTest {
             new MockMultipartFile("mockImage", "image.jpg", "image/jpeg", "image".getBytes());
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .apply(springSecurity())
                 .build();

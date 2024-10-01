@@ -31,6 +31,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.validation.Errors;
@@ -69,13 +71,14 @@ class UserValidatorTest {
         verify(errors).rejectValue("password", "user.error.password.equals");
     }
 
-    @Test
-    @DisplayName("accepting dash in password")
-    void shouldAcceptDashCharacterInPassword(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+    @DisplayName("accepting passwords")
+    @ParameterizedTest
+    @ValueSource(strings = {"pass-word", "pass_word", "password."})
+    void shouldAcceptDashCharacterInPassword(String password) {
+        log.info("Running: accepting passwords");
         var userCommand = getUserCommand();
-        userCommand.setPassword("pass-word");
-        userCommand.setPasswordConfirmation("pass-word");
+        userCommand.setPassword(password);
+        userCommand.setPasswordConfirmation(password);
         validator.validate(userCommand, errors);
         verify(errors, never()).rejectValue(anyString(), anyString());
     }

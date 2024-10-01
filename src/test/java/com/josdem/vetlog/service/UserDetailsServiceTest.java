@@ -68,7 +68,7 @@ class UserDetailsServiceTest {
 
         assertEquals(user.getUsername(), result.getUsername());
         assertEquals(user.getPassword(), result.getPassword());
-        assertEquals(user.getEnabled(), result.isEnabled());
+        assertEquals(user.isEnabled(), result.isEnabled());
     }
 
     @Test

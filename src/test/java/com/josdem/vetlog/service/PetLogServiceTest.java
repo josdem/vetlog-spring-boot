@@ -30,7 +30,7 @@ import com.josdem.vetlog.repository.PetLogRepository;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.service.impl.PetLogServiceImpl;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +46,7 @@ class PetLogServiceTest {
 
     private PetLogService service;
 
-    private Pet pet = new Pet();
+    private final Pet pet = new Pet();
 
     @Mock
     private PetLogBinder petLogBinder;
@@ -61,7 +61,7 @@ class PetLogServiceTest {
     private PetPrescriptionService petPrescriptionService;
 
     @BeforeEach
-    void setup(TestInfo testInfo) {
+    void setup() {
         MockitoAnnotations.openMocks(this);
         service = new PetLogServiceImpl(petLogBinder, petLogRepository, petRepository, petPrescriptionService);
     }
@@ -84,7 +84,7 @@ class PetLogServiceTest {
 
     @Test
     @DisplayName("should not find a pet log")
-    void shouldNotFindPetLog(TestInfo testInfo) throws IOException {
+    void shouldNotFindPetLog(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         var petLogCommand = new PetLogCommand();
         var petLog = getPetLog();
@@ -99,9 +99,9 @@ class PetLogServiceTest {
     void shouldGetPetLogsByPet(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         var petLog = getPetLog();
-        when(petLogRepository.getAllByPet(pet)).thenReturn(Arrays.asList(petLog));
+        when(petLogRepository.getAllByPet(pet)).thenReturn(List.of(petLog));
         var result = service.getPetLogsByPet(pet);
-        assertEquals(Arrays.asList(petLog), result);
+        assertEquals(List.of(petLog), result);
     }
 
     @NotNull

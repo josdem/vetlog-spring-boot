@@ -56,7 +56,7 @@ class DateFormatterTest {
     @Test
     @DisplayName("Formatting date for ES locale")
     void shouldFormatDateForEs() {
-        var locale = new Locale("es", "ES");
+        var locale = Locale.of("es", "ES");
         var date = LocalDateTime.parse("1999-08-18T10:14:00");
 
         var formattedDate = dateFormatter.formatToDate(date, locale);
