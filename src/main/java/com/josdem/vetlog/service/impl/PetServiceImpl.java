@@ -42,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PetServiceImpl implements PetService {
 
     public static final String NO_USER_WAS_FOUND_WITH_ID = "No user was found with id: ";
+    public static final String NO_PET_WAS_FOUND_WITH_ID = "No pet was found with id: ";
     private final PetBinder petBinder;
     private final PetRepository petRepository;
     private final PetImageService petImageService;
@@ -85,7 +86,7 @@ public class PetServiceImpl implements PetService {
 
     public Pet getPetById(Long id) {
         var pet = petRepository.findById(id);
-        return pet.orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
+        return pet.orElseThrow(() -> new BusinessException(NO_PET_WAS_FOUND_WITH_ID + id));
     }
 
     public List<Pet> getPetsByUser(User user) {
@@ -109,8 +110,7 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public void deletePetById(Long id) {
-        var pet =
-                petRepository.findById(id).orElseThrow(() -> new BusinessException("No pet was found with id: " + id));
+        var pet = petRepository.findById(id).orElseThrow(() -> new BusinessException(NO_PET_WAS_FOUND_WITH_ID + id));
         if (pet.getStatus() == PetStatus.IN_ADOPTION) {
             throw new BusinessException(localeService.getMessage("pet.delete.error.inAdoption"));
         }
@@ -120,7 +120,7 @@ public class PetServiceImpl implements PetService {
     private void recoveryImages(PetCommand command) {
         var pet = petRepository.findById(command.getId());
         pet.ifPresentOrElse(value -> command.setImages(value.getImages()), () -> {
-            throw new BusinessException("No pet was found with id: " + command.getId());
+            throw new BusinessException(NO_PET_WAS_FOUND_WITH_ID + command.getId());
         });
     }
 
