@@ -17,12 +17,9 @@ limitations under the License.
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.UsernameCommand;
-import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
