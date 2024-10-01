@@ -128,7 +128,7 @@ public class PetController {
         log.info("Creating pet: {}", petCommand.getName());
         ModelAndView modelAndView = new ModelAndView("pet/create");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("petCommand", petCommand);
+            modelAndView.addObject(PET_COMMAND, petCommand);
             return fillModelAndView(modelAndView);
         }
         User user = userService.getCurrentUser();
