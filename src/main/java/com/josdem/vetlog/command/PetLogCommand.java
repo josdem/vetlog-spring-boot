@@ -15,7 +15,6 @@ limitations under the License.
 package com.josdem.vetlog.command;
 
 import com.josdem.vetlog.util.UuidGenerator;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -44,6 +43,5 @@ public class PetLogCommand implements Command {
     @Min(1L)
     private Long pet;
 
-    @Transient
-    private MultipartFile attachment;
+    private transient MultipartFile attachment;
 }
