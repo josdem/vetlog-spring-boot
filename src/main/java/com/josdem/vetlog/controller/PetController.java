@@ -20,7 +20,6 @@ import com.josdem.vetlog.binder.PetBinder;
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
-import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.BreedService;
 import com.josdem.vetlog.service.LocaleService;
@@ -31,7 +30,6 @@ import com.josdem.vetlog.validator.PetValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -81,8 +79,8 @@ public class PetController {
 
     @GetMapping(value = "/create")
     public ModelAndView create(@RequestParam(value = "type", required = false) String type) {
-        ModelAndView modelAndView = new ModelAndView("pet/create");
-        PetCommand petCommand = new PetCommand();
+        var modelAndView = new ModelAndView("pet/create");
+        var petCommand = new PetCommand();
         petCommand.setStatus(PetStatus.OWNED);
         modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
@@ -91,8 +89,8 @@ public class PetController {
     @GetMapping(value = "/edit")
     public ModelAndView edit(@RequestParam("uuid") String uuid) {
         log.info("Editing pet: {}", uuid);
-        Pet pet = petService.getPetByUuid(uuid);
-        ModelAndView modelAndView = new ModelAndView();
+        var pet = petService.getPetByUuid(uuid);
+        var modelAndView = new ModelAndView();
         final PetCommand petCommand = petBinder.bindPet(pet);
         final User adopter = pet.getAdopter();
         if (adopter != null) {
@@ -110,7 +108,7 @@ public class PetController {
     public ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
         log.info("Updating pet: {}", petCommand.getName());
-        ModelAndView modelAndView = new ModelAndView("pet/edit");
+        var modelAndView = new ModelAndView("pet/edit");
         if (bindingResult.hasErrors()) {
             modelAndView.addObject(PET_COMMAND, petCommand);
             return fillModelAndView(modelAndView);
@@ -126,12 +124,12 @@ public class PetController {
     public ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
         log.info("Creating pet: {}", petCommand.getName());
-        ModelAndView modelAndView = new ModelAndView("pet/create");
+        var modelAndView = new ModelAndView("pet/create");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject("petCommand", petCommand);
+            modelAndView.addObject(PET_COMMAND, petCommand);
             return fillModelAndView(modelAndView);
         }
-        User user = userService.getCurrentUser();
+        var user = userService.getCurrentUser();
         petService.save(petCommand, user);
         modelAndView.addObject("message", localeService.getMessage("pet.created", request));
         petCommand = new PetCommand();
@@ -148,22 +146,21 @@ public class PetController {
     @GetMapping(value = "/list")
     public ModelAndView list() {
         log.info("Listing pets");
-        ModelAndView modelAndView = new ModelAndView();
-        return fillPetAndImageUrl(modelAndView);
+        return fillPetAndImageUrl(new ModelAndView());
     }
 
     @GetMapping(value = "/giveForAdoption")
     public ModelAndView giveForAdoption() {
         log.info("Select a pet for adoption");
-        ModelAndView modelAndView = new ModelAndView("pet/giveForAdoption");
+        var modelAndView = new ModelAndView("pet/giveForAdoption");
         return fillPetAndImageUrl(modelAndView);
     }
 
     @GetMapping(value = "/listForAdoption")
     public ModelAndView listForAdoption(HttpServletRequest request) {
         log.info("Listing pets for adoption");
-        ModelAndView modelAndView = new ModelAndView("pet/listForAdoption");
-        List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION);
+        var modelAndView = new ModelAndView("pet/listForAdoption");
+        var pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION);
         if (pets == null || pets.isEmpty()) {
             modelAndView.addObject("petListEmpty", localeService.getMessage("pet.list.empty", request));
         }
@@ -176,15 +173,15 @@ public class PetController {
     @GetMapping(value = "/delete")
     public ModelAndView delete(@RequestParam("uuid") String uuid) {
         log.info("Deleting pet: {}", uuid);
-        Pet pet = petService.getPetByUuid(uuid);
+        var pet = petService.getPetByUuid(uuid);
         petService.deletePetById(pet.getId());
-        ModelAndView modelAndView = new ModelAndView("pet/list");
+        var modelAndView = new ModelAndView("pet/list");
         return fillPetAndImageUrl(modelAndView);
     }
 
     private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView) {
-        User user = userService.getCurrentUser();
-        List<Pet> pets = petService.getPetsByUser(user);
+        var user = userService.getCurrentUser();
+        var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinationsByPet(pet)));
         modelAndView.addObject("pets", pets);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");

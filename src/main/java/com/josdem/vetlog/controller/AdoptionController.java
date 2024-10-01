@@ -18,12 +18,10 @@ package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.AdoptionCommand;
 import com.josdem.vetlog.enums.PetStatus;
-import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.AdoptionService;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.validator.AdoptionValidator;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
