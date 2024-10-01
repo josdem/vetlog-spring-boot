@@ -53,7 +53,7 @@ public class VetController {
     @GetMapping("/form")
     ModelAndView form() {
         log.info("Searching pets");
-        ModelAndView modelAndView = new ModelAndView("vet/form");
+        var modelAndView = new ModelAndView("vet/form");
         modelAndView.addObject("usernameCommand", new UsernameCommand());
         return modelAndView;
     }
@@ -61,9 +61,9 @@ public class VetController {
     @PostMapping("/search")
     ModelAndView search(@Valid UsernameCommand command) {
         log.info("Listing pets");
-        ModelAndView modelAndView = new ModelAndView("vet/list");
-        User user = userService.getByUsername(command.getUsername());
-        List<Pet> pets = petService.getPetsByUser(user);
+        var modelAndView = new ModelAndView("vet/list");
+        var user = userService.getByUsername(command.getUsername());
+        var pets = petService.getPetsByUser(user);
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
