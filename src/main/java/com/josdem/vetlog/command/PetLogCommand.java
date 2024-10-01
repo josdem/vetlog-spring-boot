@@ -44,6 +44,5 @@ public class PetLogCommand implements Command {
     @Min(1L)
     private Long pet;
 
-    @Transient
-    private MultipartFile attachment;
+    private transient MultipartFile attachment;
 }
