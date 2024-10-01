@@ -16,10 +16,8 @@ limitations under the License.
 
 package com.josdem.vetlog.controller;
 
-import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.PetLogCommand;
 import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.PetLog;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.PetLogService;
