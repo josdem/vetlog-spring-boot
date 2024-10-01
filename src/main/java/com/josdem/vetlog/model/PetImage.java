@@ -14,26 +14,35 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.josdem.vetlog.model;
+ package com.josdem.vetlog.model;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
-
-@Entity
-@Getter
-@Setter
-public class PetImage {
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
-    private String uuid;
-}
+ import static jakarta.persistence.GenerationType.IDENTITY;
+ 
+ import jakarta.persistence.Column;
+ import jakarta.persistence.Entity;
+ import jakarta.persistence.FetchType;
+ import jakarta.persistence.GeneratedValue;
+ import jakarta.persistence.Id;
+ import jakarta.persistence.JoinColumn;
+ import jakarta.persistence.ManyToOne;
+ import lombok.Getter;
+ import lombok.Setter;
+ 
+ @Entity
+ @Getter
+ @Setter
+ public class PetImage {
+ 
+     @Id
+     @GeneratedValue(strategy = IDENTITY)
+     private Long id;
+ 
+     @Column(nullable = false)
+     private String uuid;
+ 
+     // Relationship mapping to Pet
+     @ManyToOne(fetch = FetchType.LAZY)
+     @JoinColumn(name = "pet_id", nullable = false)
+     private Pet pet;
+ }
+ 
