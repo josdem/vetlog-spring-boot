@@ -62,12 +62,12 @@ public class PetLogController {
     @GetMapping(value = "/create")
     public ModelAndView create(@RequestParam("uuid") String uuid, HttpServletRequest request) {
         log.info("Pet uuid: {}", uuid);
-        ModelAndView modelAndView = new ModelAndView("petlog/create");
-        Command petLogCommand = new PetLogCommand();
+        var modelAndView = new ModelAndView("petlog/create");
+        var petLogCommand = new PetLogCommand();
         modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
-        Pet pet = petService.getPetByUuid(uuid);
-        User currentUser = userService.getCurrentUser();
-        List<Pet> pets = getPetsFromUser(pet, currentUser);
+        var pet = petService.getPetByUuid(uuid);
+        var currentUser = userService.getCurrentUser();
+        var pets = getPetsFromUser(pet, currentUser);
         return fillModelAndView(modelAndView, pets, request);
     }
 
@@ -76,18 +76,17 @@ public class PetLogController {
             @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
         log.info("Creating petLog: {}", petLogCommand.getPet());
-        ModelAndView modelAndView = new ModelAndView("petlog/create");
-        Pet pet = petService.getPetById(petLogCommand.getPet());
-        User currentUser = userService.getCurrentUser();
-        List<Pet> pets = getPetsFromUser(pet, currentUser);
+        var modelAndView = new ModelAndView("petlog/create");
+        var pet = petService.getPetById(petLogCommand.getPet());
+        var currentUser = userService.getCurrentUser();
+        var pets = getPetsFromUser(pet, currentUser);
         if (bindingResult.hasErrors()) {
             modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
             return fillModelAndView(modelAndView, pets, request);
         }
         petLogService.save(petLogCommand);
         modelAndView.addObject("message", localeService.getMessage("petlog.created", request));
-        petLogCommand = new PetLogCommand();
-        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
+        modelAndView.addObject(PET_LOG_COMMAND, new PetLogCommand());
         return fillModelAndView(modelAndView, pets, request);
     }
 
@@ -102,9 +101,9 @@ public class PetLogController {
     @GetMapping(value = "/list")
     public ModelAndView list(@RequestParam("uuid") String uuid) {
         log.info("Listing pet logs");
-        ModelAndView modelAndView = new ModelAndView();
-        Pet pet = petService.getPetByUuid(uuid);
-        List<PetLog> petLogs = petLogService.getPetLogsByPet(pet);
+        var modelAndView = new ModelAndView();
+        var pet = petService.getPetByUuid(uuid);
+        var petLogs = petLogService.getPetLogsByPet(pet);
         modelAndView.addObject("petLogs", petLogs);
         modelAndView.addObject("uuid", uuid);
         modelAndView.addObject("gcpPrescriptionUrl", gcpUrl + prescriptionBucket + "/");
