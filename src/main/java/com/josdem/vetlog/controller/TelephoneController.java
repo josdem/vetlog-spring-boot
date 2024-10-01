@@ -60,9 +60,9 @@ public class TelephoneController {
             ModelAndView modelAndView = new ModelAndView("telephone/adopt");
             return fillPetAndTelephoneCommand(modelAndView, telephoneCommand);
         }
-        User user = userService.getCurrentUser();
+        var user = userService.getCurrentUser();
         telephoneService.save(telephoneCommand, user);
-        ModelAndView modelAndView = new ModelAndView("redirect:/");
+        var modelAndView = new ModelAndView("redirect:/");
         modelAndView.addObject("message", localeService.getMessage("adoption.email.sent", request));
         return modelAndView;
     }
@@ -70,12 +70,12 @@ public class TelephoneController {
     @GetMapping(value = "/adopt")
     public ModelAndView adopt(TelephoneCommand telephoneCommand) {
         log.info("Adoption to pet with uuid: {}", telephoneCommand.getUuid());
-        ModelAndView modelAndView = new ModelAndView("telephone/adopt");
+        var modelAndView = new ModelAndView("telephone/adopt");
         return fillPetAndTelephoneCommand(modelAndView, telephoneCommand);
     }
 
     private ModelAndView fillPetAndTelephoneCommand(ModelAndView modelAndView, TelephoneCommand telephoneCommand) {
-        Pet pet = petService.getPetByUuid(telephoneCommand.getUuid());
+        var pet = petService.getPetByUuid(telephoneCommand.getUuid());
         modelAndView.addObject("pet", pet);
         modelAndView.addObject("telephoneCommand", telephoneCommand);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
