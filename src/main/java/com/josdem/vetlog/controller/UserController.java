@@ -51,8 +51,7 @@ public class UserController {
 
     @GetMapping(value = "/create")
     public ModelAndView create() {
-        Command userCommand = new UserCommand();
-        return fillUserCommand(userCommand);
+        return fillUserCommand(new UserCommand());
     }
 
     @PostMapping(value = "/save")
@@ -62,13 +61,13 @@ public class UserController {
             return fillUserCommand(userCommand);
         }
         userService.save(userCommand);
-        ModelAndView modelAndView = new ModelAndView("login/login");
+        var modelAndView = new ModelAndView("login/login");
         modelAndView.addObject("userAccountCreatedMessage", localeService.getMessage("user.account.created", request));
         return modelAndView;
     }
 
     private ModelAndView fillUserCommand(Command userCommand) {
-        ModelAndView modelAndView = new ModelAndView("user/create");
+        var modelAndView = new ModelAndView("user/create");
         modelAndView.addObject("userCommand", userCommand);
         return modelAndView;
     }

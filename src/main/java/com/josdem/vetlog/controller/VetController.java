@@ -17,12 +17,9 @@ limitations under the License.
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.UsernameCommand;
-import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,7 +50,7 @@ public class VetController {
     @GetMapping("/form")
     ModelAndView form() {
         log.info("Searching pets");
-        ModelAndView modelAndView = new ModelAndView("vet/form");
+        var modelAndView = new ModelAndView("vet/form");
         modelAndView.addObject("usernameCommand", new UsernameCommand());
         return modelAndView;
     }
@@ -61,9 +58,9 @@ public class VetController {
     @PostMapping("/search")
     ModelAndView search(@Valid UsernameCommand command) {
         log.info("Listing pets");
-        ModelAndView modelAndView = new ModelAndView("vet/list");
-        User user = userService.getByUsername(command.getUsername());
-        List<Pet> pets = petService.getPetsByUser(user);
+        var modelAndView = new ModelAndView("vet/list");
+        var user = userService.getByUsername(command.getUsername());
+        var pets = petService.getPetsByUser(user);
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);

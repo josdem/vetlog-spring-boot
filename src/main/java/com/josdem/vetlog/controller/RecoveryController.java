@@ -17,7 +17,6 @@ limitations under the License.
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.ChangePasswordCommand;
-import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.RecoveryPasswordCommand;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.RecoveryService;
@@ -67,7 +66,7 @@ public class RecoveryController {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("recovery/recoveryPassword");
         }
-        ModelAndView modelAndView = new ModelAndView(LOGIN_VIEW);
+        var modelAndView = new ModelAndView(LOGIN_VIEW);
         modelAndView.addObject("message", localeService.getMessage("recovery.email.sent", request));
         recoveryService.generateRegistrationCodeForEmail(command.getEmail());
         return modelAndView;
@@ -76,8 +75,8 @@ public class RecoveryController {
     @GetMapping(value = "/password")
     public ModelAndView recoveryPassword() {
         log.info("Calling recovery password");
-        ModelAndView modelAndView = new ModelAndView("recovery/recoveryPassword");
-        Command recoveryPasswordCommand = new RecoveryPasswordCommand();
+        var modelAndView = new ModelAndView("recovery/recoveryPassword");
+        var recoveryPasswordCommand = new RecoveryPasswordCommand();
         modelAndView.addObject("recoveryPasswordCommand", recoveryPasswordCommand);
         return modelAndView;
     }
@@ -85,12 +84,12 @@ public class RecoveryController {
     @GetMapping(value = "/forgot/{token}")
     public ModelAndView changePassword(@PathVariable String token, HttpServletRequest request) {
         log.info("Calling change password");
-        ModelAndView modelAndView = new ModelAndView("recovery/changePassword");
+        var modelAndView = new ModelAndView("recovery/changePassword");
         boolean valid = recoveryService.validateToken(token);
         if (!valid) {
             modelAndView.addObject("message", localeService.getMessage("recovery.token.error", request));
         }
-        ChangePasswordCommand changePasswordCommand = new ChangePasswordCommand();
+        var changePasswordCommand = new ChangePasswordCommand();
         changePasswordCommand.setToken(token);
         modelAndView.addObject("changePasswordCommand", changePasswordCommand);
         return modelAndView;
@@ -103,7 +102,7 @@ public class RecoveryController {
         if (bindingResult.hasErrors()) {
             return new ModelAndView("recovery/changePassword");
         }
-        ModelAndView modelAndView = new ModelAndView(LOGIN_VIEW);
+        var modelAndView = new ModelAndView(LOGIN_VIEW);
         modelAndView.addObject("change", localeService.getMessage("recovery.password.changed", request));
         recoveryService.changePassword(command);
         return modelAndView;

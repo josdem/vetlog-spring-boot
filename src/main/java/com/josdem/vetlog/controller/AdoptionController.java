@@ -18,12 +18,10 @@ package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.AdoptionCommand;
 import com.josdem.vetlog.enums.PetStatus;
-import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.AdoptionService;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.validator.AdoptionValidator;
 import jakarta.validation.Valid;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,8 +58,7 @@ public class AdoptionController {
     @GetMapping(value = "/descriptionForAdoption")
     public ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand) {
         log.info("Adding description to pet with uuid: {}", adoptionCommand.getUuid());
-        ModelAndView modelAndView = new ModelAndView();
-        return fillPetAndAdoptionCommand(modelAndView, adoptionCommand);
+        return fillPetAndAdoptionCommand(new ModelAndView(), adoptionCommand);
     }
 
     @PostMapping(value = "/save")
@@ -73,15 +70,15 @@ public class AdoptionController {
             return modelAndView;
         }
         adoptionService.save(adoptionCommand);
-        List<Pet> pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION);
-        ModelAndView modelAndView = new ModelAndView("pet/listForAdoption");
+        var pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION);
+        var modelAndView = new ModelAndView("pet/listForAdoption");
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         return modelAndView;
     }
 
     private ModelAndView fillPetAndAdoptionCommand(ModelAndView modelAndView, AdoptionCommand adoptionCommand) {
-        Pet pet = petService.getPetByUuid(adoptionCommand.getUuid());
+        var pet = petService.getPetByUuid(adoptionCommand.getUuid());
         modelAndView.addObject("pet", pet);
         modelAndView.addObject("adoptionCommand", adoptionCommand);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
