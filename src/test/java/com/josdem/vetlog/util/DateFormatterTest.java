@@ -25,22 +25,31 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 @Slf4j
 @SpringBootTest
 class DateFormatterTest {
 
+    public static final String ES = "es";
+
     @Autowired
     private DateFormatter dateFormatter;
+
+    private final Locale currentUserLocale = LocaleContextHolder.getLocale();
 
     @Test
     @DisplayName("Formatting a date")
     void shouldFormatADate() {
         var date = LocalDateTime.parse("2021-11-17T10:15:00");
 
-        var formattedDate = dateFormatter.formatToDate(date, Locale.ENGLISH);
+        var formattedDate = dateFormatter.formatToDate(date, currentUserLocale);
 
-        assertEquals("11/17/2021", formattedDate);
+        if (currentUserLocale.getLanguage().equals(ES)) {
+            assertEquals("17/11/2021", formattedDate);
+        } else {
+            assertEquals("11/17/2021", formattedDate);
+        }
     }
 
     @Test
@@ -48,15 +57,19 @@ class DateFormatterTest {
     void shouldFormatOldDate() {
         var date = LocalDateTime.parse("1999-08-18T10:14:00");
 
-        var formattedDate = dateFormatter.formatToDate(date, Locale.ENGLISH);
+        var formattedDate = dateFormatter.formatToDate(date, currentUserLocale);
 
-        assertEquals("08/18/1999", formattedDate);
+        if (currentUserLocale.getLanguage().equals(ES)) {
+            assertEquals("18/08/1999", formattedDate);
+        } else {
+            assertEquals("08/18/1999", formattedDate);
+        }
     }
 
     @Test
     @DisplayName("Formatting date for ES locale")
     void shouldFormatDateForEs() {
-        var locale = Locale.of("es", "ES");
+        var locale = Locale.of(ES, "ES");
         var date = LocalDateTime.parse("1999-08-18T10:14:00");
 
         var formattedDate = dateFormatter.formatToDate(date, locale);
