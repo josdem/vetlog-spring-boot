@@ -24,6 +24,9 @@
                     <li>
                         <a class="page-scroll" th:href="@{/pet/giveForAdoption}"><p th:text="#{adoption.name}"/></a>
                     </li>
+                    <li>
+                        <a class="page-scroll" th:href="@{/pet/create}"><p th:text="#{pet.view.create.title}"/></a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -42,6 +45,9 @@
                     </li>
                     <li sec:authorize="hasAuthority('ADMIN')">
                         <a class="page-scroll" th:href="@{/vet/form}"><p th:text="#{vet.list}"/></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" th:href="@{/pet/create}"><p th:text="#{pet.view.create.title}"/></a>
                     </li>
                 </ul>
             </div>
