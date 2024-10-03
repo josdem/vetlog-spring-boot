@@ -22,6 +22,7 @@ import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.repository.BreedRepository;
+import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.util.UuidGenerator;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -33,6 +34,7 @@ import org.springframework.stereotype.Component;
 public class PetBinder {
 
     private final BreedRepository breedRepository;
+    private final VaccinationRepository vaccinationRepository;
 
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
@@ -71,6 +73,7 @@ public class PetBinder {
         command.setBreed(pet.getBreed().getId());
         command.setUser(pet.getUser().getId());
         command.setType(pet.getBreed().getType());
+        command.setVaccines(vaccinationRepository.findAllByPet(pet));
         return command;
     }
 }

@@ -92,6 +92,7 @@ public class PetController {
         var pet = petService.getPetByUuid(uuid);
         var modelAndView = new ModelAndView();
         final PetCommand petCommand = petBinder.bindPet(pet);
+        log.info("Pet command vaccines: {}", petCommand.getVaccines());
         final User adopter = pet.getAdopter();
         if (adopter != null) {
             petCommand.setAdopter(pet.getAdopter().getId());

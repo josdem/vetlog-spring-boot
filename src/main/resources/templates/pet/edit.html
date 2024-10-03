@@ -86,6 +86,20 @@
                                    placeholder="vaccinated" id='vaccinated'/>
                             <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
                             <br/>
+                            <table th:if="${!petCommand.vaccines.isEmpty()}">
+                                <thead>
+                                <tr>
+                                    <th th:text="#{pet.table.header.vaccines}"></th>
+                                    <th th:text="#{pet.table.header.status}"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="vaccination : ${petCommand.vaccines}">
+                                    <td th:text="${vaccination.name}"></td>
+                                    <td th:text="${vaccination.status}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
                             <br/>
                             <div sec:authorize="hasAuthority('ADMIN')">
                                 <label for="status"><h4 th:text="#{pet.status}"/></label>
