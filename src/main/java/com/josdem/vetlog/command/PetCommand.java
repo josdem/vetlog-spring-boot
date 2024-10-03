@@ -18,7 +18,6 @@ import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.model.PetImage;
 import com.josdem.vetlog.model.Vaccination;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

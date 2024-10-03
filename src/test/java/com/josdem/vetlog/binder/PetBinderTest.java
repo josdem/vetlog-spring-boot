@@ -31,9 +31,12 @@ import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.PetImage;
 import com.josdem.vetlog.model.User;
+import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.BreedRepository;
+import com.josdem.vetlog.repository.VaccinationRepository;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -52,18 +55,26 @@ class PetBinderTest {
     @Mock
     private BreedRepository breedRepository;
 
+    @Mock
+    private VaccinationRepository vaccinationRepository;
+
+    private final List<Vaccination> vaccines = List.of(new Vaccination());
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        petBinder = new PetBinder(breedRepository);
+        petBinder = new PetBinder(breedRepository, vaccinationRepository);
     }
 
     @Test
     @DisplayName("binding a pet")
     void shouldBindPet(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
+
         var breed = getBreed();
         var pet = getPet(breed);
+
+        when(vaccinationRepository.findAllByPet(pet)).thenReturn(vaccines);
 
         var result = petBinder.bindPet(pet);
 
@@ -75,6 +86,7 @@ class PetBinderTest {
         assertTrue(result.getSterilized());
         assertTrue(result.getVaccinated());
         assertFalse(result.getImages().isEmpty());
+        assertFalse(result.getVaccines().isEmpty());
         assertEquals(5L, result.getBreed());
         assertEquals(2L, result.getUser());
         assertEquals(PetType.CAT, result.getType());
@@ -127,7 +139,7 @@ class PetBinderTest {
         pet.setDewormed(true);
         pet.setSterilized(true);
         pet.setVaccinated(true);
-        pet.setImages(Arrays.asList(new PetImage()));
+        pet.setImages(List.of(new PetImage()));
         pet.setBreed(breed);
         pet.setBirthDate(LocalDateTime.of(2021, 01, 17, 0, 0, 0));
         pet.setUser(getUser());
