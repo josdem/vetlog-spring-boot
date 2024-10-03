@@ -38,5 +38,4 @@ public enum VaccinationStatus {
         }
         return null;
     }
-
 }

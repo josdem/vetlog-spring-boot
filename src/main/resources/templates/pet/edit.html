@@ -99,7 +99,7 @@
                                     <td>
                                         <select id="vaccinationStatus" name="vaccinationStatus" class="form-control">
                                             <option th:each=" vaccinationStatus : ${T(com.josdem.vetlog.enums.VaccinationStatus).values()}"
-                                                    th:value="${vaccinationStatus}" th:text="${vaccination.status}"/>
+                                                    th:value="${vaccinationStatus}" th:text="${vaccinationStatus.value}"/>
                                         </select>
                                     </td>
                                 </tr>
