@@ -21,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.command.PetCommand;
@@ -34,6 +35,7 @@ import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -58,7 +60,9 @@ class PetBinderTest {
     @Mock
     private VaccinationRepository vaccinationRepository;
 
-    private final List<Vaccination> vaccines = List.of(new Vaccination());
+    private final Vaccination vaccination = new Vaccination();
+
+    private final List<Vaccination> vaccines = List.of(vaccination);
 
     @BeforeEach
     void setup() {
@@ -106,6 +110,7 @@ class PetBinderTest {
         petCommand.setVaccinated(true);
         petCommand.setImages(Arrays.asList(new PetImage()));
         petCommand.setBreed(1L);
+        petCommand.setVaccines(vaccines);
 
         var breed = getBreed();
         var optionalBreed = Optional.of(breed);
@@ -119,6 +124,9 @@ class PetBinderTest {
         assertEquals(PetStatus.IN_ADOPTION, result.getStatus());
         assertNotNull(result.getImages());
         assertEquals(breed, result.getBreed());
+
+        verify(vaccinationRepository).save(vaccination);
+        assertEquals(LocalDate.now(), vaccination.getDate());
     }
 
     @Test
