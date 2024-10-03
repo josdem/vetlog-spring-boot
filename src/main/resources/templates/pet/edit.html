@@ -89,15 +89,16 @@
                             <table th:if="${!petCommand.vaccines.isEmpty()}">
                                 <thead>
                                 <tr>
-                                    <th th:text="#{pet.table.header.vaccines}"></th>
-                                    <th th:text="#{pet.table.header.status}"></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <label for="vaccines"><h4 th:text="#{pet.vaccines}"/></label>
                                 <tr th:each="vaccination, itemStat : *{vaccines}">
                                     <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].id}"/></td>
                                     <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].pet}"/></td>
-                                    <td><input th:field="*{vaccines[__${itemStat.index}__].name}"/></td>
+                                    <td><input type="text" th:field="*{vaccines[__${itemStat.index}__].name}" readonly/></td>
                                     <td>
                                         <select th:field="*{vaccines[__${itemStat.index}__].status}">
                                             <option th:each="status : ${T(com.josdem.vetlog.enums.VaccinationStatus).values()}"
