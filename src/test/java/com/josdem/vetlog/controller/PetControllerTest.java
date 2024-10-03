@@ -167,6 +167,7 @@ class PetControllerTest {
     }
 
     private void registerPet() throws Exception {
+
         mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
                         .file(image)
                         .with(csrf())
