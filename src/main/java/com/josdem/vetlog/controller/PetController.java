@@ -107,7 +107,7 @@ public class PetController {
     @PostMapping(value = "/update")
     public ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
-        log.info("Updating pet: {}", petCommand);
+        log.info("Updating pet: {}", petCommand.getName());
         var modelAndView = new ModelAndView("pet/edit");
         if (bindingResult.hasErrors()) {
             modelAndView.addObject(PET_COMMAND, petCommand);
