@@ -24,6 +24,7 @@ import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.util.UuidGenerator;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -52,6 +53,10 @@ public class PetBinder {
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
         pet.setVaccines(petCommand.getVaccines());
+        petCommand.getVaccines().forEach(vaccine -> {
+            vaccine.setDate(LocalDate.now());
+            vaccinationRepository.save(vaccine);
+        });
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
         if (breed.isEmpty()) {
             throw new BusinessException("Breed was not found for pet: " + pet.getName());

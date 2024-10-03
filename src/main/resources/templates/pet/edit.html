@@ -95,7 +95,9 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="vaccination, itemStat : *{vaccines}">
-                                    <td><input th:field="*{vaccines[__${itemStat.index}__].name}" disabled /></td>
+                                    <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].id}"/></td>
+                                    <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].pet}"/></td>
+                                    <td><input th:field="*{vaccines[__${itemStat.index}__].name}"/></td>
                                     <td>
                                         <select th:field="*{vaccines[__${itemStat.index}__].status}">
                                             <option th:each="status : ${T(com.josdem.vetlog.enums.VaccinationStatus).values()}"
