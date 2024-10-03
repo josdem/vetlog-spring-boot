@@ -18,7 +18,7 @@
                 </div>
                 <div class="caption" align="center">
                     <h3 th:text="${pet.name}"></h3>
-                    <p th:text="${pet.birthDate}"/>
+                    <p th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                     <p th:text="${pet.breed.name}"/>
                     <p th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                     <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
