@@ -17,6 +17,7 @@ package com.josdem.vetlog.command;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.model.PetImage;
+import com.josdem.vetlog.model.Vaccination;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -65,4 +66,6 @@ public class PetCommand implements Command {
     private transient MultipartFile image;
 
     private transient List<PetImage> images = new ArrayList<>();
+
+    private transient List<Vaccination> vaccines = new ArrayList<>();
 }

@@ -17,6 +17,25 @@ limitations under the License.
 package com.josdem.vetlog.enums;
 
 public enum VaccinationStatus {
-    PENDING,
-    APPLIED
+    PENDING("Pending"),
+    APPLIED("Applied");
+
+    private final String value;
+
+    VaccinationStatus(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public static VaccinationStatus getVaccinationStatusByValue(String value) {
+        for (VaccinationStatus status : VaccinationStatus.values()) {
+            if (value.equals(status.value)) {
+                return status;
+            }
+        }
+        return null;
+    }
 }

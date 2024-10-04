@@ -22,7 +22,9 @@ import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.repository.BreedRepository;
+import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.util.UuidGenerator;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +35,7 @@ import org.springframework.stereotype.Component;
 public class PetBinder {
 
     private final BreedRepository breedRepository;
+    private final VaccinationRepository vaccinationRepository;
 
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
@@ -49,8 +52,13 @@ public class PetBinder {
         pet.setVaccinated(petCommand.getVaccinated());
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
+        pet.setVaccines(petCommand.getVaccines());
+        petCommand.getVaccines().forEach(vaccine -> {
+            vaccine.setDate(LocalDate.now());
+            vaccinationRepository.save(vaccine);
+        });
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
-        if (!breed.isPresent()) {
+        if (breed.isEmpty()) {
             throw new BusinessException("Breed was not found for pet: " + pet.getName());
         }
         pet.setBreed(breed.get());
@@ -71,6 +79,7 @@ public class PetBinder {
         command.setBreed(pet.getBreed().getId());
         command.setUser(pet.getUser().getId());
         command.setType(pet.getBreed().getType());
+        command.setVaccines(vaccinationRepository.findAllByPet(pet));
         return command;
     }
 }
