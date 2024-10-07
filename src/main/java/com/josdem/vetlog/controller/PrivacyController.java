@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PrivacyController {
 
     @RequestMapping("/show")
-    public String index(){
+    public String index() {
         log.info("Showing privacy page");
         return "privacy/show";
     }
-
 }
