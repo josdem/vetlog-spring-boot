@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                                 "/recovery/**",
                                 "/breed/list",
                                 "/pet/listForAdoption",
-                                "/service/list")
+                                "/privacy/show")
                         .permitAll()
                         .anyRequest()
                         .authenticated())
