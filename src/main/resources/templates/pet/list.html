@@ -76,7 +76,7 @@
                                     <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
                                 </ul>
                             </div>
-                            <table border="1" th:if="${!pet.vaccines.isEmpty()}">
+                            <table th:if="${!pet.vaccines.isEmpty()}">
                                 <thead>
                                     <tr>
                                         <th th:text="#{pet.table.header.vaccines}"></th>
