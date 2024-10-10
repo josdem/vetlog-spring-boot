@@ -75,21 +75,21 @@
                                     <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
                                     <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
                                 </ul>
-                            </div>
-                            <table th:if="${!pet.vaccines.isEmpty()}">
-                                <thead>
+                                <table th:if="${!pet.vaccines.isEmpty()}">
+                                    <thead>
                                     <tr>
                                         <th th:text="#{pet.table.header.vaccines}"></th>
                                         <th th:text="#{pet.table.header.status}"></th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="vaccination : ${pet.vaccines}">
-                                    <td th:text="${vaccination.name}"></td>
-                                    <td th:text="${vaccination.status}"></td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="vaccination : ${pet.vaccines}">
+                                        <td th:text="${vaccination.name}"></td>
+                                        <td th:text="${vaccination.status}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <br/>
                         <center>
