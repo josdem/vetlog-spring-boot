@@ -65,9 +65,9 @@
                         <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${defaultImage}}"/>
                     </div>
                     <div class="caption">
-                        <h3 th:text="${pet.name}"></h3>
+                        <h3 style="text-align:center" th:text="${pet.name}"></h3>
                         <div class="pet-info-container">
-                            <div>
+                            <div class="col-lg-4 col-lg-offset-4">
                                 <ul>
                                     <li th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                                     <li th:text="${pet.breed.name}"/>
