@@ -19,6 +19,7 @@ package com.josdem.vetlog.controller;
 import com.josdem.vetlog.command.UsernameCommand;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
+import com.josdem.vetlog.service.VaccinationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +38,7 @@ public class VetController {
 
     private final UserService userService;
     private final PetService petService;
+    private final VaccinationService vaccinationService;
 
     @Value("${gcpUrl}")
     private String gcpUrl;
@@ -61,6 +63,7 @@ public class VetController {
         var modelAndView = new ModelAndView("vet/list");
         var user = userService.getByUsername(command.getUsername());
         var pets = petService.getPetsByUser(user);
+        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinationsByPet(pet)));
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
