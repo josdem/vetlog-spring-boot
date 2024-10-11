@@ -64,8 +64,22 @@
                             <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                             <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
                             <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
+                        <br/>
+                        <table th:if="${!pet.vaccines.isEmpty()}">
+                            <thead>
+                            <tr>
+                                <th th:text="#{pet.table.header.vaccines}"></th>
+                                <th th:text="#{pet.table.header.status}"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="vaccination : ${pet.vaccines}">
+                                <td th:text="${vaccination.name}"></td>
+                                <td th:text="${vaccination.status}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
                         </ul>
-                        </p>
                         <br/>
                         <center>
                             <a th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-success">
