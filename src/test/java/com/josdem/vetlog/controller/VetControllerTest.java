@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,4 +50,14 @@ class VetControllerTest {
                 .andExpect(model().attributeExists("usernameCommand"))
                 .andExpect(view().name("vet/form"));
     }
+
+    @Test
+    @Transactional
+    @DisplayName("searching by user")
+    @WithMockUser(username = "admin", password = "12345678", roles = "ADMIN")
+    void shouldSearchPetsByUser(TestInfo testInfo){
+        log.info("Running: {}", testInfo.getDisplayName());
+        
+    }
+
 }
