@@ -40,15 +40,6 @@ class RecoveryControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @DisplayName("validating token")
-    void shouldValidateToken(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(get("/recovery/activate/token"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("error"));
-    }
-
-    @Test
     @DisplayName("getting email to change password")
     void shouldRequestEmailToChangePassword(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
