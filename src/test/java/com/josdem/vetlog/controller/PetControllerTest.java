@@ -166,6 +166,33 @@ class PetControllerTest {
                 .andExpect(view().name("pet/giveForAdoption"));
     }
 
+    @Test
+    @DisplayName("showing create pet form")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldShowCreatePetForm(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+        mockMvc.perform(get("/pet/create"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("petCommand"))
+                .andExpect(model().attributeExists("breeds"))
+                .andExpect(model().attributeExists("breedsByTypeUrl"))
+                .andExpect(view().name("pet/create"));
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("not deleting a pet due to is in adoption")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldShowDeletePetForm(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+
+        registerPet();
+
+        mockMvc.perform(get("/pet/delete").param("uuid", PET_UUID))
+                .andExpect(status().isOk())
+                .andExpect(view().name("error"));
+    }
+
     private void registerPet() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
@@ -182,19 +209,6 @@ class PetControllerTest {
                         .param("status", PetStatus.IN_ADOPTION.toString())
                         .param("type", PetType.DOG.toString()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("pet/create"));
-    }
-
-    @Test
-    @DisplayName("showing create pet form")
-    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldShowCreatePetForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(get("/pet/create"))
-                .andExpect(status().isOk())
-                .andExpect(model().attributeExists("petCommand"))
-                .andExpect(model().attributeExists("breeds"))
-                .andExpect(model().attributeExists("breedsByTypeUrl"))
                 .andExpect(view().name("pet/create"));
     }
 }
