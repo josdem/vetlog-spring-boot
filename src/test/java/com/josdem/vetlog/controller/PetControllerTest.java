@@ -184,4 +184,17 @@ class PetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("pet/create"));
     }
+
+    @Test
+    @DisplayName("showing create pet form")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldShowCreatePetForm(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+        mockMvc.perform(get("/pet/create"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("petCommand"))
+                .andExpect(model().attributeExists("breeds"))
+                .andExpect(model().attributeExists("breedsByTypeUrl"))
+                .andExpect(view().name("pet/create"));
+    }
 }
