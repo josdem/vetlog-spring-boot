@@ -115,6 +115,22 @@ class PetLogControllerTest {
                 .andExpect(view().name("error"));
     }
 
+    @Test
+    @Transactional
+    @DisplayName("listing pet logs")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldListPetLogs(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+
+        registerPet();
+
+        mockMvc.perform(get("/petlog/list").param("uuid", PET_UUID))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("petLogs"))
+                .andExpect(model().attributeExists("uuid"))
+                .andExpect(view().name("petlog/list"));
+    }
+
     private void registerPet() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
                         .file(image)
