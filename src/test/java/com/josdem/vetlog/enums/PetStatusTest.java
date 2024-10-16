@@ -14,15 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
-package com.josdem.vetlog;
+package com.josdem.vetlog.enums;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootApplication
-public class VetlogApplication {
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
-    public static void main(String[] args) {
-        SpringApplication.run(VetlogApplication.class, args);
+class PetStatusTest {
+
+    private final PetStatus petStatus = PetStatus.OWNED;
+
+    @Test
+    @DisplayName("returning pet status")
+    void shouldReturnPetStatus() {
+        assertEquals("OWNED", petStatus.name());
+        assertEquals("Owned", petStatus.getValue());
+        assertEquals(PetStatus.OWNED, PetStatus.getPetStatusByValue("Owned"));
     }
 }
