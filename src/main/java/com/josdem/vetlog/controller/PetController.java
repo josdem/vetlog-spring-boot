@@ -186,7 +186,7 @@ public class PetController {
         var user = userService.getCurrentUser();
         var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> {
-            final List<Vaccination> pendingVaccines = vaccinationService.getVaccinationsByPet(pet).stream()
+            final var pendingVaccines = vaccinationService.getVaccinationsByPet(pet).stream()
                     .filter(vaccination -> vaccination.getStatus().equals(VaccinationStatus.PENDING))
                     .toList();
             pet.setVaccines(pendingVaccines);
