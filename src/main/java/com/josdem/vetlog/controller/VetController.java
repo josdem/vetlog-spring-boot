@@ -64,9 +64,7 @@ public class VetController {
         var modelAndView = new ModelAndView("vet/list");
         var user = userService.getByUsername(command.getUsername());
         var pets = petService.getPetsByUser(user);
-        pets.forEach(pet -> {
-            pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING));
-        });
+        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
