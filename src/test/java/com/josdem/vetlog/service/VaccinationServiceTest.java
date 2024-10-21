@@ -16,11 +16,13 @@ limitations under the License.
 
 package com.josdem.vetlog.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
@@ -36,6 +38,7 @@ import com.josdem.vetlog.strategy.vaccination.impl.DogVaccinationStrategy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,22 +58,16 @@ class VaccinationServiceTest {
     @Mock
     private VaccinationRepository vaccinationRepository;
 
-    private DogVaccinationStrategy dogVaccinationStrategy;
-
-    private CatVaccinationStrategy catVaccinationStrategy;
-
-    private Map<PetType, VaccinationStrategy> vaccinationStrategies;
-
     private final Pet pet = new Pet();
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
 
-        dogVaccinationStrategy = new DogVaccinationStrategy(vaccinationRepository);
-        catVaccinationStrategy = new CatVaccinationStrategy(vaccinationRepository);
+        DogVaccinationStrategy dogVaccinationStrategy = new DogVaccinationStrategy(vaccinationRepository);
+        CatVaccinationStrategy catVaccinationStrategy = new CatVaccinationStrategy(vaccinationRepository);
 
-        vaccinationStrategies = new HashMap<>();
+        Map<PetType, VaccinationStrategy> vaccinationStrategies = new HashMap<>();
         vaccinationStrategies.put(PetType.DOG, dogVaccinationStrategy);
         vaccinationStrategies.put(PetType.CAT, catVaccinationStrategy);
 
@@ -107,5 +104,17 @@ class VaccinationServiceTest {
         vaccinationService.save(pet);
         verify(vaccinationRepository, never())
                 .save(new Vaccination(null, any(), LocalDate.now(), VaccinationStatus.PENDING, pet));
+    }
+
+    @Test
+    @DisplayName("getting vaccines in Pending status")
+    void shouldGetVaccinesInPendingStatus(TestInfo testInfo) {
+        log.info("Test: {}", testInfo.getDisplayName());
+        when(vaccinationRepository.findAllByPet(pet))
+                .thenReturn(List.of(
+                        new Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.PENDING, pet),
+                        new Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.APPLIED, pet)));
+        final var vaccinesInPendingStatus = vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING);
+        assertEquals(1, vaccinesInPendingStatus.size());
     }
 }
