@@ -33,7 +33,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -187,7 +186,9 @@ public class PetController {
         var user = userService.getCurrentUser();
         var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> {
-            final List<Vaccination> pendingVaccines = vaccinationService.getVaccinationsByPet(pet).stream().filter(vaccination -> vaccination.getStatus().equals(VaccinationStatus.PENDING)).toList();
+            final List<Vaccination> pendingVaccines = vaccinationService.getVaccinationsByPet(pet).stream()
+                    .filter(vaccination -> vaccination.getStatus().equals(VaccinationStatus.PENDING))
+                    .toList();
             pet.setVaccines(pendingVaccines);
         });
         modelAndView.addObject("pets", pets);

@@ -17,10 +17,13 @@ limitations under the License.
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.UsernameCommand;
+import com.josdem.vetlog.enums.VaccinationStatus;
+import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.service.VaccinationService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,7 +66,12 @@ public class VetController {
         var modelAndView = new ModelAndView("vet/list");
         var user = userService.getByUsername(command.getUsername());
         var pets = petService.getPetsByUser(user);
-        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinationsByPet(pet)));
+        pets.forEach(pet -> {
+            final List<Vaccination> pendingVaccines = vaccinationService.getVaccinationsByPet(pet).stream()
+                    .filter(vaccination -> vaccination.getStatus().equals(VaccinationStatus.PENDING))
+                    .toList();
+            pet.setVaccines(pendingVaccines);
+        });
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
