@@ -20,7 +20,9 @@ import com.josdem.vetlog.binder.PetBinder;
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
+import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.User;
+import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.service.BreedService;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.PetService;
@@ -30,6 +32,8 @@ import com.josdem.vetlog.validator.PetValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -182,7 +186,10 @@ public class PetController {
     private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView) {
         var user = userService.getCurrentUser();
         var pets = petService.getPetsByUser(user);
-        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinationsByPet(pet)));
+        pets.forEach(pet -> {
+            final List<Vaccination> pendingVaccines = vaccinationService.getVaccinationsByPet(pet).stream().filter(vaccination -> vaccination.getStatus().equals(VaccinationStatus.PENDING)).toList();
+            pet.setVaccines(pendingVaccines);
+        });
         modelAndView.addObject("pets", pets);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
