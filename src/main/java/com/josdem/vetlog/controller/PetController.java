@@ -20,6 +20,7 @@ import com.josdem.vetlog.binder.PetBinder;
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
+import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.BreedService;
 import com.josdem.vetlog.service.LocaleService;
@@ -182,7 +183,7 @@ public class PetController {
     private ModelAndView fillPetAndImageUrl(ModelAndView modelAndView) {
         var user = userService.getCurrentUser();
         var pets = petService.getPetsByUser(user);
-        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinationsByPet(pet)));
+        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);

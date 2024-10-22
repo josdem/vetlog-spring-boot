@@ -17,6 +17,7 @@ limitations under the License.
 package com.josdem.vetlog.service.impl;
 
 import com.josdem.vetlog.enums.PetType;
+import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
@@ -53,5 +54,12 @@ public class VaccinationServiceImpl implements VaccinationService {
     @Override
     public List<Vaccination> getVaccinationsByPet(Pet pet) {
         return vaccinationRepository.findAllByPet(pet);
+    }
+
+    @Override
+    public List<Vaccination> getVaccinesByStatus(Pet pet, VaccinationStatus status) {
+        return getVaccinationsByPet(pet).stream()
+                .filter(vaccination -> vaccination.getStatus().equals(status))
+                .toList();
     }
 }

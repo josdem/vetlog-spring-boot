@@ -17,6 +17,7 @@ limitations under the License.
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.UsernameCommand;
+import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.service.VaccinationService;
@@ -63,7 +64,7 @@ public class VetController {
         var modelAndView = new ModelAndView("vet/list");
         var user = userService.getByUsername(command.getUsername());
         var pets = petService.getPetsByUser(user);
-        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinationsByPet(pet)));
+        pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
