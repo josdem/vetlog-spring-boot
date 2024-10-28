@@ -18,6 +18,7 @@ package com.josdem.vetlog.binder;
 
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.PetCommand;
+import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
@@ -79,7 +80,10 @@ public class PetBinder {
         command.setBreed(pet.getBreed().getId());
         command.setUser(pet.getUser().getId());
         command.setType(pet.getBreed().getType());
-        command.setVaccines(vaccinationRepository.findAllByPet(pet));
+        var vaccines = vaccinationRepository.findAllByPet(pet).stream()
+                .filter(vaccine -> vaccine.getStatus().equals(VaccinationStatus.PENDING))
+                .toList();
+        command.setVaccines(vaccines);
         return command;
     }
 }
