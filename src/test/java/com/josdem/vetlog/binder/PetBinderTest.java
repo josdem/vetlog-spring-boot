@@ -21,12 +21,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
+import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
@@ -60,9 +63,9 @@ class PetBinderTest {
     @Mock
     private VaccinationRepository vaccinationRepository;
 
-    private final Vaccination vaccination = new Vaccination();
-
-    private final List<Vaccination> vaccines = List.of(vaccination);
+    private final List<Vaccination> vaccines = List.of(
+            new Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.APPLIED, null),
+            new Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.PENDING, null));
 
     @BeforeEach
     void setup() {
@@ -90,7 +93,7 @@ class PetBinderTest {
         assertTrue(result.getSterilized());
         assertTrue(result.getVaccinated());
         assertFalse(result.getImages().isEmpty());
-        assertFalse(result.getVaccines().isEmpty());
+        assertEquals(1, result.getVaccines().size());
         assertEquals(5L, result.getBreed());
         assertEquals(2L, result.getUser());
         assertEquals(PetType.CAT, result.getType());
@@ -125,8 +128,8 @@ class PetBinderTest {
         assertNotNull(result.getImages());
         assertEquals(breed, result.getBreed());
 
-        verify(vaccinationRepository).save(vaccination);
-        assertEquals(LocalDate.now(), vaccination.getDate());
+        verify(vaccinationRepository, times(2)).save(isA(Vaccination.class));
+        vaccines.forEach(vaccine -> assertEquals(LocalDate.now(), vaccine.getDate()));
     }
 
     @Test
