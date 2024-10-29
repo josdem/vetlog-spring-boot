@@ -114,8 +114,8 @@ public class PetServiceImpl implements PetService {
         if (pet.getStatus() == PetStatus.IN_ADOPTION) {
             throw new BusinessException(localeService.getMessage("pet.delete.error.inAdoption"));
         }
-        petRepository.delete(pet);
         vaccinationService.deleteVaccinesByPet(pet);
+        petRepository.delete(pet);
     }
 
     private void recoveryImages(PetCommand command) {
