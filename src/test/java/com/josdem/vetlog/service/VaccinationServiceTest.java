@@ -117,4 +117,12 @@ class VaccinationServiceTest {
         final var vaccinesInPendingStatus = vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING);
         assertEquals(1, vaccinesInPendingStatus.size());
     }
+
+    @Test
+    @DisplayName("deleting vaccines")
+    void shouldDeleteVaccines(TestInfo testInfo) {
+        log.info("Test: {}", testInfo.getDisplayName());
+        vaccinationService.deleteVaccinesByPet(pet);
+        verify(vaccinationRepository).deleteAllByPet(pet);
+    }
 }
