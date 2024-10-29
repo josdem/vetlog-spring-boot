@@ -52,6 +52,7 @@ public class PetController {
 
     public static final String PET_COMMAND = "petCommand";
     public static final String GCP_IMAGE_URL = "gcpImageUrl";
+    public static final String MESSAGE = "message";
 
     private final BreedService breedService;
     private final PetService petService;
@@ -115,7 +116,7 @@ public class PetController {
             return fillModelAndView(modelAndView);
         }
         petService.update(petCommand);
-        modelAndView.addObject("message", localeService.getMessage("pet.updated", request));
+        modelAndView.addObject(MESSAGE, localeService.getMessage("pet.updated", request));
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
@@ -132,7 +133,7 @@ public class PetController {
         }
         var user = userService.getCurrentUser();
         petService.save(petCommand, user);
-        modelAndView.addObject("message", localeService.getMessage("pet.created", request));
+        modelAndView.addObject(MESSAGE, localeService.getMessage("pet.created", request));
         petCommand = new PetCommand();
         modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
@@ -177,7 +178,7 @@ public class PetController {
         var pet = petService.getPetByUuid(uuid);
         petService.deletePetById(pet.getId());
         var modelAndView = new ModelAndView("pet/list");
-        modelAndView.addObject("message", localeService.getMessage("pet.deleted", request));
+        modelAndView.addObject(MESSAGE, localeService.getMessage("pet.deleted", request));
         return fillPetAndImageUrl(modelAndView);
     }
 
