@@ -115,6 +115,7 @@ public class PetServiceImpl implements PetService {
             throw new BusinessException(localeService.getMessage("pet.delete.error.inAdoption"));
         }
         petRepository.delete(pet);
+        vaccinationService.deleteVaccinesByPet(pet);
     }
 
     private void recoveryImages(PetCommand command) {
