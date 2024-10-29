@@ -26,4 +26,6 @@ public interface VaccinationRepository extends JpaRepository<Vaccination, Long> 
     Vaccination save(Vaccination vaccination);
 
     List<Vaccination> findAllByPet(Pet pet);
+
+    void deleteAllByPet(Pet pet);
 }
