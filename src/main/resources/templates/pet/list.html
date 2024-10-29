@@ -107,12 +107,12 @@
                             <a th:href="@{/pet/edit(uuid=${pet.uuid})}" class="btn btn-success">
                                 <p th:text="#{pet.edit}"/>
                             </a>
-                            <a class="btn btn-danger" data-toggle="modal" data-target="#flipFlop">
+                            <a class="btn btn-danger" data-toggle="modal" th:attr="data-target=${'#flipFlop'+pet.uuid}">
                                 <p th:text="#{pet.delete}"/>
                             </a>
                         </center>
                         <!-- The modal -->
-                        <div class="modal fade" id="flipFlop" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+                        <div class="modal fade" th:attr="id=${'flipFlop' + pet.uuid}" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
