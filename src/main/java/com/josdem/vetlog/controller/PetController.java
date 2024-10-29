@@ -172,11 +172,12 @@ public class PetController {
     }
 
     @GetMapping(value = "/delete")
-    public ModelAndView delete(@RequestParam("uuid") String uuid) {
+    public ModelAndView delete(@RequestParam("uuid") String uuid, HttpServletRequest request) {
         log.info("Deleting pet: {}", uuid);
         var pet = petService.getPetByUuid(uuid);
         petService.deletePetById(pet.getId());
         var modelAndView = new ModelAndView("pet/list");
+        modelAndView.addObject("message", localeService.getMessage("pet.deleted", request));
         return fillPetAndImageUrl(modelAndView);
     }
 

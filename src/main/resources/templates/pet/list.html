@@ -25,6 +25,7 @@
 <br/><br/>
 <div class="container">
     <div class="row">
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"/>
         <div th:if="${pets.isEmpty()}">
             <div align="center">
                 <p th:text="#{pet.list.empty}"/>
