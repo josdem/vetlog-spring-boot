@@ -62,4 +62,9 @@ public class VaccinationServiceImpl implements VaccinationService {
                 .filter(vaccination -> vaccination.getStatus().equals(status))
                 .toList();
     }
+
+    @Override
+    public void deleteVaccinesByPet(Pet pet) {
+        vaccinationRepository.deleteAllByPet(pet);
+    }
 }

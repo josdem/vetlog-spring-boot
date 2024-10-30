@@ -27,4 +27,6 @@ public interface VaccinationService {
     List<Vaccination> getVaccinationsByPet(Pet pet);
 
     List<Vaccination> getVaccinesByStatus(Pet pet, VaccinationStatus status);
+
+    void deleteVaccinesByPet(Pet pet);
 }

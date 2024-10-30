@@ -243,10 +243,11 @@ class PetServiceTest {
 
     @Test
     @DisplayName("deleting a pet")
-    void deletePetByIdSuccessufully(TestInfo testInfo) {
+    void shouldDeletePetById(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         when(petRepository.findById(1L)).thenReturn(Optional.of(pet));
         assertDoesNotThrow(() -> service.deletePetById(1L));
+        verify(vaccinationService).deleteVaccinesByPet(pet);
     }
 
     @Test

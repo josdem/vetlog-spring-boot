@@ -108,12 +108,13 @@ public class PetServiceImpl implements PetService {
         });
     }
 
-    @Override
+    @Transactional
     public void deletePetById(Long id) {
         var pet = petRepository.findById(id).orElseThrow(() -> new BusinessException(NO_PET_WAS_FOUND_WITH_ID + id));
         if (pet.getStatus() == PetStatus.IN_ADOPTION) {
             throw new BusinessException(localeService.getMessage("pet.delete.error.inAdoption"));
         }
+        vaccinationService.deleteVaccinesByPet(pet);
         petRepository.delete(pet);
     }
 
