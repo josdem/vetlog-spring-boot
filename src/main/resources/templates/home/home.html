@@ -77,7 +77,7 @@ background-color: #faf6e6;
                     <hr/>
                     <p th:text="#{home.list.adoption.description}"/>
                     <br/>
-                    <a th:href="@{/pet/listForAdoption}" class="page-scroll btn btn-primary"><p
+                    <a th:data-testid="listForAdoption" th:href="@{/pet/listForAdoption}" class="page-scroll btn btn-primary"><p
                             th:text="#{button.action}"/></a>
                 </div>
             </div>
