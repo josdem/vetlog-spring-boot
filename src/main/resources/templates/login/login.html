@@ -15,9 +15,9 @@
             <div class="portlet portlet-green">
                 <div class="portlet-body">
 
-                    <div th:if="${userAccountCreatedMessage}" class="alert alert-success" th:text="#{user.account.created}"/>
-                    <div th:if="${message}" class="alert alert-success" th:text="#{recovery.email.sent}"/>
-                    <div th:if="${change}" class="alert alert-success" th:text="#{recovery.password.changed}"/>
+                    <div th:data-testid="accountCreatedMessage" th:if="${userAccountCreatedMessage}" class="alert alert-success" th:text="#{user.account.created}"/>
+                    <div th:data-testid="recoveryPasswordMessage" th:if="${message}" class="alert alert-success" th:text="#{recovery.email.sent}"/>
+                    <div th:data-testid="passwordChangedMessage" th:if="${change}" class="alert alert-success" th:text="#{recovery.password.changed}"/>
                     <div th:if="${param.error}" class="alert alert-danger" th:text="#{login.error.message}"/>
 
                     <form th:action="@{/login}" method='POST' id='loginForm' class='cssform' autocomplete='off'>
