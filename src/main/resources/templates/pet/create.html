@@ -16,11 +16,7 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="portlet portlet-green">
                 <div class="portlet-body">
-                    <div th:if="${message}">
-                        <div align="center">
-                            <p style="color:blue;font-size:18px;" th:text="${message}"/>
-                        </div>
-                    </div>
+                    <div th:data-testid="petRegistered" th:if="${message}" class="alert alert-success" th:text="${message}"/>
                     <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"
                           class="form-horizontal" enctype="multipart/form-data">
                         <fieldset>
