@@ -47,7 +47,11 @@ public class PetBinder {
             pet.setUuid(petCommand.getUuid());
         }
         pet.setName(petCommand.getName());
-        pet.setBirthDate(LocalDateTime.parse(petCommand.getBirthDate()));
+        if (petCommand.getBirthDate().isEmpty()) {
+            pet.setBirthDate(LocalDateTime.now());
+        } else {
+            pet.setBirthDate(LocalDateTime.parse(petCommand.getBirthDate()));
+        }
         pet.setDewormed(petCommand.getDewormed());
         pet.setSterilized(petCommand.getSterilized());
         pet.setVaccinated(petCommand.getVaccinated());
