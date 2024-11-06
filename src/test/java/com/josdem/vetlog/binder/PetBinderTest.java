@@ -26,6 +26,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
@@ -103,10 +104,30 @@ class PetBinderTest {
     @DisplayName("binging a pet from command")
     void shouldBindPetFromCommand(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
+        var petCommand = setPetBinderExpectations();
+
+        petCommand.setBirthDate("2021-01-17T00:00");
+        var result = petBinder.bindPet(petCommand);
+
+        doPetBinderAssertions(result);
+    }
+
+    @Test
+    @DisplayName("binging a pet from command")
+    void shouldBindPetFromCommandWithoutBirthdate(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        var petCommand = setPetBinderExpectations();
+        petCommand.setBirthDate("");
+
+        var result = petBinder.bindPet(petCommand);
+
+        doPetBinderAssertions(result);
+    }
+
+    private PetCommand setPetBinderExpectations(){
         var petCommand = new PetCommand();
         petCommand.setId(2L);
         petCommand.setName("Marla");
-        petCommand.setBirthDate("2021-01-17T00:00");
         petCommand.setStatus(PetStatus.IN_ADOPTION);
         petCommand.setDewormed(true);
         petCommand.setSterilized(true);
@@ -114,19 +135,19 @@ class PetBinderTest {
         petCommand.setImages(Arrays.asList(new PetImage()));
         petCommand.setBreed(1L);
         petCommand.setVaccines(vaccines);
-
-        var breed = getBreed();
-        var optionalBreed = Optional.of(breed);
+        var optionalBreed = Optional.of(getBreed());
         when(breedRepository.findById(1L)).thenReturn(optionalBreed);
-        var result = petBinder.bindPet(petCommand);
+        return petCommand;
+    }
 
+    private void doPetBinderAssertions(Pet result){
         assertEquals(2L, result.getId());
         assertEquals(36, result.getUuid().length());
         assertEquals("Marla", result.getName());
         assertEquals(LocalDateTime.of(2021, 01, 17, 0, 0), result.getBirthDate());
         assertEquals(PetStatus.IN_ADOPTION, result.getStatus());
         assertNotNull(result.getImages());
-        assertEquals(breed, result.getBreed());
+        assertEquals(getBreed(), result.getBreed());
 
         verify(vaccinationRepository, times(2)).save(isA(Vaccination.class));
         vaccines.forEach(vaccine -> assertEquals(LocalDate.now(), vaccine.getDate()));
