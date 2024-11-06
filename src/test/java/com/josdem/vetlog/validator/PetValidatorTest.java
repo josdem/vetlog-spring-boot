@@ -45,6 +45,15 @@ class PetValidatorTest {
     }
 
     @Test
+    @DisplayName("validating empty birthdate")
+    void shouldValidateEmptyBirthdate(TestInfo testInfo) {
+        log.info("Running: {}", testInfo.getDisplayName());
+        var petCommand = getPetCommand("");
+        validator.validate(petCommand, errors);
+        verify(errors, never()).rejectValue(anyString(), anyString());
+    }
+
+    @Test
     @DisplayName("rejecting a birthdate")
     void shouldRejectBirthdate(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
