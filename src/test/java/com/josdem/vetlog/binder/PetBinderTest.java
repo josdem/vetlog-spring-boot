@@ -26,7 +26,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
@@ -110,10 +109,11 @@ class PetBinderTest {
         var result = petBinder.bindPet(petCommand);
 
         doPetBinderAssertions(result);
+        assertEquals(LocalDateTime.of(2021, 01, 17, 0, 0), result.getBirthDate());
     }
 
     @Test
-    @DisplayName("binging a pet from command")
+    @DisplayName("binging a pet from command even without birthdate")
     void shouldBindPetFromCommandWithoutBirthdate(TestInfo testInfo) {
         log.info("Running: {}", testInfo.getDisplayName());
         var petCommand = setPetBinderExpectations();
@@ -122,9 +122,11 @@ class PetBinderTest {
         var result = petBinder.bindPet(petCommand);
 
         doPetBinderAssertions(result);
+        long diff = LocalDateTime.now().getDayOfYear() - result.getBirthDate().getDayOfYear();
+        assertEquals(0L, diff);
     }
 
-    private PetCommand setPetBinderExpectations(){
+    private PetCommand setPetBinderExpectations() {
         var petCommand = new PetCommand();
         petCommand.setId(2L);
         petCommand.setName("Marla");
@@ -140,14 +142,13 @@ class PetBinderTest {
         return petCommand;
     }
 
-    private void doPetBinderAssertions(Pet result){
+    private void doPetBinderAssertions(Pet result) {
         assertEquals(2L, result.getId());
         assertEquals(36, result.getUuid().length());
         assertEquals("Marla", result.getName());
-        assertEquals(LocalDateTime.of(2021, 01, 17, 0, 0), result.getBirthDate());
         assertEquals(PetStatus.IN_ADOPTION, result.getStatus());
         assertNotNull(result.getImages());
-        assertEquals(getBreed(), result.getBreed());
+        assertEquals(getBreed().getId(), result.getBreed().getId());
 
         verify(vaccinationRepository, times(2)).save(isA(Vaccination.class));
         vaccines.forEach(vaccine -> assertEquals(LocalDate.now(), vaccine.getDate()));
