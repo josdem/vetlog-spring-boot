@@ -102,13 +102,13 @@
                         </div>
                         <br/>
                         <center>
-                            <a th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-primary">
+                            <a th:data-testid="petLogsButton" th:href="@{/petlog/list(uuid=${pet.uuid})}" class="btn btn-primary">
                                 <p th:text="#{petlog.list}"/>
                             </a>
-                            <a th:href="@{/pet/edit(uuid=${pet.uuid})}" class="btn btn-success">
+                            <a th:data-testid="petEditButton" th:href="@{/pet/edit(uuid=${pet.uuid})}" class="btn btn-success">
                                 <p th:text="#{pet.edit}"/>
                             </a>
-                            <a class="btn btn-danger" data-toggle="modal" th:attr="data-target=${'#flipFlop'+pet.uuid}">
+                            <a th:data-testid="petDeleteButton" class="btn btn-danger" data-toggle="modal" th:attr="data-target=${'#flipFlop'+pet.uuid}">
                                 <p th:text="#{pet.delete}"/>
                             </a>
                         </center>
@@ -126,7 +126,7 @@
                                         <p th:text="#{pet.delete.warning}"/>
                                     </div>
                                     <div class="modal-footer">
-                                        <a th:href="@{/pet/delete(uuid=${pet.uuid})}" class="btn btn-danger"><p th:text="#{pet.delete}"/></a>
+                                        <a th:data-testid="petDeleteModal" th:href="@{/pet/delete(uuid=${pet.uuid})}" class="btn btn-danger"><p th:text="#{pet.delete}"/></a>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal"><p th:text="#{pet.delete.close}"/></button>
                                     </div>
                                 </div>
