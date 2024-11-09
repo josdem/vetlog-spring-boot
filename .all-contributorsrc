@@ -124,6 +124,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "slusy",
+      "name": "Achal",
+      "avatar_url": "https://avatars.githubusercontent.com/u/106076516?v=4",
+      "profile": "https://slusy.vercel.app",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
