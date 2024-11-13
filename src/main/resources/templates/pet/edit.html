@@ -28,7 +28,7 @@
                         <fieldset>
                             <legend th:text="#{pet.edit}"/>
                             <label for="name"><h4 th:text="#{pet.name}"/></label>
-                            <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name"
+                            <input type="text" name='name' th:data-testid="petName" th:field="*{name}" class="form-control" placeholder="name"
                                    id='name'/>
                             <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
                             <br/>
@@ -64,25 +64,25 @@
                                 </div>
                             </div>
                             <br/>
-                            <label for="image"><h4 th:text="#{pet.image}"/></label>
+                            <label for="image"><h4 th:data-testid="petImage" th:text="#{pet.image}"/></label>
                             <input type="file" name="image"/>
                             <br/>
                             <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
-                            <input type="datetime-local" id="birthDate" name="birthDate" th:field="*{birthDate}">
+                            <input type="datetime-local" id="birthDate" name="birthDate" th:data-testid="petBirthdate" th:field="*{birthDate}">
                             <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
                             <br/>
                             <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
-                            <input type="checkbox" name='dewormed' th:field="*{dewormed}" class="form-control"
+                            <input type="checkbox" name='dewormed' th:data-testid="petDeworming" th:field="*{dewormed}" class="form-control"
                                    placeholder="dewormed" id='dewormed'/>
                             <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
                             <br/>
                             <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
-                            <input type="checkbox" name='sterilized' th:field="*{sterilized}" class="form-control"
+                            <input type="checkbox" name='sterilized' th:data-testid="petSterilized" th:field="*{sterilized}" class="form-control"
                                    placeholder="sterilized" id='sterilized'/>
                             <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
                             <br/>
                             <label for="vaccinated"><h4 th:text="#{pet.vaccinated}"/></label>
-                            <input type="checkbox" name='vaccinated' th:field="*{vaccinated}" class="form-control"
+                            <input type="checkbox" name='vaccinated' th:data-testid="petVaccinated" th:field="*{vaccinated}" class="form-control"
                                    placeholder="vaccinated" id='vaccinated'/>
                             <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
                             <br/>
@@ -113,21 +113,21 @@
                             <br/>
                             <div sec:authorize="hasAuthority('ADMIN')">
                                 <label for="status"><h4 th:text="#{pet.status}"/></label>
-                                <select id="statusSelector" name="status" th:field="*{status}" class="form-control">
+                                <select id="statusSelector" name="status" th:data-testid="petStatus" th:field="*{status}" class="form-control">
                                     <option th:each=" status : ${T(com.josdem.vetlog.enums.PetStatus).values()}"
                                         th:value="${status}" th:text="${status.value}" th:selected="(${status} == *{status})"/>
                                 </select>
                             <br/>
                             </div>
                             <label for="type"><h4 th:text="#{pet.type}"/></label>
-                            <select id="typeSelector" name="type" th:field="*{type}" class="form-control"
+                            <select id="typeSelector" name="type" th:data-testid="petType" th:field="*{type}" class="form-control"
                                     onchange="updateBreedType()">
                                 <option th:each=" type : ${T(com.josdem.vetlog.enums.PetType).values()}"
                                         th:value="${type}" th:text="${type.value}" th:selected="(${type} == *{type})"/>
                             </select>
                             <br/>
                             <label for="breed"><h4 th:text="#{pet.breed}"/></label>
-                            <select id="breedSelector" name="breed" class="form-control">
+                            <select id="breedSelector" name="breed" class="form-control" th:data-testid="petBreed">
                                 <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"
                                         th:selected="(${breed.id} == *{breed})"/>
                             </select>
