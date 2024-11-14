@@ -22,11 +22,11 @@
                           class="form-horizontal">
                         <fieldset>
                             <label for="username"><h4 th:text="#{vet.username}"/></label>
-                            <input type="text" name="username" class="form-control" placeholder="username"
+                            <input th:data-testid="usernameInput" type="text" name="username" class="form-control" placeholder="username"
                                    id='username'/>
                             <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
                             <br/><br/>
-                            <input type="submit" class="btn btn-primary btn-block"/>
+                            <input th:data-testid="submitButton" type="submit" class="btn btn-primary btn-block"/>
                         </fieldset>
                     </form>
                 </div>
