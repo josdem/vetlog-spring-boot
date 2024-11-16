@@ -56,14 +56,14 @@
                         <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${defaultImage}}"/>
                     </div>
                     <div class="caption">
-                        <h3 th:text="${pet.name}"></h3>
+                        <h3 th:data-testid="petName" th:text="${pet.name}"></h3>
                         <p>
                         <ul>
-                            <li th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
-                            <li th:text="${pet.breed.name}"/>
-                            <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
-                            <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
-                            <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
+                            <li th:data-testid="petBirthdate" th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
+                            <li th:data-testid="petBreed" th:text="${pet.breed.name}"/>
+                            <li th:data-testid="petDeworming" th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
+                            <li th:data-testid="petSterilized" th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
+                            <li th:data-testid="petVaccinated" th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
                         <br/>
                         <table th:if="${!pet.vaccines.isEmpty()}">
                             <thead>
