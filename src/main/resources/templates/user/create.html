@@ -41,28 +41,26 @@
                             <label for="username"><h4 th:text="#{login.username}"/></label>
                             <input th:data-testid="usernameInput" type="text" name='username' th:field="*{username}" class="form-control"
                                    placeholder="username" id='username'/>
-                            <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
+                            <label th:data-testid="usernameLabel" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
                             <br/>
                             <label for="password"><h4 th:text="#{login.password}"/></label>
                             <input th:data-testid="passwordInput" type="password" name='password' class="form-control" placeholder="password"
                                    id='password'/>
-                            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
+                            <label th:data-testid="passwordLabel" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
                             <br/>
                             <label for="passwordConfirmation"><h4 th:text="#{login.passwordConfirmation}"/></label>
                             <input th:data-testid="passwordConfirmationInput" type="password" name='passwordConfirmation' class="form-control"
                                    placeholder="password confirmation" id='passwordConfirmation'/>
-                            <label th:if="${#fields.hasErrors('passwordConfirmation')}"
-                                   th:errors="*{passwordConfirmation}"></label>
+                            <label th:data-testid="passwordConfirmation" th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}"></label>
                             <br/>
                             <label for="name"><h4 th:text="#{user.firstname}"/></label>
                             <input th:data-testid="nameInput" type="text" name='firstname' th:field="*{firstname}" class="form-control"
                                    placeholder="name" id='name'/>
-                            <label th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></label>
+                            <label th:data-testid="firstnameLabel" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></label>
                             <br/>
                             <label for="lastname"><h4 th:text="#{user.lastname}"/></label>
-                            <input th:data-testid="lastnameInput" type="text" name='lastname' th:field="*{lastname}" class="form-control"
-                                   placeholder="lastname" id='lastname'/>
-                            <label th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></label>
+                            <input th:data-testid="lastnameInput" type="text" name='lastname' th:field="*{lastname}" class="form-control" placeholder="lastname" id='lastname'/>
+                            <label th:data-testid="lastnameLabel" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></label>
                             <br/>
                             <label for="mobile"><h4 th:text="#{user.mobile}"/></label>
                             <div class="mobile-container">
@@ -120,15 +118,13 @@
                                        placeholder="phone number" id="mobile"
                                        pattern="\d{10}" title="Phone number must be 10 digits only" required />
                             </div>
-                            <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
+                            <label th:data-testid="mobileLabel" th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
                             <br/>
                             <label for="email"><h4 th:text="#{user.email}"/></label>
-                            <input th:data-testid="emailInput" type="text" name='email' th:field="*{email}" class="form-control" placeholder="email"
-                                   id='email'/>
-                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
+                            <input th:data-testid="emailInput" type="text" name='email' th:field="*{email}" class="form-control" placeholder="email" id='email'/>
+                            <label th:data-testid="emailLabel" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
                             <br/>
-                            <button th:data-testid="submitButton" id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><h5
-                                    th:text="#{login.submit}"/></button>
+                            <button th:data-testid="submitButton" id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><h5 th:text="#{login.submit}"/></button>
                         </fieldset>
                     </form>
                 </div>

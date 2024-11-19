@@ -72,7 +72,7 @@
                             <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
                             <br/>
                             <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
-                            <input type="checkbox" name='dewormed' th:data-testid="petDeworming" th:field="*{dewormed}" class="form-control"
+                            <input type="checkbox" name='dewormed' th:data-testid="petDewormed" th:field="*{dewormed}" class="form-control"
                                    placeholder="dewormed" id='dewormed'/>
                             <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
                             <br/>
