@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:lang="${#locale.language}">
 <head>
-    <title th:text="#{pet.view.create.title}"/>
+    <title th:text="#{pet.view.edit.title}"/>
     <head th:insert="~{fragments/include}"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
@@ -18,11 +18,7 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="portlet portlet-green">
                 <div class="portlet-body">
-                    <div th:if="${message}">
-                        <div align="center">
-                            <p style="color:blue;font-size:18px;" th:text="${message}"/>
-                        </div>
-                    </div>
+                    <div th:data-testid="petEditMessage" th:if="${message}" class="alert alert-success" th:text="${message}"/>
                     <form id="register" th:action="@{/pet/update}" th:object="${petCommand}" method="post"
                           class="form-horizontal" enctype="multipart/form-data">
                         <fieldset>
