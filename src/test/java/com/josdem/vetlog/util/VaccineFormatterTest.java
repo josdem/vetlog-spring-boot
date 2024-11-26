@@ -33,6 +33,15 @@ class VaccineFormatterTest {
         log.info(testInfo.getDisplayName());
         when(locale.getLanguage()).thenReturn("es");
 
-        assertEquals("Recombitek C4/CV", vaccineFormatter.format("DA2PP", locale));
+        assertEquals("Quintuple Canina", vaccineFormatter.format("DA2PP", locale));
+    }
+
+    @Test
+    @DisplayName("formatting deworming if locale is Spanish")
+    void shouldFormatDewormingInSpanish(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(locale.getLanguage()).thenReturn("es");
+
+        assertEquals("Desparasitación", vaccineFormatter.format("Deworming", locale));
     }
 }

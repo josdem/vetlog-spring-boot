@@ -23,6 +23,13 @@ import org.springframework.stereotype.Component;
 public class VaccineFormatter {
 
     public String format(String name, Locale locale) {
-        return locale.getLanguage().equals("es") ? "Recombitek C4/CV" : name;
+        if (!locale.getLanguage().equals("es")) {
+            return name;
+        }
+        return switch (name) {
+            case "DA2PP" -> "Quintuple Canina";
+            case "Deworming" -> "Desparasitación";
+            default -> name;
+        };
     }
 }
