@@ -93,7 +93,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="vaccination : ${pet.vaccines}">
-                                        <td th:text="${vaccination.name}"></td>
+                                        <td th:text="${@vaccineFormatter.format(vaccination.name, #locale)}"></td>
                                         <td th:text="${vaccination.status}"></td>
                                     </tr>
                                     </tbody>
