@@ -78,4 +78,13 @@ class VaccineFormatterTest {
 
         assertEquals("Tripe Felina", vaccineFormatter.format("FVRCP", locale));
     }
+
+    @Test
+    @DisplayName("not formatting DA2PP if locale is Sengish")
+    void shouldNotFormatDA2PP(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(locale.getLanguage()).thenReturn("en");
+
+        assertEquals("DA2PP", vaccineFormatter.format("DA2PP", locale));
+    }
 }
