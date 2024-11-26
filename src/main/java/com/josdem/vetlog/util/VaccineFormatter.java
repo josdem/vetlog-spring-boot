@@ -29,6 +29,7 @@ public class VaccineFormatter {
         return switch (name) {
             case "DA2PP" -> "Quintuple Canina";
             case "Deworming" -> "Desparasitación";
+            case "Rabies" -> "Rabia";
             default -> name;
         };
     }

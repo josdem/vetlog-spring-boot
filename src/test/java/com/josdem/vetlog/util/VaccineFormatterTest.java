@@ -44,4 +44,13 @@ class VaccineFormatterTest {
 
         assertEquals("Desparasitación", vaccineFormatter.format("Deworming", locale));
     }
+
+    @Test
+    @DisplayName("formatting rabies if locale is Spanish")
+    void shouldFormatRabiesInSpanish(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(locale.getLanguage()).thenReturn("es");
+
+        assertEquals("Rabia", vaccineFormatter.format("Rabies", locale));
+    }
 }
