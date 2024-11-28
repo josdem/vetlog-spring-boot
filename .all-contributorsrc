@@ -151,6 +151,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Er-Sadiq",
+      "name": "Sadiq Ahmed Killedar ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/125464939?v=4",
+      "profile": "https://portfolio-er-killedar-dev.netlify.app/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
