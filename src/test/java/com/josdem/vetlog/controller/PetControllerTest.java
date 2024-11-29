@@ -78,7 +78,7 @@ class PetControllerTest {
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldRegisterNewPet(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
-        registerPet();
+        registerPet(PetStatus.IN_ADOPTION);
     }
 
     @Test
@@ -88,7 +88,7 @@ class PetControllerTest {
     void shouldShowEditPetForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         // Set up data before the test
-        registerPet();
+        registerPet(PetStatus.IN_ADOPTION);
 
         // Edit test
         mockMvc.perform(get("/pet/edit").param("uuid", PET_UUID))
@@ -106,7 +106,7 @@ class PetControllerTest {
     void shouldUpdatePet(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
         // Set up data before the test
-        registerPet();
+        registerPet(PetStatus.IN_ADOPTION);
 
         var user = userRepository.findByUsername("josdem").orElseThrow(() -> new RuntimeException("User not found"));
         var cremita = petRepository.findByUuid(PET_UUID).orElseThrow(() -> new RuntimeException("Pet not found"));
@@ -186,14 +186,14 @@ class PetControllerTest {
     void shouldShowDeletePetForm(TestInfo testInfo) throws Exception {
         log.info("Running: {}", testInfo.getDisplayName());
 
-        registerPet();
+        registerPet(PetStatus.IN_ADOPTION);
 
         mockMvc.perform(get("/pet/delete").param("uuid", PET_UUID))
                 .andExpect(status().isOk())
                 .andExpect(view().name("error"));
     }
 
-    private void registerPet() throws Exception {
+    private void registerPet(PetStatus status) throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
                         .file(image)
@@ -206,12 +206,11 @@ class PetControllerTest {
                         .param("sterilized", "true")
                         .param("breed", "11")
                         .param("user", "1")
-                        .param("status", PetStatus.IN_ADOPTION.toString())
+                        .param("status", status.toString())
                         .param("type", PetType.DOG.toString()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("pet/create"));
     }
-
 
     @Test
     @Transactional
@@ -221,21 +220,7 @@ class PetControllerTest {
         log.info("Running: {}", testInfo.getDisplayName());
 
         // Register a pet with OWNED status
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
-                        .file(image)
-                        .with(csrf())
-                        .param("name", "Cremita")
-                        .param("uuid", PET_UUID)
-                        .param("birthDate", "2024-08-22T09:28:00")
-                        .param("dewormed", "true")
-                        .param("vaccinated", "true")
-                        .param("sterilized", "true")
-                        .param("breed", "11")
-                        .param("user", "1")
-                        .param("status", PetStatus.OWNED.toString()) // Set status to OWNED
-                        .param("type", PetType.DOG.toString()))
-                .andExpect(status().isOk())
-                .andExpect(view().name("pet/create"));
+        registerPet(PetStatus.OWNED);
 
         // Perform the delete request
         mockMvc.perform(get("/pet/delete").param("uuid", PET_UUID))
