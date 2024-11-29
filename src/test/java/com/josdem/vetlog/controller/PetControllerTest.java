@@ -211,4 +211,36 @@ class PetControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("pet/create"));
     }
+
+
+    @Test
+    @Transactional
+    @DisplayName("deleting a pet successfully")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldDeletePet(TestInfo testInfo) throws Exception {
+        log.info("Running: {}", testInfo.getDisplayName());
+
+        // Register a pet with OWNED status
+        mockMvc.perform(MockMvcRequestBuilders.multipart("/pet/save")
+                        .file(image)
+                        .with(csrf())
+                        .param("name", "Cremita")
+                        .param("uuid", PET_UUID)
+                        .param("birthDate", "2024-08-22T09:28:00")
+                        .param("dewormed", "true")
+                        .param("vaccinated", "true")
+                        .param("sterilized", "true")
+                        .param("breed", "11")
+                        .param("user", "1")
+                        .param("status", PetStatus.OWNED.toString()) // Set status to OWNED
+                        .param("type", PetType.DOG.toString()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("pet/create"));
+
+        // Perform the delete request
+        mockMvc.perform(get("/pet/delete").param("uuid", PET_UUID))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("message"))
+                .andExpect(view().name("pet/list"));
+    }
 }
