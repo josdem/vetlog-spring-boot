@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Vetlog Error page</title>
-    <head th:insert="~{fragments/include}"/>
+    <title>Vetlog Error Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .space-div {
+            height: 200px;
+        }
+    </style>
 </head>
-<style>
-.space-div {
-height: 200px;
-}
-</style>
 <body>
-<div th:insert="~{fragments/header}"/>
-<br/><br/>
-<br/><br/>
-<div class="space-div">...</div>
-<div th:if="${data}">
-    <div align="center">
-        <h3 style="font-size:18px;" th:text="'Oops! ' + ${data.message}"/>
-        <br/><br/>
+<!-- Insert Header Fragment -->
+<div th:insert="~{fragments/header}"></div>
+
+<!-- Spacing Div -->
+<div class="space-div"></div>
+
+<!-- Standardized Message Format -->
+<div align="center" th:if="${data}">
+    <div th:data-testid="petListMessage"
+         th:if="${data.message}"
+         class="alert alert-success"
+         th:text="${data.message}">
     </div>
 </div>
-<div th:insert="~{fragments/footer}"/>
+
+<!-- Insert Footer Fragment -->
+<div th:insert="~{fragments/footer}"></div>
 </body>
 </html>
