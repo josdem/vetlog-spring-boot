@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Vetlog Error Page</title>
-    <!-- Include Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Revert to the project's specific Bootstrap version -->
+    <link href="/static/assets/servizi-dog-theme/bootstrap.min.css" rel="stylesheet">
     <style>
         .space-div {
             height: 200px;
@@ -19,11 +19,11 @@
 
 <!-- Standardized Message Format -->
 <div align="center" th:if="${data}">
-    <div th:data-testid="petListMessage"
-         th:if="${data.message}"
-         class="alert alert-success"
-         th:text="${data.message}">
-    </div>
+    <div th:data-testid="errorMessage" <!-- Updated `data-testid` attribute -->
+    class="alert alert-success"
+    th:if="${data.message}"
+    th:text="${data.message}">
+</div>
 </div>
 
 <!-- Insert Footer Fragment -->
