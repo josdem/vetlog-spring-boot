@@ -14,11 +14,7 @@
         <div class="col-md-6 col-md-offset-3">
             <div class="portlet portlet-green">
                 <div class="portlet-body">
-                    <div th:if="${message}">
-                        <div align="center">
-                            <p style="color:blue;font-size:18px;" th:text="${message}"/>
-                        </div>
-                    </div>
+                    <div th:data-testid="petLogMessage" th:if="${message}" class="alert alert-success" th:text="${message}"/>
                     <div th:if="${petListEmpty}">
                         <div align="center">
                             <p th:text="${petListEmpty}"/>
