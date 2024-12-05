@@ -13,12 +13,11 @@ height: 200px;
 <div th:insert="~{fragments/header}"/>
 <br/><br/>
 <br/><br/>
-<div class="space-div">...</div>
-<div th:if="${data}">
-    <div align="center">
-        <h3 style="font-size:18px;" th:text="'Oops! ' + ${data.message}"/>
-        <br/><br/>
-    </div>
+<div class="space-div"></div>
+<div th:if="${data.message}"
+     th:text="${data.message}"
+     th:data-testid="errorMessage"
+     class="alert alert-warning">
 </div>
 <div th:insert="~{fragments/footer}"/>
 </body>

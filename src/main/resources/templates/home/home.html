@@ -13,11 +13,8 @@ background-color: #faf6e6;
 </style>
 <body>
 <div th:if="${message}">
-    <div class="space-div">...</div>
-    <div align="center" class="bg-warning">
-        <p style="color:blue;font-size:18px;" th:text="${message}"/>
-        <br/><br/>
-    </div>
+    <div class="space-div"></div>
+    <div th:data-testid="homeMessage" th:if="${message}" class="alert alert-success" th:text="${message}"/>
 </div>
 <div th:insert="~{fragments/header}"/>
 <header id="home">
