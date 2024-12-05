@@ -23,6 +23,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -40,6 +42,8 @@ public class PetCommand implements Command {
 
     @NotNull
     private String birthDate;
+
+    private String birthTime;
 
     private Boolean dewormed = false;
 
@@ -68,4 +72,13 @@ public class PetCommand implements Command {
     private transient List<PetImage> images = new ArrayList<>();
 
     private transient List<Vaccination> vaccines = new ArrayList<>();
+
+    public void combineBirthDateAndTime() {
+        if (Objects.equals(birthTime, "")) {
+            this.birthDate = birthDate + "T00:00:00";
+        }
+        else {
+            this.birthDate = birthDate + "T" + birthTime;
+        }
+    }
 }

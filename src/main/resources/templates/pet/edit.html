@@ -64,9 +64,15 @@
                             <input type="file" name="image"/>
                             <br/>
                             <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
-                            <input type="datetime-local" id="birthDate" name="birthDate" th:data-testid="petBirthdate" th:field="*{birthDate}">
+                            <input th:data-testid="birthDate" type="date" id="birthDate" name="birthDate">
                             <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
                             <br/>
+
+                            <label for="birthTime"><h4 th:text="#{pet.birthTime}"/></label>
+                            <input th:data-testid="birthTime" type="time" id="birthTime" name="birthTime" optional>
+                            <label th:if="${#fields.hasErrors('birthTime')}" th:errors="*{birthTime}"></label>
+                            <br/>
+
                             <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
                             <input type="checkbox" name='dewormed' th:data-testid="petDewormed" th:field="*{dewormed}" class="form-control"
                                    placeholder="dewormed" id='dewormed'/>
