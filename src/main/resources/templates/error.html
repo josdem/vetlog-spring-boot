@@ -14,11 +14,7 @@ height: 200px;
 <br/><br/>
 <br/><br/>
 <div class="space-div"></div>
-<div th:if="${data.message}"
-     th:text="${data.message}"
-     th:data-testid="errorMessage"
-     class="alert alert-warning">
-</div>
+<div th:data-testid="errorMessage" th:if="${data}" class="alert alert-warning" th:text="${data.message}"></div>
 <div th:insert="~{fragments/footer}"/>
 </body>
 </html>
