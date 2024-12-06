@@ -33,6 +33,7 @@ public class PetValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         PetCommand petCommand = (PetCommand) target;
+        petCommand.defaultBirthDateAndTime();
         validateBirthdate(errors, petCommand);
     }
 

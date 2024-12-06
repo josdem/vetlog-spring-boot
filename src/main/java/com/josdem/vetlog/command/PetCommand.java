@@ -68,4 +68,8 @@ public class PetCommand implements Command {
     private transient List<PetImage> images = new ArrayList<>();
 
     private transient List<Vaccination> vaccines = new ArrayList<>();
+
+    public void defaultBirthDateAndTime() {
+        this.birthDate = birthDate + "T" + "06:00";
+    }
 }
