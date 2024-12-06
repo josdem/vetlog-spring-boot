@@ -5,6 +5,12 @@
     <head th:insert="~{fragments/include}"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/javascript/selector.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('birthDate').setAttribute('max', today);
+        });
+    </script>
 </head>
 <body class="login">
 <div th:insert="~{fragments/header}"/>
@@ -29,15 +35,9 @@
                             <input type="file" name="image"/>
                             <br/>
                             <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
-                            <input th:data-testid="birthDate" type="date" id="birthDate" name="birthDate">
+                            <input th:data-testid="birthDate" type="date" id="birthDate" name="birthDate" min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
                             <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
                             <br/>
-
-                            <label for="birthTime"><h4 th:text="#{pet.birthTime}"/></label>
-                            <input th:data-testid="birthTime" type="time" id="birthTime" name="birthTime" optional>
-                            <label th:if="${#fields.hasErrors('birthTime')}" th:errors="*{birthTime}"></label>
-                            <br/>
-
                             <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
                             <input type="checkbox" name='dewormed' th:field="*{dewormed}" class="form-control"
                                    placeholder="dewormed" id='dewormed'/>

@@ -43,8 +43,6 @@ public class PetCommand implements Command {
     @NotNull
     private String birthDate;
 
-    private String birthTime;
-
     private Boolean dewormed = false;
 
     private Boolean sterilized = false;
@@ -73,12 +71,7 @@ public class PetCommand implements Command {
 
     private transient List<Vaccination> vaccines = new ArrayList<>();
 
-    public void combineBirthDateAndTime() {
-        if (Objects.equals(birthTime, "")) {
-            this.birthDate = birthDate + "T00:00:00";
-        }
-        else {
-            this.birthDate = birthDate + "T" + birthTime;
-        }
+    public void defaultBirthDateAndTime() {
+        this.birthDate = birthDate + "T" + "06:00";
     }
 }

@@ -33,6 +33,7 @@ public class PetValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         PetCommand petCommand = (PetCommand) target;
+        petCommand.defaultBirthDateAndTime();
         validateBirthdate(errors, petCommand);
     }
 
@@ -40,7 +41,6 @@ public class PetValidator implements Validator {
         if (petCommand.getBirthDate().isEmpty()) {
             return;
         }
-        petCommand.combineBirthDateAndTime();
         LocalDateTime now = LocalDateTime.now();
         if (now.isBefore(LocalDateTime.parse(petCommand.getBirthDate()))) {
             errors.rejectValue("birthDate", "pet.error.birthDate.past");
