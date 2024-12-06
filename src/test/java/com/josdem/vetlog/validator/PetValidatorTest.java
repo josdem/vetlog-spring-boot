@@ -32,14 +32,14 @@ import org.springframework.validation.Errors;
 @Slf4j
 class PetValidatorTest {
 
-    private PetValidator validator = new PetValidator();
-    private Errors errors = mock(Errors.class);
+    private final PetValidator validator = new PetValidator();
+    private final Errors errors = mock(Errors.class);
 
     @Test
     @DisplayName("validating birthdate")
     void shouldValidateBirthdate(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
-        var petCommand = getPetCommand("2021-01-17T00:00");
+        log.info(testInfo.getDisplayName());
+        var petCommand = getPetCommand("2021-01-17");
         validator.validate(petCommand, errors);
         verify(errors, never()).rejectValue(anyString(), anyString());
     }
@@ -47,7 +47,7 @@ class PetValidatorTest {
     @Test
     @DisplayName("validating empty birthdate")
     void shouldValidateEmptyBirthdate(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         var petCommand = getPetCommand("");
         validator.validate(petCommand, errors);
         verify(errors, never()).rejectValue(anyString(), anyString());
@@ -56,8 +56,8 @@ class PetValidatorTest {
     @Test
     @DisplayName("rejecting a birthdate")
     void shouldRejectBirthdate(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
-        var petCommand = getPetCommand("2026-01-17T00:00");
+        log.info(testInfo.getDisplayName());
+        var petCommand = getPetCommand("2026-01-17");
         validator.validate(petCommand, errors);
         verify(errors).rejectValue("birthDate", "pet.error.birthDate.past");
     }

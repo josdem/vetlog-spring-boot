@@ -70,7 +70,7 @@ class TelephoneControllerTest {
                         .with(csrf())
                         .param("name", "Cremita")
                         .param("uuid", PET_UUID)
-                        .param("birthDate", "2024-08-22T09:28:00")
+                        .param("birthDate", "2024-08-22")
                         .param("dewormed", "true")
                         .param("vaccinated", "true")
                         .param("sterilized", "true")
