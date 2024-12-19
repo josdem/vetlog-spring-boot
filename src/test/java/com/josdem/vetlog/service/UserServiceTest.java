@@ -25,11 +25,13 @@ import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.binder.UserBinder;
 import com.josdem.vetlog.command.Command;
+import com.josdem.vetlog.config.ApplicationProperties;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.impl.UserServiceImpl;
 import com.josdem.vetlog.util.UserContextHolderProvider;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,10 +60,13 @@ class UserServiceTest {
     @Mock
     private UserContextHolderProvider provider;
 
+    @Mock
+    private ApplicationProperties applicationProperties;
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        service = new UserServiceImpl(userBinder, userRepository, provider);
+        service = new UserServiceImpl(userBinder, userRepository, provider, applicationProperties);
     }
 
     @Test
@@ -119,6 +124,7 @@ class UserServiceTest {
         var command = mock(Command.class);
         user.setEmail(EMAIL);
         user.setCountryCode("+countryCodeOne");
+        when(applicationProperties.getCountryCodes()).thenReturn(List.of("+countryCodeOne"));
         when(userBinder.bindUser(command)).thenReturn(user);
 
         var result = service.save(command);
