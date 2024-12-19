@@ -57,6 +57,8 @@ prescriptionBucket: prescription-bucket
 gcpUrl: https://storage.googleapis.com/
 defaultImage: default-image.png
 token: userToken
+countryCodes:
+  - "+countryCodeOne"
 management:
   endpoints:
     web:

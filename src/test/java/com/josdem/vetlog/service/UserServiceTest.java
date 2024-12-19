@@ -17,6 +17,7 @@ limitations under the License.
 package com.josdem.vetlog.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -66,7 +67,7 @@ class UserServiceTest {
     @Test
     @DisplayName("getting user by username")
     void shouldGetUserByUsername(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.ofNullable(user));
         var result = service.getByUsername(USERNAME);
         assertEquals(user, result);
@@ -75,7 +76,7 @@ class UserServiceTest {
     @Test
     @DisplayName("not finding user by username")
     void shouldNotGetUserByUsername(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty());
         assertThrows(UserNotFoundException.class, () -> service.getByUsername(USERNAME));
     }
@@ -83,7 +84,7 @@ class UserServiceTest {
     @Test
     @DisplayName("getting user by email")
     void shouldGetUserByEmail(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
         var result = service.getByEmail(EMAIL);
         assertEquals(user, result);
@@ -92,7 +93,7 @@ class UserServiceTest {
     @Test
     @DisplayName("not finding user by email")
     void shouldNotGetUserByEmail(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.empty());
         assertThrows(UserNotFoundException.class, () -> service.getByEmail(EMAIL));
     }
@@ -100,7 +101,7 @@ class UserServiceTest {
     @Test
     @DisplayName("saving an user")
     void shouldSaveAnUser(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         var command = mock(Command.class);
         user.setEmail(EMAIL);
         when(userBinder.bindUser(command)).thenReturn(user);
@@ -112,9 +113,25 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("disabling an user due to country code")
+    void shouldDisableAnUser(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        var command = mock(Command.class);
+        user.setEmail(EMAIL);
+        user.setCountryCode("+countryCodeOne");
+        when(userBinder.bindUser(command)).thenReturn(user);
+
+        var result = service.save(command);
+
+        verify(userRepository).save(user);
+        assertEquals(user, result);
+        assertFalse(user.isEnabled(), "user should be disabled");
+    }
+
+    @Test
     @DisplayName("getting current user")
     void shouldGetCurrentUser(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         var authentication = mock(Authentication.class);
         when(authentication.getName()).thenReturn(USERNAME);
         when(provider.getAuthentication()).thenReturn(authentication);
@@ -125,7 +142,7 @@ class UserServiceTest {
     @Test
     @DisplayName("not finding current user")
     void shouldNotGetCurrentUser(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         var authentication = mock(Authentication.class);
         when(authentication.getName()).thenReturn(USERNAME);
         when(provider.getAuthentication()).thenReturn(authentication);

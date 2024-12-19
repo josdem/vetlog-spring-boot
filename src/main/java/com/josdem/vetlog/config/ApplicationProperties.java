@@ -16,9 +16,9 @@
 
 package com.josdem.vetlog.config;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
