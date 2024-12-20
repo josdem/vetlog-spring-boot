@@ -1,6 +1,22 @@
+/*
+  Copyright 2024 Jose Morales contact@josdem.io
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
 package com.josdem.vetlog.client;
 
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -9,7 +25,10 @@ import com.google.auth.Credentials;
 import com.google.cloud.spring.core.GcpProjectIdProvider;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
+import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.helper.StorageOptionsHelper;
+
+import java.io.IOException;
 import java.io.InputStream;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +52,21 @@ class GoogleStorageWriterTest {
     @Mock
     private StorageOptionsHelper storageOptionsHelper;
 
+    @Mock
+    private InputStream inputStream;
+
+    @Mock
+    private Storage storage;
+
+    @Mock
+    private Credentials credentials;
+
+    @Mock
+    private StorageOptions storageOptions;
+
+    @Mock
+    private StorageOptions.Builder builder;
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
@@ -43,12 +77,29 @@ class GoogleStorageWriterTest {
     @DisplayName("Should upload to bucket")
     void shouldUploadToBucket(TestInfo testInfo) throws Exception {
         log.info(testInfo.getDisplayName());
-        var inputStream = mock(InputStream.class);
-        var builder = mock(StorageOptions.Builder.class);
-        var credentials = mock(Credentials.class);
-        var storage = mock(Storage.class);
-        var storageOptions = mock(StorageOptions.class);
 
+        setExpectations();
+
+        googleStorageWriter.setup();
+        googleStorageWriter.uploadToBucket("bucket", "fileName", inputStream, "contentType");
+        verify(inputStream).readAllBytes();
+    }
+
+    @Test
+    @DisplayName("not upload to bucket due to exception")
+    void shouldNotUploadToBucket(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+
+        setExpectations();
+
+        googleStorageWriter.setup();
+        when(inputStream.readAllBytes()).thenThrow(new IllegalStateException("Error"));
+        assertThrows(
+                BusinessException.class,
+                () -> googleStorageWriter.uploadToBucket("bucket", "fileName", inputStream, "contentType"));
+    }
+
+    private void setExpectations() throws IOException {
         when(gcpProjectIdProvider.getProjectId()).thenReturn("projectId");
         when(credentialsProvider.getCredentials()).thenReturn(credentials);
 
@@ -57,9 +108,5 @@ class GoogleStorageWriterTest {
         when(builder.setCredentials(credentials)).thenReturn(builder);
         when(builder.build()).thenReturn(storageOptions);
         when(builder.build().getService()).thenReturn(storage);
-
-        googleStorageWriter.setup();
-        googleStorageWriter.uploadToBucket("bucket", "fileName", inputStream, "contentType");
-        verify(inputStream).readAllBytes();
     }
 }
