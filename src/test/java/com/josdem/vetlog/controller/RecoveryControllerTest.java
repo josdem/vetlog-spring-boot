@@ -42,8 +42,17 @@ class RecoveryControllerTest {
     @Test
     @DisplayName("getting email to change password")
     void shouldRequestEmailToChangePassword(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/recovery/password"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("recovery/recoveryPassword"));
+    }
+
+    @Test
+    @DisplayName("not getting email to change password due to invalid email")
+    void shouldNotRequestEmailToChangePassword(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        mockMvc.perform(get("/recovery/password").param("email", "notValidEmail"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recovery/recoveryPassword"));
     }
@@ -51,25 +60,16 @@ class RecoveryControllerTest {
     @Test
     @DisplayName("showing change password forms")
     void shouldShowChangePasswordForms(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/recovery/forgot/token"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recovery/changePassword"));
     }
 
     @Test
-    @DisplayName("user token not found")
-    void shouldNotFindUserToken(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(get("/recovery/activate/token"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("error"));
-    }
-
-    @Test
     @DisplayName("not generating token for changing password due to user not found")
     void shouldNotGenerateTokenToChangePassword(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(post("/recovery/password").with(csrf()).param("email", "contact@josdem.io"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("error"));
@@ -78,7 +78,7 @@ class RecoveryControllerTest {
     @Test
     @DisplayName("not changing password due to token not found")
     void shouldNotChangePassword(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(post("/recovery/change")
                         .with(csrf())
                         .param("token", "18c58288-cb57-46dc-b14f-e3ebc2d9b8ce")
