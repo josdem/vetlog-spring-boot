@@ -86,7 +86,7 @@ class PetControllerTest {
     @DisplayName("showing edit pet form")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowEditPetForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         // Set up data before the test
         registerPet(PetStatus.IN_ADOPTION);
 
@@ -104,7 +104,7 @@ class PetControllerTest {
     @DisplayName("updating pet status")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldUpdatePet(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         // Set up data before the test
         registerPet(PetStatus.IN_ADOPTION);
 
@@ -135,7 +135,7 @@ class PetControllerTest {
     @DisplayName("listing pets")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldListPets(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/pet/list"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("pets"))
@@ -147,7 +147,7 @@ class PetControllerTest {
     @DisplayName("listing for adoption")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldListForAdoption(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/pet/listForAdoption"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("pets"))
@@ -158,7 +158,7 @@ class PetControllerTest {
     @DisplayName("giving in adoption")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldGiveForAdoption(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/pet/giveForAdoption"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("pets"))
@@ -170,7 +170,7 @@ class PetControllerTest {
     @DisplayName("showing create pet form")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowCreatePetForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/pet/create"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("petCommand"))
@@ -184,7 +184,7 @@ class PetControllerTest {
     @DisplayName("not deleting a pet due to is in adoption")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowDeletePetForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
 
         registerPet(PetStatus.IN_ADOPTION);
 
@@ -217,7 +217,7 @@ class PetControllerTest {
     @DisplayName("deleting a pet successfully")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldDeletePet(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
 
         // Register a pet with OWNED status
         registerPet(PetStatus.OWNED);

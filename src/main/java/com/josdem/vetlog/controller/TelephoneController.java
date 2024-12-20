@@ -56,6 +56,7 @@ public class TelephoneController {
         log.info("Saving adoption for pet: {}", telephoneCommand.getUuid());
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("telephone/adopt");
+            modelAndView.addObject("errorMessage", localeService.getMessage("user.error.mobile", request));
             return fillPetAndTelephoneCommand(modelAndView, telephoneCommand);
         }
         var user = userService.getCurrentUser();
