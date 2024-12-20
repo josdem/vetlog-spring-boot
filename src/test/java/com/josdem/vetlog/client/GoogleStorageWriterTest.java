@@ -27,7 +27,6 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.helper.StorageOptionsHelper;
-
 import java.io.IOException;
 import java.io.InputStream;
 import lombok.extern.slf4j.Slf4j;
