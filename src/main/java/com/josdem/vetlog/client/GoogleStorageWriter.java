@@ -21,8 +21,8 @@ import com.google.cloud.spring.core.GcpProjectIdProvider;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
 import com.josdem.vetlog.exception.BusinessException;
+import com.josdem.vetlog.helper.StorageOptionsHelper;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.annotation.PostConstruct;
@@ -35,11 +35,13 @@ public class GoogleStorageWriter {
 
     private final CredentialsProvider credentialsProvider;
     private final GcpProjectIdProvider gcpProjectIdProvider;
+    private final StorageOptionsHelper storageOptionsHelper;
     private Storage storage;
 
     @PostConstruct
     void setup() throws IOException {
-        storage = StorageOptions.newBuilder()
+        storage = storageOptionsHelper
+                .getStorageOptions()
                 .setProjectId(gcpProjectIdProvider.getProjectId())
                 .setCredentials(credentialsProvider.getCredentials())
                 .build()
