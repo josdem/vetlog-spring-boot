@@ -14,12 +14,15 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.util;
+package com.josdem.vetlog.helper;
 
-import java.util.UUID;
+import com.google.cloud.storage.StorageOptions;
+import org.springframework.stereotype.Component;
 
-public class UuidGenerator {
-    public static String generateUuid() {
-        return UUID.randomUUID().toString();
+@Component
+public class StorageOptionsHelper {
+
+    public StorageOptions.Builder getStorageOptions() {
+        return StorageOptions.newBuilder();
     }
 }

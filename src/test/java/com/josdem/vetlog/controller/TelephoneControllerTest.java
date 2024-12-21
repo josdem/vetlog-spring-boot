@@ -4,6 +4,7 @@ import static com.josdem.vetlog.controller.PetControllerTest.PET_UUID;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
@@ -80,5 +81,24 @@ class TelephoneControllerTest {
                         .param("type", PetType.DOG.toString()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("pet/create"));
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("not saving adoption due to invalid phone number")
+    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
+    void shouldNotSaveAdoption(TestInfo testInfo) throws Exception {
+        registerPet();
+
+        log.info(testInfo.getDisplayName());
+        mockMvc.perform(post("/telephone/save")
+                        .with(csrf())
+                        .param("uuid", PET_UUID)
+                        .param("mobile", "123"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("telephone/adopt"))
+                .andExpect(model().attributeExists("pet"))
+                .andExpect(model().attributeExists("telephoneCommand"))
+                .andExpect(status().isOk());
     }
 }

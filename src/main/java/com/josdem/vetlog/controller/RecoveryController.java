@@ -52,13 +52,6 @@ public class RecoveryController {
         binder.addValidators(changePasswordValidator);
     }
 
-    @GetMapping(value = "/activate/{token}")
-    public String create(@PathVariable String token) {
-        log.info("Calling activate token");
-        recoveryService.confirmAccountForToken(token);
-        return LOGIN_VIEW;
-    }
-
     @PostMapping(value = "/password")
     public ModelAndView generateTokenToChangePassword(
             @Valid RecoveryPasswordCommand command, BindingResult bindingResult, HttpServletRequest request) {

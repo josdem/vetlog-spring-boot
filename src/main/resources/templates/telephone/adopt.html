@@ -14,6 +14,7 @@
     <div class="row">
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
+                <div th:data-testid="errorMessage" th:if="${errorMessage}" class="alert alert-warning" th:text="${errorMessage}"/>
                 <div th:if="${!pet.images.isEmpty()}">
                     <img style="width:320px;height:240px;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
                 </div>

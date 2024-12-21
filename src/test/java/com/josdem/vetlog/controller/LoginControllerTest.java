@@ -40,16 +40,23 @@ class LoginControllerTest {
     @Test
     @DisplayName("getting login page")
     void shouldGetLogin(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/login")).andExpect(status().isOk()).andExpect(view().name("login/login"));
     }
 
     @Test
     @DisplayName("getting login error")
     void shouldGetLoginErrorMessage(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/login").param("error", "invalid credentials"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("login/login"));
+    }
+
+    @Test
+    @DisplayName("logging out")
+    void shouldLogout(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        mockMvc.perform(get("/logout")).andExpect(status().is3xxRedirection());
     }
 }
