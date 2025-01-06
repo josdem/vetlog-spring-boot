@@ -1,9 +1,3 @@
--- MySQL dump 10.13  Distrib 5.7.18, for Linux (x86_64)
---
--- Host: localhost    Database: vetlog_spring_boot
--- ------------------------------------------------------
--- Server version	5.7.18-0ubuntu0.17.04.1
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
@@ -26,7 +20,7 @@ CREATE TABLE `registration_code` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `date_created` datetime NOT NULL,
   `email` varchar(255) NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` tinyint(11) NOT NULL,
   `token` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -88,6 +82,7 @@ CREATE TABLE `user` (
   `username` varchar(255) NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
+  `country_code` varchar(255) default null,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_sb8bbouer5wak8vyiiy4pf2bx` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -227,3 +222,17 @@ CREATE TABLE `pet_medicine` (
     KEY `FKnf9loskcjkxo9f2qafq08dyjm` (`pet_medicine_id`),
     CONSTRAINT `FKnf9loskcjkxo9f2qafq08dyjm` FOREIGN KEY (`pet_medicine_id`) REFERENCES `pet` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `vaccination`;
+CREATE TABLE vaccination (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `pet_id` bigint(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `status` varchar(255),
+  `pet` varchar(255),
+  PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_0900_ai_ci;
