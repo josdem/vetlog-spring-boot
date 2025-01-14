@@ -20,11 +20,10 @@ import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.User;
-import java.io.IOException;
-
 import com.josdem.vetlog.service.EmailService;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.RestService;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +45,9 @@ public class EmailServiceImpl implements EmailService {
 
     public void sendWelcomeEmail(User user) {
         log.info("Sending welcome email to: {}", user.getFirstName());
+        if (!user.isEnabled()) {
+            return;
+        }
         try {
             var command = new MessageCommand();
             command.setEmail(user.getEmail());

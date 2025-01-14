@@ -18,6 +18,7 @@ package com.josdem.vetlog.service;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -25,9 +26,8 @@ import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.User;
-import java.io.IOException;
-
 import com.josdem.vetlog.service.impl.EmailServiceImpl;
+import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -50,13 +50,12 @@ class EmailServiceTest {
     @Mock
     private TemplateProperties templateProperties;
 
-    private User user;
+    private final User user = new User();
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
         emailService = new EmailServiceImpl(restService, localeService, templateProperties);
-        user = new User();
     }
 
     @Test
@@ -69,7 +68,7 @@ class EmailServiceTest {
 
         emailService.sendWelcomeEmail(user);
 
-        verify(localeService.getMessage("user.welcome.message"));
+        verify(localeService).getMessage("user.welcome.message");
         verify(restService).sendMessage(isA(MessageCommand.class));
     }
 
@@ -80,5 +79,16 @@ class EmailServiceTest {
         when(restService.sendMessage(isA(MessageCommand.class))).thenThrow(new IOException("Error"));
 
         assertThrows(BusinessException.class, () -> emailService.sendWelcomeEmail(user));
+    }
+
+    @Test
+    @DisplayName("not sending email if user is not enabled")
+    void shouldNotSendEmailIfUserIsNotEnabled(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        user.setEnabled(false);
+
+        emailService.sendWelcomeEmail(user);
+
+        verify(restService, never()).sendMessage(isA(MessageCommand.class));
     }
 }
