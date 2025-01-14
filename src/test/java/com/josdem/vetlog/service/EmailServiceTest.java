@@ -16,13 +16,16 @@
 
 package com.josdem.vetlog.service;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.config.TemplateProperties;
+import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.User;
+import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,10 +45,13 @@ class EmailServiceTest {
     @Mock
     private TemplateProperties templateProperties;
 
+    private User user;
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
         emailService = new EmailServiceImpl(restService, templateProperties);
+        user = new User();
     }
 
     @Test
@@ -53,12 +59,20 @@ class EmailServiceTest {
     void shouldSendWelcomeEmail(TestInfo testInfo) throws Exception {
         log.info(testInfo.getDisplayName());
         when(templateProperties.getWelcome()).thenReturn("welcome.ftl");
-        var user = new User();
         user.setFirstName("Jose");
         user.setEmail("contact@josdem.io");
 
         emailService.sendWelcomeEmail(user);
 
         verify(restService).sendMessage(isA(MessageCommand.class));
+    }
+
+    @Test
+    @DisplayName("not sending a welcome email due to an exception")
+    void shouldNotSendWelcomeEmail(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+        when(restService.sendMessage(isA(MessageCommand.class))).thenThrow(new IOException("Error"));
+
+        assertThrows(BusinessException.class, () -> emailService.sendWelcomeEmail(user));
     }
 }
