@@ -53,7 +53,7 @@ template:
     name: adoption.ftl
   welcome: welcome.ftl
 breedsByTypeUrl: https://vetlog.org/breed/list
-imageBucket: vetlog-bucket:q
+imageBucket: vetlog-bucket
 prescriptionBucket: prescription-bucket
 gcpUrl: https://storage.googleapis.com/
 defaultImage: default-image.png

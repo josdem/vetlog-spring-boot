@@ -14,13 +14,17 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.service;
+package com.josdem.vetlog.service.impl;
 
 import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.User;
 import java.io.IOException;
+
+import com.josdem.vetlog.service.EmailService;
+import com.josdem.vetlog.service.LocaleService;
+import com.josdem.vetlog.service.RestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,6 +41,7 @@ public class EmailServiceImpl implements EmailService {
     private String clientToken;
 
     private final RestService restService;
+    private final LocaleService localeService;
     private final TemplateProperties templateProperties;
 
     public void sendWelcomeEmail(User user) {
@@ -46,6 +51,7 @@ public class EmailServiceImpl implements EmailService {
             command.setEmail(user.getEmail());
             command.setName(user.getFirstName());
             command.setTemplate(templateProperties.getWelcome());
+            command.setMessage(localeService.getMessage("user.welcome.message"));
             command.setToken(clientToken);
             restService.sendMessage(command);
         } catch (IOException ioe) {

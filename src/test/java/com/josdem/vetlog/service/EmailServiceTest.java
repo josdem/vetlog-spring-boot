@@ -26,6 +26,8 @@ import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.User;
 import java.io.IOException;
+
+import com.josdem.vetlog.service.impl.EmailServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,6 +45,9 @@ class EmailServiceTest {
     private RestService restService;
 
     @Mock
+    private LocaleService localeService;
+
+    @Mock
     private TemplateProperties templateProperties;
 
     private User user;
@@ -50,7 +55,7 @@ class EmailServiceTest {
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        emailService = new EmailServiceImpl(restService, templateProperties);
+        emailService = new EmailServiceImpl(restService, localeService, templateProperties);
         user = new User();
     }
 
@@ -64,6 +69,7 @@ class EmailServiceTest {
 
         emailService.sendWelcomeEmail(user);
 
+        verify(localeService.getMessage("user.welcome.message"));
         verify(restService).sendMessage(isA(MessageCommand.class));
     }
 
