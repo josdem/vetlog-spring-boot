@@ -51,6 +51,7 @@ template:
     path: recovery/forgot/
   adoption:
     name: adoption.ftl
+  welcome: welcome.ftl
 breedsByTypeUrl: https://vetlog.org/breed/list
 imageBucket: vetlog-bucket
 prescriptionBucket: prescription-bucket

@@ -63,10 +63,13 @@ class UserServiceTest {
     @Mock
     private ApplicationProperties applicationProperties;
 
+    @Mock
+    private EmailService emailService;
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        service = new UserServiceImpl(userBinder, userRepository, provider, applicationProperties);
+        service = new UserServiceImpl(userBinder, userRepository, provider, applicationProperties, emailService);
     }
 
     @Test
@@ -113,6 +116,7 @@ class UserServiceTest {
 
         final User result = service.save(command);
 
+        verify(emailService).sendWelcomeEmail(user);
         verify(userRepository).save(user);
         assertEquals(user, result);
     }

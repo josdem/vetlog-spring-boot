@@ -22,6 +22,7 @@ import com.josdem.vetlog.config.ApplicationProperties;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.UserRepository;
+import com.josdem.vetlog.service.EmailService;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.util.UserContextHolderProvider;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +41,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserContextHolderProvider provider;
     private final ApplicationProperties applicationProperties;
+    private final EmailService emailService;
 
     public User getByUsername(String username) {
         return userRepository
@@ -59,6 +61,7 @@ public class UserServiceImpl implements UserService {
         if (applicationProperties.getCountryCodes().contains(user.getCountryCode())) {
             user.setEnabled(false);
         }
+        emailService.sendWelcomeEmail(user);
         userRepository.save(user);
         return user;
     }
