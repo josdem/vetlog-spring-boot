@@ -73,7 +73,7 @@
                         <div class="pet-info-container">
                             <div class="col-lg-4 col-lg-offset-4">
                                 <ul>
-                                    <li th:data-testid="petBirhdate" th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
+                                    <li th:data-testid="petBirthdate" th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                                     <li th:data-testid="petBreed" th:text="${pet.breed.name}"/>
                                     <li th:data-testid="petDewormed" th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                                     <li th:data-testid="petSterilized" th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
