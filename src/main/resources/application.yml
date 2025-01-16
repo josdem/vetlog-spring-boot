@@ -52,7 +52,7 @@ template:
   adoption:
     name: adoption.ftl
   welcome: welcome.ftl
-breedsByTypeUrl: https://vetlog.org/breed/list
+breedsByTypeUrl: http://localhost:8080/breed/list
 imageBucket: vetlog-bucket
 prescriptionBucket: prescription-bucket
 gcpUrl: https://storage.googleapis.com/
