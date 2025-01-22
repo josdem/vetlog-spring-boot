@@ -41,6 +41,8 @@ class UserDetailsServiceTest {
 
     private UserDetailsServiceImpl service;
 
+    private final User user = new User();
+
     @Mock
     private UserRepository userRepository;
 
@@ -53,8 +55,7 @@ class UserDetailsServiceTest {
     @Test
     @DisplayName("loading user by username")
     void shouldLoadUserByUsername(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
-        var user = new User();
+        log.info(testInfo.getDisplayName());
         user.setUsername(USERNAME);
         user.setPassword("password");
         user.setEnabled(true);
@@ -74,7 +75,19 @@ class UserDetailsServiceTest {
     @Test
     @DisplayName("not search for authorities since user does not exist")
     void shouldNotSearchForAuthoritiesDueToUserNotFound(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         assertThrows(BusinessException.class, () -> service.loadUserByUsername("thisUserDoesNotExist"));
+    }
+
+    @Test
+    @DisplayName("not return user since is not enabled")
+    void shouldNotReturnUserSinceIsNotEnabled(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        user.setEnabled(true);
+        user.setRole(Role.USER);
+        user.setUsername(USERNAME);
+        user.setPassword("password");
+        when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
+        assertThrows(BusinessException.class, () -> service.loadUserByUsername(USERNAME));
     }
 }
