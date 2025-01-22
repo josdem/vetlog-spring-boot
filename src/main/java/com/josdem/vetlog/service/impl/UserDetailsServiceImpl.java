@@ -37,6 +37,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         var optional = userRepository.findByUsername(username);
+        if (optional.isPresent() && !optional.get().isEnabled()) {
+            throw new BusinessException("User with username: " + username + " is not enabled");
+        }
         return optional.map(user -> new org.springframework.security.core.userdetails.User(
                         user.getUsername(),
                         user.getPassword(),
