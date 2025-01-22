@@ -56,13 +56,11 @@ class UserDetailsServiceTest {
     @DisplayName("loading user by username")
     void shouldLoadUserByUsername(TestInfo testInfo) {
         log.info(testInfo.getDisplayName());
-        user.setUsername(USERNAME);
-        user.setPassword("password");
+        setBasicUserData();
         user.setEnabled(true);
         user.setAccountNonExpired(true);
         user.setAccountNonLocked(true);
         user.setCredentialsNonExpired(true);
-        user.setRole(Role.USER);
         when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
 
         var result = service.loadUserByUsername(USERNAME);
@@ -83,11 +81,15 @@ class UserDetailsServiceTest {
     @DisplayName("not return user since is not enabled")
     void shouldNotReturnUserSinceIsNotEnabled(TestInfo testInfo) {
         log.info(testInfo.getDisplayName());
-        user.setEnabled(true);
-        user.setRole(Role.USER);
-        user.setUsername(USERNAME);
-        user.setPassword("password");
+        setBasicUserData();
+        user.setEnabled(false);
         when(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user));
         assertThrows(BusinessException.class, () -> service.loadUserByUsername(USERNAME));
+    }
+
+    private void setBasicUserData() {
+        user.setUsername(USERNAME);
+        user.setPassword("password");
+        user.setRole(Role.USER);
     }
 }
