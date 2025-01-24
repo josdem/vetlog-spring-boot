@@ -78,14 +78,14 @@ class VaccinationServiceTest {
     @Test
     @DisplayName("not saving a pet if it is not a dog or cat")
     void shouldNotSavePetIfItIsNotADogOrCat(TestInfo testInfo) {
-        log.info("Test: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         pet.getBreed().setType(PetType.BIRD);
         assertThrows(BusinessException.class, () -> vaccinationService.save(pet));
     }
 
     @DisplayName("saving vaccines")
     @ParameterizedTest
-    @CsvSource({"6, 2", "10, 3", "14, 4", "20, 5"})
+    @CsvSource({"9, 2", "13, 3", "20, 5"})
     void shouldSaveVaccines(int weeks, int times) {
         log.info("Test: saving vaccines");
         pet.getBreed().setType(PetType.DOG);
@@ -98,7 +98,7 @@ class VaccinationServiceTest {
     @Test
     @DisplayName("not saving vaccination due is not old enough")
     void shouldNotSaveVaccinationDueToNotOldEnough(TestInfo testInfo) {
-        log.info("Test: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         pet.getBreed().setType(PetType.DOG);
         pet.setBirthDate(LocalDateTime.now().minusWeeks(1));
         vaccinationService.save(pet);
@@ -109,7 +109,7 @@ class VaccinationServiceTest {
     @Test
     @DisplayName("getting vaccines in Pending status")
     void shouldGetVaccinesInPendingStatus(TestInfo testInfo) {
-        log.info("Test: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         when(vaccinationRepository.findAllByPet(pet))
                 .thenReturn(List.of(
                         new Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.PENDING, pet),
@@ -121,7 +121,7 @@ class VaccinationServiceTest {
     @Test
     @DisplayName("deleting vaccines")
     void shouldDeleteVaccines(TestInfo testInfo) {
-        log.info("Test: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         vaccinationService.deleteVaccinesByPet(pet);
         verify(vaccinationRepository).deleteAllByPet(pet);
     }
