@@ -40,7 +40,7 @@ class DogVaccinationStrategyTest {
 
     @DisplayName("saving vaccines")
     @ParameterizedTest
-    @CsvSource({"9, 2", "13, 3", "20, 5"})
+    @CsvSource({"9, 2", "12, 2", "13, 3", "16, 3", "20, 5"})
     void shouldVaccinatePet(int weeks, int times) {
         log.info("Running test: saving vaccines");
         pet.setBirthDate(LocalDateTime.now().minusWeeks(weeks));
