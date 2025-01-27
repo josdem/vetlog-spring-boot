@@ -24,16 +24,16 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
 
     @Override
     public void vaccinate(Pet pet) {
-        Long weeks = ChronoUnit.WEEKS.between(pet.getBirthDate(), LocalDateTime.now());
+        long weeks = ChronoUnit.WEEKS.between(pet.getBirthDate(), LocalDateTime.now());
 
-        switch (weeks.intValue()) {
-            case 0, 1, 2, 3, 4, 5, 6, 7 -> log.info("No vaccination needed");
-            case 8, 9, 10, 11 -> {
+        switch ((int) weeks) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8 -> log.info("No vaccination needed");
+            case 9, 10, 11, 12 -> {
                 log.info("First vaccination");
                 registerVaccination(FVRCP, pet);
                 registerVaccination(DEWORMING, pet);
             }
-            case 12, 13, 14, 15 -> {
+            case 13, 14, 15, 16 -> {
                 log.info("Second vaccination");
                 registerVaccination(FVRCP, pet);
                 registerVaccination(DEWORMING, pet);
