@@ -58,7 +58,7 @@ class UserControllerTest {
     @Transactional
     @DisplayName("registering an user")
     void shouldShowCreateUserForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(post("/user/save")
                         .with(csrf())
                         .param("username", "vetlog")
@@ -76,7 +76,7 @@ class UserControllerTest {
     @Test
     @DisplayName("not saving user due to invalid email")
     void shouldNotSaveUserWithInvalidEmail(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(post("/user/save")
                         .with(csrf())
                         .param("username", "vetlog")
@@ -95,7 +95,7 @@ class UserControllerTest {
     @Test
     @DisplayName("not saving user due to invalid mobile")
     void shouldNotSaveUserWithInvalidMobile(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(post("/user/save")
                         .with(csrf())
                         .param("username", "vetlog")

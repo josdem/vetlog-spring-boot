@@ -83,9 +83,12 @@ public class RecoveryServiceImpl implements RecoveryService {
             var command = new MessageCommand();
             command.setEmail(email);
             command.setName(email);
-            command.setTemplate(templateProperties.getTemplates().getFirst().getName());
-            command.setMessage(
-                    baseUrl + templateProperties.getTemplates().getFirst().getPath() + token);
+            var template = templateProperties.getTemplates().stream()
+                    .filter(t -> t.getName().equals("forgotPassword.ftl"))
+                    .findFirst()
+                    .orElseThrow(() -> new BusinessException("Template not found"));
+            command.setTemplate(template.getName());
+            command.setMessage(baseUrl + template.getPath() + token);
             command.setToken(clientToken);
             restService.sendMessage(command);
         } catch (IOException ioException) {
