@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.command.ChangePasswordCommand;
 import com.josdem.vetlog.command.MessageCommand;
+import com.josdem.vetlog.config.Template;
 import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.exception.VetlogException;
@@ -35,6 +36,7 @@ import com.josdem.vetlog.repository.RegistrationCodeRepository;
 import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.impl.RecoveryServiceImpl;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,10 +45,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.TestPropertySource;
 
 @Slf4j
-@TestPropertySource(properties = {"template.register.name=registerTemplate"})
 class RecoveryServiceTest {
 
     private static final String TOKEN = "token";
@@ -113,6 +113,9 @@ class RecoveryServiceTest {
     @DisplayName("generating token to change password")
     void shouldSendChangePasswordToken(TestInfo testInfo) throws IOException {
         log.info(testInfo.getDisplayName());
+        var template = new Template();
+        template.setName("forgotPassword.ftl");
+        when(templateProperties.getTemplates()).thenReturn(List.of(template));
 
         user.setEnabled(true);
         when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));

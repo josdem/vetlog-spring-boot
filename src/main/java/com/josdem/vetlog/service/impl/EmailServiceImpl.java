@@ -53,7 +53,7 @@ public class EmailServiceImpl implements EmailService {
             command.setEmail(user.getEmail());
             command.setName(user.getFirstName());
             var templateName = templateProperties.getTemplates().stream()
-                    .filter(template -> template.getName().equals("welcome"))
+                    .filter(template -> template.getName().equals("welcome.ftl"))
                     .findFirst()
                     .orElseThrow(() -> new BusinessException("Template not found"));
             command.setTemplate(templateName.getName());
