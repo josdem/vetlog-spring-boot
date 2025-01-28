@@ -43,9 +43,6 @@ jmailer:
   path: message
 baseUrl: https://vetlog.org/
 template:
-  register:
-    name: register.ftl
-    path: recovery/activate/
   forgot:
     name: forgotPassword.ftl
     path: recovery/forgot/
