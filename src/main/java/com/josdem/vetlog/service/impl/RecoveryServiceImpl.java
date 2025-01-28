@@ -53,12 +53,6 @@ public class RecoveryServiceImpl implements RecoveryService {
     @Value("${token}")
     private String clientToken;
 
-    @Value("${template.register.name}")
-    private String registerTemplate;
-
-    @Value("${template.register.path}")
-    private String registerPath;
-
     @Value("${template.forgot.name}")
     private String forgotTemplate;
 
