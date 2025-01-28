@@ -23,11 +23,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.command.MessageCommand;
+import com.josdem.vetlog.config.Template;
 import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.impl.EmailServiceImpl;
 import java.io.IOException;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -62,7 +64,9 @@ class EmailServiceTest {
     @DisplayName("sending a welcome email")
     void shouldSendWelcomeEmail(TestInfo testInfo) throws Exception {
         log.info(testInfo.getDisplayName());
-        when(templateProperties.getWelcome()).thenReturn("welcome.ftl");
+        var template = new Template();
+        template.setName("welcome.ftl");
+        when(templateProperties.getTemplates()).thenReturn(List.of(template));
         user.setFirstName("Jose");
         user.setEmail("contact@josdem.io");
 

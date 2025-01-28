@@ -26,6 +26,7 @@ import static org.mockito.Mockito.when;
 
 import com.josdem.vetlog.command.ChangePasswordCommand;
 import com.josdem.vetlog.command.MessageCommand;
+import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.exception.VetlogException;
 import com.josdem.vetlog.model.RegistrationCode;
@@ -69,16 +70,20 @@ class RecoveryServiceTest {
     @Mock
     private LocaleService localeService;
 
+    @Mock
+    private TemplateProperties templateProperties;
+
     @BeforeEach
     void setup() {
         MockitoAnnotations.openMocks(this);
-        service = new RecoveryServiceImpl(restService, registrationService, userRepository, repository, localeService);
+        service = new RecoveryServiceImpl(
+                restService, registrationService, userRepository, repository, localeService, templateProperties);
     }
 
     @Test
     @DisplayName("sending activation account token")
     void shouldSendActivationAccountToken(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
 
         when(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL));
         when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
@@ -92,14 +97,14 @@ class RecoveryServiceTest {
     @Test
     @DisplayName("not sending activation account token due to token do not exist")
     void shouldNotSendActivationAccountTokenDueNotValidToken(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         assertThrows(VetlogException.class, () -> service.confirmAccountForToken(TOKEN));
     }
 
     @Test
     @DisplayName("not sending activation account token due to user not found")
     void shouldNotSendActivationAccountTokenDueUserNotFound(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         when(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL));
         assertThrows(UserNotFoundException.class, () -> service.confirmAccountForToken(TOKEN));
     }
@@ -107,7 +112,7 @@ class RecoveryServiceTest {
     @Test
     @DisplayName("generating token to change password")
     void shouldSendChangePasswordToken(TestInfo testInfo) throws IOException {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
 
         user.setEnabled(true);
         when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
@@ -120,14 +125,14 @@ class RecoveryServiceTest {
     @Test
     @DisplayName("not sending change password token due to user not found")
     void shouldNotSendChangePasswordTokenDueUserNotFound(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         assertThrows(UserNotFoundException.class, () -> service.generateRegistrationCodeForEmail(EMAIL));
     }
 
     @Test
     @DisplayName("not sending change password token due to user not enabled")
     void shouldNotSendChangePasswordTokenDueUserNotEnabled(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         user.setEnabled(false);
         when(userRepository.findByEmail(EMAIL)).thenReturn(Optional.ofNullable(user));
         assertThrows(VetlogException.class, () -> service.generateRegistrationCodeForEmail(EMAIL));
@@ -136,7 +141,7 @@ class RecoveryServiceTest {
     @Test
     @DisplayName("validating a token")
     void shouldValidateToken(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         when(repository.findByToken(TOKEN)).thenReturn(Optional.of(new RegistrationCode()));
         assertTrue(service.validateToken(TOKEN));
     }
@@ -144,14 +149,14 @@ class RecoveryServiceTest {
     @Test
     @DisplayName("finding an invalid token")
     void shouldFindInvalidToken(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         assertFalse(service.validateToken(TOKEN));
     }
 
     @Test
     @DisplayName("changing password")
     void shouldChangePassword(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         var changePasswordCommand = new ChangePasswordCommand();
         changePasswordCommand.setToken(TOKEN);
         changePasswordCommand.setPassword("password");

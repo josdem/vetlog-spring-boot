@@ -42,16 +42,13 @@ jmailer:
   url: https://jmailer.josdem.io/emailer/
   path: message
 baseUrl: https://vetlog.org/
-template:
-  register:
-    name: register.ftl
-    path: recovery/activate/
-  forgot:
-    name: forgotPassword.ftl
+templates:
+  - name: forgotPassword.ftl
     path: recovery/forgot/
-  adoption:
-    name: adoption.ftl
-  welcome: welcome.ftl
+  - name: adoption.ftl
+    path: adoption/
+  - name: welcome.ftl
+    path: welcome/
 breedsByTypeUrl: http://localhost:8080/breed/list
 imageBucket: vetlog-bucket
 prescriptionBucket: prescription-bucket

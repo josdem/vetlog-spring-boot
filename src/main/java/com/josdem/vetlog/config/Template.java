@@ -16,14 +16,12 @@
 
 package com.josdem.vetlog.config;
 
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties("templates")
-public class TemplateProperties {
-    private List<Template> templates;
+public class Template {
+    private String name;
+    private String path;
 }

@@ -19,6 +19,7 @@ package com.josdem.vetlog.service.impl;
 import com.josdem.vetlog.command.ChangePasswordCommand;
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.MessageCommand;
+import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.exception.VetlogException;
@@ -46,24 +47,13 @@ public class RecoveryServiceImpl implements RecoveryService {
     private final UserRepository userRepository;
     private final RegistrationCodeRepository repository;
     private final LocaleService localeService;
+    private final TemplateProperties templateProperties;
 
     @Value("${baseUrl}")
     private String baseUrl;
 
     @Value("${token}")
     private String clientToken;
-
-    @Value("${template.register.name}")
-    private String registerTemplate;
-
-    @Value("${template.register.path}")
-    private String registerPath;
-
-    @Value("${template.forgot.name}")
-    private String forgotTemplate;
-
-    @Value("${template.forgot.path}")
-    private String forgotPath;
 
     public User confirmAccountForToken(String token) {
         var user = getUserByToken(token);
@@ -93,8 +83,9 @@ public class RecoveryServiceImpl implements RecoveryService {
             var command = new MessageCommand();
             command.setEmail(email);
             command.setName(email);
-            command.setTemplate(forgotTemplate);
-            command.setMessage(baseUrl + forgotPath + token);
+            command.setTemplate(templateProperties.getTemplates().getFirst().getName());
+            command.setMessage(
+                    baseUrl + templateProperties.getTemplates().getFirst().getPath() + token);
             command.setToken(clientToken);
             restService.sendMessage(command);
         } catch (IOException ioException) {

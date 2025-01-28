@@ -52,7 +52,11 @@ public class EmailServiceImpl implements EmailService {
             var command = new MessageCommand();
             command.setEmail(user.getEmail());
             command.setName(user.getFirstName());
-            command.setTemplate(templateProperties.getWelcome());
+            var templateName = templateProperties.getTemplates().stream()
+                    .filter(template -> template.getName().equals("welcome"))
+                    .findFirst()
+                    .orElseThrow(() -> new BusinessException("Template not found"));
+            command.setTemplate(templateName.getName());
             command.setMessage(localeService.getMessage("user.welcome.message"));
             command.setToken(clientToken);
             restService.sendMessage(command);
