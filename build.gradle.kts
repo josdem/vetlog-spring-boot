@@ -1,3 +1,13 @@
+buildscript {
+  repositories {
+    gradlePluginPortal()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.4.2")
+    classpath("org.flywaydb:flyway-mysql:11.2.0")
+  }
+}
+
 plugins {
   id("org.springframework.boot") version "3.4.1"
   id("io.spring.dependency-management") version "1.1.7"
@@ -25,12 +35,8 @@ repositories {
   mavenCentral()
 }
 
-val flywayClasspath = configurations.register("flywayClasspath")
-
 flyway {
   url = "jdbc:mysql://localhost:3306/vetlog"
-  driver = "com.mysql.cj.jdbc.Driver"
-  configurations = listOf("flywayClasspath").toTypedArray()
 }
 
 sonar {
@@ -72,8 +78,6 @@ dependencies {
   runtimeOnly("com.mysql:mysql-connector-j")
   implementation("net.minidev:json-smart:2.4.9")
   implementation("javax.xml.bind:jaxb-api:2.3.1")
-  implementation("org.flywaydb:flyway-core:11.2.0")
-  implementation("org.flywaydb:flyway-mysql:11.2.0")
   testImplementation("cglib:cglib-nodep:3.2.4")
   testCompileOnly("org.projectlombok:lombok")
   testAnnotationProcessor("org.projectlombok:lombok")
@@ -81,9 +85,6 @@ dependencies {
   testImplementation("org.springframework.security:spring-security-test")
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
-  add("flywayClasspath", "org.flywaydb:flyway-core:11.2.0")
-  add("flywayClasspath", "org.flywaydb:flyway-mysql:11.2.0")
-  add("flywayClasspath", "com.mysql:mysql-connector-j:8.2.0")
 }
 
 jacoco {
