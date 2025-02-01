@@ -104,13 +104,13 @@ java {
   }
 }
 
-tasks.named<Test>("test") {
+tasks.withType<Test> {
   useJUnitPlatform()
   systemProperties.putAll(System.getProperties().map { it.key.toString() to it.value.toString() })
   dependsOn("spotlessApply")
 }
 
-tasks.named<JavaExec>("bootRun") {
+tasks.withType<JavaExec> {
   systemProperties.putAll(System.getProperties().map { it.key.toString() to it.value.toString() })
   dependsOn("flywayMigrate")
 }
