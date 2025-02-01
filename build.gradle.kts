@@ -85,6 +85,8 @@ dependencies {
   testImplementation("org.springframework.security:spring-security-test")
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
+  implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
 }
 
 jacoco {
