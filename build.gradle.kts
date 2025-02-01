@@ -75,9 +75,6 @@ dependencies {
   implementation("org.springframework.boot:spring-boot-starter-validation")
   implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 
-  // Database and ORM
-  runtimeOnly("com.mysql:mysql-connector-j")
-
   // External services and API integration
   implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:$gcpVersion"))
   implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
@@ -90,6 +87,9 @@ dependencies {
   implementation("org.jetbrains:annotations:$annotationsVersion")
   implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
+  // Database and ORM
+  runtimeOnly("com.mysql:mysql-connector-j")
+
   // Compile-time dependencies
   compileOnly("org.projectlombok:lombok")
   annotationProcessor("org.projectlombok:lombok")
@@ -100,9 +100,8 @@ dependencies {
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
   testImplementation("cglib:cglib-nodep:$cglibVersion")
-
-  testCompileOnly("org.projectlombok:lombok")
   testAnnotationProcessor("org.projectlombok:lombok")
+  testCompileOnly("org.projectlombok:lombok")
 }
 
 
