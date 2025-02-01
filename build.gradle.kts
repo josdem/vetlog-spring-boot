@@ -22,6 +22,10 @@ plugins {
 val gcpVersion by extra("5.10.0")
 val retrofitVersion by extra("2.11.0")
 val mockitoCoreVersion by extra("5.15.2")
+val annotationsVersion by extra("24.0.1")
+val jsonSmartVersion by extra("2.4.9")
+val jaxbVersion by extra("2.3.1")
+val cglibVersion by extra("3.2.4")
 
 group = "com.josdem.vetlog"
 version = "2.2.5"
@@ -81,9 +85,9 @@ dependencies {
   implementation("com.squareup.retrofit2:converter-jackson:$retrofitVersion")
 
   // Utility libraries (JSON, XML, Annotations)
-  implementation("net.minidev:json-smart:2.4.9")
-  implementation("javax.xml.bind:jaxb-api:2.3.1")
-  implementation("org.jetbrains:annotations:24.0.1")
+  implementation("net.minidev:json-smart:$jsonSmartVersion")
+  implementation("javax.xml.bind:jaxb-api:$jaxbVersion")
+  implementation("org.jetbrains:annotations:$annotationsVersion")
   implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
   // Compile-time dependencies
@@ -95,7 +99,7 @@ dependencies {
   testImplementation("org.springframework.security:spring-security-test")
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
-  testImplementation("cglib:cglib-nodep:3.2.4")
+  testImplementation("cglib:cglib-nodep:$cglibVersion")
 
   testCompileOnly("org.projectlombok:lombok")
   testAnnotationProcessor("org.projectlombok:lombok")
