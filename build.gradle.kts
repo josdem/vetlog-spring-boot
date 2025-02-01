@@ -16,6 +16,7 @@ plugins {
   id("jacoco")
   id("java")
   id("com.diffplug.spotless") version "7.0.2"
+  id("org.jetbrains.kotlin.jvm") version "2.0.0"
 }
 
 val gcpVersion by extra("5.10.0")
