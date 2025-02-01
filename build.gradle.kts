@@ -61,34 +61,46 @@ spotless {
 }
 
 dependencies {
+  // Spring Boot Core
   implementation("org.springframework.boot:spring-boot-starter-web")
   implementation("org.springframework.boot:spring-boot-starter-aop")
   implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-  implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
-  implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
-  implementation("com.squareup.retrofit2:converter-jackson:$retrofitVersion")
-  implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
   implementation("org.springframework.boot:spring-boot-starter-security")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-actuator")
   implementation("org.springframework.boot:spring-boot-starter-validation")
-  implementation("org.jetbrains:annotations:24.0.1")
-  implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:$gcpVersion"))
-  compileOnly("org.projectlombok:lombok")
-  annotationProcessor("org.projectlombok:lombok")
+  implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+
+  // Database and ORM
   runtimeOnly("com.mysql:mysql-connector-j")
+
+  // External services and API integration
+  implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:$gcpVersion"))
+  implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
+  implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+  implementation("com.squareup.retrofit2:converter-jackson:$retrofitVersion")
+
+  // Utility libraries (JSON, XML, Annotations)
   implementation("net.minidev:json-smart:2.4.9")
   implementation("javax.xml.bind:jaxb-api:2.3.1")
-  testImplementation("cglib:cglib-nodep:3.2.4")
-  testCompileOnly("org.projectlombok:lombok")
-  testAnnotationProcessor("org.projectlombok:lombok")
+  implementation("org.jetbrains:annotations:24.0.1")
+  implementation("org.jetbrains.kotlin:kotlin-stdlib")
+
+  // Compile-time dependencies
+  compileOnly("org.projectlombok:lombok")
+  annotationProcessor("org.projectlombok:lombok")
+
+  // Test dependencies
   testImplementation("org.springframework.boot:spring-boot-starter-test")
   testImplementation("org.springframework.security:spring-security-test")
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
-  implementation("org.jetbrains.kotlin:kotlin-stdlib")
+  testImplementation("cglib:cglib-nodep:3.2.4")
 
+  testCompileOnly("org.projectlombok:lombok")
+  testAnnotationProcessor("org.projectlombok:lombok")
 }
+
 
 jacoco {
   toolVersion = "0.8.11"
