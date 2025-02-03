@@ -28,7 +28,7 @@ val jaxbVersion by extra("2.3.1")
 val cglibVersion by extra("3.2.4")
 
 group = "com.josdem.vetlog"
-version = "2.2.5"
+version = "2.2.6"
 
 configurations {
   compileOnly {
