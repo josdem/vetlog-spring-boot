@@ -102,6 +102,9 @@ dependencies {
   testImplementation("cglib:cglib-nodep:$cglibVersion")
   testAnnotationProcessor("org.projectlombok:lombok")
   testCompileOnly("org.projectlombok:lombok")
+  testImplementation("org.jetbrains.kotlin:kotlin-test")
+  testImplementation(kotlin("test"))
+  testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
 }
 
 
@@ -120,6 +123,10 @@ java {
   toolchain {
     languageVersion.set(JavaLanguageVersion.of(21))
   }
+}
+
+kotlin {
+  jvmToolchain(21)
 }
 
 tasks.withType<Test> {
