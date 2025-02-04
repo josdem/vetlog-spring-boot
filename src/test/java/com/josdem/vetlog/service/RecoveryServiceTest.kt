@@ -24,13 +24,20 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.RegistrationCodeRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.RecoveryServiceImpl
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.*
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.util.*
+import java.util.Optional
+import kotlin.test.Test
 
 internal class RecoveryServiceTest {
     private lateinit var service: RecoveryService
