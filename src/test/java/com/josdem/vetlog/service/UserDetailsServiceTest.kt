@@ -20,12 +20,17 @@ import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.UserDetailsServiceImpl
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.*
+import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
-import java.util.*
+import kotlin.test.Test
+import java.util.Optional
 
 internal class UserDetailsServiceTest {
     private lateinit var service: UserDetailsServiceImpl
