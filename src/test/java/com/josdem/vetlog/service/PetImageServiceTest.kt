@@ -19,15 +19,22 @@ import com.josdem.vetlog.client.GoogleStorageWriter
 import com.josdem.vetlog.command.PetCommand
 import com.josdem.vetlog.repository.PetImageRepository
 import com.josdem.vetlog.service.impl.PetImageServiceImpl
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
+import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import org.springframework.test.util.ReflectionTestUtils
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
 import java.io.InputStream
+import kotlin.test.Test
 
 internal class PetImageServiceTest {
 
