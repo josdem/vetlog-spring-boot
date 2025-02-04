@@ -23,12 +23,18 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.TelephoneServiceImpl
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.*
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import kotlin.test.Test
 
 internal class TelephoneServiceTest {
     private lateinit var service: TelephoneService
