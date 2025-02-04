@@ -20,18 +20,27 @@ import com.josdem.vetlog.command.Command
 import com.josdem.vetlog.command.PetCommand
 import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.exception.BusinessException
-import com.josdem.vetlog.model.*
+import com.josdem.vetlog.model.Pet
+import com.josdem.vetlog.model.PetAdoption
+import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.AdoptionRepository
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.PetServiceImpl
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.util.*
+import java.util.Optional
 
 internal class PetServiceTest {
 
