@@ -26,15 +26,24 @@ import com.josdem.vetlog.service.impl.VaccinationServiceImpl
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy
 import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy
 import com.josdem.vetlog.strategy.vaccination.impl.DogVaccinationStrategy
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.*
+import org.mockito.kotlin.times
+import org.mockito.kotlin.never
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
+import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.test.Test
 
 internal class VaccinationServiceTest {
     private lateinit var vaccinationService: VaccinationService
