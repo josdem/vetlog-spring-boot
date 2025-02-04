@@ -21,12 +21,16 @@ import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.service.impl.AdoptionServiceImpl
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 import org.mockito.kotlin.verify
 import org.slf4j.LoggerFactory
+import kotlin.test.Test
 
 internal class AdoptionServiceTest {
 
