@@ -39,7 +39,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RecoveryServiceImpl implements RecoveryService {
 
-    public static final String EXCEPTION_USER_NOT_FOUND = "exception.user.not.found";
+    public static final String USER_NOT_FOUND = "user.not.found";
 
     private final RestService restService;
     private final RegistrationService registrationService;
@@ -72,13 +72,13 @@ public class RecoveryServiceImpl implements RecoveryService {
                 .orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
         return userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND)));
+                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(USER_NOT_FOUND)));
     }
 
     public void generateRegistrationCodeForEmail(String email) {
         var user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND)));
+                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(USER_NOT_FOUND)));
         if (!user.isEnabled()) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
