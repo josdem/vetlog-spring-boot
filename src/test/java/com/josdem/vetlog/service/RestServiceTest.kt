@@ -3,14 +3,19 @@ package com.josdem.vetlog.service
 import com.josdem.vetlog.command.MessageCommand
 import com.josdem.vetlog.service.impl.RestServiceImpl
 import okhttp3.ResponseBody
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
+import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.*
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import retrofit2.Call
 import retrofit2.Retrofit
 import java.io.IOException
+import kotlin.test.Test
 
 internal class RestServiceTest {
     private lateinit var service: RestServiceImpl
