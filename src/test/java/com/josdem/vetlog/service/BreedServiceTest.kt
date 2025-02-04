@@ -20,12 +20,16 @@ import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.repository.BreedRepository
 import com.josdem.vetlog.service.impl.BreedServiceImpl
 import com.josdem.vetlog.enums.PetType
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 import org.mockito.kotlin.verify
 import org.slf4j.LoggerFactory
+import kotlin.test.Test
 
 internal class BreedServiceTest {
 
