@@ -26,6 +26,7 @@ val annotationsVersion by extra("24.0.1")
 val jsonSmartVersion by extra("2.4.9")
 val jaxbVersion by extra("2.3.1")
 val cglibVersion by extra("3.2.4")
+val mockitoKotlinVersion by extra("4.1.0")
 
 group = "com.josdem.vetlog"
 version = "2.2.6"
@@ -100,6 +101,9 @@ dependencies {
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
   testImplementation("cglib:cglib-nodep:$cglibVersion")
+  testImplementation("org.jetbrains.kotlin:kotlin-test")
+  testImplementation(kotlin("test"))
+  testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
   testAnnotationProcessor("org.projectlombok:lombok")
   testCompileOnly("org.projectlombok:lombok")
 }
@@ -120,6 +124,10 @@ java {
   toolchain {
     languageVersion.set(JavaLanguageVersion.of(21))
   }
+}
+
+kotlin {
+  jvmToolchain(21)
 }
 
 tasks.withType<Test> {

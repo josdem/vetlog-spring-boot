@@ -20,11 +20,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 import com.josdem.vetlog.enums.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import lombok.Getter;
@@ -70,13 +66,13 @@ public class User implements Serializable {
     private boolean enabled = true;
 
     @Column(nullable = false)
-    private Boolean accountNonExpired = true;
+    private boolean accountNonExpired = true;
 
     @Column(nullable = false)
-    private Boolean credentialsNonExpired = true;
+    private boolean credentialsNonExpired = true;
 
     @Column(nullable = false)
-    private Boolean accountNonLocked = true;
+    private boolean accountNonLocked = true;
 
     @Column(nullable = false)
     private LocalDateTime dateCreated = LocalDateTime.now();
