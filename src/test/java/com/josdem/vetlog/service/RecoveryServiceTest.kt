@@ -26,9 +26,6 @@ import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.RecoveryServiceImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
-import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
@@ -71,9 +68,8 @@ internal class RecoveryServiceTest {
     }
 
     @Test
-    @DisplayName("Sending activation account token")
-    fun shouldSendActivationAccountToken(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Sending activation account token`() {
+        log.info("Running test: Sending activation account token")
         whenever(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL))
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
 
@@ -84,25 +80,22 @@ internal class RecoveryServiceTest {
     }
 
     @Test
-    @DisplayName("Not sending activation account token due to token not existing")
-    fun shouldNotSendActivationAccountTokenDueToInvalidToken(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        assertThrows<VetlogException> { service.confirmAccountForToken(TOKEN) }
+    fun `Not sending activation account token due to token not existing`() {
+        log.info("Running test: Not sending activation account token due to token not existing")
+        Assertions.assertThrows(VetlogException::class.java) { service.confirmAccountForToken(TOKEN) }
     }
 
     @Test
-    @DisplayName("Not sending activation account token due to user not found")
-    fun shouldNotSendActivationAccountTokenDueToUserNotFound(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not sending activation account token due to user not found`() {
+        log.info("Running test: Not sending activation account token due to user not found")
         whenever(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL))
-        assertThrows<UserNotFoundException> { service.confirmAccountForToken(TOKEN) }
+        Assertions.assertThrows(UserNotFoundException::class.java) { service.confirmAccountForToken(TOKEN) }
     }
 
     @Test
-    @DisplayName("Generating token to change password")
     @Throws(IOException::class)
-    fun shouldSendChangePasswordToken(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Generating token to change password`() {
+        log.info("Running test: Generating token to change password")
         user.isEnabled = true
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
         whenever(registrationService.generateToken(EMAIL)).thenReturn(TOKEN)
@@ -112,40 +105,35 @@ internal class RecoveryServiceTest {
     }
 
     @Test
-    @DisplayName("Not sending change password token due to user not found")
-    fun shouldNotSendChangePasswordTokenDueToUserNotFound(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        assertThrows<UserNotFoundException> { service.generateRegistrationCodeForEmail(EMAIL) }
+    fun `Not sending change password token due to user not found`() {
+        log.info("Running test: Not sending change password token due to user not found")
+        Assertions.assertThrows(UserNotFoundException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
     }
 
     @Test
-    @DisplayName("Not sending change password token due to user not enabled")
-    fun shouldNotSendChangePasswordTokenDueToUserNotEnabled(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not sending change password token due to user not enabled`() {
+        log.info("Running test: Not sending change password token due to user not enabled")
         user.isEnabled = false
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
-        assertThrows<VetlogException> { service.generateRegistrationCodeForEmail(EMAIL) }
+        Assertions.assertThrows(VetlogException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
     }
 
     @Test
-    @DisplayName("Validating a token")
-    fun shouldValidateToken(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Validating a token`() {
+        log.info("Running test: Validating a token")
         whenever(repository.findByToken(TOKEN)).thenReturn(Optional.of(RegistrationCode()))
         Assertions.assertTrue(service.validateToken(TOKEN))
     }
 
     @Test
-    @DisplayName("Finding an invalid token")
-    fun shouldFindInvalidToken(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Finding an invalid token`() {
+        log.info("Running test: Finding an invalid token")
         Assertions.assertFalse(service.validateToken(TOKEN))
     }
 
     @Test
-    @DisplayName("Changing password")
-    fun shouldChangePassword(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Changing password`() {
+        log.info("Running test: Changing password")
         val changePasswordCommand = ChangePasswordCommand().apply {
             token = TOKEN
             password = "password"

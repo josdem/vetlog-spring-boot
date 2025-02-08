@@ -25,8 +25,6 @@ import com.josdem.vetlog.service.impl.UserServiceImpl
 import com.josdem.vetlog.util.UserContextHolderProvider
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.Mockito.mock
@@ -70,43 +68,38 @@ internal class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Getting user by username")
-    fun shouldGetUserByUsername(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Getting user by username`() {
+        log.info("Running test: Getting user by username")
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user))
         val result = service.getByUsername(USERNAME)
         Assertions.assertEquals(user, result)
     }
 
     @Test
-    @DisplayName("Not finding user by username")
-    fun shouldNotGetUserByUsername(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not finding user by username`() {
+        log.info("Running test: Not finding user by username")
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
         assertThrows<UserNotFoundException> { service.getByUsername(USERNAME) }
     }
 
     @Test
-    @DisplayName("Getting user by email")
-    fun shouldGetUserByEmail(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Getting user by email`() {
+        log.info("Running test: Getting user by email")
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
         val result = service.getByEmail(EMAIL)
         Assertions.assertEquals(user, result)
     }
 
     @Test
-    @DisplayName("Not finding user by email")
-    fun shouldNotGetUserByEmail(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not finding user by email`() {
+        log.info("Running test: Not finding user by email")
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.empty())
         assertThrows<UserNotFoundException> { service.getByEmail(EMAIL) }
     }
 
     @Test
-    @DisplayName("Saving a user")
-    fun shouldSaveAnUser(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Saving a user`() {
+        log.info("Running test: Saving a user")
         val command: Command = mock()
         user.email = EMAIL
         whenever(userBinder.bindUser(command)).thenReturn(user)
@@ -119,9 +112,8 @@ internal class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Disabling a user due to country code")
-    fun shouldDisableAnUser(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Disabling a user due to country code`() {
+        log.info("Running test: Disabling a user due to country code")
         val command: Command = mock()
         user.email = EMAIL
         user.countryCode = "+countryCodeOne"
@@ -136,9 +128,8 @@ internal class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Getting current user")
-    fun shouldGetCurrentUser(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Getting current user`() {
+        log.info("Running test: Getting current user")
         val authentication: Authentication = mock()
         whenever(authentication.name).thenReturn(USERNAME)
         whenever(provider.authentication).thenReturn(authentication)
@@ -147,9 +138,8 @@ internal class UserServiceTest {
     }
 
     @Test
-    @DisplayName("Not finding current user")
-    fun shouldNotGetCurrentUser(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not finding current user`() {
+        log.info("Running test: Not finding current user")
         val authentication: Authentication = mock()
         whenever(authentication.name).thenReturn(USERNAME)
         whenever(provider.authentication).thenReturn(authentication)

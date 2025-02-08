@@ -49,9 +49,8 @@ internal class BreedServiceTest {
     }
 
     @Test
-    @DisplayName("Getting breeds by type")
-    fun shouldGetBreedsByType(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Getting breeds by type`() {
+        log.info("Running test: getting breeds by type")
 
         val mockBreeds = listOf(Breed()) // Kotlin の listOf を使用
         whenever(breedRepository.findByType(PetType.DOG)).thenReturn(mockBreeds)

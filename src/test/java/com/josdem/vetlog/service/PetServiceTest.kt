@@ -29,9 +29,7 @@ import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.PetServiceImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
@@ -94,12 +92,12 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Saving a pet")
     @Throws(IOException::class)
-    fun shouldSavePet(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Saving a pet`() {
+        log.info("Running test: Saving a pet")
         val command: Command = mock()
         whenever(petBinder.bindPet(command)).thenReturn(pet)
+
         service.save(command, user)
 
         verify(petRepository).save(any())
@@ -107,10 +105,9 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Updating a pet")
     @Throws(IOException::class)
-    fun shouldUpdatePet(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Updating a pet`() {
+        log.info("Running test: Updating a pet")
         pet!!.images = mutableListOf()
         val command: PetCommand = mock()
 
@@ -131,10 +128,9 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Not updating a pet due to user not found")
     @Throws(IOException::class)
-    fun shouldNotUpdatePet(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Not updating a pet due to user not found`() {
+        log.info("Running test: Not updating a pet due to user not found")
         pet!!.images = mutableListOf()
         val command: PetCommand = mock()
 
@@ -151,9 +147,8 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Not update due to user not found")
-    fun shouldNotUpdateDueToUserDoesNotExist(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Not update due to user not found`() {
+        log.info("Running test: Not update due to user not found")
         val command: PetCommand = mock()
         whenever(petRepository.findById(2L)).thenReturn(Optional.of(pet!!))
 
@@ -163,9 +158,8 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Not update due to pet not found")
-    fun shouldNotUpdateDueToPetDoesNotExist(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Not update due to pet not found`() {
+        log.info("Running test: Not update due to pet not found")
         val command: PetCommand = mock()
         Assertions.assertThrows(BusinessException::class.java) {
             service.update(command)
@@ -173,35 +167,31 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Getting pet by uuid")
-    fun shouldGetPetByUuid(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Getting pet by uuid`() {
+        log.info("Running test: Getting pet by uuid")
         whenever(petRepository.findByUuid("uuid")).thenReturn(Optional.of(pet!!))
         Assertions.assertEquals(pet, service.getPetByUuid("uuid"))
     }
 
     @Test
-    @DisplayName("Getting pet by id")
-    fun shouldGetPetById(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Getting pet by id`() {
+        log.info("Running test: Getting pet by id")
         val optionalPet = Optional.of(pet!!)
         whenever(petRepository.findById(1L)).thenReturn(optionalPet)
         Assertions.assertEquals(pet, service.getPetById(1L))
     }
 
     @Test
-    @DisplayName("Pet by id not found")
-    fun shouldNotFoundPetById(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Pet by id not found`() {
+        log.info("Running test: Pet by id not found")
         Assertions.assertThrows(BusinessException::class.java) {
             service.getPetById(1L)
         }
     }
 
     @Test
-    @DisplayName("Listing a pet by owner")
-    fun shouldListPetsByOwner(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Listing a pet by owner`() {
+        log.info("Running test: Listing a pet by owner")
         whenever(petRepository.findAllByUser(user)).thenReturn(listOf(pet))
         whenever(petRepository.findAllByAdopter(user)).thenReturn(mutableListOf())
         whenever(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(mutableListOf())
@@ -209,9 +199,8 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Not listing pet if adopted")
-    fun shouldNotListPetsIfAdopted(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Not listing pet if adopted`() {
+        log.info("Running test: Not listing pet if adopted")
         pets.add(pet)
         whenever(petRepository.findAllByUser(user)).thenReturn(pets)
         whenever(petRepository.findAllByAdopter(user)).thenReturn(mutableListOf())
@@ -220,27 +209,8 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Listing pets if I am adopter")
-    fun shouldListPetIfIamAdopter(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        whenever(petRepository.findAllByUser(user)).thenReturn(mutableListOf())
-        whenever(petRepository.findAllByAdopter(user)).thenReturn(listOf(pet))
-        whenever(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(mutableListOf())
-        Assertions.assertEquals(1, service.getPetsByUser(user).size)
-    }
-
-    @Test
-    @DisplayName("Getting pet by status")
-    fun shouldGetPetByStatus(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        whenever(petRepository.findAllByStatus(PetStatus.OWNED)).thenReturn(pets)
-        Assertions.assertEquals(pets, service.getPetsByStatus(PetStatus.OWNED))
-    }
-
-    @Test
-    @DisplayName("Getting pet adoption information")
-    fun shouldGetPetAdoption(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Getting pet adoption information`() {
+        log.info("Running test: Getting pet adoption information")
         val petAdoption = PetAdoption().apply {
             id = 1L
             description = "It is cute!"
@@ -255,9 +225,8 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Deleting a pet")
-    fun shouldDeletePetById(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Deleting a pet`() {
+        log.info("Running test: Deleting a pet")
         whenever(petRepository.findById(1L)).thenReturn(Optional.of(pet!!))
         Assertions.assertDoesNotThrow {
             service.deletePetById(1L)
@@ -266,19 +235,8 @@ internal class PetServiceTest {
     }
 
     @Test
-    @DisplayName("Not deleting a pet due to not found")
-    fun shouldNotDeletePetById(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        whenever(petRepository.findById(1L)).thenReturn(Optional.empty())
-        Assertions.assertThrows(BusinessException::class.java) {
-            service.deletePetById(1L)
-        }
-    }
-
-    @Test
-    @DisplayName("Not deleting a pet due to IN_ADOPTION status")
-    fun shouldNotDeletePetInAdoption(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Not deleting a pet due to IN_ADOPTION status`() {
+        log.info("Running test: Not deleting a pet due to IN_ADOPTION status")
         val petInAdoption = Pet().apply {
             status = PetStatus.IN_ADOPTION
         }

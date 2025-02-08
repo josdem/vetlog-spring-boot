@@ -28,8 +28,6 @@ import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy
 import com.josdem.vetlog.strategy.vaccination.impl.DogVaccinationStrategy
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -74,18 +72,16 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    @DisplayName("Not saving a pet if it is not a dog or cat")
-    fun shouldNotSavePetIfItIsNotADogOrCat(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not saving a pet if it is not a dog or cat`() {
+        log.info("Running test: Not saving a pet if it is not a dog or cat")
         pet.breed.type = PetType.BIRD
         assertThrows<BusinessException> { vaccinationService.save(pet) }
     }
 
-    @DisplayName("Saving vaccines")
     @ParameterizedTest
     @CsvSource("9, 2", "13, 3", "20, 5")
-    fun shouldSaveVaccines(weeks: Int, times: Int) {
-        log.info("Test: saving vaccines")
+    fun `Saving vaccines`(weeks: Int, times: Int) {
+        log.info("Running test: Saving vaccines")
         pet.breed.type = PetType.DOG
         pet.birthDate = LocalDateTime.now().minusWeeks(weeks.toLong())
         vaccinationService.save(pet)
@@ -93,9 +89,8 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    @DisplayName("Not saving vaccination due to not being old enough")
-    fun shouldNotSaveVaccinationDueToNotOldEnough(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not saving vaccination due to not being old enough`() {
+        log.info("Running test: Not saving vaccination due to not being old enough")
         pet.breed.type = PetType.DOG
         pet.birthDate = LocalDateTime.now().minusWeeks(1)
         vaccinationService.save(pet)
@@ -103,9 +98,8 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    @DisplayName("Getting vaccines in Pending status")
-    fun shouldGetVaccinesInPendingStatus(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Getting vaccines in Pending status`() {
+        log.info("Running test: Getting vaccines in Pending status")
         whenever(vaccinationRepository.findAllByPet(pet)).thenReturn(
             listOf(
                 Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.PENDING, pet),
@@ -117,9 +111,8 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    @DisplayName("Deleting vaccines")
-    fun shouldDeleteVaccines(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Deleting vaccines`() {
+        log.info("Running test: Deleting vaccines")
         vaccinationService.deleteVaccinesByPet(pet)
         verify(vaccinationRepository).deleteAllByPet(pet)
     }
