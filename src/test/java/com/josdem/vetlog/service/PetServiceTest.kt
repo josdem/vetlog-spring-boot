@@ -209,6 +209,22 @@ internal class PetServiceTest {
     }
 
     @Test
+    fun `Listing pets if I am adopter`() {
+        log.info("Running test: Listing pets if I am adopter")
+        whenever(petRepository.findAllByUser(user)).thenReturn(mutableListOf())
+        whenever(petRepository.findAllByAdopter(user)).thenReturn(listOf(pet))
+        whenever(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(mutableListOf())
+        Assertions.assertEquals(1, service.getPetsByUser(user).size)
+    }
+
+    @Test
+    fun `Getting pet by status`() {
+        log.info("Running test: Getting pet by status")
+        whenever(petRepository.findAllByStatus(PetStatus.OWNED)).thenReturn(pets)
+        Assertions.assertEquals(pets, service.getPetsByStatus(PetStatus.OWNED))
+    }
+
+    @Test
     fun `Getting pet adoption information`() {
         log.info("Running test: Getting pet adoption information")
         val petAdoption = PetAdoption().apply {
@@ -232,6 +248,14 @@ internal class PetServiceTest {
             service.deletePetById(1L)
         }
         verify(vaccinationService).deleteVaccinesByPet(pet)
+    }
+    @Test
+    fun `Not deleting a pet due to not found`() {
+        log.info("Running test: Not deleting a pet due to not found")
+        whenever(petRepository.findById(1L)).thenReturn(Optional.empty())
+        Assertions.assertThrows(BusinessException::class.java) {
+            service.deletePetById(1L)
+        }
     }
 
     @Test
