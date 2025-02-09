@@ -23,8 +23,6 @@ import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.service.impl.AdoptionServiceImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
@@ -53,9 +51,8 @@ internal class AdoptionServiceTest {
     }
 
     @Test
-    @DisplayName("Saving a pet in adoption")
-    fun shouldSaveAPetInAdoption(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Saving a pet in adoption`() {
+        log.info("Running test: saving a pet in adoption")
         val adoptionCommand = getAdoptionCommand()
         val pet = getPet()
 

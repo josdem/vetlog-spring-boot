@@ -20,8 +20,6 @@ import com.josdem.vetlog.repository.RegistrationCodeRepository
 import com.josdem.vetlog.service.impl.RegistrationServiceImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
@@ -53,18 +51,16 @@ internal class RegistrationServiceTest {
     }
 
     @Test
-    @DisplayName("Getting user by token")
-    fun shouldGetUserByToken(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Getting user by token`() {
+        log.info("Running test: Getting user by token")
         val registrationCode = RegistrationCode().apply { email = EMAIL }
         whenever(repository.findByToken(TOKEN)).thenReturn(Optional.of(registrationCode))
         Assertions.assertEquals(EMAIL, service.findEmailByToken(TOKEN).get())
     }
 
     @Test
-    @DisplayName("Generating token")
-    fun shouldGenerateToken(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Generating token`() {
+        log.info("Running test: Generating token")
         val token = service.generateToken(EMAIL)
         Assertions.assertEquals(36, token.length)
         verify(repository).save(any<RegistrationCode>())

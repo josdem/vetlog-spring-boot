@@ -22,8 +22,6 @@ import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.UserDetailsServiceImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -52,9 +50,8 @@ internal class UserDetailsServiceTest {
     }
 
     @Test
-    @DisplayName("Loading user by username")
-    fun shouldLoadUserByUsername(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Loading user by username`() {
+        log.info("Running test: Loading user by username")
         setBasicUserData()
         user.isEnabled = true
         user.isAccountNonExpired = true
@@ -70,16 +67,14 @@ internal class UserDetailsServiceTest {
     }
 
     @Test
-    @DisplayName("Not searching for authorities since user does not exist")
-    fun shouldNotSearchForAuthoritiesDueToUserNotFound(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not searching for authorities since user does not exist`() {
+        log.info("Running test: Not searching for authorities since user does not exist")
         assertThrows<BusinessException> { service.loadUserByUsername("thisUserDoesNotExist") }
     }
 
     @Test
-    @DisplayName("Not returning user since it is not enabled")
-    fun shouldNotReturnUserSinceIsNotEnabled(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not returning user since it is not enabled`() {
+        log.info("Running test: Not returning user since it is not enabled")
         setBasicUserData()
         user.isEnabled = false
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user))

@@ -25,8 +25,6 @@ import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.TelephoneServiceImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
@@ -62,10 +60,9 @@ internal class TelephoneServiceTest {
     }
 
     @Test
-    @DisplayName("Sending adopter contact information to the pet owner")
     @Throws(IOException::class)
-    fun shouldSendAdopterInformation(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Sending adopter contact information to the pet owner`() {
+        log.info("Running test: Sending adopter contact information to the pet owner")
         val telephoneCommand = TelephoneCommand().apply {
             uuid = "uuid"
             mobile = "7346041832"

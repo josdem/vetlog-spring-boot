@@ -20,8 +20,6 @@ import jakarta.servlet.http.HttpServletRequest
 import com.josdem.vetlog.service.impl.LocaleServiceImpl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
@@ -54,9 +52,8 @@ internal class LocaleServiceTest {
     }
 
     @Test
-    @DisplayName("Getting message by request")
-    fun shouldGetMessageByRequest(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Getting message by request`() {
+        log.info("Running test: Getting message by request")
         val request: HttpServletRequest = mock()
 
         whenever(messageSource.getMessage(code, null, localeResolver.resolveLocale(request)))
@@ -66,9 +63,8 @@ internal class LocaleServiceTest {
     }
 
     @Test
-    @DisplayName("Getting message by code")
-    fun shouldGetMessageByCode(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Getting message by code`() {
+        log.info("Running test: Getting message by code")
 
         whenever(messageSource.getMessage(code, null, Locale.of("en"))).thenReturn("message")
 

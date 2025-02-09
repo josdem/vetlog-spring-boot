@@ -19,9 +19,7 @@ import com.josdem.vetlog.client.GoogleStorageWriter
 import com.josdem.vetlog.command.PetLogCommand
 import com.josdem.vetlog.service.impl.PetPrescriptionServiceImpl
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
@@ -56,10 +54,9 @@ internal class PetPrescriptionServiceTest {
     }
 
     @Test
-    @DisplayName("Saving a pet image")
     @Throws(IOException::class)
-    fun shouldSavePetImage(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
+    fun `Saving a pet image`() {
+        log.info("Running test: Saving a pet image")
 
         val petLogCommand = PetLogCommand()
         val multiPartFile: MultipartFile = mock()

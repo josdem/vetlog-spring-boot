@@ -20,8 +20,6 @@ import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.service.impl.EmailServiceImpl
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -59,9 +57,8 @@ internal class EmailServiceTest {
     }
 
     @Test
-    @DisplayName("Sending a welcome email")
-    fun shouldSendWelcomeEmail(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Sending a welcome email`() {
+        log.info("Running test: Sending a welcome email")
         whenever(templateProperties.welcome).thenReturn("welcome.ftl")
         user.firstName = "Jose"
         user.email = "contact@josdem.io"
@@ -73,9 +70,8 @@ internal class EmailServiceTest {
     }
 
     @Test
-    @DisplayName("Not sending a welcome email due to an exception")
-    fun shouldNotSendWelcomeEmail(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not sending a welcome email due to an exception`() {
+        log.info("Running test: Not sending a welcome email due to an exception")
         whenever(restService.sendMessage(any())).thenThrow(IOException("Error"))
 
         assertThrows<BusinessException> {
@@ -84,9 +80,8 @@ internal class EmailServiceTest {
     }
 
     @Test
-    @DisplayName("Not sending email if user is not enabled")
-    fun shouldNotSendEmailIfUserIsNotEnabled(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
+    fun `Not sending email if user is not enabled`() {
+        log.info("Running test: Not sending email if user is not enabled")
         user.isEnabled = false
 
         emailService.sendWelcomeEmail(user)
