@@ -13,6 +13,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 */
+
 package com.josdem.vetlog.service
 
 import com.josdem.vetlog.config.TemplateProperties
