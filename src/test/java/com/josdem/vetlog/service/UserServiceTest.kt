@@ -25,6 +25,7 @@ import com.josdem.vetlog.service.impl.UserServiceImpl
 import com.josdem.vetlog.util.UserContextHolderProvider
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.Mockito.mock
@@ -145,5 +146,14 @@ internal class UserServiceTest {
         whenever(provider.authentication).thenReturn(authentication)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
         assertThrows<UserNotFoundException> { service.getCurrentUser() }
+    }
+
+    @Test
+    fun `should find an user by mobile`(testInfo: TestInfo) {
+        log.info("Running test: {}", testInfo.displayName)
+        val mobile = "+521234567890"
+        whenever(userRepository.findByMobile(mobile)).thenReturn(Optional.of(user))
+        val result = service.getByMobile(mobile)
+        Assertions.assertEquals(user, result)
     }
 }

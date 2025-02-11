@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("User with email: " + email + NOT_FOUND));
     }
 
+    @Override
+    public User getByMobile(String mobile) {
+        return null;
+    }
+
     @Transactional
     public User save(Command command) {
         var user = userBinder.bindUser(command);
