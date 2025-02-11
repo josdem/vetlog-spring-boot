@@ -46,13 +46,21 @@ public class UserServiceImpl implements UserService {
     public User getByUsername(String username) {
         return userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + NOT_FOUND));
+                .or(() -> userRepository.findByMobile(username))
+                .orElseThrow(() -> new UserNotFoundException("User " + NOT_FOUND));
     }
 
     public User getByEmail(String email) {
         return userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("User with email: " + email + NOT_FOUND));
+    }
+
+    @Override
+    public User getByMobile(String mobile) {
+        return userRepository
+                .findByMobile(mobile)
+                .orElseThrow(() -> new UserNotFoundException("User with mobile: " + mobile + NOT_FOUND));
     }
 
     @Transactional

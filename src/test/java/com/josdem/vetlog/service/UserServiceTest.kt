@@ -15,6 +15,9 @@
 */
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+
 import com.josdem.vetlog.binder.UserBinder
 import com.josdem.vetlog.command.Command
 import com.josdem.vetlog.config.ApplicationProperties
@@ -23,8 +26,9 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.UserServiceImpl
 import com.josdem.vetlog.util.UserContextHolderProvider
-import org.junit.jupiter.api.Assertions
+
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.Mockito.mock
@@ -59,6 +63,7 @@ internal class UserServiceTest {
         private val log = LoggerFactory.getLogger(UserServiceTest::class.java)
         private const val USERNAME = "josdem"
         private const val EMAIL = "contact@josdem.io"
+        private const val MOBILE = "+521234567890"
     }
 
     @BeforeEach
@@ -72,7 +77,7 @@ internal class UserServiceTest {
         log.info("Running test: Getting user by username")
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user))
         val result = service.getByUsername(USERNAME)
-        Assertions.assertEquals(user, result)
+        assertEquals(user, result)
     }
 
     @Test
@@ -87,7 +92,7 @@ internal class UserServiceTest {
         log.info("Running test: Getting user by email")
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
         val result = service.getByEmail(EMAIL)
-        Assertions.assertEquals(user, result)
+        assertEquals(user, result)
     }
 
     @Test
@@ -108,7 +113,7 @@ internal class UserServiceTest {
 
         verify(emailService).sendWelcomeEmail(user)
         verify(userRepository).save(user)
-        Assertions.assertEquals(user, result)
+        assertEquals(user, result)
     }
 
     @Test
@@ -123,8 +128,8 @@ internal class UserServiceTest {
         val result = service.save(command)
 
         verify(userRepository).save(user)
-        Assertions.assertEquals(user, result)
-        Assertions.assertFalse(user.isEnabled, "User should be disabled")
+        assertEquals(user, result)
+        assertFalse(user.isEnabled, "User should be disabled")
     }
 
     @Test
@@ -134,7 +139,7 @@ internal class UserServiceTest {
         whenever(authentication.name).thenReturn(USERNAME)
         whenever(provider.authentication).thenReturn(authentication)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user))
-        Assertions.assertEquals(user, service.getCurrentUser())
+        assertEquals(user, service.getCurrentUser())
     }
 
     @Test
@@ -145,5 +150,19 @@ internal class UserServiceTest {
         whenever(provider.authentication).thenReturn(authentication)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
         assertThrows<UserNotFoundException> { service.getCurrentUser() }
+    }
+
+    @Test
+    fun `Should find an user by mobile`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userRepository.findByMobile(MOBILE)).thenReturn(Optional.of(user))
+        val result = service.getByMobile(MOBILE)
+        assertEquals(user, result)
+    }
+
+    @Test
+    fun `Should not find an user by mobile`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        assertThrows<UserNotFoundException> { service.getByMobile(MOBILE) }
     }
 }

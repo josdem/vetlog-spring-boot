@@ -24,6 +24,8 @@ public interface UserService {
 
     User getByEmail(String email);
 
+    User getByMobile(String mobile);
+
     User save(Command command);
 
     User getCurrentUser();
