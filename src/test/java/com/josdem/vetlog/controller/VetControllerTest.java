@@ -68,7 +68,7 @@ class VetControllerTest {
     @DisplayName("showing create vet form")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowCreateVetForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/vet/form"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("usernameCommand"))
@@ -80,11 +80,27 @@ class VetControllerTest {
     @DisplayName("searching by user")
     @WithMockUser(username = "admin", password = "12345678", roles = "ADMIN")
     void shouldSearchPetsByUser(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
 
         registerPet();
 
         mockMvc.perform(post("/vet/search").with(csrf()).param("username", "josdem"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("pets"))
+                .andExpect(model().attributeExists("defaultImage"))
+                .andExpect(view().name("vet/list"));
+    }
+
+    @Test
+    @Transactional
+    @DisplayName("searching by mobile")
+    @WithMockUser(username = "admin", password = "12345678", roles = "ADMIN")
+    void shouldSearchPetsByMobile(TestInfo testInfo) throws Exception {
+        log.info(testInfo.getDisplayName());
+
+        registerPet();
+
+        mockMvc.perform(post("/vet/search").with(csrf()).param("username", "1234567890"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("pets"))
                 .andExpect(model().attributeExists("defaultImage"))

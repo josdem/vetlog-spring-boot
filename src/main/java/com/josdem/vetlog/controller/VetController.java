@@ -18,8 +18,6 @@ package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.UsernameCommand;
 import com.josdem.vetlog.enums.VaccinationStatus;
-import com.josdem.vetlog.exception.UserNotFoundException;
-import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.service.VaccinationService;
@@ -64,12 +62,7 @@ public class VetController {
     ModelAndView search(@Valid UsernameCommand command) {
         log.info("Listing pets");
         var modelAndView = new ModelAndView("vet/list");
-        var user = new User();
-        try {
-            user = userService.getByUsername(command.getUsername());
-        } catch (UserNotFoundException unt) {
-            user = userService.getByMobile(command.getUsername());
-        }
+        var user = userService.getByUsername(command.getUsername());
         var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);

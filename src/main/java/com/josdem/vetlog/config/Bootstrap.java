@@ -47,21 +47,22 @@ public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
     }
 
     void createDefaultUsers() {
-        createUserWithRole("josdem", SECRET, "joseluis.delacruz@gmail.com", Role.USER);
-        createUserWithRole("miriam", SECRET, "miriam@gmail.com", Role.USER);
-        createUserWithRole("admin", SECRET, "admin@email.com", Role.ADMIN);
+        createUserWithRole("josdem", "joseluis.delacruz@gmail.com", "1234567890", Role.USER);
+        createUserWithRole("miriam", "miriam@gmail.com", "1112223334", Role.USER);
+        createUserWithRole("admin", "admin@email.com", "5556667778", Role.ADMIN);
     }
 
-    void createUserWithRole(String username, String password, String email, Role authority) {
+    void createUserWithRole(String username, String email, String mobile, Role authority) {
         if (userRepository.findByUsername(username).isEmpty()) {
             log.info("Creating user: {}", username);
             User user = new User();
             user.setUsername(username);
-            user.setPassword(new BCryptPasswordEncoder().encode(password));
+            user.setPassword(new BCryptPasswordEncoder().encode(SECRET));
             user.setEmail(email);
             user.setRole(authority);
             user.setFirstName(username);
             user.setLastName(username);
+            user.setMobile(mobile);
             user.setEnabled(true);
             userRepository.save(user);
         }
