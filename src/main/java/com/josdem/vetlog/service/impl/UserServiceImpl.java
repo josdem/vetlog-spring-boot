@@ -57,7 +57,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByMobile(String mobile) {
-        return null;
+        return userRepository
+                .findByMobile(mobile)
+                .orElseThrow(() -> new UserNotFoundException("User with mobile: " + mobile + NOT_FOUND));
     }
 
     @Transactional
