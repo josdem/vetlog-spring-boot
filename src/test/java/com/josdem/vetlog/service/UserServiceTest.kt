@@ -63,6 +63,7 @@ internal class UserServiceTest {
         private val log = LoggerFactory.getLogger(UserServiceTest::class.java)
         private const val USERNAME = "josdem"
         private const val EMAIL = "contact@josdem.io"
+        private const val MOBILE = "+521234567890"
     }
 
     @BeforeEach
@@ -152,11 +153,16 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `should find an user by mobile`(testInfo: TestInfo) {
-        log.info("Running test: {}", testInfo.displayName)
-        val mobile = "+521234567890"
-        whenever(userRepository.findByMobile(mobile)).thenReturn(Optional.of(user))
-        val result = service.getByMobile(mobile)
+    fun `Should find an user by mobile`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userRepository.findByMobile(MOBILE)).thenReturn(Optional.of(user))
+        val result = service.getByMobile(MOBILE)
         assertEquals(user, result)
+    }
+
+    @Test
+    fun `Should not find an user by mobile`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        assertThrows<UserNotFoundException> { service.getByMobile(MOBILE) }
     }
 }
