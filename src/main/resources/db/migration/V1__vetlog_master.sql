@@ -243,109 +243,11 @@ VALUES
   (66, '2017-06-03 21:23:01', 'Rosy Boa', 'SNAKE'),
   (67, '2017-06-03 21:23:01', 'Gopher', 'SNAKE'),
   (68, '2017-06-03 21:23:01', 'Ball Python', 'SNAKE'),
-  (69, '2017-06-03 21:23:01', 'Tarantula', 'SPIDER');
-
-INSERT INTO
-  `breed`
-VALUES
-  (
-    80,
-    '2025-02-12 11:14:23',
-    'Australian Cattle',
-    'DOG'
-  ),
-  (
-    81,
-    '2025-03-12 11:14:23',
-    'Miniature Pinscher',
-    'DOG'
-  ),
+  (69, '2017-06-03 21:23:01', 'Tarantula', 'SPIDER'),
+  (80,'2025-02-12 11:14:23','Australian Cattle','DOG'),
+  (81,'2025-03-12 11:14:23','Miniature Pinscher','DOG'),
   (82, '2025-02-12 11:14:23', 'Goldendoodle', 'DOG'),
   (83, '2025-02-12 11:14:23', 'Schnoodle', 'DOG'),
-  (
-    84,
-    '2025-12-02 11:19:00',
-    'Alaskan Malamute',
-    'DOG'
-  ),
-  (
-    85,
-    '2025-12-02 11:19:00',
-    'Bernese Mountain Dog',
-    'DOG'
-  ),
-  (86, '2025-12-02 11:19:00', 'Basset Hound', 'DOG'),
-  (87, '2025-12-02 11:19:00', 'Cane Corso', 'DOG'),
-  (88, '2025-12-02 11:19:00', 'Collie', 'DOG'),
-  (89, '2025-12-02 11:19:00', 'Irish Setter', 'DOG'),
-  (
-    90,
-    '2025-12-02 11:19:00',
-    'Italian Greyhound',
-    'DOG'
-  ),
-  (91, '2025-12-02 11:19:00', 'Lhasa Apso', 'DOG'),
-  (
-    92,
-    '2025-12-02 11:19:00',
-    'Norwegian Elkhound',
-    'DOG'
-  ),
-  (93, '2025-12-02 11:19:00', 'Papillon', 'DOG'),
-  (94, '2025-12-02 11:19:00', 'Samoyed', 'DOG'),
-  (95, '2025-12-02 11:19:00', 'Shar Pei', 'DOG'),
-  (
-    96,
-    '2025-12-02 11:19:00',
-    'Springer Spaniel',
-    'DOG'
-  ),
-  (
-    97,
-    '2025-12-02 11:19:00',
-    'Staffordshire Bull Terrier',
-    'DOG'
-  ),
-  (98, '2025-12-02 11:19:00', 'Vizsla', 'DOG'),
-  (99, '2025-12-02 11:19:00', 'Whippet', 'DOG'),
-  (
-    100,
-    '2025-12-02 11:19:00',
-    'West Highland White Terrier',
-    'DOG'
-  ),
-  (101, '2025-12-02 11:19:00', 'Akita', 'DOG'),
-  (102, '2025-12-02 11:19:00', 'Borzoi', 'DOG'),
-  (103, '2025-12-02 11:19:00', 'Chow Chow', 'DOG'),
-  (104, '2025-12-02 11:19:00', 'Afghan Hound', 'DOG'),
-  (105, '2025-12-02 11:19:00', 'Basenji', 'DOG'),
-  (
-    106,
-    '2025-12-02 11:19:00',
-    'Great Pyrenees',
-    'DOG'
-  ),
-  (
-    107,
-    '2025-12-02 11:19:00',
-    'Japanese Chin',
-    'DOG'
-  ),
-  (108, '2025-12-02 11:19:00', 'Keeshond', 'DOG'),
-  (109, '2025-12-02 11:19:00', 'Kuvasz', 'DOG'),
-  (
-    110,
-    '2025-12-02 11:19:00',
-    'Tibetan Mastiff',
-    'DOG'
-  ),
-  (
-    111,
-    '2025-12-02 11:19:00',
-    'Tibetan Terrier',
-    'DOG'
-  );
-
 /*!40000 ALTER TABLE `breed` ENABLE KEYS */;
 
 UNLOCK TABLES;
