@@ -89,7 +89,7 @@ internal class PetBinderTest {
     }
 
     @Test
-    fun `binding a pet from command`(testInfo: TestInfo){
+    fun `binding a pet from command`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         var petCommand = getPetCommand()
         petCommand.birthDate = "2021-01-17T00:00"
@@ -109,7 +109,7 @@ internal class PetBinderTest {
     }
 
     @Test
-    fun `binding a pet from command even without birthdate`(testInfo: TestInfo){
+    fun `binding a pet from command even without birthdate`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         var petCommand = getPetCommand()
         petCommand.birthDate = ""
@@ -147,7 +147,7 @@ internal class PetBinderTest {
     private fun getPet(): Pet {
         return Pet().apply {
             id = 1L
-            uuid= "1b211410-320b-11ed-a261-0242ac120002"
+            uuid = "1b211410-320b-11ed-a261-0242ac120002"
             name = "Cremita"
             dewormed = true
             sterilized = true

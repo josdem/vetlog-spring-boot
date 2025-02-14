@@ -17,10 +17,10 @@
 package com.josdem.vetlog.binder
 
 import com.josdem.vetlog.command.PetLogCommand
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
-import org.junit.jupiter.api.Assertions.assertEquals
 
 internal class PetLogBinderTest {
 
@@ -31,7 +31,7 @@ internal class PetLogBinderTest {
     }
 
     @Test
-    fun `binding a pet log command`(testInfo: TestInfo){
+    fun `binding a pet log command`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
 
         val petLogCommand = PetLogCommand().apply {
