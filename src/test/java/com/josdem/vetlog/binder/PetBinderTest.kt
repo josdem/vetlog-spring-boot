@@ -20,7 +20,11 @@ import com.josdem.vetlog.command.PetCommand
 import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
-import com.josdem.vetlog.model.*
+import com.josdem.vetlog.model.Breed
+import com.josdem.vetlog.model.Pet
+import com.josdem.vetlog.model.PetImage
+import com.josdem.vetlog.model.User
+import com.josdem.vetlog.model.Vaccination
 import com.josdem.vetlog.repository.BreedRepository
 import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.service.AdoptionServiceTest
@@ -32,19 +36,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.any
-import org.mockito.kotlin.isA
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.List
-import java.util.Optional
+import java.util.*
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
-
 
 internal class PetBinderTest {
 
@@ -94,11 +92,8 @@ internal class PetBinderTest {
     fun `binding a pet from command`(testInfo: TestInfo){
         log.info(testInfo.displayName)
         var petCommand = getPetCommand()
-        whenever(breedRepository.findById(1L)).thenReturn(Optional.of(Breed().apply {
-            id = 1L
-            name = "Chihuahua"
-            type = PetType.DOG
-        }))
+        petCommand.birthDate = "2021-01-17T00:00"
+        setBreedExpectations()
 
         val result = petBinder.bindPet(petCommand)
 
@@ -113,6 +108,27 @@ internal class PetBinderTest {
         }
     }
 
+    @Test
+    fun `binding a pet from command even without birthdate`(testInfo: TestInfo){
+        log.info(testInfo.displayName)
+        var petCommand = getPetCommand()
+        petCommand.birthDate = ""
+        setBreedExpectations()
+
+        val result = petBinder.bindPet(petCommand)
+
+        val diff: Int = LocalDateTime.now().dayOfYear - result.birthDate.dayOfYear
+        assertEquals(0, diff)
+    }
+
+    private fun setBreedExpectations() {
+        whenever(breedRepository.findById(1L)).thenReturn(Optional.of(Breed().apply {
+            id = 1L
+            name = "Chihuahua"
+            type = PetType.DOG
+        }))
+    }
+
     private fun getPetCommand(): PetCommand {
         return PetCommand().apply {
             id = 2L
@@ -124,7 +140,6 @@ internal class PetBinderTest {
             images = listOf(PetImage())
             breed = 1L
             vaccines = vaccines
-            birthDate = "2021-01-17T00:00";
         }
     }
 
