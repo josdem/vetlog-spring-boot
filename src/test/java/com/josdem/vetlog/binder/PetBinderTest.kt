@@ -16,11 +16,11 @@
 
 package com.josdem.vetlog.binder
 
+import com.josdem.vetlog.command.PetCommand
+import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
-import com.josdem.vetlog.model.Pet
-import com.josdem.vetlog.model.Breed
-import com.josdem.vetlog.model.PetImage
-import com.josdem.vetlog.model.User
+import com.josdem.vetlog.enums.VaccinationStatus
+import com.josdem.vetlog.model.*
 import com.josdem.vetlog.repository.BreedRepository
 import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.service.AdoptionServiceTest
@@ -32,9 +32,17 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
+import org.mockito.kotlin.isA
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
+import java.time.LocalDate
 import java.time.LocalDateTime
-import kotlin.collections.listOf
+import java.util.List
+import java.util.Optional
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 
@@ -47,6 +55,11 @@ internal class PetBinderTest {
 
     @Mock
     private lateinit var vaccinationRepository: VaccinationRepository
+
+    private val vaccines = listOf(
+        Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.APPLIED, null),
+        Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.PENDING, null)
+    )
 
     companion object {
         private val log = LoggerFactory.getLogger(AdoptionServiceTest::class.java)
@@ -75,6 +88,44 @@ internal class PetBinderTest {
         assertEquals(5L, result.breed)
         assertEquals(1L, result.user)
         assertEquals(PetType.DOG, result.type)
+    }
+
+    @Test
+    fun `binding a pet from command`(testInfo: TestInfo){
+        log.info(testInfo.displayName)
+        var petCommand = getPetCommand()
+        whenever(breedRepository.findById(1L)).thenReturn(Optional.of(Breed().apply {
+            id = 1L
+            name = "Chihuahua"
+            type = PetType.DOG
+        }))
+
+        val result = petBinder.bindPet(petCommand)
+
+        assertEquals(2L, result.id)
+        assertEquals(36, result.uuid.length)
+        assertEquals("Marla", result.name)
+        assertEquals(PetStatus.IN_ADOPTION, result.status)
+        assertNotNull(result.images)
+        assertEquals(1L, result.breed.id)
+        vaccines.forEach {
+            assertEquals(LocalDate.now(), it.date)
+        }
+    }
+
+    private fun getPetCommand(): PetCommand {
+        return PetCommand().apply {
+            id = 2L
+            name = "Marla"
+            status = PetStatus.IN_ADOPTION
+            dewormed = true
+            sterilized = true
+            vaccinated = true
+            images = listOf(PetImage())
+            breed = 1L
+            vaccines = vaccines
+            birthDate = "2021-01-17T00:00";
+        }
     }
 
     @NotNull
