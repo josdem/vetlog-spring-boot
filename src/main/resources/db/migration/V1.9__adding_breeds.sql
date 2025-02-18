@@ -1,5 +1,4 @@
-INSERT INTO `breed` (id, date_created, name, type) 
-VALUES 
+INSERT INTO `breed` VALUES 
 (80,'2025-02-18 15:05:01','Australian Cattle','DOG'),
 (81,'2025-02-18 15:05:01','Miniature Pinscher','DOG'),
 (82,'2025-02-18 15:05:01','Goldendoodle','DOG'),
