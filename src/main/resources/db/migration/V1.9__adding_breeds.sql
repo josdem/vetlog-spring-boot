@@ -7,7 +7,6 @@ INSERT INTO `breed` VALUES
 (85,'2025-02-18 15:05:01','Alaskan Malamute','DOG'),
 (86,'2025-02-18 15:05:01','Bernese Mountain Dog','DOG'),
 (87,'2025-02-18 15:05:01','Basset Hound','DOG'),
-(88,'2025-02-18 15:05:01','Belgian Malinois','DOG'),
 (89,'2025-02-18 15:05:01','Chow Chow','DOG'),
 (90,'2025-02-18 15:05:01','Irish Setter','DOG'),
 (91,'2025-02-18 15:05:01','Rhodesian Ridgeback','DOG'),
