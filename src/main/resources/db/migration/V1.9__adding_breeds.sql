@@ -7,8 +7,8 @@ INSERT INTO `breed` VALUES
 (85,'2025-02-18 15:05:01','Alaskan Malamute','DOG'),
 (86,'2025-02-18 15:05:01','Bernese Mountain Dog','DOG'),
 (87,'2025-02-18 15:05:01','Basset Hound','DOG'),
-(89,'2025-02-18 15:05:01','Chow Chow','DOG'),
-(90,'2025-02-18 15:05:01','Irish Setter','DOG'),
-(91,'2025-02-18 15:05:01','Rhodesian Ridgeback','DOG'),
-(92,'2025-02-18 15:05:01','Samoyed','DOG'),
-(93,'2025-02-18 15:05:01','Tibetan Mastiff','DOG');
+(88,'2025-02-18 15:05:01','Chow Chow','DOG'),
+(89,'2025-02-18 15:05:01','Irish Setter','DOG'),
+(90,'2025-02-18 15:05:01','Rhodesian Ridgeback','DOG'),
+(91,'2025-02-18 15:05:01','Samoyed','DOG'),
+(92,'2025-02-18 15:05:01','Tibetan Mastiff','DOG');
