@@ -20,11 +20,9 @@ import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.service.BreedService;
 import jakarta.servlet.http.HttpServletResponse;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,9 +46,8 @@ public class BreedController {
         response.addHeader("Allow-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
 
-        return breedService.getBreedsByType(PetType.getPetTypeByValue(type))
-            .stream()
-            .sorted(Comparator.comparing(Breed::getName))
-            .collect(Collectors.toList());  // (dynamic for changes) for sorting breeds by name alphabetically
+        return breedService.getBreedsByType(PetType.getPetTypeByValue(type)).stream()
+                .sorted(Comparator.comparing(Breed::getName))
+                .collect(Collectors.toList()); // (dynamic for changes) for sorting breeds by name alphabetically
     }
 }

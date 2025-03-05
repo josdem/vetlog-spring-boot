@@ -34,7 +34,6 @@ import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -145,13 +144,16 @@ public class PetController {
 
     private ModelAndView fillModelAndView(ModelAndView modelAndView) {
         modelAndView.addObject(
-        "breeds", breedService.getBreedsByType(PetType.DOG)
-            .stream()
-            .sorted(Comparator.comparing(Breed::getName))   // for sorting the initial dog listings alphabetically
-            .collect(Collectors.toList())
-    );  // this overlaps with the breed controller, will there be a way to unify this?
-    modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
-    return modelAndView;
+                "breeds",
+                breedService.getBreedsByType(PetType.DOG).stream()
+                        .sorted(Comparator.comparing(
+                                Breed::getName)) // for sorting the initial dog listings alphabetically
+                        .collect(
+                                Collectors
+                                        .toList())); // this overlaps with the breed controller, will there be a way to
+        // unify this?
+        modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
+        return modelAndView;
     }
 
     @GetMapping(value = "/list")

@@ -19,7 +19,7 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
 
     private static final String DA2PP = "DA2PP";
     private static final String DEWORMING = "Deworming";
-    private static final String LEPTOSPIROSIS = "Leptospirosis";
+    private static final String BORDETELLA = "Canine influenza";
     private static final String RABIES = "Rabies";
 
     private final VaccinationRepository vaccinationRepository;
@@ -29,25 +29,23 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
         Long weeks = ChronoUnit.WEEKS.between(pet.getBirthDate(), LocalDateTime.now());
 
         switch (weeks.intValue()) {
-            case 0, 1, 2, 3, 4, 5, 6, 7, 8 -> log.info("No vaccination needed");
-            case 9, 10, 11, 12 -> {
+            case 0, 1, 2, 3, 4, 5 -> log.info("No vaccination needed");
+            case 6, 7, 8 -> {
                 log.info("First vaccination");
                 registerVaccination(DA2PP, pet);
                 registerVaccination(DEWORMING, pet);
             }
-            case 13, 14, 15, 16 -> {
+            case 9, 10, 11, 12 -> {
                 log.info("Second vaccination");
                 registerVaccination(DA2PP, pet);
                 registerVaccination(DEWORMING, pet);
-                registerVaccination(LEPTOSPIROSIS, pet);
             }
             default -> {
                 log.info("Annual vaccination");
                 registerVaccination(DA2PP, pet);
                 registerVaccination(DEWORMING, pet);
-                registerVaccination(LEPTOSPIROSIS, pet);
                 registerVaccination(RABIES, pet);
-                registerVaccination("Canine influenza", pet);
+                registerVaccination(BORDETELLA, pet);
             }
         }
     }

@@ -79,7 +79,7 @@ internal class VaccinationServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource("9, 2", "13, 3", "20, 5")
+    @CsvSource("7, 2", "10, 2", "20, 4")
     fun `Saving vaccines`(weeks: Int, times: Int) {
         log.info("Running test: Saving vaccines")
         pet.breed.type = PetType.DOG
