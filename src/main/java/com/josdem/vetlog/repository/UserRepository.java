@@ -29,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByMobile(String mobile);
 
     User save(User user);
+
+    boolean existsByCountryCodeAndMobile(String countryCode, String mobile);
 }

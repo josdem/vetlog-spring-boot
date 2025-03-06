@@ -30,6 +30,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"countryCode", "mobile"}))
 @ToString
 public class User implements Serializable {
 
