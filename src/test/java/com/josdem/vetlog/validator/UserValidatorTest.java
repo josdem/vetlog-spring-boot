@@ -40,6 +40,8 @@ import org.springframework.validation.Errors;
 @Slf4j
 class UserValidatorTest {
 
+    public static final String COUNTRY_CODE = "+52";
+    public static final String MOBILE = "1234567890";
     private UserValidator validator;
     private Errors errors = mock(Errors.class);
 
@@ -135,6 +137,16 @@ class UserValidatorTest {
         verify(errors).rejectValue("mobile", "user.error.mobile");
     }
 
+    @Test
+    @DisplayName("not duplicating users by country code plus mobile")
+    void shouldNotDuplicateUsersByCountryCodeAndMobile(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        var userCommand = getUserCommand();
+        when(userRepository.findByCountryCodeAndMobile(COUNTRY_CODE, MOBILE)).thenReturn(Optional.of(new User()));
+        validator.validate(userCommand, errors);
+        verify(errors).rejectValue("mobile", "user.error.duplicated.mobile");
+    }
+
     private UserCommand getUserCommand() {
         var userCommand = new UserCommand();
         userCommand.setUsername("josdem");
@@ -143,7 +155,8 @@ class UserValidatorTest {
         userCommand.setFirstname("Jose");
         userCommand.setLastname("Morales");
         userCommand.setEmail("contact@josdem.io");
-        userCommand.setMobile("1234567890");
+        userCommand.setCountryCode(COUNTRY_CODE);
+        userCommand.setMobile(MOBILE);
         return userCommand;
     }
 }

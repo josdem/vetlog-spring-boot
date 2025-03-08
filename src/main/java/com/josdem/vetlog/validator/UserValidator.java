@@ -47,6 +47,7 @@ public class UserValidator implements Validator {
         validateUsername(errors, userCommand);
         validateMobile(errors, userCommand);
         validateEmail(errors, userCommand);
+        validateCountryCodeAndMobile(errors, userCommand);
     }
 
     private void validateMobile(Errors errors, UserCommand command) {
@@ -72,6 +73,14 @@ public class UserValidator implements Validator {
         Optional<User> optional = userRepository.findByEmail(command.getEmail());
         if (optional.isPresent()) {
             errors.rejectValue("email", "user.error.duplicated.email");
+        }
+    }
+
+    private void validateCountryCodeAndMobile(Errors errors, UserCommand command) {
+        Optional<User> optional =
+                userRepository.findByCountryCodeAndMobile(command.getCountryCode(), command.getMobile());
+        if (optional.isPresent()) {
+            errors.rejectValue("mobile", "user.error.duplicated.mobile");
         }
     }
 }
