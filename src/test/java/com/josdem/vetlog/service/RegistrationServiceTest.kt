@@ -15,10 +15,11 @@
 */
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
+
 import com.josdem.vetlog.model.RegistrationCode
 import com.josdem.vetlog.repository.RegistrationCodeRepository
 import com.josdem.vetlog.service.impl.RegistrationServiceImpl
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -55,14 +56,14 @@ internal class RegistrationServiceTest {
         log.info("Running test: Getting user by token")
         val registrationCode = RegistrationCode().apply { email = EMAIL }
         whenever(repository.findByToken(TOKEN)).thenReturn(Optional.of(registrationCode))
-        Assertions.assertEquals(EMAIL, service.findEmailByToken(TOKEN).get())
+        assertEquals(EMAIL, service.findEmailByToken(TOKEN).get())
     }
 
     @Test
     fun `Generating token`() {
         log.info("Running test: Generating token")
         val token = service.generateToken(EMAIL)
-        Assertions.assertEquals(36, token.length)
+        assertEquals(36, token.length)
         verify(repository).save(any<RegistrationCode>())
     }
 }

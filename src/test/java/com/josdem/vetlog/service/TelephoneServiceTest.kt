@@ -15,6 +15,8 @@
 */
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
+
 import com.josdem.vetlog.command.MessageCommand
 import com.josdem.vetlog.command.TelephoneCommand
 import com.josdem.vetlog.enums.PetStatus
@@ -23,7 +25,6 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.TelephoneServiceImpl
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -78,8 +79,8 @@ internal class TelephoneServiceTest {
         verify(petRepository).save(pet)
         verify(userRepository).save(adopter)
         verify(restService).sendMessage(any<MessageCommand>())
-        Assertions.assertEquals(PetStatus.ADOPTED, pet.status)
-        Assertions.assertEquals(adopter, pet.adopter)
+        assertEquals(PetStatus.ADOPTED, pet.status)
+        assertEquals(adopter, pet.adopter)
     }
 
     private fun getPet(owner: User?, adopter: User?): Pet {

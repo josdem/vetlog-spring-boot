@@ -15,6 +15,8 @@
 */
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
+
 import com.josdem.vetlog.binder.PetLogBinder
 import com.josdem.vetlog.command.PetLogCommand
 import com.josdem.vetlog.exception.BusinessException
@@ -23,7 +25,6 @@ import com.josdem.vetlog.model.PetLog
 import com.josdem.vetlog.repository.PetLogRepository
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.service.impl.PetLogServiceImpl
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
@@ -99,7 +100,7 @@ internal class PetLogServiceTest {
 
         val result = service.getPetLogsByPet(pet)
 
-        Assertions.assertEquals(listOf(petLog), result)
+        assertEquals(listOf(petLog), result)
     }
 
     private fun getPetLog(): PetLog {

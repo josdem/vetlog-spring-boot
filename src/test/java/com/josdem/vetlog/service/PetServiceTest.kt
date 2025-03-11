@@ -15,6 +15,11 @@
 */
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
+
 import com.josdem.vetlog.binder.PetBinder
 import com.josdem.vetlog.command.Command
 import com.josdem.vetlog.command.PetCommand
@@ -27,7 +32,6 @@ import com.josdem.vetlog.repository.AdoptionRepository
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.PetServiceImpl
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
@@ -120,8 +124,8 @@ internal class PetServiceTest {
         whenever(userRepository.findById(3L)).thenReturn(Optional.of(adopter!!))
 
         service.update(command)
-        Assertions.assertEquals(user, pet!!.user)
-        Assertions.assertEquals(adopter, pet!!.adopter)
+        assertEquals(user, pet!!.user)
+        assertEquals(adopter, pet!!.adopter)
         verify(petImageService).attachFile(command)
         verify(petRepository).save(any())
         verify(command).images = any()
@@ -141,7 +145,7 @@ internal class PetServiceTest {
         whenever(command.adopter).thenReturn(3L)
         whenever(userRepository.findById(1L)).thenReturn(Optional.empty())
 
-        Assertions.assertThrows(BusinessException::class.java) {
+        assertThrows(BusinessException::class.java) {
             service.update(command)
         }
     }
@@ -152,7 +156,7 @@ internal class PetServiceTest {
         val command: PetCommand = mock()
         whenever(petRepository.findById(2L)).thenReturn(Optional.of(pet!!))
 
-        Assertions.assertThrows(BusinessException::class.java) {
+        assertThrows(BusinessException::class.java) {
             service.update(command)
         }
     }
@@ -161,7 +165,7 @@ internal class PetServiceTest {
     fun `Not update due to pet not found`() {
         log.info("Running test: Not update due to pet not found")
         val command: PetCommand = mock()
-        Assertions.assertThrows(BusinessException::class.java) {
+        assertThrows(BusinessException::class.java) {
             service.update(command)
         }
     }
@@ -170,7 +174,7 @@ internal class PetServiceTest {
     fun `Getting pet by uuid`() {
         log.info("Running test: Getting pet by uuid")
         whenever(petRepository.findByUuid("uuid")).thenReturn(Optional.of(pet!!))
-        Assertions.assertEquals(pet, service.getPetByUuid("uuid"))
+        assertEquals(pet, service.getPetByUuid("uuid"))
     }
 
     @Test
@@ -178,13 +182,13 @@ internal class PetServiceTest {
         log.info("Running test: Getting pet by id")
         val optionalPet = Optional.of(pet!!)
         whenever(petRepository.findById(1L)).thenReturn(optionalPet)
-        Assertions.assertEquals(pet, service.getPetById(1L))
+        assertEquals(pet, service.getPetById(1L))
     }
 
     @Test
     fun `Pet by id not found`() {
         log.info("Running test: Pet by id not found")
-        Assertions.assertThrows(BusinessException::class.java) {
+        assertThrows(BusinessException::class.java) {
             service.getPetById(1L)
         }
     }
@@ -195,7 +199,7 @@ internal class PetServiceTest {
         whenever(petRepository.findAllByUser(user)).thenReturn(listOf(pet))
         whenever(petRepository.findAllByAdopter(user)).thenReturn(mutableListOf())
         whenever(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(mutableListOf())
-        Assertions.assertEquals(1, service.getPetsByUser(user).size)
+        assertEquals(1, service.getPetsByUser(user).size)
     }
 
     @Test
@@ -205,7 +209,7 @@ internal class PetServiceTest {
         whenever(petRepository.findAllByUser(user)).thenReturn(pets)
         whenever(petRepository.findAllByAdopter(user)).thenReturn(mutableListOf())
         whenever(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(pets)
-        Assertions.assertTrue(service.getPetsByUser(user).isEmpty())
+        assertTrue(service.getPetsByUser(user).isEmpty())
     }
 
     @Test
@@ -214,14 +218,14 @@ internal class PetServiceTest {
         whenever(petRepository.findAllByUser(user)).thenReturn(mutableListOf())
         whenever(petRepository.findAllByAdopter(user)).thenReturn(listOf(pet))
         whenever(petRepository.findAllByStatus(PetStatus.ADOPTED)).thenReturn(mutableListOf())
-        Assertions.assertEquals(1, service.getPetsByUser(user).size)
+        assertEquals(1, service.getPetsByUser(user).size)
     }
 
     @Test
     fun `Getting pet by status`() {
         log.info("Running test: Getting pet by status")
         whenever(petRepository.findAllByStatus(PetStatus.OWNED)).thenReturn(pets)
-        Assertions.assertEquals(pets, service.getPetsByStatus(PetStatus.OWNED))
+        assertEquals(pets, service.getPetsByStatus(PetStatus.OWNED))
     }
 
     @Test
@@ -237,14 +241,14 @@ internal class PetServiceTest {
         whenever(adoptionRepository.findByPet(pet)).thenReturn(optional)
 
         service.getPetsAdoption(pets)
-        Assertions.assertEquals("It is cute!", pets[0]!!.adoption.description)
+        assertEquals("It is cute!", pets[0]!!.adoption.description)
     }
 
     @Test
     fun `Deleting a pet`() {
         log.info("Running test: Deleting a pet")
         whenever(petRepository.findById(1L)).thenReturn(Optional.of(pet!!))
-        Assertions.assertDoesNotThrow {
+        assertDoesNotThrow {
             service.deletePetById(1L)
         }
         verify(vaccinationService).deleteVaccinesByPet(pet)
@@ -253,7 +257,7 @@ internal class PetServiceTest {
     fun `Not deleting a pet due to not found`() {
         log.info("Running test: Not deleting a pet due to not found")
         whenever(petRepository.findById(1L)).thenReturn(Optional.empty())
-        Assertions.assertThrows(BusinessException::class.java) {
+        assertThrows(BusinessException::class.java) {
             service.deletePetById(1L)
         }
     }
@@ -266,7 +270,7 @@ internal class PetServiceTest {
         }
         whenever(petRepository.findById(1L)).thenReturn(Optional.of(petInAdoption))
 
-        Assertions.assertThrows(BusinessException::class.java) {
+        assertThrows(BusinessException::class.java) {
             service.deletePetById(1L)
         }
     }
