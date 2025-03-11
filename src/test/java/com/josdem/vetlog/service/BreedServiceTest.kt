@@ -16,14 +16,13 @@
 
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertTrue
+
 import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.repository.BreedRepository
 import com.josdem.vetlog.service.impl.BreedServiceImpl
 import com.josdem.vetlog.enums.PetType
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
@@ -57,7 +56,7 @@ internal class BreedServiceTest {
 
         val breeds = service.getBreedsByType(PetType.DOG)
 
-        Assertions.assertTrue(breeds.isNotEmpty(), "should have a breed")
+        assertTrue(breeds.isNotEmpty(), "should have a breed")
         verify(breedRepository).findByType(PetType.DOG)
     }
 }

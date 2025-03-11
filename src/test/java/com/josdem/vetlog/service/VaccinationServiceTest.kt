@@ -15,6 +15,8 @@
 */
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
+
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
 import com.josdem.vetlog.exception.BusinessException
@@ -26,7 +28,6 @@ import com.josdem.vetlog.service.impl.VaccinationServiceImpl
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy
 import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy
 import com.josdem.vetlog.strategy.vaccination.impl.DogVaccinationStrategy
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -107,7 +108,7 @@ internal class VaccinationServiceTest {
             )
         )
         val vaccinesInPendingStatus = vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)
-        Assertions.assertEquals(1, vaccinesInPendingStatus.size)
+        assertEquals(1, vaccinesInPendingStatus.size)
     }
 
     @Test

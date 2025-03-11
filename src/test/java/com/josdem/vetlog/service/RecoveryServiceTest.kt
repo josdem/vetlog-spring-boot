@@ -15,6 +15,11 @@
 */
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
+
 import com.josdem.vetlog.command.ChangePasswordCommand
 import com.josdem.vetlog.command.MessageCommand
 import com.josdem.vetlog.exception.UserNotFoundException
@@ -24,7 +29,6 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.RegistrationCodeRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.RecoveryServiceImpl
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -75,21 +79,21 @@ internal class RecoveryServiceTest {
 
         service.confirmAccountForToken(TOKEN)
 
-        Assertions.assertTrue(user.isEnabled)
+        assertTrue(user.isEnabled)
         verify(userRepository).save(user)
     }
 
     @Test
     fun `Not sending activation account token due to token not existing`() {
         log.info("Running test: Not sending activation account token due to token not existing")
-        Assertions.assertThrows(VetlogException::class.java) { service.confirmAccountForToken(TOKEN) }
+        assertThrows(VetlogException::class.java) { service.confirmAccountForToken(TOKEN) }
     }
 
     @Test
     fun `Not sending activation account token due to user not found`() {
         log.info("Running test: Not sending activation account token due to user not found")
         whenever(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL))
-        Assertions.assertThrows(UserNotFoundException::class.java) { service.confirmAccountForToken(TOKEN) }
+        assertThrows(UserNotFoundException::class.java) { service.confirmAccountForToken(TOKEN) }
     }
 
     @Test
@@ -107,7 +111,7 @@ internal class RecoveryServiceTest {
     @Test
     fun `Not sending change password token due to user not found`() {
         log.info("Running test: Not sending change password token due to user not found")
-        Assertions.assertThrows(UserNotFoundException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
+        assertThrows(UserNotFoundException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
     }
 
     @Test
@@ -115,20 +119,20 @@ internal class RecoveryServiceTest {
         log.info("Running test: Not sending change password token due to user not enabled")
         user.isEnabled = false
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
-        Assertions.assertThrows(VetlogException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
+        assertThrows(VetlogException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
     }
 
     @Test
     fun `Validating a token`() {
         log.info("Running test: Validating a token")
         whenever(repository.findByToken(TOKEN)).thenReturn(Optional.of(RegistrationCode()))
-        Assertions.assertTrue(service.validateToken(TOKEN))
+        assertTrue(service.validateToken(TOKEN))
     }
 
     @Test
     fun `Finding an invalid token`() {
         log.info("Running test: Finding an invalid token")
-        Assertions.assertFalse(service.validateToken(TOKEN))
+        assertFalse(service.validateToken(TOKEN))
     }
 
     @Test
@@ -143,7 +147,7 @@ internal class RecoveryServiceTest {
 
         service.changePassword(changePasswordCommand)
 
-        Assertions.assertEquals(60, user.password.length)
+        assertEquals(60, user.password.length)
         verify(userRepository).save(user)
     }
 }

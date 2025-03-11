@@ -15,12 +15,13 @@
 */
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
+
 import com.josdem.vetlog.enums.Role
 import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.UserDetailsServiceImpl
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
@@ -61,9 +62,9 @@ internal class UserDetailsServiceTest {
 
         val result = service.loadUserByUsername(USERNAME)
 
-        Assertions.assertEquals(user.username, result.username)
-        Assertions.assertEquals(user.password, result.password)
-        Assertions.assertEquals(user.isEnabled, result.isEnabled)
+        assertEquals(user.username, result.username)
+        assertEquals(user.password, result.password)
+        assertEquals(user.isEnabled, result.isEnabled)
     }
 
     @Test

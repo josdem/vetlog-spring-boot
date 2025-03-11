@@ -16,12 +16,13 @@
 
 package com.josdem.vetlog.service
 
+import org.junit.jupiter.api.Assertions.assertEquals
+
 import com.josdem.vetlog.command.AdoptionCommand
 import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.service.impl.AdoptionServiceImpl
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -60,9 +61,9 @@ internal class AdoptionServiceTest {
         val result = service.save(adoptionCommand)
 
         verify(petRepository).save(pet)
-        Assertions.assertEquals(PetStatus.IN_ADOPTION, pet.status)
-        Assertions.assertEquals(pet, result.pet)
-        Assertions.assertEquals("description", result.description)
+        assertEquals(PetStatus.IN_ADOPTION, pet.status)
+        assertEquals(pet, result.pet)
+        assertEquals("description", result.description)
     }
 
     private fun getPet(): Pet {
