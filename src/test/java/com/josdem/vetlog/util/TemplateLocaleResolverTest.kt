@@ -17,7 +17,6 @@
 package com.josdem.vetlog.util
 
 import com.josdem.vetlog.service.AdoptionServiceTest
-import lombok.extern.slf4j.Slf4j
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
@@ -39,5 +38,16 @@ internal class TemplateLocaleResolverTest {
 
         val result = TemplateLocaleResolver.getTemplate(template, locale)
         assertEquals(expected, result, "should get template with locale es")
+    }
+
+    @Test
+    fun `should get template with locale en`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+
+        val template = "template.ftl"
+        val locale = "en"
+
+        val result = TemplateLocaleResolver.getTemplate(template, locale)
+        assertEquals(template, result, "should get template with locale es")
     }
 }
