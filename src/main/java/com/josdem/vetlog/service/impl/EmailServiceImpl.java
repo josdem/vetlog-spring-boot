@@ -23,11 +23,14 @@ import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.EmailService;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.RestService;
+import com.josdem.vetlog.util.TemplateLocaleResolver;
 import java.io.IOException;
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -42,17 +45,19 @@ public class EmailServiceImpl implements EmailService {
     private final RestService restService;
     private final LocaleService localeService;
     private final TemplateProperties templateProperties;
+    private final Locale locale = LocaleContextHolder.getLocale();
 
     public void sendWelcomeEmail(User user) {
         log.info("Sending welcome email to: {}", user.getFirstName());
         if (!user.isEnabled()) {
             return;
         }
+        var template = TemplateLocaleResolver.getTemplate(templateProperties.getWelcome(), locale.getLanguage());
         try {
             var command = new MessageCommand();
             command.setEmail(user.getEmail());
             command.setName(user.getFirstName());
-            command.setTemplate(templateProperties.getWelcome());
+            command.setTemplate(template);
             command.setMessage(localeService.getMessage("user.welcome.message"));
             command.setToken(clientToken);
             restService.sendMessage(command);
