@@ -18,6 +18,7 @@ package com.josdem.vetlog.service;
 
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.model.User;
+import java.util.Locale;
 
 public interface UserService {
     User getByUsername(String username);
@@ -26,7 +27,7 @@ public interface UserService {
 
     User getByMobile(String mobile);
 
-    User save(Command command);
+    User save(Command command, Locale locale);
 
     User getCurrentUser();
 }

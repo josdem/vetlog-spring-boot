@@ -25,6 +25,7 @@ import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.EmailService;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.util.UserContextHolderProvider;
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
@@ -64,12 +65,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public User save(Command command) {
+    public User save(Command command, Locale locale) {
         var user = userBinder.bindUser(command);
         if (applicationProperties.getCountryCodes().contains(user.getCountryCode())) {
             user.setEnabled(false);
         }
-        emailService.sendWelcomeEmail(user);
+        emailService.sendWelcomeEmail(user, locale);
         userRepository.save(user);
         return user;
     }

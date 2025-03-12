@@ -30,6 +30,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import java.util.Locale
 import kotlin.test.Test
 
 internal class EmailServiceTest {
@@ -64,7 +65,7 @@ internal class EmailServiceTest {
         user.firstName = "Jose"
         user.email = "contact@josdem.io"
 
-        emailService.sendWelcomeEmail(user)
+        emailService.sendWelcomeEmail(user, Locale.ENGLISH)
 
         verify(localeService).getMessage("user.welcome.message")
         verify(restService).sendMessage(any())
@@ -76,7 +77,7 @@ internal class EmailServiceTest {
         whenever(restService.sendMessage(any())).thenThrow(IOException("Error"))
 
         assertThrows<BusinessException> {
-            emailService.sendWelcomeEmail(user)
+            emailService.sendWelcomeEmail(user, Locale.ENGLISH)
         }
     }
 
@@ -85,7 +86,7 @@ internal class EmailServiceTest {
         log.info("Running test: Not sending email if user is not enabled")
         user.isEnabled = false
 
-        emailService.sendWelcomeEmail(user)
+        emailService.sendWelcomeEmail(user, Locale.ENGLISH)
 
         verify(restService, never()).sendMessage(any())
     }

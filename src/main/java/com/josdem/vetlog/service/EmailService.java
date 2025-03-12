@@ -17,8 +17,9 @@
 package com.josdem.vetlog.service;
 
 import com.josdem.vetlog.model.User;
+import java.util.Locale;
 
 public interface EmailService {
 
-    void sendWelcomeEmail(User user);
+    void sendWelcomeEmail(User user, Locale locale);
 }

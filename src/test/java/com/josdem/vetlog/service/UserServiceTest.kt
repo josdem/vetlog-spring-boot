@@ -37,6 +37,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
+import java.util.Locale
 import kotlin.test.Test
 import java.util.Optional
 
@@ -109,9 +110,9 @@ internal class UserServiceTest {
         user.email = EMAIL
         whenever(userBinder.bindUser(command)).thenReturn(user)
 
-        val result = service.save(command)
+        val result = service.save(command, Locale.ENGLISH)
 
-        verify(emailService).sendWelcomeEmail(user)
+        verify(emailService).sendWelcomeEmail(user, Locale.ENGLISH)
         verify(userRepository).save(user)
         assertEquals(user, result)
     }
@@ -125,7 +126,7 @@ internal class UserServiceTest {
         whenever(applicationProperties.countryCodes).thenReturn(mutableListOf("+countryCodeOne"))
         whenever(userBinder.bindUser(command)).thenReturn(user)
 
-        val result = service.save(command)
+        val result = service.save(command, Locale.ENGLISH)
 
         verify(userRepository).save(user)
         assertEquals(user, result)

@@ -30,7 +30,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -45,9 +44,8 @@ public class EmailServiceImpl implements EmailService {
     private final RestService restService;
     private final LocaleService localeService;
     private final TemplateProperties templateProperties;
-    private final Locale locale = LocaleContextHolder.getLocale();
 
-    public void sendWelcomeEmail(User user) {
+    public void sendWelcomeEmail(User user, Locale locale) {
         log.info("Sending welcome email to: {}", user.getFirstName());
         if (!user.isEnabled()) {
             return;

@@ -60,7 +60,8 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return fillUserCommand(userCommand);
         }
-        userService.save(userCommand);
+        var locale = request.getLocale();
+        userService.save(userCommand, locale);
         var modelAndView = new ModelAndView("login/login");
         modelAndView.addObject("userAccountCreatedMessage", localeService.getMessage("user.account.created", request));
         return modelAndView;
