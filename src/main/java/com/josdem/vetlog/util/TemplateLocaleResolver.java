@@ -19,6 +19,9 @@ package com.josdem.vetlog.util;
 public class TemplateLocaleResolver {
 
     public static String getTemplate(String template, String locale) {
+        if (locale == null || locale.isEmpty()) {
+            return template;
+        }
         if (locale.equals("es")) {
             return template.substring(0, template.length() - 4) + "_es.ftl";
         }

@@ -23,6 +23,7 @@ import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.EmailService;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.RestService;
+import com.josdem.vetlog.util.TemplateLocaleResolver;
 import java.io.IOException;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;
@@ -51,11 +52,12 @@ public class EmailServiceImpl implements EmailService {
         if (!user.isEnabled()) {
             return;
         }
+        var template = TemplateLocaleResolver.getTemplate(templateProperties.getWelcome(), locale.getLanguage());
         try {
             var command = new MessageCommand();
             command.setEmail(user.getEmail());
             command.setName(user.getFirstName());
-            command.setTemplate(templateProperties.getWelcome());
+            command.setTemplate(template);
             command.setMessage(localeService.getMessage("user.welcome.message"));
             command.setToken(clientToken);
             restService.sendMessage(command);

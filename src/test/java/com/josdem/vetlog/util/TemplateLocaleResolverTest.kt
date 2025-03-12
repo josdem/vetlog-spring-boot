@@ -45,6 +45,14 @@ internal class TemplateLocaleResolverTest {
         val locale = "en"
 
         val result = TemplateLocaleResolver.getTemplate(TEMPLATE, locale)
-        assertEquals(TEMPLATE, result, "should get template with locale es")
+        assertEquals(TEMPLATE, result, "should get template with locale en")
+    }
+
+    @Test
+    fun `should get template even with locale as null`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+
+        val result = TemplateLocaleResolver.getTemplate(TEMPLATE, null)
+        assertEquals(TEMPLATE, result, "should get template with locale en")
     }
 }
