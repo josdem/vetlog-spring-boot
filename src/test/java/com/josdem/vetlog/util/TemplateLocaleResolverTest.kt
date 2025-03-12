@@ -26,28 +26,25 @@ internal class TemplateLocaleResolverTest {
 
     companion object {
         private val log = LoggerFactory.getLogger(AdoptionServiceTest::class.java)
+        private const val TEMPLATE = "template.ftl"
     }
 
     @Test
     fun `should get template with locale es`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-
-        val template = "template.ftl"
         val locale = "es"
         val expected = "template_es.ftl"
 
-        val result = TemplateLocaleResolver.getTemplate(template, locale)
+        val result = TemplateLocaleResolver.getTemplate(TEMPLATE, locale)
         assertEquals(expected, result, "should get template with locale es")
     }
 
     @Test
     fun `should get template with locale en`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-
-        val template = "template.ftl"
         val locale = "en"
 
-        val result = TemplateLocaleResolver.getTemplate(template, locale)
-        assertEquals(template, result, "should get template with locale es")
+        val result = TemplateLocaleResolver.getTemplate(TEMPLATE, locale)
+        assertEquals(TEMPLATE, result, "should get template with locale es")
     }
 }
