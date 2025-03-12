@@ -18,6 +18,10 @@ package com.josdem.vetlog.util;
 
 public class TemplateLocaleResolver {
 
+    private TemplateLocaleResolver() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static String getTemplate(String template, String locale) {
         if (locale == null || locale.isEmpty()) {
             return template;
