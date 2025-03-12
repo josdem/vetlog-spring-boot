@@ -25,7 +25,6 @@ import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.RestService;
 import java.io.IOException;
 import java.util.Locale;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
