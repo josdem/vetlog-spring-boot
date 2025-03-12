@@ -67,7 +67,7 @@ internal class EmailServiceTest {
 
         emailService.sendWelcomeEmail(user, Locale.ENGLISH)
 
-        verify(localeService).getMessage("user.welcome.message")
+        verify(localeService).getMessage("user.welcome.message", Locale.ENGLISH)
         verify(restService).sendMessage(any())
     }
 
