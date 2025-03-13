@@ -96,4 +96,22 @@ class VaccineFormatterTest {
 
         assertEquals("Pendiente", vaccineFormatter.formatStatus("PENDING", locale));
     }
+
+    @Test
+    @DisplayName("formatting applied status if locale is Spanish")
+    void shouldFormatAppliedInSpanish(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(locale.getLanguage()).thenReturn("es");
+
+        assertEquals("Aplicada", vaccineFormatter.formatStatus("APPLIED", locale));
+    }
+
+    @Test
+    @DisplayName("formatting applied status if locale is English")
+    void shouldFormatAppliedInEnglish(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(locale.getLanguage()).thenReturn("en");
+
+        assertEquals("APPLIED", vaccineFormatter.formatStatus("APPLIED", locale));
+    }
 }
