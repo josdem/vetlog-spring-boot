@@ -80,11 +80,20 @@ class VaccineFormatterTest {
     }
 
     @Test
-    @DisplayName("not formatting DA2PP if locale is Sengish")
+    @DisplayName("not formatting DA2PP if locale is English")
     void shouldNotFormatDA2PP(TestInfo testInfo) {
         log.info(testInfo.getDisplayName());
         when(locale.getLanguage()).thenReturn("en");
 
         assertEquals("DA2PP", vaccineFormatter.format("DA2PP", locale));
+    }
+
+    @Test
+    @DisplayName("formatting pending status if locale is Spanish")
+    void shouldFormatPendingInSpanish(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(locale.getLanguage()).thenReturn("es");
+
+        assertEquals("Pendiente", vaccineFormatter.formatStatus("PENDING", locale));
     }
 }
