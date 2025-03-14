@@ -63,6 +63,13 @@ spotless {
     trimTrailingWhitespace()
     endWithNewline()
   }
+  kotlin {
+    target("**/*.kt")
+    targetExclude("**/build/**", "**/build-*/**")
+    ktlint()
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
 }
 
 dependencies {
