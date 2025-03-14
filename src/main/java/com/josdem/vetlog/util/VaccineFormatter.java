@@ -34,4 +34,15 @@ public class VaccineFormatter {
             default -> name;
         };
     }
+
+    public String formatStatus(String name, Locale locale) {
+        if (!locale.getLanguage().equals("es")) {
+            return name;
+        }
+        return switch (name) {
+            case "PENDING" -> "Pendiente";
+            case "APPLIED" -> "Aplicada";
+            default -> name;
+        };
+    }
 }
