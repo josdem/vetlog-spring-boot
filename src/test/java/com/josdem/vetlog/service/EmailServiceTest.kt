@@ -34,7 +34,6 @@ import java.util.Locale
 import kotlin.test.Test
 
 internal class EmailServiceTest {
-
     private lateinit var emailService: EmailService
 
     @Mock

@@ -15,8 +15,6 @@
 */
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertEquals
-
 import com.josdem.vetlog.command.MessageCommand
 import com.josdem.vetlog.command.TelephoneCommand
 import com.josdem.vetlog.enums.PetStatus
@@ -25,12 +23,13 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.TelephoneServiceImpl
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import kotlin.test.Test
@@ -64,10 +63,11 @@ internal class TelephoneServiceTest {
     @Throws(IOException::class)
     fun `Sending adopter contact information to the pet owner`() {
         log.info("Running test: Sending adopter contact information to the pet owner")
-        val telephoneCommand = TelephoneCommand().apply {
-            uuid = "uuid"
-            mobile = "7346041832"
-        }
+        val telephoneCommand =
+            TelephoneCommand().apply {
+                uuid = "uuid"
+                mobile = "7346041832"
+            }
 
         val owner = getUser("contact@josdem.io")
         val adopter = getUser("athena@gmail.com")
@@ -83,17 +83,18 @@ internal class TelephoneServiceTest {
         assertEquals(adopter, pet.adopter)
     }
 
-    private fun getPet(owner: User?, adopter: User?): Pet {
-        return Pet().apply {
+    private fun getPet(
+        owner: User?,
+        adopter: User?,
+    ): Pet =
+        Pet().apply {
             name = "Cinnamon"
             this.user = owner
             this.adopter = adopter
         }
-    }
 
-    private fun getUser(email: String?): User {
-        return User().apply {
+    private fun getUser(email: String?): User =
+        User().apply {
             this.email = email
         }
-    }
 }

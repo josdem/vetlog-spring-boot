@@ -15,9 +15,6 @@
 */
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-
 import com.josdem.vetlog.binder.UserBinder
 import com.josdem.vetlog.command.Command
 import com.josdem.vetlog.config.ApplicationProperties
@@ -26,7 +23,8 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.UserServiceImpl
 import com.josdem.vetlog.util.UserContextHolderProvider
-
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
@@ -38,8 +36,8 @@ import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.Authentication
 import java.util.Locale
-import kotlin.test.Test
 import java.util.Optional
+import kotlin.test.Test
 
 internal class UserServiceTest {
     private lateinit var service: UserService

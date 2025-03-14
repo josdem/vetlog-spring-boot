@@ -35,7 +35,6 @@ import java.io.InputStream
 import kotlin.test.Test
 
 internal class PetImageServiceTest {
-
     private lateinit var service: PetImageService
 
     @Mock
@@ -76,7 +75,7 @@ internal class PetImageServiceTest {
             any<String>(),
             any(),
             eq(inputStream),
-            any()
+            any(),
         )
     }
 }

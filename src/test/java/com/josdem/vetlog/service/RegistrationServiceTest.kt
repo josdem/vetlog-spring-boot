@@ -15,20 +15,19 @@
 */
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertEquals
-
 import com.josdem.vetlog.model.RegistrationCode
 import com.josdem.vetlog.repository.RegistrationCodeRepository
 import com.josdem.vetlog.service.impl.RegistrationServiceImpl
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
-import kotlin.test.Test
 import java.util.Optional
+import kotlin.test.Test
 
 internal class RegistrationServiceTest {
     private lateinit var service: RegistrationService

@@ -15,11 +15,6 @@
 */
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertDoesNotThrow
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
-import org.junit.jupiter.api.Assertions.assertTrue
-
 import com.josdem.vetlog.binder.PetBinder
 import com.josdem.vetlog.command.Command
 import com.josdem.vetlog.command.PetCommand
@@ -32,6 +27,10 @@ import com.josdem.vetlog.repository.AdoptionRepository
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.PetServiceImpl
+import org.junit.jupiter.api.Assertions.assertDoesNotThrow
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
@@ -45,7 +44,6 @@ import java.io.IOException
 import java.util.Optional
 
 internal class PetServiceTest {
-
     private lateinit var service: PetService
 
     @Mock
@@ -84,15 +82,16 @@ internal class PetServiceTest {
         user = User()
         adopter = User()
         pet = Pet()
-        service = PetServiceImpl(
-            petBinder,
-            petRepository,
-            petImageService,
-            userRepository,
-            adoptionRepository,
-            localeService,
-            vaccinationService
-        )
+        service =
+            PetServiceImpl(
+                petBinder,
+                petRepository,
+                petImageService,
+                userRepository,
+                adoptionRepository,
+                localeService,
+                vaccinationService,
+            )
     }
 
     @Test
@@ -231,10 +230,11 @@ internal class PetServiceTest {
     @Test
     fun `Getting pet adoption information`() {
         log.info("Running test: Getting pet adoption information")
-        val petAdoption = PetAdoption().apply {
-            id = 1L
-            description = "It is cute!"
-        }
+        val petAdoption =
+            PetAdoption().apply {
+                id = 1L
+                description = "It is cute!"
+            }
         val optional = Optional.of(petAdoption)
         pets.add(pet)
 
@@ -253,6 +253,7 @@ internal class PetServiceTest {
         }
         verify(vaccinationService).deleteVaccinesByPet(pet)
     }
+
     @Test
     fun `Not deleting a pet due to not found`() {
         log.info("Running test: Not deleting a pet due to not found")
@@ -265,9 +266,10 @@ internal class PetServiceTest {
     @Test
     fun `Not deleting a pet due to IN_ADOPTION status`() {
         log.info("Running test: Not deleting a pet due to IN_ADOPTION status")
-        val petInAdoption = Pet().apply {
-            status = PetStatus.IN_ADOPTION
-        }
+        val petInAdoption =
+            Pet().apply {
+                status = PetStatus.IN_ADOPTION
+            }
         whenever(petRepository.findById(1L)).thenReturn(Optional.of(petInAdoption))
 
         assertThrows(BusinessException::class.java) {

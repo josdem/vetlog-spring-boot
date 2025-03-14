@@ -15,11 +15,10 @@
 */
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertEquals
-
 import com.josdem.vetlog.helper.LocaleResolver
-import jakarta.servlet.http.HttpServletRequest
 import com.josdem.vetlog.service.impl.LocaleServiceImpl
+import jakarta.servlet.http.HttpServletRequest
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.Mockito.mock
@@ -31,7 +30,6 @@ import java.util.Locale
 import kotlin.test.Test
 
 internal class LocaleServiceTest {
-
     private lateinit var service: LocaleService
 
     @Mock
@@ -72,4 +70,3 @@ internal class LocaleServiceTest {
         assertEquals("message", service.getMessage(code))
     }
 }
-
