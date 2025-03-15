@@ -40,12 +40,11 @@ import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Optional
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 internal class PetBinderTest {
-
     private lateinit var petBinder: PetBinder
 
     @Mock
@@ -54,10 +53,11 @@ internal class PetBinderTest {
     @Mock
     private lateinit var vaccinationRepository: VaccinationRepository
 
-    private val vaccines = listOf(
-        Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.APPLIED, null),
-        Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.PENDING, null)
-    )
+    private val vaccines =
+        listOf(
+            Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.APPLIED, null),
+            Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.PENDING, null),
+        )
 
     companion object {
         private val log = LoggerFactory.getLogger(AdoptionServiceTest::class.java)
@@ -122,15 +122,19 @@ internal class PetBinderTest {
     }
 
     private fun setBreedExpectations() {
-        whenever(breedRepository.findById(1L)).thenReturn(Optional.of(Breed().apply {
-            id = 1L
-            name = "Chihuahua"
-            type = PetType.DOG
-        }))
+        whenever(breedRepository.findById(1L)).thenReturn(
+            Optional.of(
+                Breed().apply {
+                    id = 1L
+                    name = "Chihuahua"
+                    type = PetType.DOG
+                },
+            ),
+        )
     }
 
-    private fun getPetCommand(): PetCommand {
-        return PetCommand().apply {
+    private fun getPetCommand(): PetCommand =
+        PetCommand().apply {
             id = 2L
             name = "Marla"
             status = PetStatus.IN_ADOPTION
@@ -141,11 +145,10 @@ internal class PetBinderTest {
             breed = 1L
             vaccines = vaccines
         }
-    }
 
     @NotNull
-    private fun getPet(): Pet {
-        return Pet().apply {
+    private fun getPet(): Pet =
+        Pet().apply {
             id = 1L
             uuid = "1b211410-320b-11ed-a261-0242ac120002"
             name = "Cremita"
@@ -154,14 +157,15 @@ internal class PetBinderTest {
             vaccinated = true
             images = listOf(PetImage())
             birthDate = LocalDateTime.of(2021, 1, 17, 0, 0)
-            user = User().apply {
-                id = 1L
-            }
-            breed = Breed().apply {
-                id = 5L
-                name = "Chihuahua"
-                type = PetType.DOG
-            }
+            user =
+                User().apply {
+                    id = 1L
+                }
+            breed =
+                Breed().apply {
+                    id = 5L
+                    name = "Chihuahua"
+                    type = PetType.DOG
+                }
         }
-    }
 }

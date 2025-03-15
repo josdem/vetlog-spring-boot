@@ -15,11 +15,6 @@
 */
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertThrows
-import org.junit.jupiter.api.Assertions.assertTrue
-
 import com.josdem.vetlog.command.ChangePasswordCommand
 import com.josdem.vetlog.command.MessageCommand
 import com.josdem.vetlog.exception.UserNotFoundException
@@ -29,12 +24,16 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.RegistrationCodeRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.RecoveryServiceImpl
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.util.Optional
@@ -138,10 +137,11 @@ internal class RecoveryServiceTest {
     @Test
     fun `Changing password`() {
         log.info("Running test: Changing password")
-        val changePasswordCommand = ChangePasswordCommand().apply {
-            token = TOKEN
-            password = "password"
-        }
+        val changePasswordCommand =
+            ChangePasswordCommand().apply {
+                token = TOKEN
+                password = "password"
+            }
         whenever(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL))
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
 

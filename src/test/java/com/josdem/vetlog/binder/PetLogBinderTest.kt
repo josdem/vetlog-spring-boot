@@ -23,7 +23,6 @@ import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 
 internal class PetLogBinderTest {
-
     val petLogBinder = PetLogBinder()
 
     companion object {
@@ -34,19 +33,19 @@ internal class PetLogBinderTest {
     fun `binding a pet log command`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
 
-        val petLogCommand = PetLogCommand().apply {
-            vetName = "Diana Juarez"
-            signs = "Cough"
-            diagnosis = "Bronchitis"
-            medicine = "Antibiotics"
-        }
+        val petLogCommand =
+            PetLogCommand().apply {
+                vetName = "Diana Juarez"
+                signs = "Cough"
+                diagnosis = "Bronchitis"
+                medicine = "Antibiotics"
+            }
 
         val result = petLogBinder.bind(petLogCommand)
 
-        assertEquals("Diana Juarez", result.vetName);
-        assertEquals("Cough", result.signs);
-        assertEquals("Bronchitis", result.diagnosis);
-        assertEquals("Antibiotics", result.medicine);
+        assertEquals("Diana Juarez", result.vetName)
+        assertEquals("Cough", result.signs)
+        assertEquals("Bronchitis", result.diagnosis)
+        assertEquals("Antibiotics", result.medicine)
     }
-
 }

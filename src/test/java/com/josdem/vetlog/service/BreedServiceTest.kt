@@ -16,22 +16,20 @@
 
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertTrue
-
+import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.repository.BreedRepository
 import com.josdem.vetlog.service.impl.BreedServiceImpl
-import com.josdem.vetlog.enums.PetType
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.whenever
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import kotlin.test.Test
 
 internal class BreedServiceTest {
-
     private lateinit var service: BreedService
 
     @Mock

@@ -29,7 +29,7 @@ val cglibVersion by extra("3.3.0")
 val mockitoKotlinVersion by extra("5.4.0")
 
 group = "com.josdem.vetlog"
-version = "2.3.6"
+version = "2.3.7"
 
 configurations {
   compileOnly {
@@ -60,6 +60,13 @@ spotless {
     toggleOffOn()
     palantirJavaFormat()
     removeUnusedImports()
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
+  kotlin {
+    target("**/*.kt")
+    targetExclude("**/build/**", "**/build-*/**")
+    ktlint()
     trimTrailingWhitespace()
     endWithNewline()
   }

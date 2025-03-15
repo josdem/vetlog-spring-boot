@@ -23,7 +23,6 @@ import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 
 internal class TemplateLocaleResolverTest {
-
     companion object {
         private val log = LoggerFactory.getLogger(AdoptionServiceTest::class.java)
         private const val TEMPLATE = "template.ftl"

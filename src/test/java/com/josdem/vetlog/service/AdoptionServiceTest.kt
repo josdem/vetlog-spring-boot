@@ -16,23 +16,21 @@
 
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertEquals
-
 import com.josdem.vetlog.command.AdoptionCommand
 import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.service.impl.AdoptionServiceImpl
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.whenever
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import kotlin.test.Test
 
 internal class AdoptionServiceTest {
-
     private lateinit var service: AdoptionService
 
     @Mock
@@ -66,16 +64,14 @@ internal class AdoptionServiceTest {
         assertEquals("description", result.description)
     }
 
-    private fun getPet(): Pet {
-        return Pet().apply {
+    private fun getPet(): Pet =
+        Pet().apply {
             status = PetStatus.OWNED
         }
-    }
 
-    private fun getAdoptionCommand(): AdoptionCommand {
-        return AdoptionCommand().apply {
+    private fun getAdoptionCommand(): AdoptionCommand =
+        AdoptionCommand().apply {
             uuid = "uuid"
             description = "description"
         }
-    }
 }

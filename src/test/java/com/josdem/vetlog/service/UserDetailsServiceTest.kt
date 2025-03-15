@@ -15,21 +15,20 @@
 */
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertEquals
-
 import com.josdem.vetlog.enums.Role
 import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.UserDetailsServiceImpl
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
-import kotlin.test.Test
 import java.util.Optional
+import kotlin.test.Test
 
 internal class UserDetailsServiceTest {
     private lateinit var service: UserDetailsServiceImpl

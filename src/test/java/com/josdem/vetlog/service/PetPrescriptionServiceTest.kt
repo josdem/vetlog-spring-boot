@@ -34,7 +34,6 @@ import java.io.IOException
 import java.io.InputStream
 
 internal class PetPrescriptionServiceTest {
-
     private lateinit var service: PetPrescriptionService
 
     @Mock
@@ -73,8 +72,7 @@ internal class PetPrescriptionServiceTest {
             any(),
             any(),
             eq(inputStream),
-            any()
+            any(),
         )
     }
 }
-

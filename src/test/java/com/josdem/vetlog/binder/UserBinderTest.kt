@@ -23,7 +23,6 @@ import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 
 internal class UserBinderTest {
-
     val userBinder = UserBinder()
 
     companion object {
@@ -34,15 +33,16 @@ internal class UserBinderTest {
     fun `should bind user`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
 
-        val user = UserCommand().apply {
-            username = "josdem"
-            password = "12345678"
-            firstname = "Jose"
-            lastname = "Morales"
-            countryCode = "+52"
-            mobile = "1234567890"
-            email = "contact@josdem.io"
-        }
+        val user =
+            UserCommand().apply {
+                username = "josdem"
+                password = "12345678"
+                firstname = "Jose"
+                lastname = "Morales"
+                countryCode = "+52"
+                mobile = "1234567890"
+                email = "contact@josdem.io"
+            }
 
         val result = userBinder.bindUser(user)
 
@@ -54,5 +54,4 @@ internal class UserBinderTest {
         assertEquals("+52", result.countryCode)
         assertEquals("contact@josdem.io", result.email)
     }
-
 }

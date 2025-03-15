@@ -15,8 +15,6 @@
 */
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertEquals
-
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
 import com.josdem.vetlog.exception.BusinessException
@@ -28,17 +26,18 @@ import com.josdem.vetlog.service.impl.VaccinationServiceImpl
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy
 import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy
 import com.josdem.vetlog.strategy.vaccination.impl.DogVaccinationStrategy
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.times
+import org.mockito.kotlin.any
 import org.mockito.kotlin.never
+import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
-import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -63,10 +62,11 @@ internal class VaccinationServiceTest {
         val dogVaccinationStrategy = DogVaccinationStrategy(vaccinationRepository)
         val catVaccinationStrategy = CatVaccinationStrategy(vaccinationRepository)
 
-        val vaccinationStrategies = mutableMapOf<PetType, VaccinationStrategy>(
-            PetType.DOG to dogVaccinationStrategy,
-            PetType.CAT to catVaccinationStrategy
-        )
+        val vaccinationStrategies =
+            mutableMapOf<PetType, VaccinationStrategy>(
+                PetType.DOG to dogVaccinationStrategy,
+                PetType.CAT to catVaccinationStrategy,
+            )
 
         vaccinationService = VaccinationServiceImpl(vaccinationRepository, vaccinationStrategies)
         pet.breed = Breed()
@@ -81,7 +81,10 @@ internal class VaccinationServiceTest {
 
     @ParameterizedTest
     @CsvSource("7, 2", "10, 2", "20, 4")
-    fun `Saving vaccines`(weeks: Int, times: Int) {
+    fun `Saving vaccines`(
+        weeks: Int,
+        times: Int,
+    ) {
         log.info("Running test: Saving vaccines")
         pet.breed.type = PetType.DOG
         pet.birthDate = LocalDateTime.now().minusWeeks(weeks.toLong())
@@ -104,8 +107,8 @@ internal class VaccinationServiceTest {
         whenever(vaccinationRepository.findAllByPet(pet)).thenReturn(
             listOf(
                 Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.PENDING, pet),
-                Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.APPLIED, pet)
-            )
+                Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+            ),
         )
         val vaccinesInPendingStatus = vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)
         assertEquals(1, vaccinesInPendingStatus.size)
@@ -118,4 +121,3 @@ internal class VaccinationServiceTest {
         verify(vaccinationRepository).deleteAllByPet(pet)
     }
 }
-
