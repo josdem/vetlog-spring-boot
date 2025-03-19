@@ -71,6 +71,15 @@ class VaccineFormatterTest {
     }
 
     @Test
+    @DisplayName("formatting canine influenza if locale is Spanish")
+    void shouldFormatCanineInfluenzaInSpanish(TestInfo testInfo) {
+        log.info(testInfo.getDisplayName());
+        when(locale.getLanguage()).thenReturn("es");
+
+        assertEquals("Influenza Canina", vaccineFormatter.format("Canine influenza", locale));
+    }
+
+    @Test
     @DisplayName("formatting FVRCP if locale is Spanish")
     void shouldFormatFVRCPInSpanish(TestInfo testInfo) {
         log.info(testInfo.getDisplayName());
