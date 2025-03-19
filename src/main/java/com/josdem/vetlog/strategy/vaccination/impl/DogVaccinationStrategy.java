@@ -19,7 +19,7 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
 
     private static final String DA2PP = "DA2PP";
     private static final String DEWORMING = "Deworming";
-    private static final String BORDETELLA = "Canine influenza";
+    private static final String BORDETELLA = "Canine Influenza";
     private static final String RABIES = "Rabies";
 
     private final VaccinationRepository vaccinationRepository;

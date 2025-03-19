@@ -76,7 +76,7 @@ class VaccineFormatterTest {
         log.info(testInfo.getDisplayName());
         when(locale.getLanguage()).thenReturn("es");
 
-        assertEquals("Influenza Canina", vaccineFormatter.format("Canine influenza", locale));
+        assertEquals("Influenza Canina", vaccineFormatter.format("Canine Influenza", locale));
     }
 
     @Test
