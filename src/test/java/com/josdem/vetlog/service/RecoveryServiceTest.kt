@@ -29,6 +29,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
@@ -71,8 +72,8 @@ internal class RecoveryServiceTest {
     }
 
     @Test
-    fun `Sending activation account token`() {
-        log.info("Running test: Sending activation account token")
+    fun `Sending activation account token`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL))
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
 
@@ -83,22 +84,22 @@ internal class RecoveryServiceTest {
     }
 
     @Test
-    fun `Not sending activation account token due to token not existing`() {
-        log.info("Running test: Not sending activation account token due to token not existing")
+    fun `Not sending activation account token due to token not existing`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         assertThrows(VetlogException::class.java) { service.confirmAccountForToken(TOKEN) }
     }
 
     @Test
-    fun `Not sending activation account token due to user not found`() {
-        log.info("Running test: Not sending activation account token due to user not found")
+    fun `Not sending activation account token due to user not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(registrationService.findEmailByToken(TOKEN)).thenReturn(Optional.of(EMAIL))
         assertThrows(UserNotFoundException::class.java) { service.confirmAccountForToken(TOKEN) }
     }
 
     @Test
     @Throws(IOException::class)
-    fun `Generating token to change password`() {
-        log.info("Running test: Generating token to change password")
+    fun `Generating token to change password`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         user.isEnabled = true
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
         whenever(registrationService.generateToken(EMAIL)).thenReturn(TOKEN)
@@ -108,35 +109,35 @@ internal class RecoveryServiceTest {
     }
 
     @Test
-    fun `Not sending change password token due to user not found`() {
-        log.info("Running test: Not sending change password token due to user not found")
+    fun `Not sending change password token due to user not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         assertThrows(UserNotFoundException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
     }
 
     @Test
-    fun `Not sending change password token due to user not enabled`() {
-        log.info("Running test: Not sending change password token due to user not enabled")
+    fun `Not sending change password token due to user not enabled`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         user.isEnabled = false
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
         assertThrows(VetlogException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
     }
 
     @Test
-    fun `Validating a token`() {
-        log.info("Running test: Validating a token")
+    fun `Validating a token`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(repository.findByToken(TOKEN)).thenReturn(Optional.of(RegistrationCode()))
         assertTrue(service.validateToken(TOKEN))
     }
 
     @Test
-    fun `Finding an invalid token`() {
-        log.info("Running test: Finding an invalid token")
+    fun `Finding an invalid token`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         assertFalse(service.validateToken(TOKEN))
     }
 
     @Test
-    fun `Changing password`() {
-        log.info("Running test: Changing password")
+    fun `Changing password`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val changePasswordCommand =
             ChangePasswordCommand().apply {
                 token = TOKEN

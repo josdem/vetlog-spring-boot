@@ -72,38 +72,38 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `Getting user by username`() {
-        log.info("Running test: Getting user by username")
+    fun `Getting user by username`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user))
         val result = service.getByUsername(USERNAME)
         assertEquals(user, result)
     }
 
     @Test
-    fun `Not finding user by username`() {
-        log.info("Running test: Not finding user by username")
+    fun `Not finding user by username`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
         assertThrows<UserNotFoundException> { service.getByUsername(USERNAME) }
     }
 
     @Test
-    fun `Getting user by email`() {
-        log.info("Running test: Getting user by email")
+    fun `Getting user by email`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
         val result = service.getByEmail(EMAIL)
         assertEquals(user, result)
     }
 
     @Test
-    fun `Not finding user by email`() {
-        log.info("Running test: Not finding user by email")
+    fun `Not finding user by email`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.empty())
         assertThrows<UserNotFoundException> { service.getByEmail(EMAIL) }
     }
 
     @Test
-    fun `Saving a user`() {
-        log.info("Running test: Saving a user")
+    fun `Saving a user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val command: Command = mock()
         user.email = EMAIL
         whenever(userBinder.bindUser(command)).thenReturn(user)
@@ -116,8 +116,8 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `Disabling a user due to country code`() {
-        log.info("Running test: Disabling a user due to country code")
+    fun `Disabling a user due to country code`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val command: Command = mock()
         user.email = EMAIL
         user.countryCode = "+countryCodeOne"
@@ -132,8 +132,8 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `Getting current user`() {
-        log.info("Running test: Getting current user")
+    fun `Getting current user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val authentication: Authentication = mock()
         whenever(authentication.name).thenReturn(USERNAME)
         whenever(provider.authentication).thenReturn(authentication)
@@ -142,8 +142,8 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `Not finding current user`() {
-        log.info("Running test: Not finding current user")
+    fun `Not finding current user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val authentication: Authentication = mock()
         whenever(authentication.name).thenReturn(USERNAME)
         whenever(provider.authentication).thenReturn(authentication)

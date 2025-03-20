@@ -20,6 +20,7 @@ import com.josdem.vetlog.command.MessageCommand
 import com.josdem.vetlog.service.impl.RestServiceImpl
 import okhttp3.ResponseBody
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.MockitoAnnotations
@@ -49,8 +50,8 @@ internal class RestServiceTest {
 
     @Test
     @Throws(IOException::class)
-    fun `Sending message`() {
-        log.info("Running test: Sending message")
+    fun `Sending message`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val restService: RestService = mock()
         val messageCommand: MessageCommand = mock()
         val call: Call<ResponseBody> = mock()

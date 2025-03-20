@@ -23,6 +23,7 @@ import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.service.impl.AdoptionServiceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
@@ -50,8 +51,8 @@ internal class AdoptionServiceTest {
     }
 
     @Test
-    fun `Saving a pet in adoption`() {
-        log.info("Running test: saving a pet in adoption")
+    fun `Saving a pet in adoption`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val adoptionCommand = getAdoptionCommand()
         val pet = getPet()
 
