@@ -30,6 +30,7 @@ public class VaccineFormatter {
             case "DA2PP" -> "Quintuple Canina";
             case "Deworming" -> "Desparasitación";
             case "Rabies" -> "Rabia";
+            case "Canine Influenza" -> "Influenza Canina";
             case "FVRCP" -> "Tripe Felina";
             default -> name;
         };
