@@ -20,6 +20,7 @@ import com.josdem.vetlog.command.PetLogCommand
 import com.josdem.vetlog.service.impl.PetPrescriptionServiceImpl
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
@@ -54,8 +55,8 @@ internal class PetPrescriptionServiceTest {
 
     @Test
     @Throws(IOException::class)
-    fun `Saving a pet image`() {
-        log.info("Running test: Saving a pet image")
+    fun `Saving a pet image`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
 
         val petLogCommand = PetLogCommand()
         val multiPartFile: MultipartFile = mock()

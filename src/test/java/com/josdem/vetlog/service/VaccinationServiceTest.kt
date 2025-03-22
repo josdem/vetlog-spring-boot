@@ -28,6 +28,7 @@ import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy
 import com.josdem.vetlog.strategy.vaccination.impl.DogVaccinationStrategy
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -73,8 +74,8 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    fun `Not saving a pet if it is not a dog or cat`() {
-        log.info("Running test: Not saving a pet if it is not a dog or cat")
+    fun `Not saving a pet if it is not a dog or cat`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         pet.breed.type = PetType.BIRD
         assertThrows<BusinessException> { vaccinationService.save(pet) }
     }
@@ -93,8 +94,8 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    fun `Not saving vaccination due to not being old enough`() {
-        log.info("Running test: Not saving vaccination due to not being old enough")
+    fun `Not saving vaccination due to not being old enough`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         pet.breed.type = PetType.DOG
         pet.birthDate = LocalDateTime.now().minusWeeks(1)
         vaccinationService.save(pet)
@@ -102,8 +103,8 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    fun `Getting vaccines in Pending status`() {
-        log.info("Running test: Getting vaccines in Pending status")
+    fun `Getting vaccines in Pending status`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(vaccinationRepository.findAllByPet(pet)).thenReturn(
             listOf(
                 Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.PENDING, pet),
@@ -115,8 +116,8 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    fun `Deleting vaccines`() {
-        log.info("Running test: Deleting vaccines")
+    fun `Deleting vaccines`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         vaccinationService.deleteVaccinesByPet(pet)
         verify(vaccinationRepository).deleteAllByPet(pet)
     }

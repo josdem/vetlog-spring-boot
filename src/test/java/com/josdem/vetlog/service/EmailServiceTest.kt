@@ -21,6 +21,7 @@ import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.service.impl.EmailServiceImpl
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -58,8 +59,8 @@ internal class EmailServiceTest {
     }
 
     @Test
-    fun `Sending a welcome email`() {
-        log.info("Running test: Sending a welcome email")
+    fun `Sending a welcome email`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(templateProperties.welcome).thenReturn("welcome.ftl")
         user.firstName = "Jose"
         user.email = "contact@josdem.io"
@@ -71,8 +72,8 @@ internal class EmailServiceTest {
     }
 
     @Test
-    fun `Not sending a welcome email due to an exception`() {
-        log.info("Running test: Not sending a welcome email due to an exception")
+    fun `Not sending a welcome email due to an exception`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         whenever(restService.sendMessage(any())).thenThrow(IOException("Error"))
 
         assertThrows<BusinessException> {
@@ -81,8 +82,8 @@ internal class EmailServiceTest {
     }
 
     @Test
-    fun `Not sending email if user is not enabled`() {
-        log.info("Running test: Not sending email if user is not enabled")
+    fun `Not sending email if user is not enabled`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         user.isEnabled = false
 
         emailService.sendWelcomeEmail(user, Locale.ENGLISH)

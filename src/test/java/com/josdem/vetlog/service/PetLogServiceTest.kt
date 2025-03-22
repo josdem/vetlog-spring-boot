@@ -25,6 +25,7 @@ import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.service.impl.PetLogServiceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
@@ -64,8 +65,8 @@ internal class PetLogServiceTest {
 
     @Test
     @Throws(IOException::class)
-    fun `Saving a pet log`() {
-        log.info("Running test: Saving a pet log")
+    fun `Saving a pet log`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val petLogCommand = PetLogCommand().apply { pet = 1L }
         val petLog = getPetLog()
         val optionalPet: Optional<Pet> = Optional.ofNullable(pet)
@@ -78,8 +79,8 @@ internal class PetLogServiceTest {
     }
 
     @Test
-    fun `Should not find a pet log`() {
-        log.info("Running test: Should not find a pet log")
+    fun `Should not find a pet log`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val petLogCommand = PetLogCommand()
         val petLog = getPetLog()
 
@@ -91,8 +92,8 @@ internal class PetLogServiceTest {
     }
 
     @Test
-    fun `Getting logs by pet`() {
-        log.info("Running test: Getting logs by pet")
+    fun `Getting logs by pet`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val petLog = getPetLog()
         whenever(petLogRepository.getAllByPet(pet)).thenReturn(mutableListOf(petLog))
 

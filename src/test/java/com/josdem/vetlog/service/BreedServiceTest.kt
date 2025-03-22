@@ -22,6 +22,7 @@ import com.josdem.vetlog.repository.BreedRepository
 import com.josdem.vetlog.service.impl.BreedServiceImpl
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
@@ -46,8 +47,8 @@ internal class BreedServiceTest {
     }
 
     @Test
-    fun `Getting breeds by type`() {
-        log.info("Running test: getting breeds by type")
+    fun `Getting breeds by type`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
 
         val mockBreeds = listOf(Breed()) // Kotlin の listOf を使用
         whenever(breedRepository.findByType(PetType.DOG)).thenReturn(mockBreeds)

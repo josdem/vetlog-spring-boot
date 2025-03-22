@@ -25,6 +25,7 @@ import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.TelephoneServiceImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
@@ -61,8 +62,8 @@ internal class TelephoneServiceTest {
 
     @Test
     @Throws(IOException::class)
-    fun `Sending adopter contact information to the pet owner`() {
-        log.info("Running test: Sending adopter contact information to the pet owner")
+    fun `Sending adopter contact information to the pet owner`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val telephoneCommand =
             TelephoneCommand().apply {
                 uuid = "uuid"
