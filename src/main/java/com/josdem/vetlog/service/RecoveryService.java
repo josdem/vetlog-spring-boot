@@ -18,7 +18,6 @@ package com.josdem.vetlog.service;
 
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.model.User;
-
 import java.util.Locale;
 
 public interface RecoveryService {

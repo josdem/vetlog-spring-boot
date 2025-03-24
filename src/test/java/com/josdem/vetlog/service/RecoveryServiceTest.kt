@@ -37,6 +37,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import java.util.Locale
 import java.util.Optional
 import kotlin.test.Test
 
@@ -104,14 +105,14 @@ internal class RecoveryServiceTest {
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
         whenever(registrationService.generateToken(EMAIL)).thenReturn(TOKEN)
 
-        service.generateRegistrationCodeForEmail(EMAIL)
+        service.generateRegistrationCodeForEmail(EMAIL, Locale.ENGLISH)
         verify(restService).sendMessage(any<MessageCommand>())
     }
 
     @Test
     fun `Not sending change password token due to user not found`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        assertThrows(UserNotFoundException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
+        assertThrows(UserNotFoundException::class.java) { service.generateRegistrationCodeForEmail(EMAIL, Locale.ENGLISH) }
     }
 
     @Test
@@ -119,7 +120,7 @@ internal class RecoveryServiceTest {
         log.info(testInfo.displayName)
         user.isEnabled = false
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
-        assertThrows(VetlogException::class.java) { service.generateRegistrationCodeForEmail(EMAIL) }
+        assertThrows(VetlogException::class.java) { service.generateRegistrationCodeForEmail(EMAIL, Locale.ENGLISH) }
     }
 
     @Test
