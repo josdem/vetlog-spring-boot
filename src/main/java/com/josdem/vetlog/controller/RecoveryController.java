@@ -61,7 +61,8 @@ public class RecoveryController {
         }
         var modelAndView = new ModelAndView(LOGIN_VIEW);
         modelAndView.addObject("message", localeService.getMessage("recovery.email.sent", request));
-        recoveryService.generateRegistrationCodeForEmail(command.getEmail());
+        var locale = request.getLocale();
+        recoveryService.generateRegistrationCodeForEmail(command.getEmail(), locale);
         return modelAndView;
     }
 

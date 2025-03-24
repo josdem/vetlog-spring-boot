@@ -19,10 +19,12 @@ package com.josdem.vetlog.service;
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.model.User;
 
+import java.util.Locale;
+
 public interface RecoveryService {
     User confirmAccountForToken(String token);
 
-    void generateRegistrationCodeForEmail(String email);
+    void generateRegistrationCodeForEmail(String email, Locale locale);
 
     Boolean validateToken(String token);
 

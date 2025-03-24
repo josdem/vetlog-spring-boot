@@ -19,6 +19,7 @@ package com.josdem.vetlog.service.impl;
 import com.josdem.vetlog.command.ChangePasswordCommand;
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.MessageCommand;
+import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.exception.VetlogException;
@@ -30,6 +31,9 @@ import com.josdem.vetlog.service.RecoveryService;
 import com.josdem.vetlog.service.RegistrationService;
 import com.josdem.vetlog.service.RestService;
 import java.io.IOException;
+import java.util.Locale;
+
+import com.josdem.vetlog.util.TemplateLocaleResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -75,7 +79,7 @@ public class RecoveryServiceImpl implements RecoveryService {
                 .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(USER_NOT_FOUND)));
     }
 
-    public void generateRegistrationCodeForEmail(String email) {
+    public void generateRegistrationCodeForEmail(String email, Locale locale) {
         var user = userRepository
                 .findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(USER_NOT_FOUND)));
@@ -84,10 +88,11 @@ public class RecoveryServiceImpl implements RecoveryService {
         }
         try {
             var token = registrationService.generateToken(email);
+            var template = TemplateLocaleResolver.getTemplate(forgotTemplate, locale.getLanguage());
             var command = new MessageCommand();
             command.setEmail(email);
             command.setName(email);
-            command.setTemplate(forgotTemplate);
+            command.setTemplate(template);
             command.setMessage(baseUrl + forgotPath + token);
             command.setToken(clientToken);
             restService.sendMessage(command);
