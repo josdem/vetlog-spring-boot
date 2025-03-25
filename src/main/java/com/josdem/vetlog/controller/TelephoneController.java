@@ -60,7 +60,8 @@ public class TelephoneController {
             return fillPetAndTelephoneCommand(modelAndView, telephoneCommand);
         }
         var user = userService.getCurrentUser();
-        telephoneService.save(telephoneCommand, user);
+        var locale = request.getLocale();
+        telephoneService.save(telephoneCommand, user, locale);
         var modelAndView = new ModelAndView("redirect:/");
         modelAndView.addObject("message", localeService.getMessage("adoption.email.sent", request));
         return modelAndView;

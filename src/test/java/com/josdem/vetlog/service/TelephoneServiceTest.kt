@@ -33,6 +33,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import java.util.Locale
 import kotlin.test.Test
 
 internal class TelephoneServiceTest {
@@ -75,7 +76,7 @@ internal class TelephoneServiceTest {
         val pet = getPet(owner, adopter)
 
         whenever(petService.getPetByUuid("uuid")).thenReturn(pet)
-        service.save(telephoneCommand, adopter)
+        service.save(telephoneCommand, adopter, Locale.ENGLISH)
 
         verify(petRepository).save(pet)
         verify(userRepository).save(adopter)

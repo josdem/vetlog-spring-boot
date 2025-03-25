@@ -18,7 +18,8 @@ package com.josdem.vetlog.service;
 
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.model.User;
+import java.util.Locale;
 
 public interface TelephoneService {
-    void save(Command command, User adopter);
+    void save(Command command, User adopter, Locale locale);
 }

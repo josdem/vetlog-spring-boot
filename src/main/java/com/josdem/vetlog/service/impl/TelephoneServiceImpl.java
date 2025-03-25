@@ -28,7 +28,9 @@ import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.RestService;
 import com.josdem.vetlog.service.TelephoneService;
+import com.josdem.vetlog.util.TemplateLocaleResolver;
 import java.io.IOException;
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -52,7 +54,7 @@ public class TelephoneServiceImpl implements TelephoneService {
     private String adoptionTemplate;
 
     @Transactional
-    public void save(Command command, User adopter) {
+    public void save(Command command, User adopter, Locale locale) {
         var telephoneCommand = (TelephoneCommand) command;
         var pet = petService.getPetByUuid(telephoneCommand.getUuid());
         pet.setStatus(PetStatus.ADOPTED);
@@ -60,13 +62,14 @@ public class TelephoneServiceImpl implements TelephoneService {
         pet.setAdopter(adopter);
         petRepository.save(pet);
         userRepository.save(adopter);
-        createAdoptionDataMessage(pet);
+        createAdoptionDataMessage(pet, locale);
     }
 
-    private void createAdoptionDataMessage(Pet pet) {
+    private void createAdoptionDataMessage(Pet pet, Locale locale) {
         var owner = pet.getUser();
         var adopter = pet.getAdopter();
         var messageCommand = new MessageCommand();
+        var template = TemplateLocaleResolver.getTemplate(adoptionTemplate, locale.getLanguage());
         messageCommand.setEmail(owner.getEmail());
         messageCommand.setName(pet.getName());
         var sb = new StringBuilder();
@@ -77,8 +80,8 @@ public class TelephoneServiceImpl implements TelephoneService {
         messageCommand.setEmailContact(adopter.getEmail());
         messageCommand.setMessage(adopter.getMobile());
         messageCommand.setToken(clientToken);
-        messageCommand.setTemplate(adoptionTemplate);
-        log.info("Command: " + messageCommand);
+        messageCommand.setTemplate(template);
+        log.info("Command: {}", messageCommand);
         try {
             restService.sendMessage(messageCommand);
         } catch (IOException ioe) {
