@@ -54,17 +54,17 @@
                             <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
                             <br/>
                             <br/>
+                            <label for="breed"><h4 th:text="#{pet.breed}"/></label>
+                            <select id="breedSelector" name="breed" class="form-control">
+                                <option th:each="breed : ${breeds}" th:value="${breed.id}"
+                                        th:text="${breed.name}"></option>
+                            </select>
+                            <br/>
                             <label for="type"><h4 th:text="#{pet.type}"/></label>
                             <select id="typeSelector" name="type" th:field="*{type}" class="form-control"
                                     onchange="updateBreedType()">
                                 <option th:each=" type : ${T(com.josdem.vetlog.enums.PetType).values()}"
                                         th:value="${type}" th:text="${type.value}"></option>
-                            </select>
-                            <br/>
-                            <label for="breed"><h4 th:text="#{pet.breed}"/></label>
-                            <select id="breedSelector" name="breed" class="form-control">
-                                <option th:each="breed : ${breeds}" th:value="${breed.id}"
-                                        th:text="${breed.name}"></option>
                             </select>
                             <br/><br/>
                             <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
