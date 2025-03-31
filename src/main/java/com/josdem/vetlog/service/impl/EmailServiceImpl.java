@@ -56,6 +56,7 @@ public class EmailServiceImpl implements EmailService {
             command.setEmail(user.getEmail());
             command.setName(user.getFirstName());
             command.setTemplate(template);
+            command.setSubject(localeService.getMessage("email.subject", locale));
             command.setMessage(localeService.getMessage("user.welcome.message", locale));
             command.setToken(clientToken);
             restService.sendMessage(command);

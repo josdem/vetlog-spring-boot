@@ -25,6 +25,7 @@ import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.repository.UserRepository;
+import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.RestService;
 import com.josdem.vetlog.service.TelephoneService;
@@ -46,6 +47,7 @@ public class TelephoneServiceImpl implements TelephoneService {
     private final RestService restService;
     private final UserRepository userRepository;
     private final PetRepository petRepository;
+    private final LocaleService localeService;
 
     @Value("${token}")
     private String clientToken;
@@ -72,12 +74,10 @@ public class TelephoneServiceImpl implements TelephoneService {
         var template = TemplateLocaleResolver.getTemplate(adoptionTemplate, locale.getLanguage());
         messageCommand.setEmail(owner.getEmail());
         messageCommand.setName(pet.getName());
-        var sb = new StringBuilder();
-        sb.append(adopter.getFirstName());
-        sb.append(" ");
-        sb.append(adopter.getLastName());
-        messageCommand.setContactName(sb.toString());
+        String sb = adopter.getFirstName() + " " + adopter.getLastName();
+        messageCommand.setContactName(sb);
         messageCommand.setEmailContact(adopter.getEmail());
+        messageCommand.setSubject(localeService.getMessage("email.subject", locale));
         messageCommand.setMessage(adopter.getMobile());
         messageCommand.setToken(clientToken);
         messageCommand.setTemplate(template);

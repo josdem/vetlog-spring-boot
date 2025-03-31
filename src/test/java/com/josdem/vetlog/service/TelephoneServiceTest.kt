@@ -51,6 +51,9 @@ internal class TelephoneServiceTest {
     @Mock
     private lateinit var petRepository: PetRepository
 
+    @Mock
+    private lateinit var localeService: LocaleService
+
     companion object {
         private val log = LoggerFactory.getLogger(TelephoneServiceTest::class.java)
     }
@@ -58,7 +61,7 @@ internal class TelephoneServiceTest {
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        service = TelephoneServiceImpl(petService, restService, userRepository, petRepository)
+        service = TelephoneServiceImpl(petService, restService, userRepository, petRepository, localeService)
     }
 
     @Test
