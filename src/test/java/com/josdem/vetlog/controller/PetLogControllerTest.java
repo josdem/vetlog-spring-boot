@@ -72,13 +72,14 @@ class PetLogControllerTest {
     @DisplayName("showing create pet log form")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldShowCreatePetLogForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
 
         registerPet();
 
         mockMvc.perform(get("/petlog/create").param("uuid", PET_UUID))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("petLogCommand"))
+                .andExpect(model().attributeExists("veterinarians"))
                 .andExpect(view().name("petlog/create"));
     }
 
@@ -87,7 +88,7 @@ class PetLogControllerTest {
     @DisplayName("registering a pet log")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldRegisterPetLog(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
 
         registerPet();
 
@@ -109,7 +110,7 @@ class PetLogControllerTest {
     @DisplayName("not listing pet logs due to uuid not found")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldNotListPetLogs(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
         mockMvc.perform(get("/petlog/list").param("uuid", "uuid"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("error"));
@@ -120,7 +121,7 @@ class PetLogControllerTest {
     @DisplayName("listing pet logs")
     @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
     void shouldListPetLogs(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
+        log.info(testInfo.getDisplayName());
 
         registerPet();
 

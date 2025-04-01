@@ -17,6 +17,7 @@
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.PetLogCommand;
+import com.josdem.vetlog.config.ApplicationProperties;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.LocaleService;
@@ -50,6 +51,7 @@ public class PetLogController {
     private final PetLogService petLogService;
     private final UserService userService;
     private final LocaleService localeService;
+    private final ApplicationProperties applicationProperties;
 
     @Value("${gcpUrl}")
     private String gcpUrl;
@@ -93,6 +95,8 @@ public class PetLogController {
         if (pets == null) {
             modelAndView.addObject("petListEmpty", localeService.getMessage("pet.list.empty", request));
         }
+        var veterinarians = applicationProperties.getVeterinarians();
+        modelAndView.addObject("veterinarians", veterinarians);
         return modelAndView;
     }
 
