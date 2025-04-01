@@ -26,4 +26,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties
 public class ApplicationProperties {
     private List<String> countryCodes;
+    private List<String> veterinarians;
 }

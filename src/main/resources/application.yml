@@ -56,8 +56,8 @@ gcpUrl: https://storage.googleapis.com/
 defaultImage: default-image.png
 token: userToken
 veterinarians:
-  - Diana Juárez
-  - Margarita Morales
+  - "vet-1"
+  - "vet-2"
 countryCodes:
   - "+countryCodeOne"
 management:
