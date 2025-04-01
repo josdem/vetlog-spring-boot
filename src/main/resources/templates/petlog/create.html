@@ -31,9 +31,9 @@
                                 </select>
                                 <br/>
                                 <label for="vetName"><h4 th:text="#{petlog.vetName}"/></label>
-                                <input type="text" name='vetName' th:field="*{vetName}" class="form-control"
-                                       placeholder="Vet name" id='vetName'/>
-                                <label th:if="${#fields.hasErrors('vetName')}" th:errors="*{vetName}"></label>
+                                <select id="vetSelector" name="vetName" th:field="*{vetName}" class="form-control">
+                                  <option th:each="vet : ${veterinarians}" th:value="${vet}" th:text="${vet}"></option>
+                                </select>
                                 <br/>
                                 <label for="signs"><h4 th:text="#{petlog.signs}"/></label>
                                 <textarea name="signs" th:field="*{signs}" rows="8" class="form-control"

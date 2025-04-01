@@ -31,6 +31,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/petlog")
 @RequiredArgsConstructor
+@EnableConfigurationProperties(ApplicationProperties.class)
 public class PetLogController {
 
     public static final String PET_LOG_COMMAND = "petLogCommand";
