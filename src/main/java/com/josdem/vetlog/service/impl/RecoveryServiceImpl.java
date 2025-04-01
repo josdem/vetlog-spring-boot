@@ -91,6 +91,7 @@ public class RecoveryServiceImpl implements RecoveryService {
             command.setEmail(email);
             command.setName(email);
             command.setTemplate(template);
+            command.setSubject(localeService.getMessage("email.subject", locale));
             command.setMessage(baseUrl + forgotPath + token);
             command.setToken(clientToken);
             restService.sendMessage(command);
