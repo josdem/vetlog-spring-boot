@@ -55,6 +55,9 @@ prescriptionBucket: prescription-bucket
 gcpUrl: https://storage.googleapis.com/
 defaultImage: default-image.png
 token: userToken
+veterinarians:
+  - Diana Juárez
+  - Margarita Morales
 countryCodes:
   - "+countryCodeOne"
 management:
