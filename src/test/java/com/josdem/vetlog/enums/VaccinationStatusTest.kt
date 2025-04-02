@@ -14,26 +14,28 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.enums;
+package com.josdem.vetlog.enums
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions.assertEquals
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.slf4j.LoggerFactory
 
-@Slf4j
 class VaccinationStatusTest {
 
-    private final VaccinationStatus vaccinationStatus = VaccinationStatus.PENDING;
+    private val vaccinationStatus = VaccinationStatus.PENDING
+
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
     @DisplayName("returning vaccination status")
-    void shouldReturnVaccinationStatus(TestInfo testInfo) {
-        log.info("Running: {}", testInfo.getDisplayName());
-        assertEquals("PENDING", vaccinationStatus.name());
-        assertEquals("Pending", vaccinationStatus.getValue());
-        assertEquals(VaccinationStatus.PENDING, VaccinationStatus.getVaccinationStatusByValue("Pending"));
+    fun shouldReturnVaccinationStatus(testInfo: TestInfo) {
+        log.info("Running: {}", testInfo.displayName)
+        assertEquals("PENDING", vaccinationStatus.name)
+        assertEquals("Pending", vaccinationStatus.value)
+        assertEquals(VaccinationStatus.PENDING, VaccinationStatus.getVaccinationStatusByValue("Pending"))
     }
 }
+
