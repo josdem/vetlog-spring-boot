@@ -33,6 +33,7 @@ import org.springframework.test.util.ReflectionTestUtils
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
 import java.io.InputStream
+import kotlin.test.assertTrue
 
 internal class PetPrescriptionServiceTest {
     private lateinit var service: PetPrescriptionService
@@ -69,6 +70,7 @@ internal class PetPrescriptionServiceTest {
 
         service.attachFile(petLogCommand)
 
+        assertTrue { petLogCommand.isHasAttachment }
         verify(googleStorageWriter).uploadToBucket(
             any(),
             any(),

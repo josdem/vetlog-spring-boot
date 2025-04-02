@@ -42,6 +42,8 @@ public class PetLogCommand implements Command {
 
     private String uuid = UuidGenerator.generateUuid();
 
+    private boolean hasAttachment = false;
+
     @Min(1L)
     private Long pet;
 
