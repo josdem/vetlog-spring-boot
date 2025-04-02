@@ -17,6 +17,7 @@
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.command.PetLogCommand;
+import com.josdem.vetlog.config.ApplicationProperties;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.LocaleService;
@@ -30,6 +31,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +44,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/petlog")
 @RequiredArgsConstructor
+@EnableConfigurationProperties(ApplicationProperties.class)
 public class PetLogController {
 
     public static final String PET_LOG_COMMAND = "petLogCommand";
@@ -50,6 +53,7 @@ public class PetLogController {
     private final PetLogService petLogService;
     private final UserService userService;
     private final LocaleService localeService;
+    private final ApplicationProperties applicationProperties;
 
     @Value("${gcpUrl}")
     private String gcpUrl;
@@ -93,6 +97,8 @@ public class PetLogController {
         if (pets == null) {
             modelAndView.addObject("petListEmpty", localeService.getMessage("pet.list.empty", request));
         }
+        var veterinarians = applicationProperties.getVeterinarians();
+        modelAndView.addObject("veterinarians", veterinarians);
         return modelAndView;
     }
 
