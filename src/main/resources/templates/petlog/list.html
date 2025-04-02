@@ -33,7 +33,7 @@
                             <li th:text="${log.signs}"/>
                             <li th:text="${log.diagnosis}"/>
                             <li th:text="${log.medicine}"/>
-                            <a th:href="${gcpPrescriptionUrl + log.uuid}"><p th:text="#{petlog.file}"/></a>
+                            <a th:if="${log.isHasAttachment}" th:href="${gcpPrescriptionUrl + log.uuid}"><p th:text="#{petlog.file}"/></a>
                         </ul>
                         </p>
                     </div>
