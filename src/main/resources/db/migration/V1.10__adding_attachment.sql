@@ -1,1 +1,1 @@
-ALTER TABLE pet_log ADD COLUMN has_attachment tinyint DEFAULT 0;
+ALTER TABLE pet_log ADD COLUMN has_attachment bit(1) DEFAULT 0;
