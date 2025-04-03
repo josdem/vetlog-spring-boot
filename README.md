@@ -61,6 +61,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/axtant"><img src="https://avatars.githubusercontent.com/u/70051483?v=4?s=100" width="100px;" alt="axtant"/><br /><sub><b>axtant</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=axtant" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/BOMBYASCHER"><img src="https://avatars.githubusercontent.com/u/113691860?v=4?s=100" width="100px;" alt="Daniil Kamanin"/><br /><sub><b>Daniil Kamanin</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=BOMBYASCHER" title="Code">💻</a> <a href="#mentoring-BOMBYASCHER" title="Mentoring">🧑‍🏫</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/LoseGameng"><img src="https://avatars.githubusercontent.com/u/115796742?v=4?s=100" width="100px;" alt="Chebotkov Ivan"/><br /><sub><b>Chebotkov Ivan</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=LoseGameng" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
