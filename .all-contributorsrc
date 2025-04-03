@@ -209,6 +209,15 @@
         "code",
         "mentoring"
       ]
+    },
+    {
+      "login": "LoseGameng",
+      "name": "Chebotkov Ivan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/115796742?v=4",
+      "profile": "https://github.com/LoseGameng",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
