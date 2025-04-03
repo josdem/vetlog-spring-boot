@@ -52,6 +52,8 @@ public class PetLog {
     @Column(nullable = false)
     private String uuid;
 
+    private boolean hasAttachment = false;
+
     @Column(nullable = false)
     private LocalDateTime dateCreated = LocalDateTime.now();
 

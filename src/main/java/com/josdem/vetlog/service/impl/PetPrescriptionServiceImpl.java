@@ -41,6 +41,7 @@ public class PetPrescriptionServiceImpl implements PetPrescriptionService {
             return;
         }
         if (petLogCommand.getAttachment().getInputStream().available() > 0) {
+            petLogCommand.setHasAttachment(true);
             googleStorageWriter.uploadToBucket(
                     bucket,
                     petLogCommand.getUuid(),

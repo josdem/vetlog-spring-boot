@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
+import kotlin.test.assertTrue
 
 internal class PetLogBinderTest {
     val petLogBinder = PetLogBinder()
@@ -39,6 +40,7 @@ internal class PetLogBinderTest {
                 signs = "Cough"
                 diagnosis = "Bronchitis"
                 medicine = "Antibiotics"
+                isHasAttachment = true
             }
 
         val result = petLogBinder.bind(petLogCommand)
@@ -47,5 +49,6 @@ internal class PetLogBinderTest {
         assertEquals("Cough", result.signs)
         assertEquals("Bronchitis", result.diagnosis)
         assertEquals("Antibiotics", result.medicine)
+        assertTrue { result.isHasAttachment }
     }
 }

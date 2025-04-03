@@ -32,6 +32,7 @@ public class PetLogBinder {
         petLog.setDiagnosis(petLogCommand.getDiagnosis());
         petLog.setMedicine(petLogCommand.getMedicine());
         petLog.setUuid(petLogCommand.getUuid());
+        petLog.setHasAttachment(petLogCommand.isHasAttachment());
         return petLog;
     }
 }

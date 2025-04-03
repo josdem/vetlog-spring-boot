@@ -30,10 +30,8 @@ import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PetLogServiceImpl implements PetLogService {
@@ -55,7 +53,6 @@ public class PetLogServiceImpl implements PetLogService {
         }
         petLog.setPet(pet.get());
         petPrescriptionService.attachFile(petLogCommand);
-        log.info("petLog: {}", petLogCommand);
         petLogRepository.save(petLog);
         return petLog;
     }
