@@ -28,6 +28,7 @@ import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.repository.UserRepository;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.PetImageService;
+import com.josdem.vetlog.service.PetLogService;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.VaccinationService;
 import java.io.IOException;
@@ -50,6 +51,7 @@ public class PetServiceImpl implements PetService {
     private final AdoptionRepository adoptionRepository;
     private final LocaleService localeService;
     private final VaccinationService vaccinationService;
+    private final PetLogService petLogService;
 
     @Transactional
     public Pet save(Command command, User user) throws IOException {
@@ -113,6 +115,9 @@ public class PetServiceImpl implements PetService {
         var pet = petRepository.findById(id).orElseThrow(() -> new BusinessException(NO_PET_WAS_FOUND_WITH_ID + id));
         if (pet.getStatus() == PetStatus.IN_ADOPTION) {
             throw new BusinessException(localeService.getMessage("pet.delete.error.inAdoption"));
+        }
+        if (!petLogService.getPetLogsByPet(pet).isEmpty()) {
+            throw new BusinessException(localeService.getMessage("pet.delete.error.logs"));
         }
         vaccinationService.deleteVaccinesByPet(pet);
         petRepository.delete(pet);
