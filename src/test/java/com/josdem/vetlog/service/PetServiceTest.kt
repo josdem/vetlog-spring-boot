@@ -22,6 +22,7 @@ import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.PetAdoption
+import com.josdem.vetlog.model.PetLog
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.AdoptionRepository
 import com.josdem.vetlog.repository.PetRepository
@@ -68,6 +69,9 @@ internal class PetServiceTest {
     @Mock
     private lateinit var vaccinationService: VaccinationService
 
+    @Mock
+    private lateinit var petLogService: PetLogService
+
     private var user: User? = null
     private var adopter: User? = null
     private var pet: Pet? = null
@@ -92,6 +96,7 @@ internal class PetServiceTest {
                 adoptionRepository,
                 localeService,
                 vaccinationService,
+                petLogService,
             )
     }
 
@@ -272,6 +277,18 @@ internal class PetServiceTest {
                 status = PetStatus.IN_ADOPTION
             }
         whenever(petRepository.findById(1L)).thenReturn(Optional.of(petInAdoption))
+
+        assertThrows(BusinessException::class.java) {
+            service.deletePetById(1L)
+        }
+    }
+
+    @Test
+    fun `Not deleting a pet due to has medical records`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petLog = mock<PetLog>()
+        val petLogRecords = listOf<PetLog>(petLog)
+        whenever(petLogService.getPetLogsByPet(pet)).thenReturn(petLogRecords)
 
         assertThrows(BusinessException::class.java) {
             service.deletePetById(1L)
