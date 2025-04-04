@@ -16,7 +16,6 @@
 
 package com.josdem.vetlog.enums
 
-import com.josdem.vetlog.binder.PetLogBinderTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
@@ -26,7 +25,7 @@ class PetStatusTest {
     private val petStatus = PetStatus.OWNED
 
     companion object {
-        private val log = LoggerFactory.getLogger(PetLogBinderTest::class.java)
+        private val log = LoggerFactory.getLogger(this::class.java)
     }
 
     @Test

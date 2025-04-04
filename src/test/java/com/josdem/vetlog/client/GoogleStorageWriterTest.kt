@@ -7,7 +7,6 @@ import com.google.cloud.storage.Storage
 import com.google.cloud.storage.StorageOptions
 import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.helper.StorageOptionsHelper
-import com.josdem.vetlog.service.AdoptionServiceTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
@@ -47,7 +46,7 @@ class GoogleStorageWriterTest {
     private lateinit var builder: StorageOptions.Builder
 
     companion object {
-        private val log = LoggerFactory.getLogger(AdoptionServiceTest::class.java)
+        private val log = LoggerFactory.getLogger(this::class.java)
     }
 
     @BeforeEach

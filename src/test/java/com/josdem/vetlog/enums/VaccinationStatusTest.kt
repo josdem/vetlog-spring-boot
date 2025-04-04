@@ -17,7 +17,6 @@
 package com.josdem.vetlog.enums
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
@@ -25,11 +24,12 @@ import org.slf4j.LoggerFactory
 class VaccinationStatusTest {
     private val vaccinationStatus = VaccinationStatus.PENDING
 
-    private val log = LoggerFactory.getLogger(this::class.java)
+    companion object {
+        private val log = LoggerFactory.getLogger(this::class.java)
+    }
 
     @Test
-    @DisplayName("returning vaccination status")
-    fun shouldReturnVaccinationStatus(testInfo: TestInfo) {
+    fun `should return vaccination status`(testInfo: TestInfo) {
         log.info("Running: {}", testInfo.displayName)
         assertEquals("PENDING", vaccinationStatus.name)
         assertEquals("Pending", vaccinationStatus.value)
