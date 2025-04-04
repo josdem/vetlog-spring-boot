@@ -14,22 +14,22 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.enums;
+package com.josdem.vetlog.enums
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions.assertEquals
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
 
 class PetStatusTest {
 
-    private final PetStatus petStatus = PetStatus.OWNED;
+    private val petStatus = PetStatus.OWNED
 
     @Test
     @DisplayName("returning pet status")
-    void shouldReturnPetStatus() {
-        assertEquals("OWNED", petStatus.name());
-        assertEquals("Owned", petStatus.getValue());
-        assertEquals(PetStatus.OWNED, PetStatus.getPetStatusByValue("Owned"));
+    fun shouldReturnPetStatus() {
+        assertEquals("OWNED", petStatus.name)
+        assertEquals("Owned", petStatus.value)
+        assertEquals(PetStatus.OWNED, PetStatus.getPetStatusByValue("Owned"))
     }
 }
