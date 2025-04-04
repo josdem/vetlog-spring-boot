@@ -16,18 +16,22 @@
 
 package com.josdem.vetlog.enums
 
+import com.josdem.vetlog.binder.PetLogBinderTest
 import org.junit.jupiter.api.Assertions.assertEquals
-
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.slf4j.LoggerFactory
 
 class PetStatusTest {
-
     private val petStatus = PetStatus.OWNED
 
+    companion object {
+        private val log = LoggerFactory.getLogger(PetLogBinderTest::class.java)
+    }
+
     @Test
-    @DisplayName("returning pet status")
-    fun shouldReturnPetStatus() {
+    fun `should return pet status`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         assertEquals("OWNED", petStatus.name)
         assertEquals("Owned", petStatus.value)
         assertEquals(PetStatus.OWNED, PetStatus.getPetStatusByValue("Owned"))
