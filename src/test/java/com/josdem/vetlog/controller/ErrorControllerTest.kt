@@ -14,35 +14,38 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.controller;
+package com.josdem.vetlog.controller
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.test.context.support.WithMockUser
+import org.springframework.test.web.servlet.MockMvc
 
-@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 class ErrorControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private lateinit var mockMvc : MockMvc
+
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
     @DisplayName("showing error page")
-    @WithMockUser(username = "josdem", password = "12345678", roles = "USER")
-    void shouldShowHomePage(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(get("/error")).andExpect(status().isOk()).andExpect(view().name("error"));
+    @WithMockUser(username = "josdem", password = "12345678", roles = ["USER"])
+    fun shouldShowHomePage(testInfo: TestInfo) {
+        log.info("Running: {}", testInfo.displayName)
+        mockMvc.perform(get("/error"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("error"))
     }
 }
