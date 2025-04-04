@@ -272,6 +272,7 @@ internal class PetServiceTest {
     @Test
     fun `Not deleting a pet due to IN_ADOPTION status`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        whenever(petRepository.findById(1L)).thenReturn(Optional.of(pet!!))
         val petInAdoption =
             Pet().apply {
                 status = PetStatus.IN_ADOPTION
@@ -288,6 +289,7 @@ internal class PetServiceTest {
         log.info(testInfo.displayName)
         val petLog = mock<PetLog>()
         val petLogRecords = listOf<PetLog>(petLog)
+        whenever(petRepository.findById(1L)).thenReturn(Optional.of(pet!!))
         whenever(petLogService.getPetLogsByPet(pet)).thenReturn(petLogRecords)
 
         assertThrows(BusinessException::class.java) {
