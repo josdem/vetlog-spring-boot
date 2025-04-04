@@ -17,12 +17,10 @@
 package com.josdem.vetlog.enums
 
 import org.junit.jupiter.api.Assertions.assertEquals
-
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class PetStatusTest {
-
     private val petStatus = PetStatus.OWNED
 
     @Test

@@ -17,14 +17,12 @@
 package com.josdem.vetlog.enums
 
 import org.junit.jupiter.api.Assertions.assertEquals
-
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 
 class VaccinationStatusTest {
-
     private val vaccinationStatus = VaccinationStatus.PENDING
 
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -38,4 +36,3 @@ class VaccinationStatusTest {
         assertEquals(VaccinationStatus.PENDING, VaccinationStatus.getVaccinationStatusByValue("Pending"))
     }
 }
-
