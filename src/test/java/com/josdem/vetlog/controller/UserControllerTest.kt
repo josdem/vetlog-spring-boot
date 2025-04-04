@@ -14,100 +14,104 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.controller;
+package com.josdem.vetlog.controller
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
+import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.model
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 
-import jakarta.transaction.Transactional;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import jakarta.transaction.Transactional
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.context.WebApplicationContext
 
-@Slf4j
 @SpringBootTest
 @AutoConfigureMockMvc
 class UserControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private lateinit var mockMvc : MockMvc
+
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @Autowired
-    private WebApplicationContext webApplicationContext;
+    private lateinit var webApplicationContext : WebApplicationContext
 
     @BeforeEach
-    public void setUp() {
+    fun setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
-                .build();
+            .apply { springSecurity() }
+            .build()
     }
 
     @Test
     @Transactional
     @DisplayName("registering an user")
-    void shouldShowCreateUserForm(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(post("/user/save")
-                        .with(csrf())
-                        .param("username", "vetlog")
-                        .param("password", "12345678")
-                        .param("passwordConfirmation", "12345678")
-                        .param("firstname", "vetlog")
-                        .param("lastname", "organization")
-                        .param("countryCode", "+52")
-                        .param("mobile", "1234567890")
-                        .param("email", "contact@josdem.io"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("login/login"));
+    fun shouldShowCreateUserForm(testInfo : TestInfo) {
+        log.info("Running: {}", testInfo.displayName)
+        val request = post("/user/save")
+            .with(csrf())
+            .param("username", "vetlog")
+            .param("password", "12345678")
+            .param("passwordConfirmation", "12345678")
+            .param("firstname", "vetlog")
+            .param("lastname", "organization")
+            .param("countryCode", "+52")
+            .param("mobile", "1234567890")
+            .param("email", "contact@josdem.io")
+        mockMvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(view().name("login/login"))
     }
 
     @Test
     @DisplayName("not saving user due to invalid email")
-    void shouldNotSaveUserWithInvalidEmail(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(post("/user/save")
-                        .with(csrf())
-                        .param("username", "vetlog")
-                        .param("password", "12345678")
-                        .param("passwordConfirmation", "12345678")
-                        .param("firstname", "vetlog")
-                        .param("lastname", "organization")
-                        .param("countryCode", "+52")
-                        .param("mobile", "1234567890")
-                        .param("email", "contact"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/create"))
-                .andExpect(model().attributeHasFieldErrors("userCommand", "email"));
+    fun shouldNotSaveUserWithInvalidEmail(testInfo : TestInfo) {
+        log.info("Running: {}", testInfo.displayName)
+        val request = post("/user/save")
+            .with(csrf())
+            .param("username", "vetlog")
+            .param("password", "12345678")
+            .param("passwordConfirmation", "12345678")
+            .param("firstname", "vetlog")
+            .param("lastname", "organization")
+            .param("countryCode", "+52")
+            .param("mobile", "1234567890")
+            .param("email", "contact")
+        mockMvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(view().name("user/create"))
+            .andExpect(model().attributeHasFieldErrors("userCommand", "email"))
     }
 
     @Test
     @DisplayName("not saving user due to invalid mobile")
-    void shouldNotSaveUserWithInvalidMobile(TestInfo testInfo) throws Exception {
-        log.info("Running: {}", testInfo.getDisplayName());
-        mockMvc.perform(post("/user/save")
-                        .with(csrf())
-                        .param("username", "vetlog")
-                        .param("password", "12345678")
-                        .param("passwordConfirmation", "12345678")
-                        .param("firstname", "vetlog")
-                        .param("lastname", "organization")
-                        .param("countryCode", "+52")
-                        .param("mobile", "notValidMobile")
-                        .param("email", "contact"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("user/create"))
-                .andExpect(model().attributeHasFieldErrors("userCommand", "mobile"));
+    fun shouldNotSaveUserWithInvalidMobile(testInfo : TestInfo) {
+        log.info("Running: {}", testInfo.displayName)
+        val request = post("/user/save")
+            .with(csrf())
+            .param("username", "vetlog")
+            .param("password", "12345678")
+            .param("passwordConfirmation", "12345678")
+            .param("firstname", "vetlog")
+            .param("lastname", "organization")
+            .param("countryCode", "+52")
+            .param("mobile", "notValidMobile")
+            .param("email", "contact")
+        mockMvc.perform(request)
+            .andExpect(status().isOk())
+            .andExpect(view().name("user/create"))
+            .andExpect(model().attributeHasFieldErrors("userCommand", "mobile"))
     }
 }
