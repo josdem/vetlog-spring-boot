@@ -16,11 +16,6 @@
 
 package com.josdem.vetlog.controller
 
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
-
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
@@ -28,41 +23,44 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class LoginControllerTest {
-
     @Autowired
-    private lateinit var mockMvc : MockMvc
+    private lateinit var mockMvc: MockMvc
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
-    @DisplayName("getting login page")
-    fun shouldGetLogin(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        mockMvc.perform(get("/login"))
+    fun `should get login page`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        mockMvc
+            .perform(get("/login"))
             .andExpect(status().isOk())
             .andExpect(view().name("login/login"))
     }
 
     @Test
-    @DisplayName("getting login error")
-    fun shouldGetLoginErrorMessage(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        val request = get("/login")
-            .param("error", "invalid credentials")
-        mockMvc.perform(request)
+    fun `should get login error message`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            get("/login")
+                .param("error", "invalid credentials")
+        mockMvc
+            .perform(request)
             .andExpect(status().isOk())
             .andExpect(view().name("login/login"))
     }
 
     @Test
-    @DisplayName("logging out")
-    fun shouldLogout(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        mockMvc.perform(get("/logout"))
+    fun `should logout`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        mockMvc
+            .perform(get("/logout"))
             .andExpect(status().is3xxRedirection())
     }
 }

@@ -16,81 +16,81 @@
 
 package com.josdem.vetlog.controller
 
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
+import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 
-import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInfo
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.web.servlet.MockMvc
-
 @SpringBootTest
 @AutoConfigureMockMvc
 class RecoveryControllerTest {
-
     @Autowired
-    private lateinit var mockMvc : MockMvc
+    private lateinit var mockMvc: MockMvc
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
-    @DisplayName("getting email to change password")
-    fun shouldRequestEmailToChangePassword(testInfo : TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        mockMvc.perform(get("/recovery/password"))
+    fun `should request email to change password`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        mockMvc
+            .perform(get("/recovery/password"))
             .andExpect(status().isOk())
             .andExpect(view().name("recovery/recoveryPassword"))
     }
 
     @Test
-    @DisplayName("not getting email to change password due to invalid email")
-    fun shouldNotRequestEmailToChangePassword(testInfo : TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        val request = get("/recovery/password")
-            .param("email", "notValidEmail")
-        mockMvc.perform(request)
+    fun `should not request email to change password due to invalid email`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            get("/recovery/password")
+                .param("email", "notValidEmail")
+        mockMvc
+            .perform(request)
             .andExpect(status().isOk())
             .andExpect(view().name("recovery/recoveryPassword"))
     }
 
     @Test
-    @DisplayName("showing change password forms")
-    fun shouldShowChangePasswordForms(testInfo : TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        mockMvc.perform(get("/recovery/forgot/token"))
+    fun `should show change password forms`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        mockMvc
+            .perform(get("/recovery/forgot/token"))
             .andExpect(status().isOk())
             .andExpect(view().name("recovery/changePassword"))
     }
 
     @Test
-    @DisplayName("not generating token for changing password due to user not found")
-    fun shouldNotGenerateTokenToChangePassword(testInfo : TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        val request = post("/recovery/password")
-            .with(csrf())
-            .param("email", "contact@josdem.io")
-        mockMvc.perform(request)
+    fun `should not generate token to change password due to user not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            post("/recovery/password")
+                .with(csrf())
+                .param("email", "contact@josdem.io")
+        mockMvc
+            .perform(request)
             .andExpect(status().isOk())
             .andExpect(view().name("error"))
     }
 
     @Test
-    @DisplayName("not changing password due to token not found")
-    fun shouldNotChangePassword(testInfo : TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        val request = post("/recovery/change")
-            .with(csrf())
-            .param("token", "18c58288-cb57-46dc-b14f-e3ebc2d9b8ce")
-            .param("password", "12345678")
-            .param("passwordConfirmation", "12345678")
-        mockMvc.perform(request)
+    fun `should not change password due to token not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            post("/recovery/change")
+                .with(csrf())
+                .param("token", "18c58288-cb57-46dc-b14f-e3ebc2d9b8ce")
+                .param("password", "12345678")
+                .param("passwordConfirmation", "12345678")
+        mockMvc
+            .perform(request)
             .andExpect(status().isOk())
             .andExpect(view().name("error"))
     }

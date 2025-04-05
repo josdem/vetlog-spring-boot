@@ -16,10 +16,6 @@
 
 package com.josdem.vetlog.controller
 
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
@@ -28,24 +24,26 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class BreedControllerTest {
-
     @Autowired
-    private lateinit var mockMvc : MockMvc
+    private lateinit var mockMvc: MockMvc
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
-    @DisplayName("getting dogs breeds")
-    fun shouldGetDogsBreed(testInfo: TestInfo) {
-        log.info("Running: {}", testInfo.displayName)
-        val request = get("/breed/list")
-            .contentType(MediaType.APPLICATION_JSON)
-            .param("type", "Dog")
-        mockMvc.perform(request)
-                .andExpect(status().isOk())
+    fun `should get dogs breed`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            get("/breed/list")
+                .contentType(MediaType.APPLICATION_JSON)
+                .param("type", "Dog")
+        mockMvc
+            .perform(request)
+            .andExpect(status().isOk())
     }
 }
