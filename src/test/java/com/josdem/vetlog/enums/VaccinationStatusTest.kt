@@ -24,9 +24,9 @@ import org.slf4j.LoggerFactory
 class VaccinationStatusTest {
     private val vaccinationStatus = VaccinationStatus.PENDING
 
-    companion object {
-        private val log = LoggerFactory.getLogger(this::class.java)
-    }
+    
+    private val log = LoggerFactory.getLogger(this::class.java)
+    
 
     @Test
     fun `should return vaccination status`(testInfo: TestInfo) {
