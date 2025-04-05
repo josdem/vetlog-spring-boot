@@ -8,7 +8,6 @@ import com.google.cloud.storage.StorageOptions
 import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.helper.StorageOptionsHelper
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
@@ -16,6 +15,7 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import org.slf4j.LoggerFactory
 import java.io.InputStream
 
 class GoogleStorageWriterTest {
@@ -45,6 +45,10 @@ class GoogleStorageWriterTest {
     @Mock
     private lateinit var builder: StorageOptions.Builder
 
+    companion object {
+        private val log = LoggerFactory.getLogger(this::class.java)
+    }
+
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
@@ -52,9 +56,8 @@ class GoogleStorageWriterTest {
     }
 
     @Test
-    @DisplayName("Should upload to bucket")
-    fun shouldUploadToBucket(testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
+    fun `should upload to bucket`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         setExpectations()
 
         googleStorageWriter.setup()
@@ -63,9 +66,8 @@ class GoogleStorageWriterTest {
     }
 
     @Test
-    @DisplayName("Not upload to bucket due to exception")
-    fun shouldNotUploadToBucket(testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
+    fun `should not upload to bucket`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         setExpectations()
 
         googleStorageWriter.setup()
