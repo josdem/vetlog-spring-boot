@@ -21,6 +21,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import com.josdem.vetlog.command.AdoptionCommand;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ import org.springframework.validation.Errors;
 @Slf4j
 class AdoptionValidatorTest {
 
-    private static final String UUID = "21740c48-13f9-4bf4-a8a2-ef61b7d3cdc3";
+    private static final String VALID_UUID = UUID.randomUUID().toString();
     private final AdoptionValidator adoptionValidator = new AdoptionValidator();
 
     @Test
@@ -50,7 +51,7 @@ class AdoptionValidatorTest {
         log.info("Running: {}", testInfo.getDisplayName());
         var adoptionCommand = new AdoptionCommand();
         var errors = mock(Errors.class);
-        adoptionCommand.setUuid(UUID);
+        adoptionCommand.setUuid(VALID_UUID);
         adoptionValidator.validate(adoptionCommand, errors);
         verify(errors, never()).rejectValue("uuid", "adoption.error.uuid.invalid");
     }

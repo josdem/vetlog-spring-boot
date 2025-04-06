@@ -28,6 +28,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
+import java.util.UUID
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -86,7 +87,7 @@ class RecoveryControllerTest {
         val request =
             post("/recovery/change")
                 .with(csrf())
-                .param("token", "18c58288-cb57-46dc-b14f-e3ebc2d9b8ce")
+                .param("token", UUID.randomUUID().toString())
                 .param("password", "12345678")
                 .param("passwordConfirmation", "12345678")
         mockMvc
