@@ -64,6 +64,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/LoseGameng"><img src="https://avatars.githubusercontent.com/u/115796742?v=4?s=100" width="100px;" alt="Chebotkov Ivan"/><br /><sub><b>Chebotkov Ivan</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=LoseGameng" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Zipyal"><img src="https://avatars.githubusercontent.com/u/80532767?v=4?s=100" width="100px;" alt="Zipyal"/><br /><sub><b>Zipyal</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Zipyal" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Parfenix"><img src="https://avatars.githubusercontent.com/u/119493797?v=4?s=100" width="100px;" alt="Denis Parfenov"/><br /><sub><b>Denis Parfenov</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Parfenix" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
