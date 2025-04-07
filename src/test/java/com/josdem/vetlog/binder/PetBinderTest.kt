@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Optional
+import java.util.UUID
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
@@ -72,11 +73,11 @@ internal class PetBinderTest {
     @Test
     fun `should bind a pet`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        var pet = getPet()
+        val pet = getPet(uuid = UUID.randomUUID().toString())
         val result = petBinder.bindPet(pet)
 
         assertEquals(1L, result.id)
-        assertEquals("1b211410-320b-11ed-a261-0242ac120002", result.uuid)
+        assertEquals(pet.uuid, result.uuid)
         assertEquals("Cremita", result.name)
         assertEquals("2021-01-17T00:00", result.birthDate.toString())
         assertTrue(result.dewormed)
@@ -147,10 +148,10 @@ internal class PetBinderTest {
         }
 
     @NotNull
-    private fun getPet(): Pet =
+    private fun getPet(uuid: String): Pet =
         Pet().apply {
             id = 1L
-            uuid = "1b211410-320b-11ed-a261-0242ac120002"
+            this.uuid = uuid
             name = "Cremita"
             dewormed = true
             sterilized = true

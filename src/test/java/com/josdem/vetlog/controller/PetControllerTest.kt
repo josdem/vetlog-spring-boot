@@ -40,12 +40,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import java.util.UUID
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class PetControllerTest {
     companion object {
-        const val PET_UUID = "5acd03eb-2795-4e92-85d0-92e142c44170"
+        val PET_UUID = UUID.randomUUID().toString()
     }
 
     @Autowired
