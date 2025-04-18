@@ -3,27 +3,27 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.4.2")
-    classpath("org.flywaydb:flyway-mysql:11.2.0")
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.4.4")
+    classpath("org.flywaydb:flyway-mysql:11.4.0")
   }
 }
 
 plugins {
-  id("org.springframework.boot") version "3.4.2"
+  id("org.springframework.boot") version "3.4.4"
   id("io.spring.dependency-management") version "1.1.7"
-  id("org.flywaydb.flyway") version "11.3.1"
-  id("org.sonarqube") version "6.0.0.5145"
+  id("org.flywaydb.flyway") version "11.4.0"
+  id("org.sonarqube") version "6.1.0.5360"
   id("jacoco")
   id("java")
   id("com.diffplug.spotless") version "7.0.2"
-  id("org.jetbrains.kotlin.jvm") version "2.1.10"
+  id("org.jetbrains.kotlin.jvm") version "2.1.20"
 }
 
-val gcpVersion by extra("6.0.0")
+val gcpVersion by extra("6.1.1")
 val retrofitVersion by extra("2.11.0")
-val mockitoCoreVersion by extra("5.15.2")
+val mockitoCoreVersion by extra("5.16.1")
 val annotationsVersion by extra("26.0.2")
-val jsonSmartVersion by extra("2.5.1")
+val jsonSmartVersion by extra("2.5.2")
 val jaxbVersion by extra("2.3.1")
 val cglibVersion by extra("3.3.0")
 val mockitoKotlinVersion by extra("5.4.0")
