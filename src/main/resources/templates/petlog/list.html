@@ -22,10 +22,10 @@
         </div>
         <br/><br/>
         <div th:each="log : ${petLogs}">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="text-align:center;">
                 <div class="thumbnail">
-                    <div class="caption">
-                        <h3 th:text="${log.pet.name}"></h3>
+                    <h3 th:text="${log.pet.name}"></h3>
+                    <div class="caption" style="text-align:left;">
                         <p>
                         <ul>
                             <li th:text="${log.dateCreated}"/>
