@@ -40,6 +40,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import java.util.UUID
+
+private val PETLOG_UUID = UUID.randomUUID().toString()
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -91,9 +94,30 @@ class PetLogControllerTest {
     @Test
     @Transactional
     @WithMockUser(username = "josdem", password = "12345678", roles = ["USER"])
+    fun `should show edit pet log form`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        registerPet()
+        registerPetLog()
+        val request =
+            get("/petlog/edit")
+                .param("uuid", PETLOG_UUID)
+        mockMvc
+            .perform(request)
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("petLogCommand"))
+            .andExpect(view().name("petlog/edit"))
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "josdem", password = "12345678", roles = ["USER"])
     fun `should register pet log`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         registerPet()
+        registerPetLog()
+    }
+
+    private fun registerPetLog() {
         val cremita =
             petRepository
                 .findByUuid(PET_UUID)
@@ -102,7 +126,7 @@ class PetLogControllerTest {
             multipart("/petlog/save")
                 .with(csrf())
                 .param("pet", cremita.id.toString())
-                .param("uuid", PET_UUID)
+                .param("uuid", PETLOG_UUID)
                 .param("date", "2024-09-27")
                 .param("description", "description")
                 .param("diagnosis", "diagnosis")
