@@ -37,8 +37,8 @@
                         </ul>
                         </p>
                     </div>
+                    <a th:data-testid="petLogEditButton" th:href="@{/petlog/edit(uuid=${log.uuid})}" class="btn btn-success"><p th:text="#{petlog.edit}"/></a>
                 </div>
-                <a th:data-testid="petLogEditButton" th:href="@{/petlog/edit(uuid=${log.uuid})}" class="btn btn-success"><p th:text="#{petlog.edit}"/></a>
             </div>
         </div>
         <br>

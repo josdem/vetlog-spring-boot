@@ -21,9 +21,12 @@ import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.PetLog;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public interface PetLogService {
     PetLog save(Command command) throws IOException;
 
     List<PetLog> getPetLogsByPet(Pet pet);
+
+    Optional<PetLog> getPetLogByUuid(String uuid);
 }

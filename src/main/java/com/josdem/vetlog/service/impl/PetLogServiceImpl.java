@@ -29,6 +29,7 @@ import com.josdem.vetlog.service.PetPrescriptionService;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,10 @@ public class PetLogServiceImpl implements PetLogService {
     @Override
     public List<PetLog> getPetLogsByPet(Pet pet) {
         return petLogRepository.getAllByPet(pet);
+    }
+
+    @Override
+    public Optional<PetLog> getPetLogByUuid(String uuid) {
+        return petLogRepository.findByUuid(uuid);
     }
 }

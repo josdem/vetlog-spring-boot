@@ -16,8 +16,10 @@
 
 package com.josdem.vetlog.controller;
 
+import com.josdem.vetlog.binder.PetLogBinder;
 import com.josdem.vetlog.command.PetLogCommand;
 import com.josdem.vetlog.config.ApplicationProperties;
+import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.LocaleService;
@@ -53,6 +55,7 @@ public class PetLogController {
     private final PetLogService petLogService;
     private final UserService userService;
     private final LocaleService localeService;
+    private final PetLogBinder petLogBinder;
     private final ApplicationProperties applicationProperties;
 
     @Value("${gcpUrl}")
@@ -70,6 +73,19 @@ public class PetLogController {
         var pet = petService.getPetByUuid(uuid);
         var currentUser = userService.getCurrentUser();
         var pets = getPetsFromUser(pet, currentUser);
+        return fillModelAndView(modelAndView, pets, request);
+    }
+
+    @GetMapping(value = "/edit")
+    public ModelAndView edit(@RequestParam("uuid") String uuid, HttpServletRequest request) {
+        log.info("Editing petLog: {}", uuid);
+        var modelAndView = new ModelAndView();
+        var petLog = petLogService.getPetLogByUuid(uuid).orElseThrow(() -> new BusinessException("PetLog not found"));
+        var pet = petService.getPetById(petLog.getPet().getId());
+        var currentUser = userService.getCurrentUser();
+        var pets = getPetsFromUser(pet, currentUser);
+        var petLogCommand = petLogBinder.bind(petLog);
+        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
         return fillModelAndView(modelAndView, pets, request);
     }
 
