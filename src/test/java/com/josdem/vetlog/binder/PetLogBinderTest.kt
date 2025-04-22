@@ -17,6 +17,7 @@
 package com.josdem.vetlog.binder
 
 import com.josdem.vetlog.command.PetLogCommand
+import com.josdem.vetlog.model.PetLog
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
@@ -26,9 +27,7 @@ import kotlin.test.assertTrue
 internal class PetLogBinderTest {
     val petLogBinder = PetLogBinder()
 
-    companion object {
-        private val log = LoggerFactory.getLogger(PetLogBinderTest::class.java)
-    }
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
     fun `binding a pet log command`(testInfo: TestInfo) {
@@ -44,6 +43,28 @@ internal class PetLogBinderTest {
             }
 
         val result = petLogBinder.bind(petLogCommand)
+
+        assertEquals("Diana Juarez", result.vetName)
+        assertEquals("Cough", result.signs)
+        assertEquals("Bronchitis", result.diagnosis)
+        assertEquals("Antibiotics", result.medicine)
+        assertTrue { result.isHasAttachment }
+    }
+
+    @Test
+    fun `binding a pet log`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+
+        val petLog =
+            PetLog().apply {
+                vetName = "Diana Juarez"
+                signs = "Cough"
+                diagnosis = "Bronchitis"
+                medicine = "Antibiotics"
+                isHasAttachment = true
+            }
+
+        val result = petLogBinder.bind(petLog)
 
         assertEquals("Diana Juarez", result.vetName)
         assertEquals("Cough", result.signs)
