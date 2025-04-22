@@ -49,9 +49,6 @@
                                 <textarea name="medicine" th:field="*{medicine}" rows="8" class="form-control"
                                           placeholder="Medicine" id='medicine'/>
                                 <label th:if="${#fields.hasErrors('medicine')}" th:errors="*{medicine}"></label>
-                                <br/>
-                                <label for="attachment"><h4 th:text="#{petlog.attachment}"/></label>
-                                <input type="file" name="attachment"/>
                                 <br/><br/>
                                 <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><p
                                         th:text="#{button.submit}"/></button>
