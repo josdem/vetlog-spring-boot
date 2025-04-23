@@ -16,6 +16,7 @@
 
 package com.josdem.vetlog.command;
 
+import com.josdem.vetlog.util.UuidGenerator;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -39,7 +40,7 @@ public class PetLogCommand implements Command {
     @Size(min = 1, max = 1000)
     private String medicine;
 
-    private String uuid;
+    private String uuid = UuidGenerator.generateUuid();
 
     private boolean hasAttachment = false;
 

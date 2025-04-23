@@ -61,17 +61,17 @@ public class PetLogServiceImpl implements PetLogService {
     @Transactional
     public PetLog update(Command command) throws IOException {
         var petLogCommand = (PetLogCommand) command;
-        var petLog = petLogRepository.findByUuid(petLogCommand.getUuid())
-            .orElseThrow(() -> new BusinessException("No pet log was found with UUID: " + petLogCommand.getUuid()));
+        var petLog = petLogRepository
+                .findByUuid(petLogCommand.getUuid())
+                .orElseThrow(() -> new BusinessException("No pet log was found with UUID: " + petLogCommand.getUuid()));
         petLog.setVetName(petLogCommand.getVetName());
         petLog.setSigns(petLogCommand.getSigns());
         petLog.setDiagnosis(petLogCommand.getDiagnosis());
         petLog.setMedicine(petLogCommand.getMedicine());
-        petLog.setHasAttachment(petLogCommand.isHasAttachment());
-        var pet = petRepository.findById(petLogCommand.getPet())
-            .orElseThrow(() -> new BusinessException("No pet was found under id: " + petLogCommand.getPet()));
+        var pet = petRepository
+                .findById(petLogCommand.getPet())
+                .orElseThrow(() -> new BusinessException("No pet was found under id: " + petLogCommand.getPet()));
         petLog.setPet(pet);
-        petPrescriptionService.attachFile(petLogCommand);
         petLogRepository.save(petLog);
         return petLog;
     }

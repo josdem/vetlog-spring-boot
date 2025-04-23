@@ -92,7 +92,8 @@ public class PetLogController {
     }
 
     @PostMapping(value = "/update")
-    public ModelAndView update(@Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request)
+    public ModelAndView update(
+            @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
         log.info("Updating petLog: {}", petLogCommand.getUuid());
         var modelAndView = new ModelAndView("petlog/edit");

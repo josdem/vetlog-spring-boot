@@ -19,7 +19,6 @@ package com.josdem.vetlog.binder;
 import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.PetLogCommand;
 import com.josdem.vetlog.model.PetLog;
-import com.josdem.vetlog.util.UuidGenerator;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -32,10 +31,7 @@ public class PetLogBinder {
         petLog.setSigns(petLogCommand.getSigns());
         petLog.setDiagnosis(petLogCommand.getDiagnosis());
         petLog.setMedicine(petLogCommand.getMedicine());
-        petLog.setUuid(UuidGenerator.generateUuid());
-        if (petLogCommand.getUuid() != null) {
-            petLog.setUuid(petLogCommand.getUuid());
-        }
+        petLog.setUuid(petLogCommand.getUuid());
         petLog.setHasAttachment(petLogCommand.isHasAttachment());
         return petLog;
     }
