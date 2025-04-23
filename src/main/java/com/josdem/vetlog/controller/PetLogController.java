@@ -50,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class PetLogController {
 
     public static final String PET_LOG_COMMAND = "petLogCommand";
+    public static final String MESSAGE = "message";
 
     private final PetService petService;
     private final PetLogService petLogService;
