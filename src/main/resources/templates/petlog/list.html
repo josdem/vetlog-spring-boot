@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title th:text="#{pet.view.list.title}"></title>
     <head th:insert="~{fragments/include}"/>
@@ -22,10 +22,10 @@
         </div>
         <br/><br/>
         <div th:each="log : ${petLogs}">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4" style="text-align:center;">
                 <div class="thumbnail">
-                    <div class="caption">
-                        <h3 th:text="${log.pet.name}"></h3>
+                    <h3 th:text="${log.pet.name}"></h3>
+                    <div class="caption" style="text-align:left;">
                         <p>
                         <ul>
                             <li th:text="${log.dateCreated}"/>
@@ -37,9 +37,13 @@
                         </ul>
                         </p>
                     </div>
+                    <div sec:authorize="hasAuthority('ADMIN')">
+                        <a th:data-testid="petLogEditButton" th:href="@{/petlog/edit(uuid=${log.uuid})}" class="btn btn-success"><p th:text="#{petlog.edit}"/></a>
+                    </div>
                 </div>
             </div>
         </div>
+        <br>
     </div>
 </div>
 <div th:insert="~{fragments/footer}"/>

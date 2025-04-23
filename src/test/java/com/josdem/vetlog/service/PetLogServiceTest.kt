@@ -102,5 +102,17 @@ internal class PetLogServiceTest {
         assertEquals(listOf(petLog), result)
     }
 
+    @Test
+    fun `getting log by uuid`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petLog = getPetLog()
+        val uuid = petLog.uuid
+        whenever(petLogRepository.findByUuid(uuid)).thenReturn(Optional.of(petLog))
+
+        val result = service.getPetLogByUuid(uuid)
+
+        assertEquals(petLog, result.get())
+    }
+
     private fun getPetLog(): PetLog = PetLog().apply { pet = this@PetLogServiceTest.pet }
 }

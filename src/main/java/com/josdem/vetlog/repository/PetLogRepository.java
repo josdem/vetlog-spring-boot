@@ -19,6 +19,7 @@ package com.josdem.vetlog.repository;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.PetLog;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PetLogRepository extends JpaRepository<PetLog, Long> {
@@ -26,4 +27,6 @@ public interface PetLogRepository extends JpaRepository<PetLog, Long> {
     PetLog save(PetLog petLog);
 
     List<PetLog> getAllByPet(Pet pet);
+
+    Optional<PetLog> findByUuid(String uuid);
 }
