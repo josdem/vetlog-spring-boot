@@ -22,11 +22,11 @@
                         </div>
                     </div>
                     <div th:if="${petListEmpty == null}">
-                        <form id="register" th:action="@{/petlog/save}" th:object="${petLogCommand}" method="post"
+                        <form id="register" th:action="@{/petlog/update}" th:object="${petLogCommand}" method="post"
                               class="form-horizontal" enctype="multipart/form-data">
                             <fieldset>
                                 <label for="pet"><h4 th:text="#{petlog.pet}"/></label>
-                                <select id="petSelector" name="pet" class="form-control">
+                                <select id="petSelector" name="pet" th:field="*{pet}" class="form-control">
                                     <option th:each="pet : ${pets}" th:value="${pet.id}" th:text="${pet.name}"></option>
                                 </select>
                                 <br/>

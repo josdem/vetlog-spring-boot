@@ -86,6 +86,7 @@ public class PetLogController {
         var currentUser = userService.getCurrentUser();
         var pets = getPetsFromUser(pet, currentUser);
         var petLogCommand = petLogBinder.bind(petLog);
+        petLogCommand.setPet(petLog.getPet().getId());
         modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
         return fillModelAndView(modelAndView, pets, request);
     }
