@@ -19,6 +19,7 @@ package com.josdem.vetlog.controller
 import com.josdem.vetlog.controller.PetControllerTest.Companion.PET_UUID
 import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
+import com.josdem.vetlog.repository.PetLogRepository
 import com.josdem.vetlog.repository.PetRepository
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.BeforeEach
@@ -54,6 +55,9 @@ class PetLogControllerTest {
 
     @Autowired
     private lateinit var petRepository: PetRepository
+
+    @Autowired
+    private lateinit var petLogRepository: PetLogRepository
 
     @Autowired
     private lateinit var webApplicationContext: WebApplicationContext
@@ -105,6 +109,39 @@ class PetLogControllerTest {
             .perform(request)
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("petLogCommand"))
+            .andExpect(view().name("petlog/edit"))
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "josdem", password = "12345678", roles = ["USER"])
+    fun `should update pet log`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        registerPet()
+        registerPetLog()
+        // Set up data before the test
+        val cremita =
+            petRepository
+                .findByUuid(PET_UUID)
+                .orElseThrow { RuntimeException("Pet not found") }
+        val petLog =
+            petLogRepository
+                .findByUuid(PETLOG_UUID)
+                .orElseThrow { RuntimeException("Pet log not found") }
+        val request =
+            multipart("/petlog/update")
+                .with(csrf())
+                .param("vetName", petLog.vetName)
+                .param("signs", "updated signs")
+                .param("diagnosis", "updated diagnosis")
+                .param("medicine", "updated medicine")
+                .param("uuid", PETLOG_UUID)
+                .param("pet", cremita.id.toString())
+        // Update test
+        mockMvc
+            .perform(request)
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("message"))
             .andExpect(view().name("petlog/edit"))
     }
 
