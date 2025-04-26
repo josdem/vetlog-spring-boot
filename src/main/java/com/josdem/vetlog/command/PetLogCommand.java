@@ -28,6 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Setter
 @ToString
 public class PetLogCommand implements Command {
+
+    private Long id;
+
     @Size(max = 200)
     private String vetName;
 

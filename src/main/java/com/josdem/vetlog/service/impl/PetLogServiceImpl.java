@@ -31,8 +31,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PetLogServiceImpl implements PetLogService {
@@ -54,6 +56,19 @@ public class PetLogServiceImpl implements PetLogService {
         }
         petLog.setPet(pet.get());
         petPrescriptionService.attachFile(petLogCommand);
+        petLogRepository.save(petLog);
+        return petLog;
+    }
+
+    @Transactional
+    public PetLog update(Command command) throws IOException {
+        var petLogCommand = (PetLogCommand) command;
+        log.info("Updating pet{}", petLogCommand);
+        var petLog = petLogBinder.bind(petLogCommand);
+        var pet = petRepository
+                .findById(petLogCommand.getPet())
+                .orElseThrow(() -> new BusinessException("No pet was found under id: " + petLogCommand.getPet()));
+        petLog.setPet(pet);
         petLogRepository.save(petLog);
         return petLog;
     }

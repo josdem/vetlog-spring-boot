@@ -27,6 +27,7 @@ public class PetLogBinder {
     public PetLog bind(Command command) {
         PetLogCommand petLogCommand = (PetLogCommand) command;
         PetLog petLog = new PetLog();
+        petLog.setId(petLogCommand.getId());
         petLog.setVetName(petLogCommand.getVetName());
         petLog.setSigns(petLogCommand.getSigns());
         petLog.setDiagnosis(petLogCommand.getDiagnosis());
@@ -38,6 +39,7 @@ public class PetLogBinder {
 
     public PetLogCommand bind(PetLog petLog) {
         PetLogCommand petLogCommand = new PetLogCommand();
+        petLogCommand.setId(petLog.getId());
         petLogCommand.setVetName(petLog.getVetName());
         petLogCommand.setSigns(petLog.getSigns());
         petLogCommand.setDiagnosis(petLog.getDiagnosis());

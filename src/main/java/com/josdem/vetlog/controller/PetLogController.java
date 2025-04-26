@@ -50,6 +50,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class PetLogController {
 
     public static final String PET_LOG_COMMAND = "petLogCommand";
+    public static final String MESSAGE = "message";
 
     private final PetService petService;
     private final PetLogService petLogService;
@@ -85,6 +86,25 @@ public class PetLogController {
         var currentUser = userService.getCurrentUser();
         var pets = getPetsFromUser(pet, currentUser);
         var petLogCommand = petLogBinder.bind(petLog);
+        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
+        return fillModelAndView(modelAndView, pets, request);
+    }
+
+    @PostMapping(value = "/update")
+    public ModelAndView update(
+            @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request)
+            throws IOException {
+        log.info("Updating petLog: {}", petLogCommand.getUuid());
+        var modelAndView = new ModelAndView("petlog/edit");
+        var pet = petService.getPetById(petLogCommand.getPet());
+        var currentUser = userService.getCurrentUser();
+        var pets = getPetsFromUser(pet, currentUser);
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
+            return fillModelAndView(modelAndView, pets, request);
+        }
+        petLogService.update(petLogCommand);
+        modelAndView.addObject(MESSAGE, localeService.getMessage("petlog.updated", request));
         modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
         return fillModelAndView(modelAndView, pets, request);
     }
