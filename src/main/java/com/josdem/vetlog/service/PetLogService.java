@@ -26,6 +26,8 @@ import java.util.Optional;
 public interface PetLogService {
     PetLog save(Command command) throws IOException;
 
+    PetLog update(Command command) throws IOException;
+
     List<PetLog> getPetLogsByPet(Pet pet);
 
     Optional<PetLog> getPetLogByUuid(String uuid);

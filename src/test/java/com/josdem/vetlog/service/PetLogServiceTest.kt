@@ -79,6 +79,58 @@ internal class PetLogServiceTest {
     }
 
     @Test
+    @Throws(IOException::class)
+    fun `Updating a pet log`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+
+        val petLogCommand =
+            PetLogCommand().apply {
+                uuid = "uuid"
+                pet = 1L
+                vetName = "vet-1"
+                signs = "updated signs"
+                diagnosis = "updated diagnosis"
+                medicine = "updated medicine"
+            }
+
+        val petLog = getPetLog()
+        val optionalPet: Optional<Pet> = Optional.ofNullable(pet)
+
+        whenever(petLogRepository.findByUuid("uuid")).thenReturn(Optional.of(petLog))
+        whenever(petRepository.findById(1L)).thenReturn(optionalPet)
+
+        service.update(petLogCommand)
+
+        assertEquals("vet-1", petLog.vetName)
+        assertEquals("updated signs", petLog.signs)
+        assertEquals("updated diagnosis", petLog.diagnosis)
+        assertEquals("updated medicine", petLog.medicine)
+        assertEquals(pet, petLog.pet)
+        verify(petLogRepository).save(petLog)
+    }
+
+    @Test
+    fun `Not updating due to pet log not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petLogCommand = PetLogCommand().apply { pet = 1L }
+        assertThrows<BusinessException> {
+            service.update(petLogCommand)
+        }
+    }
+
+    @Test
+    fun `Not updating due to pet not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petLogCommand = PetLogCommand().apply { pet = 1L }
+        val optionalPet: Optional<Pet> = Optional.ofNullable(pet)
+        whenever(petRepository.findById(1L)).thenReturn(optionalPet)
+
+        assertThrows<BusinessException> {
+            service.update(petLogCommand)
+        }
+    }
+
+    @Test
     fun `Should not find a pet log`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val petLogCommand = PetLogCommand()
