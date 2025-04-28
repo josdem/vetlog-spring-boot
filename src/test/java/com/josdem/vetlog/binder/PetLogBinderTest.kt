@@ -35,6 +35,7 @@ internal class PetLogBinderTest {
 
         val petLogCommand =
             PetLogCommand().apply {
+                id = 1L
                 vetName = "Diana Juarez"
                 signs = "Cough"
                 diagnosis = "Bronchitis"
@@ -44,6 +45,7 @@ internal class PetLogBinderTest {
 
         val result = petLogBinder.bind(petLogCommand)
 
+        assertEquals(1L, result.id)
         assertEquals("Diana Juarez", result.vetName)
         assertEquals("Cough", result.signs)
         assertEquals("Bronchitis", result.diagnosis)
@@ -57,6 +59,7 @@ internal class PetLogBinderTest {
 
         val petLog =
             PetLog().apply {
+                id = 1L
                 vetName = "Diana Juarez"
                 signs = "Cough"
                 diagnosis = "Bronchitis"
@@ -66,6 +69,7 @@ internal class PetLogBinderTest {
 
         val result = petLogBinder.bind(petLog)
 
+        assertEquals(1L, result.id)
         assertEquals("Diana Juarez", result.vetName)
         assertEquals("Cough", result.signs)
         assertEquals("Bronchitis", result.diagnosis)
