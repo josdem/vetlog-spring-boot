@@ -96,11 +96,13 @@ internal class PetLogServiceTest {
         val petLog = getPetLog()
         val optionalPet: Optional<Pet> = Optional.ofNullable(pet)
 
+        whenever(petLogBinder.bind(petLogCommand)).thenReturn(petLog)
         whenever(petLogRepository.findByUuid("uuid")).thenReturn(Optional.of(petLog))
         whenever(petRepository.findById(1L)).thenReturn(optionalPet)
 
         service.update(petLogCommand)
 
+        assertEquals(1L, petLog.id)
         assertEquals("vet-1", petLog.vetName)
         assertEquals("updated signs", petLog.signs)
         assertEquals("updated diagnosis", petLog.diagnosis)
@@ -112,6 +114,7 @@ internal class PetLogServiceTest {
     @Test
     fun `Not updating due to pet log not found`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+
         val petLogCommand = PetLogCommand().apply { pet = 1L }
         assertThrows<BusinessException> {
             service.update(petLogCommand)
@@ -121,8 +124,11 @@ internal class PetLogServiceTest {
     @Test
     fun `Not updating due to pet not found`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        val petLogCommand = PetLogCommand().apply { pet = 1L }
+        val petLog = getPetLog()
+        val petLogCommand = PetLogCommand().apply { pet = 2L }
         val optionalPet: Optional<Pet> = Optional.ofNullable(pet)
+
+        whenever(petLogBinder.bind(petLogCommand)).thenReturn(petLog)
         whenever(petRepository.findById(1L)).thenReturn(optionalPet)
 
         assertThrows<BusinessException> {
@@ -166,5 +172,14 @@ internal class PetLogServiceTest {
         assertEquals(petLog, result.get())
     }
 
-    private fun getPetLog(): PetLog = PetLog().apply { pet = this@PetLogServiceTest.pet }
+    private fun getPetLog(): PetLog =
+        PetLog().apply {
+            id = 1L
+            uuid = "uuid"
+            vetName = "vet-1"
+            signs = "updated signs"
+            diagnosis = "updated diagnosis"
+            medicine = "updated medicine"
+            pet = this@PetLogServiceTest.pet
+        }
 }
