@@ -103,7 +103,11 @@ public class PetController {
         }
         modelAndView.addObject(PET_COMMAND, petCommand);
         modelAndView.addObject(
-                "breeds", breedService.getBreedsByType(pet.getBreed().getType()));
+                "breeds",
+                breedService.getBreedsByType(PetType.DOG).stream()
+                        .sorted(Comparator.comparing(Breed::getName))
+                        .toList()
+        );
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
         return modelAndView;
