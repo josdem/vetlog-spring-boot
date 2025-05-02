@@ -254,6 +254,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kiranraoboinapally",
+      "name": "GPTContribX",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38401453?v=4",
+      "profile": "https://github.com/kiranraoboinapally",
+      "contributions": [
+        "mentoring"
+      ]
     }
   ],
   "contributorsPerLine": 7,
