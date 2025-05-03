@@ -264,6 +264,15 @@
         "mentoring",
         "code"
       ]
+    },
+    {
+      "login": "tj330",
+      "name": "Titus James",
+      "avatar_url": "https://avatars.githubusercontent.com/u/142474733?v=4",
+      "profile": "https://github.com/tj330",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
