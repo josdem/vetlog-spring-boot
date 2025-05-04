@@ -65,3 +65,7 @@ management:
     web:
       exposure:
         include: "health,info"
+google:
+  maps:
+    api:
+      key: YourActualGoogleMapsAPIKey #issue-->Need to setup apikey of google maps location of vetlog's
