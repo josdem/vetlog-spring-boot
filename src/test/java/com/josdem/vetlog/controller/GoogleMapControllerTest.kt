@@ -22,6 +22,7 @@ class GoogleMapControllerTest {
         mockMvc.perform(get("/map"))
             .andExpect(status().isOk)
             .andExpect(view().name("map/map"))
+            .andExpect(model().attributeExists("apiKey"))
             .andExpect(model().attributeExists("apiKey","mocked-api-key"))
     }
 }
