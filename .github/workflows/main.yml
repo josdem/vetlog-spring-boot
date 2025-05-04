@@ -45,4 +45,10 @@ jobs:
           -Dsonar.organization=YOUR_ORG \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=$SONAR_TOKEN
+      - name: Debug Secrets
+        run: |
+          echo "Database: vetlog"
+          echo "User: ${{ secrets.USERNAME }}"
+          echo "Password is set: $([ -n "${{ secrets.PASSWORD }}" ] && echo "Yes" || echo "No")"
+          echo "Google Maps API Key is set: $([ -n "${{ secrets.GOOGLE_MAPS_API_KEY }}" ] && echo "Yes" || echo "No")"
 
