@@ -10,6 +10,7 @@ env:
   USER: ${{ secrets.USERNAME }}
   PASSWORD: ${{ secrets.PASSWORD }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
 jobs:
   build:
     runs-on: ubuntu-latest
