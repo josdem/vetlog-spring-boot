@@ -68,4 +68,4 @@ management:
 google:
   maps:
     api:
-      key: YourActualGoogleMapsAPIKey #issue-->Need to setup apikey of google maps location of vetlog's
+      key: YourActualGoogleMapsAPIKey # Replace YourActualGoogleMapsAPIKey with the actual API key for Google Maps.
