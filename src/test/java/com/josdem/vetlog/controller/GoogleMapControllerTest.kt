@@ -8,8 +8,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.model
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
+import org.springframework.test.context.TestPropertySource
 
 @WebMvcTest(GoogleMapController::class)
+@TestPropertySource(properties = ["google.maps.api.key=mocked-api-key"])
 class GoogleMapControllerTest {
 
     @Autowired
