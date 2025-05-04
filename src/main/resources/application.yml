@@ -68,4 +68,4 @@ management:
 google:
   maps:
     api:
-      key: YourActualGoogleMapsAPIKey # Replace YourActualGoogleMapsAPIKey with the actual API key for Google Maps.
+      key: ${GOOGLE_MAPS_API_KEY} # Replace GOOGLE_MAPS_API_KEY with the actual API key for Google Maps.
