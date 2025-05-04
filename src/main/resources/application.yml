@@ -19,7 +19,7 @@ spring:
     cache: false
   jpa:
     hibernate:
-      DdlAuto: validate
+      ddl-auto: validate
   profiles:
     include: development
   messages:
