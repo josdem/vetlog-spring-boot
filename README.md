@@ -70,6 +70,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/kiranraoboinapally"><img src="https://avatars.githubusercontent.com/u/38401453?v=4?s=100" width="100px;" alt="GPTContribX"/><br /><sub><b>GPTContribX</b></sub></a><br /><a href="#mentoring-kiranraoboinapally" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/josdem/vetlog-spring-boot/commits?author=kiranraoboinapally" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tj330"><img src="https://avatars.githubusercontent.com/u/142474733?v=4?s=100" width="100px;" alt="Titus James"/><br /><sub><b>Titus James</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=tj330" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/sardorjumamuratov"><img src="https://avatars.githubusercontent.com/u/49103067?v=4?s=100" width="100px;" alt="Sardor Jumamuratov"/><br /><sub><b>Sardor Jumamuratov</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=sardorjumamuratov" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
