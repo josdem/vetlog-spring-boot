@@ -39,7 +39,7 @@ spring:
     baseline-on-migrate: true
 message: Hello Vetlog!
 jmailer:
-  url: https://jmailer.josdem.io/emailer/
+  url: https://gmailer.josdem.io/emailer/
   path: message
 baseUrl: https://vetlog.org/
 template:
