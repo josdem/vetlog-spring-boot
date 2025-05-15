@@ -22,7 +22,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Getter
 @Setter
-@ConfigurationProperties("jmailer")
-public class JmailerProperties {
+@ConfigurationProperties("gmailer")
+public class GmailerProperties {
     private String url;
 }

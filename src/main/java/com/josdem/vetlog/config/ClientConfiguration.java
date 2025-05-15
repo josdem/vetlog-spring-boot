@@ -26,16 +26,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableConfigurationProperties(JmailerProperties.class)
+@EnableConfigurationProperties(GmailerProperties.class)
 public class ClientConfiguration {
 
-    private final JmailerProperties jmailerProperties;
+    private final GmailerProperties gmailerProperties;
     private final OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
 
     @Bean
     public Retrofit retrofit() {
         return new Retrofit.Builder()
-                .baseUrl(jmailerProperties.getUrl())
+                .baseUrl(gmailerProperties.getUrl())
                 .client(okHttpClient.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
