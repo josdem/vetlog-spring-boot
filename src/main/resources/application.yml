@@ -65,3 +65,6 @@ management:
     web:
       exposure:
         include: "health,info"
+google:
+  url: "https://www.googleapis.com/geolocation/v1/"
+  api_key: ${GOOGLE_MAPS_API_KEY} # Replace GOOGLE_MAPS_API_KEY with the actual API key for Google Maps.

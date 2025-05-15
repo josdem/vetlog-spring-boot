@@ -24,7 +24,8 @@ import org.springframework.stereotype.Component;
 @Getter
 @Setter
 @Component
-@ConfigurationProperties("gmailer")
-public class GmailerProperties {
+@ConfigurationProperties("google")
+public class GoogleProperties {
     private String url;
+    private String apiKey;
 }
