@@ -16,14 +16,17 @@
 
 package com.josdem.vetlog.service
 
-import org.junit.jupiter.api.Assertions.assertNotNull
+import com.josdem.vetlog.command.MobileCommand
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import kotlin.test.assertNotNull
 
 @SpringBootTest
+@EnabledIfEnvironmentVariable(named = "GOOGLE_API_KEY", matches = ".+")
 internal class GoogleServiceTest {
     @Autowired
     private lateinit var googleService: GoogleService
@@ -33,6 +36,20 @@ internal class GoogleServiceTest {
     @Test
     fun `should get geolocation`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        assertNotNull(googleService)
+        val call = googleService.getGeolocation(System.getenv("GOOGLE_API_KEY"), mobileCommand)
+        val execute = call.execute()
+        val result = execute.body()
+        log.info("result: $result")
+        assertNotNull(result?.location)
+        assertNotNull(result.accuracy)
     }
+
+    val mobileCommand =
+        MobileCommand().apply {
+            homeMobileCountryCode = 310
+            homeMobileNetworkCode = 410
+            radioType = "GSM"
+            carrier = "AT&T"
+            isConsiderIp = true
+        }
 }

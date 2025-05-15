@@ -14,7 +14,7 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.model;
+package com.josdem.vetlog.command;
 
 import lombok.Data;
 

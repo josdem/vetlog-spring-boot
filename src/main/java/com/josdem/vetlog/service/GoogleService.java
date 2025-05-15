@@ -16,8 +16,8 @@
 
 package com.josdem.vetlog.service;
 
+import com.josdem.vetlog.command.MobileCommand;
 import com.josdem.vetlog.model.GoogleResponse;
-import com.josdem.vetlog.model.MobileCommand;
 import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -16,8 +16,8 @@
 
 package com.josdem.vetlog.service.impl;
 
+import com.josdem.vetlog.command.MobileCommand;
 import com.josdem.vetlog.model.GoogleResponse;
-import com.josdem.vetlog.model.MobileCommand;
 import com.josdem.vetlog.service.GoogleService;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
@@ -45,8 +45,6 @@ public class GoogleServiceImpl implements GoogleService {
     @Override
     public Call<GoogleResponse> getGeolocation(@Query("key") String key, @Body MobileCommand command)
             throws IOException {
-        var call = googleService.getGeolocation(key, command);
-        call.execute();
-        return call;
+        return googleService.getGeolocation(key, command);
     }
 }

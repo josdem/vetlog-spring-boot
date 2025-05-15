@@ -27,5 +27,4 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("google")
 public class GoogleProperties {
     private String url;
-    private String apiKey;
 }
