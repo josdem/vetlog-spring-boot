@@ -28,7 +28,7 @@ internal class GoogleServiceTest {
     @Autowired
     private lateinit var googleService: GoogleService
 
-    private final val log = LoggerFactory.getLogger(this::class.java)
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
     fun `should get geolocation`(testInfo: TestInfo) {

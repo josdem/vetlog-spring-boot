@@ -16,14 +16,15 @@
 
 package com.josdem.vetlog.service;
 
+import com.josdem.vetlog.model.GoogleResponse;
 import com.josdem.vetlog.model.MobileCommand;
 import java.io.IOException;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface GoogleService {
-    @GET("geolocate")
-    Call<ResponseBody> getGeolocation(@Body MobileCommand command) throws IOException;
+    @POST("geolocate")
+    Call<GoogleResponse> getGeolocation(@Query("key") String key, @Body MobileCommand command) throws IOException;
 }
