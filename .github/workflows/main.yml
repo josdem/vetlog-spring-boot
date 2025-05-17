@@ -10,7 +10,7 @@ env:
   USER: ${{ secrets.USERNAME }}
   PASSWORD: ${{ secrets.PASSWORD }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+  GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,11 +25,8 @@ jobs:
           cache: gradle
       - name: Start MySQL
         run: |
-            sudo /etc/init.d/mysql start
-            mysql -uroot -e "CREATE DATABASE IF NOT EXISTS vetlog;"
-            mysql -uroot -e "CREATE USER IF NOT EXISTS '${{ secrets.USERNAME }}'@'localhost' IDENTIFIED BY '${{ secrets.PASSWORD }}';"
-            mysql -uroot -e "GRANT ALL PRIVILEGES ON vetlog.* TO '${{ secrets.USERNAME }}'@'localhost';"
-            mysql -uroot -e "FLUSH PRIVILEGES;"
+          sudo /etc/init.d/mysql start
+          mysql -e "CREATE DATABASE $DATABASE;" -u$USER -p$PASSWORD
       - name: Set up MySQL
         run: ./gradlew -Dflyway.user=$USER -Dflyway.password=$PASSWORD -Dflyway.baselineOnMigrate=true flywayMigrate -i
       - name: Build with Gradle
@@ -39,16 +36,3 @@ jobs:
           name: test-results
           path: build/reports/tests/test/
           retention-days: 30
-      - name: SonarCloud Scan
-        run: ./gradlew sonar \
-          -Dsonar.projectKey=YOUR_PROJECT_KEY \
-          -Dsonar.organization=YOUR_ORG \
-          -Dsonar.host.url=https://sonarcloud.io \
-          -Dsonar.login=$SONAR_TOKEN
-      - name: Debug Secrets
-        run: |
-          echo "Database: vetlog"
-          echo "User: ${{ secrets.USERNAME }}"
-          echo "Password is set: $([ -n "${{ secrets.PASSWORD }}" ] && echo "Yes" || echo "No")"
-          echo "Google Maps API Key is set: $([ -n "${{ secrets.GOOGLE_MAPS_API_KEY }}" ] && echo "Yes" || echo "No")"
-
