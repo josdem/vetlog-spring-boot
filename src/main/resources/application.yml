@@ -38,7 +38,7 @@ spring:
   flyway:
     baseline-on-migrate: true
 message: Hello Vetlog!
-jmailer:
+gmailer:
   url: https://gmailer.josdem.io/emailer/
   path: message
 baseUrl: https://vetlog.org/
@@ -65,3 +65,5 @@ management:
     web:
       exposure:
         include: "health,info"
+google:
+  url: "https://www.googleapis.com/geolocation/v1/"

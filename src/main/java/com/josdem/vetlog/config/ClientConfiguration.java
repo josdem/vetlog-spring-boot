@@ -18,7 +18,6 @@ package com.josdem.vetlog.config;
 
 import lombok.RequiredArgsConstructor;
 import okhttp3.OkHttpClient;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
@@ -26,16 +25,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableConfigurationProperties(JmailerProperties.class)
 public class ClientConfiguration {
 
-    private final JmailerProperties jmailerProperties;
+    private final GmailerProperties gmailerProperties;
+    private final GoogleProperties googleProperties;
     private final OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
 
     @Bean
     public Retrofit retrofit() {
         return new Retrofit.Builder()
-                .baseUrl(jmailerProperties.getUrl())
+                .baseUrl(gmailerProperties.getUrl())
+                .client(okHttpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    @Bean
+    public Retrofit googleRetrofit() {
+        return new Retrofit.Builder()
+                .baseUrl(googleProperties.getUrl())
                 .client(okHttpClient.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
