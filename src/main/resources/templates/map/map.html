@@ -2,10 +2,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <title th:text="#{map.view.title}"></title>
+    <head th:insert="~{fragments/include}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vetlog Map View</title>
-    <link rel="stylesheet" href="/static/assets/servizi-dog-theme/css/style.css"> <!-- Adjust if needed -->
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
     <style>
         .map-container {
             position: relative;
@@ -31,9 +32,11 @@
 
     <!-- Include header fragment -->
     <div th:insert="~{fragments/header}"></div>
-
+    <br/><br/>
+    <br/><br/>
+    <br/><br/>
+    <div class="container">
     <main>
-        <h1 style="text-align:center; margin-top: 20px;">Vetlog Location Map</h1>
         <div class="map-container">
             <iframe
                 th:src="'https://www.google.com/maps/embed/v1/place?key=' + ${apiKey} + '&q=Vetlog+Istanbul'"
@@ -43,6 +46,7 @@
             </iframe>
         </div>
     </main>
+    </div>
 
     <!-- Include footer fragment -->
     <div th:insert="~{fragments/footer}"/>
