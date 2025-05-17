@@ -19,7 +19,7 @@ spring:
     cache: false
   jpa:
     hibernate:
-      DdlAuto: validate
+      ddl-auto: validate
   profiles:
     include: development
   messages:
@@ -67,3 +67,4 @@ management:
         include: "health,info"
 google:
   url: "https://www.googleapis.com/geolocation/v1/"
+
