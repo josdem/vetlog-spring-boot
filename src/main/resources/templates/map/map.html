@@ -30,7 +30,7 @@
 <body>
 
     <!-- Include header fragment -->
-    <div th:replace="fragments/header :: header"></div>
+    <div th:insert="~{fragments/header}"></div>
 
     <main>
         <h1 style="text-align:center; margin-top: 20px;">Vetlog Location Map</h1>
@@ -45,7 +45,7 @@
     </main>
 
     <!-- Include footer fragment -->
-    <div th:replace="fragments/footer :: footer"></div>
+    <div th:insert="~{fragments/footer}"/>
 
 </body>
 </html>
