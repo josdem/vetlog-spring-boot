@@ -261,7 +261,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/38401453?v=4",
       "profile": "https://github.com/kiranraoboinapally",
       "contributions": [
-        "mentoring"
+        "mentoring",
+        "code"
       ]
     },
     {
@@ -269,6 +270,15 @@
       "name": "Titus James",
       "avatar_url": "https://avatars.githubusercontent.com/u/142474733?v=4",
       "profile": "https://github.com/tj330",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sardorjumamuratov",
+      "name": "Sardor Jumamuratov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49103067?v=4",
+      "profile": "https://github.com/sardorjumamuratov",
       "contributions": [
         "code"
       ]

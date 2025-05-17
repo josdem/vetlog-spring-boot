@@ -102,11 +102,8 @@ public class PetController {
             petCommand.setAdopter(pet.getAdopter().getId());
         }
         modelAndView.addObject(PET_COMMAND, petCommand);
-        modelAndView.addObject(
-                "breeds", breedService.getBreedsByType(pet.getBreed().getType()));
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
-        modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
-        return modelAndView;
+        return fillModelAndView(modelAndView);
     }
 
     @PostMapping(value = "/update")
