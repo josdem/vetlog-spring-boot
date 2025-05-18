@@ -67,4 +67,5 @@ management:
         include: "health,info"
 google:
   url: "https://www.googleapis.com/geolocation/v1/"
+  apiKey: ${GOOGLE_API_KEY}
 
