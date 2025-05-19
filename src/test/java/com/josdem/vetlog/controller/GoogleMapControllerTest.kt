@@ -1,3 +1,19 @@
+/*
+  Copyright 2025 Jose Morales contact@josdem.io
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
+
 package com.josdem.vetlog.controller
 
 import org.junit.jupiter.api.BeforeEach
@@ -8,6 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.model
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
@@ -35,8 +52,20 @@ class GoogleMapControllerTest {
     @Test
     fun `showMap should return Map view with API key`() {
         mockMvc
-            .perform(get("/map"))
+            .perform(get("/map/"))
             .andExpect(status().isOk)
+            .andExpect(view().name("map/map"))
+            .andExpect(model().attributeExists("apiKey"))
+    }
+
+    @Test
+    fun `should show my pet location`() {
+        mockMvc
+            .perform(
+                post("/map/location")
+                    .param("lat", "19.3699467")
+                    .param("lng", "-99.2231394"),
+            ).andExpect(status().isOk)
             .andExpect(view().name("map/map"))
             .andExpect(model().attributeExists("apiKey"))
     }
