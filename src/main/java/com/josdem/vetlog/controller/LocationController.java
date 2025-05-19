@@ -40,7 +40,7 @@ public class LocationController {
             @RequestBody PetGeolocation petGeolocation, HttpServletResponse response) {
         log.info("Storing location for pet: {}", petGeolocation.getPetName());
 
-        response.addHeader("Allow-Control-Allow-Methods", "GET");
+        response.addHeader("Access-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
 
         ApplicationCache.locations.put(
