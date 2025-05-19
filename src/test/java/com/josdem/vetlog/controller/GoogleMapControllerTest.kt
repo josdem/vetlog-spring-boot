@@ -55,5 +55,7 @@ class GoogleMapControllerTest {
             .andExpect(status().isOk)
             .andExpect(view().name("map/map"))
             .andExpect(model().attributeExists("apiKey"))
+            .andExpect(model().attributeExists("latitude"))
+            .andExpect(model().attributeExists("longitude"))
     }
 }

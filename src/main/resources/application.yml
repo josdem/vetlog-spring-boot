@@ -68,4 +68,7 @@ management:
 google:
   url: "https://www.googleapis.com/geolocation/v1/"
   apiKey: ${GOOGLE_API_KEY}
+geolocation:
+  latitude: 19.3699467
+  longitude: -99.2231394
 
