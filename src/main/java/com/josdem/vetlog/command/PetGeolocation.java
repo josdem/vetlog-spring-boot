@@ -14,23 +14,17 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.controller;
+package com.josdem.vetlog.command;
 
-import com.josdem.vetlog.config.GoogleProperties;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
-@Controller
-@RequiredArgsConstructor
-public class GoogleMapController {
+@Data
+public class PetGeolocation implements Command {
 
-    private final GoogleProperties googleProperties;
+    @Size(min = 1, max = 50)
+    private String petName;
 
-    @GetMapping("/map")
-    public String showMap(Model model) {
-        model.addAttribute("apiKey", googleProperties.getApiKey());
-        return "map/map";
-    }
+    private double latitude;
+    private double longitude;
 }

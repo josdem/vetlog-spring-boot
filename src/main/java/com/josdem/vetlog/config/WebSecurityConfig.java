@@ -46,6 +46,7 @@ public class WebSecurityConfig {
                                 "/user/**",
                                 "/recovery/**",
                                 "/breed/list",
+                                "/geolocation/location",
                                 "/pet/listForAdoption",
                                 "/privacy/show")
                         .permitAll()
