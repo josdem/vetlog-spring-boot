@@ -24,6 +24,7 @@ public class PetGeolocation implements Command {
 
     @Min(1L)
     private Long id;
+
     private double latitude;
     private double longitude;
 }
