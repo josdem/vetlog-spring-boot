@@ -14,14 +14,17 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.model;
+package com.josdem.vetlog.command;
 
-import lombok.AllArgsConstructor;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
-public class Location {
-    private double lat;
-    private double lng;
+public class PetGeolocation implements Command {
+
+    @Size(min = 1, max = 50)
+    private String petName;
+
+    private double latitude;
+    private double longitude;
 }

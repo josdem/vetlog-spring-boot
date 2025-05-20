@@ -39,7 +39,7 @@
     <main>
         <div class="map-container">
             <iframe
-                th:src="'https://www.google.com/maps/embed/v1/place?key=' + ${apiKey} + '&q=Vetlog+Istanbul'"
+                th:src="'https://www.google.com/maps/embed/v1/place?key=' + ${apiKey} + '&q=' + ${latitude} + ',' + ${longitude}"
                 allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade">

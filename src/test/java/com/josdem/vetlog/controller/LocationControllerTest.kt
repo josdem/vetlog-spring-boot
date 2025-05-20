@@ -16,46 +16,46 @@
 
 package com.josdem.vetlog.controller
 
-import org.junit.jupiter.api.BeforeEach
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
+import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.model
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.web.context.WebApplicationContext
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GoogleMapControllerTest {
+class LocationControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
     @Autowired
-    private lateinit var webApplicationContext: WebApplicationContext
+    private lateinit var objectMapper: ObjectMapper
 
-    @BeforeEach
-    fun setUp() {
-        mockMvc =
-            MockMvcBuilders
-                .webAppContextSetup(webApplicationContext)
-                .apply { springSecurity() }
-                .build()
-    }
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
-    fun `showMap should return Map view with API key`() {
+    fun `should show my pet location`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            get("/geolocation/location")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(petGeolocation))
         mockMvc
-            .perform(get("/map"))
-            .andExpect(status().isOk)
-            .andExpect(view().name("map/map"))
-            .andExpect(model().attributeExists("apiKey"))
-            .andExpect(model().attributeExists("latitude"))
-            .andExpect(model().attributeExists("longitude"))
+            .perform(
+                request,
+            ).andExpect(status().isOk)
     }
+
+    private val petGeolocation =
+        mapOf(
+            "latitude" to 37.7749,
+            "longitude" to -122.4194,
+            "petName" to "Sora",
+        )
 }
