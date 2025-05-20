@@ -36,6 +36,7 @@
     <br/><br/>
     <br/><br/>
     <div class="container">
+        <div th:data-testid="geolocationMessage" th:if="${message}" class="alert alert-success" th:text="${message}"/>
     <main>
         <div class="map-container">
             <iframe
