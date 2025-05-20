@@ -56,7 +56,7 @@ public class GoogleMapController {
         var latitude = currentPetLocation != null ? currentPetLocation.getLat() : geolocationProperties.getLatitude();
         var longitude = currentPetLocation != null ? currentPetLocation.getLng() : geolocationProperties.getLongitude();
         var message = currentPetLocation != null
-                ? pet.getName() + localeService.getMessage("map.pet.geolocation", request)
+                ? pet.getName() + " " + localeService.getMessage("map.pet.geolocation", request)
                 : localeService.getMessage("map.pet.default", request);
         model.addAttribute("message", message);
         model.addAttribute("latitude", latitude);
