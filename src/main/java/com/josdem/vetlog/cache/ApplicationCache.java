@@ -22,5 +22,5 @@ import java.util.Map;
 
 public class ApplicationCache {
 
-    public static final Map<String, Location> locations = new ConcurrentHashMap<>();
+    public static final Map<Long, Location> locations = new ConcurrentHashMap<>();
 }

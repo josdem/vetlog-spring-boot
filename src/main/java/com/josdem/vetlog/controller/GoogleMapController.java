@@ -19,23 +19,25 @@ package com.josdem.vetlog.controller;
 import com.josdem.vetlog.cache.ApplicationCache;
 import com.josdem.vetlog.config.GeolocationProperties;
 import com.josdem.vetlog.config.GoogleProperties;
+import com.josdem.vetlog.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
 public class GoogleMapController {
 
-    private static final String PET_NAME = "Sora";
-
+    private final PetService petService;
     private final GoogleProperties googleProperties;
     private final GeolocationProperties geolocationProperties;
 
     @GetMapping("/map")
-    public String showMap(Model model) {
-        var currentPetGeolocation = ApplicationCache.locations.get(PET_NAME);
+    public String showMap(@RequestParam("id") Long id, Model model) {
+        var pet = petService.getPetById(id);
+        var currentPetGeolocation = ApplicationCache.locations.get(pet.getId());
         var latitude =
                 currentPetGeolocation != null ? currentPetGeolocation.getLat() : geolocationProperties.getLatitude();
         var longitude =
