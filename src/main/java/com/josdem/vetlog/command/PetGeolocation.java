@@ -16,14 +16,14 @@
 
 package com.josdem.vetlog.command;
 
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 
 @Data
 public class PetGeolocation implements Command {
 
-    @Size(min = 1, max = 50)
-    private String petName;
+    @Min(1L)
+    private Long id;
 
     private double latitude;
     private double longitude;
