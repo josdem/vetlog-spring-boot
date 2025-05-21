@@ -17,10 +17,10 @@
 package com.josdem.vetlog.cache;
 
 import com.josdem.vetlog.model.Location;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ApplicationCache {
 
-    public static final Map<String, Location> locations = new ConcurrentHashMap<>();
+    public static final Map<Long, Location> locations = new ConcurrentHashMap<>();
 }

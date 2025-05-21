@@ -38,13 +38,13 @@ public class LocationController {
     @GetMapping(value = "/location", consumes = "application/json")
     public ResponseEntity<String> showLocation(
             @RequestBody PetGeolocation petGeolocation, HttpServletResponse response) {
-        log.info("Storing location for pet: {}", petGeolocation.getPetName());
+        log.info("Storing location for pet: {}", petGeolocation.getId());
 
         response.addHeader("Access-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
 
         ApplicationCache.locations.put(
-                petGeolocation.getPetName(), new Location(petGeolocation.getLatitude(), petGeolocation.getLongitude()));
+                petGeolocation.getId(), new Location(petGeolocation.getLatitude(), petGeolocation.getLongitude()));
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
