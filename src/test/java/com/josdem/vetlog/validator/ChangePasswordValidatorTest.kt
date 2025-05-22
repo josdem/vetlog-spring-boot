@@ -17,7 +17,7 @@ internal class ChangePasswordValidatorTest {
 
     @Test
     fun `should reject since passwords are not equals`(testInfo: TestInfo) {
-        log.info("Running: ${testInfo.displayName}")
+        log.info(testInfo.displayName)
         val command =
             ChangePasswordCommand().apply {
                 token = "token"
