@@ -4,7 +4,6 @@ import com.josdem.vetlog.command.UserCommand
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.UserRepository
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,14 +15,15 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
+import org.slf4j.LoggerFactory
 import org.springframework.validation.Errors
 import java.util.Optional
 
 internal class UserValidatorTest {
-
     companion object {
         private const val COUNTRY_CODE = "+52"
         private const val MOBILE = "1234567890"
+        private val log = LoggerFactory.getLogger(UserValidatorTest::class.java)
     }
 
     private lateinit var validator: UserValidator
@@ -40,42 +40,43 @@ internal class UserValidatorTest {
     }
 
     @Test
-    @DisplayName("validating an user")
-    fun shouldValidateAnUser(testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
+    fun `should validate an user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val userCommand = getUserCommand()
         validator.validate(userCommand, errors)
         verify(errors, never()).rejectValue(any(), any())
     }
 
     @Test
-    @DisplayName("rejecting an user since passwords do not match")
-    fun shouldRejectUserSincePasswordDoesNotMatch(testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
-        val userCommand = getUserCommand().apply {
-            passwordConfirmation = "passwords"
-        }
+    fun `should reject user since password does not match`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val userCommand =
+            getUserCommand().apply {
+                passwordConfirmation = "passwords"
+            }
         validator.validate(userCommand, errors)
         verify(errors).rejectValue("password", "user.error.password.equals")
     }
 
-    @DisplayName("accepting passwords")
     @ParameterizedTest
     @ValueSource(strings = ["pass-word", "pass_word", "password."])
-    fun shouldAcceptDashCharacterInPassword(password: String, testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
-        val userCommand = getUserCommand().apply {
-            this.password = password
-            this.passwordConfirmation = password
-        }
+    fun `should accept dash character in password`(
+        password: String,
+        testInfo: TestInfo,
+    ) {
+        log.info(testInfo.displayName)
+        val userCommand =
+            getUserCommand().apply {
+                this.password = password
+                this.passwordConfirmation = password
+            }
         validator.validate(userCommand, errors)
         verify(errors, never()).rejectValue(any(), any())
     }
 
     @Test
-    @DisplayName("not duplicating users")
-    fun shouldNotDuplicateUsers(testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
+    fun `should not duplicate users`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val userCommand = getUserCommand()
         whenever(userRepository.findByUsername("josdem")).thenReturn(Optional.of(User()))
         validator.validate(userCommand, errors)
@@ -83,9 +84,8 @@ internal class UserValidatorTest {
     }
 
     @Test
-    @DisplayName("not duplicating users by email")
-    fun shouldNotDuplicateUsersByEmail(testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
+    fun `should not duplicate users by email`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val userCommand = getUserCommand()
         whenever(userRepository.findByEmail("contact@josdem.io")).thenReturn(Optional.of(User()))
         validator.validate(userCommand, errors)
@@ -93,18 +93,16 @@ internal class UserValidatorTest {
     }
 
     @Test
-    @DisplayName("rejecting an user since mobile format is not valid")
-    fun shouldRejectUserSinceInvalidMobile(testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
+    fun `should reject user since invalid mobile`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val userCommand = getUserCommand().apply { mobile = "notValidPhoneNumber" }
         validator.validate(userCommand, errors)
         verify(errors).rejectValue("mobile", "user.error.mobile")
     }
 
     @Test
-    @DisplayName("not duplicating users by country code plus mobile")
-    fun shouldNotDuplicateUsersByCountryCodeAndMobile(testInfo: TestInfo) {
-        println("Running: ${testInfo.displayName}")
+    fun `should not duplicate users by country code and mobile`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         val userCommand = getUserCommand()
         whenever(userRepository.findByCountryCodeAndMobile(COUNTRY_CODE, MOBILE))
             .thenReturn(Optional.of(User()))
