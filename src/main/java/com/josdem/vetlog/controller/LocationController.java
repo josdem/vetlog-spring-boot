@@ -17,14 +17,13 @@
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.cache.ApplicationCache;
-import com.josdem.vetlog.command.PetGeolocation;
 import com.josdem.vetlog.model.Location;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,16 +34,18 @@ public class LocationController {
 
     public static final String DOMAIN = "vetlog.org";
 
-    @GetMapping(value = "/location", consumes = "application/json")
+    @GetMapping(value = "/location/{petId}/{latitude}/{longitude}", consumes = "application/json")
     public ResponseEntity<String> showLocation(
-            @RequestBody PetGeolocation petGeolocation, HttpServletResponse response) {
-        log.info("Storing location for pet: {}", petGeolocation.getId());
+            @PathVariable("petId") Long petId,
+            @PathVariable("latitude") double latitude,
+            @PathVariable("longitude") double longitude,
+            HttpServletResponse response) {
+        log.info("Storing location for pet: {}", petId);
 
         response.addHeader("Access-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
 
-        ApplicationCache.locations.put(
-                petGeolocation.getId(), new Location(petGeolocation.getLatitude(), petGeolocation.getLongitude()));
+        ApplicationCache.locations.put(petId, new Location(latitude, longitude));
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
