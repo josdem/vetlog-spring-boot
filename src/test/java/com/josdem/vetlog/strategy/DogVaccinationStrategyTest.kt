@@ -21,9 +21,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 class DogVaccinationStrategyTest {
-    companion object {
-        private val log = LoggerFactory.getLogger(DogVaccinationStrategyTest::class.java)
-    }
+    private val log = LoggerFactory.getLogger(DogVaccinationStrategyTest::class.java)
 
     private lateinit var dogVaccinationStrategy: DogVaccinationStrategy
 
@@ -40,7 +38,7 @@ class DogVaccinationStrategyTest {
 
     @ParameterizedTest
     @CsvSource("6, 2", "8, 2", "9, 2", "12, 2", "20, 4")
-    fun shouldSaveVaccinesBasedOnPetAge(
+    fun `should  save  vaccines  based  on  pet  age`(
         weeks: Int,
         times: Int,
     ) {
@@ -60,7 +58,7 @@ class DogVaccinationStrategyTest {
     }
 
     @Test
-    fun shouldNotSaveVaccinationWhenPetIsNotOldEnough(testInfo: TestInfo) {
+    fun `should not save vaccination when pet is not old enough`(testInfo: TestInfo) {
         log.info("Running test: {}", testInfo.displayName)
         pet.birthDate = LocalDateTime.now().minusWeeks(1)
 
