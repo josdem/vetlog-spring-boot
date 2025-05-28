@@ -34,7 +34,7 @@ public class LocationController {
 
     public static final String DOMAIN = "vetlog.org";
 
-    @GetMapping(value = "/location/{petId}/{latitude}/{longitude}", consumes = "application/json")
+    @GetMapping(value = "/location/{petId}/{latitude}/{longitude}")
     public ResponseEntity<String> showLocation(
             @PathVariable("petId") Long petId,
             @PathVariable("latitude") double latitude,
