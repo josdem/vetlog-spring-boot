@@ -16,14 +16,12 @@
 
 package com.josdem.vetlog.controller
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -34,28 +32,16 @@ class LocationControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    @Autowired
-    private lateinit var objectMapper: ObjectMapper
-
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
     fun `should show my pet location`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val request =
-            get("/geolocation/location")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(petGeolocation))
+            get("/geolocation/location/338/37.7749/-122.4194")
         mockMvc
             .perform(
                 request,
             ).andExpect(status().isOk)
     }
-
-    private val petGeolocation =
-        mapOf(
-            "latitude" to 37.7749,
-            "longitude" to -122.4194,
-            "petName" to "Sora",
-        )
 }
