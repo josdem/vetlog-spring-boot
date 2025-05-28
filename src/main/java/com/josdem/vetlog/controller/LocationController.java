@@ -40,7 +40,7 @@ public class LocationController {
             @PathVariable("latitude") double latitude,
             @PathVariable("longitude") double longitude,
             HttpServletResponse response) {
-        log.info("Storing location for pet: {}", petId);
+        log.info("Storing location for pet: {} - {},{}", petId, latitude, longitude);
 
         response.addHeader("Access-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
