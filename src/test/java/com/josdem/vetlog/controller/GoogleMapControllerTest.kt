@@ -23,6 +23,8 @@ import com.josdem.vetlog.service.PetService
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -51,6 +53,8 @@ class GoogleMapControllerTest {
     @Autowired
     private lateinit var webApplicationContext: WebApplicationContext
 
+    private val log = LoggerFactory.getLogger(this::class.java)
+
     private val image =
         MockMultipartFile(
             "mockImage",
@@ -71,14 +75,15 @@ class GoogleMapControllerTest {
     @Test
     @Transactional
     @WithMockUser(username = "josdem", password = "12345678", roles = ["USER"])
-    fun `showMap should return Map view with API key`() {
+    fun `showMap should return Map view with API key`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         registerPet()
 
         val pet = petService.getPetByUuid(PET_UUID)
 
         mockMvc
             .perform(
-                get("/map")
+                get("/map/view")
                     .param("id", pet.id.toString()),
             ).andExpect(status().isOk)
             .andExpect(view().name("map/map"))
@@ -106,5 +111,17 @@ class GoogleMapControllerTest {
             .perform(request)
             .andExpect(status().isOk())
             .andExpect(view().name("pet/create"))
+    }
+
+    @Test
+    @WithMockUser(username = "josdem", password = "12345678", roles = ["USER"])
+    fun `should list pets`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        mockMvc
+            .perform(get("/map/list"))
+            .andExpect(status().isOk())
+            .andExpect(model().attributeExists("pets"))
+            .andExpect(model().attributeExists("defaultImage"))
+            .andExpect(view().name("map/list"))
     }
 }
