@@ -19,7 +19,6 @@ package com.josdem.vetlog.controller;
 import com.josdem.vetlog.cache.ApplicationCache;
 import com.josdem.vetlog.config.GeolocationProperties;
 import com.josdem.vetlog.config.GoogleProperties;
-import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.LocaleService;
@@ -51,8 +50,10 @@ public class GoogleMapController {
 
     @Value("${gcpUrl}")
     private String gcpUrl;
+
     @Value("${imageBucket}")
     private String imageBucket;
+
     @Value("${defaultImage}")
     private String defaultImage;
 
