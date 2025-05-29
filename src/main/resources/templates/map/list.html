@@ -76,8 +76,8 @@
                         <h3 style="text-align:center" th:data-testid="petName" th:text="${pet.name}"></h3>
                         <br/>
                         <center>
-                            <a th:data-testid="locateButton" th:href="@{/map?id=${pet.id}}" class="btn btn-primary">
-                                <p th:text="#{petlog.list}"/>
+                            <a th:data-testid="locateButton" th:href="@{/map/view(id=${pet.id})}" class="btn btn-primary">
+                                <p th:text="#{map.locate}"/>
                             </a>
                         </center>
                         <br/><br/>
