@@ -58,10 +58,9 @@ public class LocationController {
         response.addHeader("Access-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
 
-
         var petIds = PetSplitter.split(pets);
         petIds.forEach(id -> {
-            ApplicationCache.locations.put(id, new Location(0.0, 0.0));
+            ApplicationCache.locations.put(id, null);
         });
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
