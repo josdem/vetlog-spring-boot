@@ -42,13 +42,15 @@ internal class PetSplitterTest {
     fun `should return a single pet when one is provided`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pets = PetSplitter.split("338")
-        assertTrue(pets.size == 1 && pets[0] == 338L, "Expected a list with one pet")
+        assertEquals(1, pets.size, "Expected the list to contain exactly one pet")
+        assertEquals(338L, pets[0], "Expected the first pet to have ID 338")
     }
 
     @Test
     fun `should return multiple pets when a comma-separated list is provided`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pets = PetSplitter.split("338, 339, 340")
-        assertTrue(pets.size == 3 && pets.containsAll(listOf(338L, 339L, 340L)), "Expected a list with three pets")
+        assertEquals(3, pets.size, "Expected the list to contain exactly three pets")
+        assertIterableEquals(listOf(338L, 339L, 340L), pets, "Expected the list to contain pets with IDs 338, 339, and 340")
     }
 }
