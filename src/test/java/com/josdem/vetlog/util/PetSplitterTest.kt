@@ -55,4 +55,12 @@ internal class PetSplitterTest {
         assertEquals(3, pets.size, "Expected a list with three pets")
         assertIterableEquals(listOf(338L, 339L, 340L), pets, "Expected the pet IDs to be 338, 339, and 340")
     }
+
+    @Test
+    fun `should ignore string values in the list`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pets = PetSplitter.split("338, 339, invalid, 340")
+        assertEquals(3, pets.size, "Expected a list with three valid pets")
+        assertIterableEquals(listOf(338L, 339L, 340L), pets, "Expected the pet IDs to be 338, 339, and 340")
+    }
 }
