@@ -30,4 +30,25 @@ internal class PetSplitterTest {
         val pets = PetSplitter.split("")
         assertTrue(pets.isEmpty(), "Expected an empty list when no pets are provided")
     }
+
+    @Test
+    fun `should return empty list when null is provided`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pets = PetSplitter.split(null)
+        assertTrue(pets.isEmpty(), "Expected an empty list when null is provided")
+    }
+
+    @Test
+    fun `should return a single pet when one is provided`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pets = PetSplitter.split("338")
+        assertTrue(pets.size == 1 && pets[0] == 338L, "Expected a list with one pet")
+    }
+
+    @Test
+    fun `should return multiple pets when a comma-separated list is provided`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pets = PetSplitter.split("338, 339, 340")
+        assertTrue(pets.size == 3 && pets.containsAll(listOf(338L, 339L, 340L)), "Expected a list with three pets")
+    }
 }
