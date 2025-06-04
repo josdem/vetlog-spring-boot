@@ -16,10 +16,12 @@
 
 package com.josdem.vetlog.util
 
+import org.junit.jupiter.api.Assertions.assertIterableEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
+import kotlin.test.assertEquals
 
 internal class PetSplitterTest {
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -42,13 +44,15 @@ internal class PetSplitterTest {
     fun `should return a single pet when one is provided`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pets = PetSplitter.split("338")
-        assertTrue(pets.size == 1 && pets[0] == 338L, "Expected a list with one pet")
+        assertEquals(1, pets.size, "Expected a list with one pet")
+        assertIterableEquals(listOf(338L), pets, "Expected the pet ID to be 338")
     }
 
     @Test
     fun `should return multiple pets when a comma-separated list is provided`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pets = PetSplitter.split("338, 339, 340")
-        assertTrue(pets.size == 3 && pets.containsAll(listOf(338L, 339L, 340L)), "Expected a list with three pets")
+        assertEquals(3, pets.size, "Expected a list with three pets")
+        assertIterableEquals(listOf(338L, 339L, 340L), pets, "Expected the pet IDs to be 338, 339, and 340")
     }
 }
