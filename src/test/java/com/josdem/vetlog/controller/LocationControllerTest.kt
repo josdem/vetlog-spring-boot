@@ -18,6 +18,7 @@ package com.josdem.vetlog.controller
 
 import com.josdem.vetlog.cache.ApplicationCache
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
@@ -35,6 +36,11 @@ class LocationControllerTest {
     private lateinit var mockMvc: MockMvc
 
     private val log = LoggerFactory.getLogger(this::class.java)
+
+    @BeforeEach
+    fun setup() {
+        ApplicationCache.locations.clear()
+    }
 
     @Test
     fun `should show my pet location`(testInfo: TestInfo) {
