@@ -60,8 +60,9 @@ public class LocationController {
 
         var petIds = PetSplitter.split(pets);
         petIds.forEach(id -> {
-            ApplicationCache.locations.put(id, null);
+            ApplicationCache.locations.put(id, new Location(0.0, 0.0)); // Default location
         });
+
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

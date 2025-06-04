@@ -16,6 +16,8 @@
 
 package com.josdem.vetlog.controller
 
+import com.josdem.vetlog.cache.ApplicationCache
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
@@ -43,5 +45,23 @@ class LocationControllerTest {
             .perform(
                 request,
             ).andExpect(status().isOk)
+    }
+
+    @Test
+    fun `should store my pet list`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            get("/geolocation/location/338,339")
+        mockMvc
+            .perform(
+                request,
+            ).andExpect(status().isOk)
+
+        assertTrue {
+            ApplicationCache.locations.size == 2 &&
+                ApplicationCache.locations.keys
+                    .toList()
+                    .containsAll(listOf(338, 339))
+        }
     }
 }
