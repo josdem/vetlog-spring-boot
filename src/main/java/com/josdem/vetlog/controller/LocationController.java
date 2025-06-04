@@ -18,6 +18,7 @@ package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.cache.ApplicationCache;
 import com.josdem.vetlog.model.Location;
+import com.josdem.vetlog.util.PetSplitter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,21 @@ public class LocationController {
 
         ApplicationCache.locations.put(petId, new Location(latitude, longitude));
 
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/location/{pets}")
+    public ResponseEntity<String> storePets(@PathVariable("pets") String pets, HttpServletResponse response) {
+        log.info("Storing pets: {}", pets);
+
+        response.addHeader("Access-Control-Allow-Methods", "GET");
+        response.addHeader("Access-Control-Allow-Origin", DOMAIN);
+
+
+        var petIds = PetSplitter.split(pets);
+        petIds.forEach(id -> {
+            ApplicationCache.locations.put(id, new Location(0.0, 0.0));
+        });
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }
