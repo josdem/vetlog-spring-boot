@@ -53,7 +53,7 @@ public class LocationController {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
-    @GetMapping(value = "/location/{pets}")
+    @GetMapping(value = "/store/{pets}")
     public ResponseEntity<String> storePets(@PathVariable("pets") String pets, HttpServletResponse response) {
         log.info("Storing pets: {}", pets);
 

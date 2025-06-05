@@ -17,6 +17,7 @@
 package com.josdem.vetlog.controller
 
 import com.josdem.vetlog.cache.ApplicationCache
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
@@ -46,18 +47,17 @@ internal class LocationControllerTest {
     fun `should store my pet list`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val request =
-            get("/geolocation/location/338,339")
+            get("/geolocation/store/338,339")
         mockMvc
             .perform(
                 request,
             ).andExpect(status().isOk)
 
-        assertTrue {
-            ApplicationCache.locations.size == 2 &&
-                ApplicationCache.locations.keys
-                    .toList()
-                    .containsAll(listOf(338, 339))
-        }
+        assertEquals(2, ApplicationCache.locations.size, "Expected 2 locations in the cache")
+        assertTrue(
+            ApplicationCache.locations.keys.containsAll(listOf(338, 339)),
+            "Expected cache to contain keys 338 and 339",
+        )
     }
 
     @Test
