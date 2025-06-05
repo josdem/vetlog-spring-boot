@@ -46,9 +46,7 @@ public class LocationController {
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
 
         var pets = ApplicationCache.locations.keySet();
-        pets.forEach(petId -> {
-            ApplicationCache.locations.put(petId, new Location(latitude, longitude));
-        });
+        pets.forEach(petId -> ApplicationCache.locations.put(petId, new Location(latitude, longitude)));
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
