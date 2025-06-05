@@ -68,8 +68,12 @@ public class GoogleMapController {
             currentPetLocation = ApplicationCache.locations.get(pet.getId());
             log.info("Current pet location: {}", currentPetLocation);
         }
-        var latitude = currentPetLocation != null ? currentPetLocation.getLat() : geolocationProperties.getLatitude();
-        var longitude = currentPetLocation != null ? currentPetLocation.getLng() : geolocationProperties.getLongitude();
+        var latitude = currentPetLocation != null && currentPetLocation.getLat() != 0.0
+                ? currentPetLocation.getLat()
+                : geolocationProperties.getLatitude();
+        var longitude = currentPetLocation != null && currentPetLocation.getLng() != 0.0
+                ? currentPetLocation.getLng()
+                : geolocationProperties.getLongitude();
         var message = currentPetLocation != null
                 ? pet.getName() + " " + localeService.getMessage("map.pet.geolocation", request)
                 : localeService.getMessage("map.pet.default", request);
