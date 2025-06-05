@@ -17,7 +17,6 @@
 package com.josdem.vetlog.controller
 
 import com.josdem.vetlog.cache.ApplicationCache
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
@@ -31,6 +30,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import kotlin.math.abs
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -71,6 +71,8 @@ internal class LocationControllerTest {
                 request,
             ).andExpect(status().isOk)
 
-        assertEquals(37.7749, ApplicationCache.locations[338]?.lat)
+        val epsilon = 0.001
+        assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
+        assertTrue { abs(-122.4194 - ApplicationCache.locations[338]!!.lng) < epsilon }
     }
 }
