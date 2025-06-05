@@ -35,18 +35,20 @@ public class LocationController {
 
     public static final String DOMAIN = "vetlog.org";
 
-    @GetMapping(value = "/location/{petId}/{latitude:.+}/{longitude:.+}")
+    @GetMapping(value = "/location/{latitude:.+}/{longitude:.+}")
     public ResponseEntity<String> showLocation(
-            @PathVariable("petId") Long petId,
             @PathVariable("latitude") double latitude,
             @PathVariable("longitude") double longitude,
             HttpServletResponse response) {
-        log.info("Storing location for pet: {} - {},{}", petId, latitude, longitude);
+        log.info("Storing location : {},{}", latitude, longitude);
 
         response.addHeader("Access-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
 
-        ApplicationCache.locations.put(petId, new Location(latitude, longitude));
+        var pets = ApplicationCache.locations.keySet();
+        pets.forEach(petId -> {
+            ApplicationCache.locations.put(petId, new Location(latitude, longitude));
+        });
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
