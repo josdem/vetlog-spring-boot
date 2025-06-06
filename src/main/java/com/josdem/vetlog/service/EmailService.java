@@ -16,10 +16,13 @@
 
 package com.josdem.vetlog.service;
 
+import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.model.User;
 import java.util.Locale;
 
 public interface EmailService {
 
     void sendWelcomeEmail(User user, Locale locale);
+
+    void sendPullingUpEmail(Long PetId, Location location, Locale locale);
 }

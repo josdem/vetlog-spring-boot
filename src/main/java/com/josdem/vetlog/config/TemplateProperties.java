@@ -25,4 +25,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("template")
 public class TemplateProperties {
     private String welcome;
+    private String pullingUp;
 }

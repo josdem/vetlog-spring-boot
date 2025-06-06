@@ -16,12 +16,18 @@
 
 package com.josdem.vetlog.controller
 
+import com.josdem.vetlog.model.User
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -32,7 +38,18 @@ class LocationControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
+    @MockitoBean
+    private lateinit var emailService: com.josdem.vetlog.service.EmailService
+
+    @MockitoBean
+    private lateinit var petservice: com.josdem.vetlog.service.PetService
+
     private val log = LoggerFactory.getLogger(this::class.java)
+
+    @BeforeEach
+    fun setup() {
+        MockitoAnnotations.openMocks(this)
+    }
 
     @Test
     fun `should show my pet location`(testInfo: TestInfo) {
@@ -43,5 +60,29 @@ class LocationControllerTest {
             .perform(
                 request,
             ).andExpect(status().isOk)
+    }
+
+    @Test
+    fun `should send pulling up email notification`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        var user = User()
+        user.firstName = "abc"
+        user.email = "abc@xyz.io"
+        val petId = 338L
+        val latitude = 37.7749
+        val longitude = -122.4194
+        val request =
+            get("/geolocation/pullup/$petId/$latitude/$longitude")
+
+        whenever(petservice.getUserByPetId(Mockito.anyLong())).thenReturn(user)
+        mockMvc
+            .perform(request)
+            .andExpect(status().isOk)
+
+        Mockito.verify(emailService).sendPullingUpEmail(
+            Mockito.eq(petId),
+            Mockito.any(com.josdem.vetlog.model.Location::class.java),
+            Mockito.any(java.util.Locale::class.java),
+        )
     }
 }

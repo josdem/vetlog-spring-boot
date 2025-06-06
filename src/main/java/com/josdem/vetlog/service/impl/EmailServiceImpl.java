@@ -19,10 +19,9 @@ package com.josdem.vetlog.service.impl;
 import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
+import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.model.User;
-import com.josdem.vetlog.service.EmailService;
-import com.josdem.vetlog.service.LocaleService;
-import com.josdem.vetlog.service.RestService;
+import com.josdem.vetlog.service.*;
 import com.josdem.vetlog.util.TemplateLocaleResolver;
 import java.io.IOException;
 import java.util.Locale;
@@ -44,6 +43,7 @@ public class EmailServiceImpl implements EmailService {
     private final RestService restService;
     private final LocaleService localeService;
     private final TemplateProperties templateProperties;
+    private final PetService petService;
 
     public void sendWelcomeEmail(User user, Locale locale) {
         log.info("Sending welcome email to: {}", user.getFirstName());
@@ -58,6 +58,32 @@ public class EmailServiceImpl implements EmailService {
             command.setTemplate(template);
             command.setSubject(localeService.getMessage("email.subject", locale));
             command.setMessage(localeService.getMessage("user.welcome.message", locale));
+            command.setToken(clientToken);
+            restService.sendMessage(command);
+        } catch (IOException ioe) {
+            throw new BusinessException(ioe.getMessage());
+        }
+    }
+
+    @Override
+    public void sendPullingUpEmail(Long petId, Location location, Locale locale) {
+        User user = petService.getUserByPetId(petId);
+        if (user == null) {
+            log.warn("User not found for petId: {}", petId);
+            return;
+        }
+        log.info("Sending pulling up email to: {}", user.getFirstName());
+        if (!user.isEnabled()) {
+            return;
+        }
+        var template = TemplateLocaleResolver.getTemplate(templateProperties.getPullingUp(), locale.getLanguage());
+        try {
+            var command = new MessageCommand();
+            command.setEmail(user.getEmail());
+            command.setName(user.getFirstName());
+            command.setTemplate(template);
+            command.setSubject(localeService.getMessage("email.subject", locale));
+            command.setMessage(localeService.getMessage("pet.pulling-up.message", locale));
             command.setToken(clientToken);
             restService.sendMessage(command);
         } catch (IOException ioe) {

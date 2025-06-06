@@ -18,8 +18,11 @@ package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.cache.ApplicationCache;
 import com.josdem.vetlog.model.Location;
+import com.josdem.vetlog.service.EmailService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +37,9 @@ public class LocationController {
 
     public static final String DOMAIN = "vetlog.org";
 
+    @Autowired
+    private EmailService emailService;
+
     @GetMapping(value = "/location/{petId}/{latitude:.+}/{longitude:.+}")
     public ResponseEntity<String> showLocation(
             @PathVariable("petId") Long petId,
@@ -47,6 +53,20 @@ public class LocationController {
 
         ApplicationCache.locations.put(petId, new Location(latitude, longitude));
 
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/pullup/{petId}/{latitude:.+}/{longitude:.+}")
+    public ResponseEntity<String> sendEmailNotifiation(
+            @PathVariable("petId") Long petId,
+            @PathVariable("latitude") double latitude,
+            @PathVariable("longitude") double longitude,
+            HttpServletRequest request) {
+        log.info("Sending pulling up email notification for pet: {} - {},{}", petId, latitude, longitude);
+        Location location = new Location(latitude, longitude);
+        ApplicationCache.locations.put(petId, location);
+        var locale = request.getLocale();
+        emailService.sendPullingUpEmail(petId, location, locale);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

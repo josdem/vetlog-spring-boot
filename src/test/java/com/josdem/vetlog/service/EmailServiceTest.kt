@@ -18,6 +18,7 @@ package com.josdem.vetlog.service
 
 import com.josdem.vetlog.config.TemplateProperties
 import com.josdem.vetlog.exception.BusinessException
+import com.josdem.vetlog.model.Location
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.service.impl.EmailServiceImpl
 import org.junit.jupiter.api.BeforeEach
@@ -41,6 +42,9 @@ internal class EmailServiceTest {
     private lateinit var restService: RestService
 
     @Mock
+    private lateinit var petService: PetService
+
+    @Mock
     private lateinit var localeService: LocaleService
 
     @Mock
@@ -55,7 +59,7 @@ internal class EmailServiceTest {
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        emailService = EmailServiceImpl(restService, localeService, templateProperties)
+        emailService = EmailServiceImpl(restService, localeService, templateProperties, petService)
     }
 
     @Test
@@ -87,6 +91,50 @@ internal class EmailServiceTest {
         user.isEnabled = false
 
         emailService.sendWelcomeEmail(user, Locale.ENGLISH)
+
+        verify(restService, never()).sendMessage(any())
+    }
+
+    @Test
+    fun `Sending a pulling up email`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
+        user.firstName = "abc"
+        user.email = "abc@xyz.io"
+        val latitude = 37.7749
+        val longitude = -122.4194
+        val loc = Location(latitude, longitude)
+        whenever(petService.getUserByPetId(1L)).thenReturn(user)
+        emailService.sendPullingUpEmail(1L, loc, Locale.ENGLISH)
+
+        verify(localeService).getMessage("pet.pulling-up.message", Locale.ENGLISH)
+        verify(restService).sendMessage(any())
+    }
+
+    @Test
+    fun `Not sending a pulling up email due to an exception`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
+        user.firstName = "abc"
+        user.email = "abc@xyz.io"
+        val latitude = 37.7749
+        val longitude = -122.4194
+        val loc = Location(latitude, longitude)
+        whenever(petService.getUserByPetId(1L)).thenReturn(user)
+        whenever(restService.sendMessage(any())).thenThrow(IOException("Error"))
+
+        assertThrows<BusinessException> {
+            emailService.sendPullingUpEmail(1L, loc, Locale.ENGLISH)
+        }
+    }
+
+    @Test
+    fun `Not sending a pulling up email if user is not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(petService.getUserByPetId(1L)).thenReturn(null)
+        val loc = Location(37.7749, -122.4194)
+
+        emailService.sendPullingUpEmail(1L, loc, Locale.ENGLISH)
 
         verify(restService, never()).sendMessage(any())
     }

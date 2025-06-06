@@ -30,6 +30,7 @@ import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.PetServiceImpl
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -295,5 +296,39 @@ internal class PetServiceTest {
         assertThrows(BusinessException::class.java) {
             service.deletePetById(1L)
         }
+    }
+
+    @Test
+    fun `get user by petId`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petId = 1L
+        val pet = Pet()
+        val user = User()
+        pet.id = petId
+        pet.name = "caramel"
+        pet.user = user
+        user.username = "abc"
+        user.email = "abc@xyz.com"
+        user.mobile = "+521234567890"
+        whenever(petRepository.findById(petId)).thenReturn(Optional.of(pet))
+        val result = service.getUserByPetId(petId)
+        assertEquals(user, result)
+    }
+
+    @Test
+    fun `should return null when pet id does not exist`() {
+        whenever(petRepository.findById(999L)).thenReturn(Optional.empty())
+        val result = service.getUserByPetId(999L)
+        assertNull(result)
+    }
+
+    @Test
+    fun `should return null when pet has no associated user`() {
+        val pet = Pet()
+        pet.id = 100L
+        pet.user = null
+        whenever(petRepository.findById(100L)).thenReturn(Optional.of(pet))
+        val result = service.getUserByPetId(100L)
+        assertNull(result)
     }
 }
