@@ -45,7 +45,7 @@ public class PetLogServiceImpl implements PetLogService {
 
     @Override
     @Transactional
-    public PetLog save(Command command) throws IOException {
+    public PetLog save(Command command, String username) throws IOException {
         var petLogCommand = (PetLogCommand) command;
         var petLog = petLogBinder.bind(petLogCommand);
         var pet = petRepository.findById(petLogCommand.getPet());
@@ -54,6 +54,7 @@ public class PetLogServiceImpl implements PetLogService {
         }
         petLog.setPet(pet.get());
         petPrescriptionService.attachFile(petLogCommand);
+        petLog.setUsername(username);
         petLogRepository.save(petLog);
         return petLog;
     }
