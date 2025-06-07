@@ -16,6 +16,14 @@
 
 package com.josdem.vetlog.controller
 
+import com.josdem.vetlog.model.Pet
+import com.josdem.vetlog.model.User
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.whenever
 import com.josdem.vetlog.cache.ApplicationCache
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -28,6 +36,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -39,6 +48,12 @@ import kotlin.math.abs
 internal class LocationControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
+
+    @MockitoBean
+    private lateinit var emailService: com.josdem.vetlog.service.EmailService
+
+    @MockitoBean
+    private lateinit var petservice: com.josdem.vetlog.service.PetService
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
@@ -74,5 +89,28 @@ internal class LocationControllerTest {
         val epsilon = 0.001
         assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
         assertTrue { abs(-122.4194 - ApplicationCache.locations[338]!!.lng) < epsilon }
+    }
+
+    @Test
+    fun `should send pulling up email notification`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        var user = User()
+        user.firstName = "abc"
+        user.email = "abc@xyz.io"
+        var pet = Pet()
+        pet.id = 338L
+        pet.user = user
+        val request =
+            get("/geolocation/pullup/${pet.id}")
+
+        whenever(petservice.getPetById(Mockito.anyLong())).thenReturn(pet)
+        mockMvc
+            .perform(request)
+            .andExpect(status().isOk)
+
+        Mockito.verify(emailService).sendPullingUpEmail(
+            Mockito.eq(pet.id),
+            Mockito.any(java.util.Locale::class.java),
+        )
     }
 }
