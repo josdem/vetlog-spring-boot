@@ -24,6 +24,14 @@ import org.junit.jupiter.api.TestInfo
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
+import com.josdem.vetlog.cache.ApplicationCache
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.TestMethodOrder
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -32,10 +40,12 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import kotlin.math.abs
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class LocationControllerTest {
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
+internal class LocationControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
@@ -48,14 +58,37 @@ class LocationControllerTest {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
-    fun `should show my pet location`(testInfo: TestInfo) {
+    @Order(1)
+    fun `should store my pet list`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val request =
-            get("/geolocation/location/338/37.7749/-122.4194")
+            get("/geolocation/store/338,339")
         mockMvc
             .perform(
                 request,
             ).andExpect(status().isOk)
+
+        assertEquals(2, ApplicationCache.locations.size, "Expected 2 locations in the cache")
+        assertTrue(
+            ApplicationCache.locations.keys.containsAll(listOf(338, 339)),
+            "Expected cache to contain keys 338 and 339",
+        )
+    }
+
+    @Test
+    @Order(2)
+    fun `should show my pet location`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            get("/geolocation/location/37.7749/-122.4194")
+        mockMvc
+            .perform(
+                request,
+            ).andExpect(status().isOk)
+
+        val epsilon = 0.001
+        assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
+        assertTrue { abs(-122.4194 - ApplicationCache.locations[338]!!.lng) < epsilon }
     }
 
     @Test
