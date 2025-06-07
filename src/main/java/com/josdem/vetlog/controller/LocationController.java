@@ -56,17 +56,11 @@ public class LocationController {
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
-    @GetMapping(value = "/pullup/{petId}/{latitude:.+}/{longitude:.+}")
-    public ResponseEntity<String> sendEmailNotifiation(
-            @PathVariable("petId") Long petId,
-            @PathVariable("latitude") double latitude,
-            @PathVariable("longitude") double longitude,
-            HttpServletRequest request) {
-        log.info("Sending pulling up email notification for pet: {} - {},{}", petId, latitude, longitude);
-        Location location = new Location(latitude, longitude);
-        ApplicationCache.locations.put(petId, location);
+    @GetMapping(value = "/pullup/{petId}")
+    public ResponseEntity<String> sendEmailNotification(@PathVariable("petId") Long petId, HttpServletRequest request) {
+        log.info("Sending pulling up email notification for pet: {}", petId);
         var locale = request.getLocale();
-        emailService.sendPullingUpEmail(petId, location, locale);
+        emailService.sendPullingUpEmail(petId, locale);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

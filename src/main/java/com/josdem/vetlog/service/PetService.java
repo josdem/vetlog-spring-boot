@@ -40,5 +40,4 @@ public interface PetService {
 
     void deletePetById(Long id);
 
-    User getUserByPetId(Long petId);
 }

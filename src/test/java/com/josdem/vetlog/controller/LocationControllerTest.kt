@@ -16,6 +16,7 @@
 
 package com.josdem.vetlog.controller
 
+import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -46,11 +47,6 @@ class LocationControllerTest {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    @BeforeEach
-    fun setup() {
-        MockitoAnnotations.openMocks(this)
-    }
-
     @Test
     fun `should show my pet location`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
@@ -68,20 +64,19 @@ class LocationControllerTest {
         var user = User()
         user.firstName = "abc"
         user.email = "abc@xyz.io"
-        val petId = 338L
-        val latitude = 37.7749
-        val longitude = -122.4194
+        var pet = Pet()
+        pet.id = 338L
+        pet.user = user
         val request =
-            get("/geolocation/pullup/$petId/$latitude/$longitude")
+            get("/geolocation/pullup/${pet.id}")
 
-        whenever(petservice.getUserByPetId(Mockito.anyLong())).thenReturn(user)
+        whenever(petservice.getPetById(Mockito.anyLong())).thenReturn(pet)
         mockMvc
             .perform(request)
             .andExpect(status().isOk)
 
         Mockito.verify(emailService).sendPullingUpEmail(
-            Mockito.eq(petId),
-            Mockito.any(com.josdem.vetlog.model.Location::class.java),
+            Mockito.eq(pet.id),
             Mockito.any(java.util.Locale::class.java),
         )
     }

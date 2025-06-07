@@ -19,7 +19,7 @@ package com.josdem.vetlog.service.impl;
 import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.config.TemplateProperties;
 import com.josdem.vetlog.exception.BusinessException;
-import com.josdem.vetlog.model.Location;
+import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.*;
 import com.josdem.vetlog.util.TemplateLocaleResolver;
@@ -66,11 +66,10 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendPullingUpEmail(Long petId, Location location, Locale locale) {
-        User user = petService.getUserByPetId(petId);
+    public void sendPullingUpEmail(Long petId, Locale locale) {
+        User user = petService.getPetById(petId).getUser();
         if (user == null) {
-            log.warn("User not found for petId: {}", petId);
-            return;
+            throw new UserNotFoundException("No user was found for pet with id: " + petId);
         }
         log.info("Sending pulling up email to: {}", user.getFirstName());
         if (!user.isEnabled()) {
