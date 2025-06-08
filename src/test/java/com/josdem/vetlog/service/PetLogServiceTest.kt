@@ -112,6 +112,7 @@ internal class PetLogServiceTest {
         assertEquals("updated signs", petLog.signs)
         assertEquals("updated diagnosis", petLog.diagnosis)
         assertEquals("updated medicine", petLog.medicine)
+        assertEquals("josdem", petLog.username)
         assertEquals(pet, petLog.pet)
         verify(petLogRepository).save(petLog)
     }
@@ -187,5 +188,6 @@ internal class PetLogServiceTest {
             diagnosis = "updated diagnosis"
             medicine = "updated medicine"
             pet = this@PetLogServiceTest.pet
+            username = "josdem"
         }
 }
