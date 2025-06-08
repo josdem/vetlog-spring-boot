@@ -1,0 +1,1 @@
+ALTER TABLE pet_log ADD COLUMN username VARCHAR(255) NOT NULL DEFAULT 'system';
