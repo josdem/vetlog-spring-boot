@@ -66,6 +66,11 @@ public class PetLogServiceImpl implements PetLogService {
         var pet = petRepository
                 .findById(petLogCommand.getPet())
                 .orElseThrow(() -> new BusinessException("No pet was found under id: " + petLogCommand.getPet()));
+        var username = petLogRepository
+                .findByUuid(petLogCommand.getUuid())
+                .orElseThrow(() -> new BusinessException("No pet log found with uuid: " + petLogCommand.getUuid()))
+                .getUsername();
+        petLog.setUsername(username);
         petLog.setPet(pet);
         petLogRepository.save(petLog);
         return petLog;
