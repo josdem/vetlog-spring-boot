@@ -18,9 +18,12 @@ package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.cache.ApplicationCache;
 import com.josdem.vetlog.model.Location;
+import com.josdem.vetlog.service.EmailService;
+import jakarta.servlet.http.HttpServletRequest;
 import com.josdem.vetlog.util.PetSplitter;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +37,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class LocationController {
 
     public static final String DOMAIN = "vetlog.org";
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping(value = "/location/{latitude:.+}/{longitude:.+}")
     public ResponseEntity<String> showLocation(
@@ -63,6 +69,14 @@ public class LocationController {
             ApplicationCache.locations.put(id, new Location(0.0, 0.0)); // Default location
         });
 
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/pullup/{petId}")
+    public ResponseEntity<String> sendEmailNotification(@PathVariable("petId") Long petId, HttpServletRequest request) {
+        log.info("Sending pulling up email notification for pet: {}", petId);
+        var locale = request.getLocale();
+        emailService.sendPullingUpEmail(petId, locale);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

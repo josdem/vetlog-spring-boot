@@ -22,4 +22,6 @@ import java.util.Locale;
 public interface EmailService {
 
     void sendWelcomeEmail(User user, Locale locale);
+
+    void sendPullingUpEmail(Long PetId, Locale locale);
 }
