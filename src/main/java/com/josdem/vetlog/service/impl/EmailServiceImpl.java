@@ -67,7 +67,8 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendPullingUpEmail(Long petId, Locale locale) {
-        User user = petService.getPetById(petId).getUser();
+        var pet = petService.getPetById(petId);
+        var user = pet.getUser();
         if (user == null) {
             throw new UserNotFoundException("No user was found for pet with id: " + petId);
         }
@@ -82,7 +83,7 @@ public class EmailServiceImpl implements EmailService {
             command.setName(user.getFirstName());
             command.setTemplate(template);
             command.setSubject(localeService.getMessage("email.subject", locale));
-            command.setMessage(localeService.getMessage("pet.pulling-up.message", locale));
+            command.setMessage(pet.getName());
             command.setToken(clientToken);
             restService.sendMessage(command);
         } catch (IOException ioe) {
