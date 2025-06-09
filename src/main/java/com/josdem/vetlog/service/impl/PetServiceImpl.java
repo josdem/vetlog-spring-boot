@@ -133,6 +133,4 @@ public class PetServiceImpl implements PetService {
     private Optional<User> getUser(Long id) {
         return id == null ? Optional.empty() : userRepository.findById(id);
     }
-
-
 }

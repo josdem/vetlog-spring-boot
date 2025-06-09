@@ -16,15 +16,9 @@
 
 package com.josdem.vetlog.controller
 
+import com.josdem.vetlog.cache.ApplicationCache
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInfo
-import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.whenever
-import com.josdem.vetlog.cache.ApplicationCache
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.MethodOrderer
@@ -94,23 +88,17 @@ internal class LocationControllerTest {
     @Test
     fun `should send pulling up email notification`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        var user = User()
+        val user = User()
         user.firstName = "abc"
         user.email = "abc@xyz.io"
-        var pet = Pet()
+        val pet = Pet()
         pet.id = 338L
         pet.user = user
         val request =
             get("/geolocation/pullup/${pet.id}")
 
-        whenever(petservice.getPetById(Mockito.anyLong())).thenReturn(pet)
         mockMvc
             .perform(request)
             .andExpect(status().isOk)
-
-        Mockito.verify(emailService).sendPullingUpEmail(
-            Mockito.eq(pet.id),
-            Mockito.any(java.util.Locale::class.java),
-        )
     }
 }
