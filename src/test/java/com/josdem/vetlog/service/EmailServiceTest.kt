@@ -108,7 +108,7 @@ internal class EmailServiceTest {
         whenever(petService.getPetById(any())).thenReturn(pet)
         emailService.sendPullingUpEmail(1L, Locale.ENGLISH)
 
-        verify(localeService).getMessage("pet.pulling-up.message", Locale.ENGLISH)
+        verify(localeService).getMessage("email.subject", Locale.ENGLISH)
         verify(restService).sendMessage(any())
     }
 
