@@ -1,0 +1,2 @@
+INSERT INTO `breed` VALUES 
+(93,'2025-06-10 15:05:01','Shar Pei','DOG');
