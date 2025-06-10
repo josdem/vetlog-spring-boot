@@ -29,6 +29,7 @@ import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
@@ -70,12 +71,16 @@ internal class PetLogServiceTest {
         val petLogCommand = PetLogCommand().apply { pet = 1L }
         val petLog = getPetLog()
         val optionalPet: Optional<Pet> = Optional.ofNullable(pet)
+        val username = "test_user"
 
         whenever(petLogBinder.bind(petLogCommand)).thenReturn(petLog)
         whenever(petRepository.findById(1L)).thenReturn(optionalPet)
 
-        service.save(petLogCommand)
-        verify(petLogRepository).save(petLog)
+        service.save(petLogCommand, username)
+        argumentCaptor<PetLog>().apply {
+            verify(petLogRepository).save(capture())
+            assertEquals(username, firstValue.username)
+        }
     }
 
     @Test
@@ -107,6 +112,7 @@ internal class PetLogServiceTest {
         assertEquals("updated signs", petLog.signs)
         assertEquals("updated diagnosis", petLog.diagnosis)
         assertEquals("updated medicine", petLog.medicine)
+        assertEquals("josdem", petLog.username)
         assertEquals(pet, petLog.pet)
         verify(petLogRepository).save(petLog)
     }
@@ -141,11 +147,12 @@ internal class PetLogServiceTest {
         log.info(testInfo.displayName)
         val petLogCommand = PetLogCommand()
         val petLog = getPetLog()
+        val username = "test_user"
 
         whenever(petLogBinder.bind(petLogCommand)).thenReturn(petLog)
 
         assertThrows<BusinessException> {
-            service.save(petLogCommand)
+            service.save(petLogCommand, username)
         }
     }
 
@@ -181,5 +188,6 @@ internal class PetLogServiceTest {
             diagnosis = "updated diagnosis"
             medicine = "updated medicine"
             pet = this@PetLogServiceTest.pet
+            username = "josdem"
         }
 }

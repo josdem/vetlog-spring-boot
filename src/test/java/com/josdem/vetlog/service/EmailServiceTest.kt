@@ -18,6 +18,8 @@ package com.josdem.vetlog.service
 
 import com.josdem.vetlog.config.TemplateProperties
 import com.josdem.vetlog.exception.BusinessException
+import com.josdem.vetlog.exception.UserNotFoundException
+import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.service.impl.EmailServiceImpl
 import org.junit.jupiter.api.BeforeEach
@@ -41,12 +43,16 @@ internal class EmailServiceTest {
     private lateinit var restService: RestService
 
     @Mock
+    private lateinit var petService: PetService
+
+    @Mock
     private lateinit var localeService: LocaleService
 
     @Mock
     private lateinit var templateProperties: TemplateProperties
 
     private val user = User()
+    private val pet = Pet()
 
     companion object {
         private val log = LoggerFactory.getLogger(EmailServiceTest::class.java)
@@ -55,7 +61,7 @@ internal class EmailServiceTest {
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        emailService = EmailServiceImpl(restService, localeService, templateProperties)
+        emailService = EmailServiceImpl(restService, localeService, templateProperties, petService)
     }
 
     @Test
@@ -88,6 +94,48 @@ internal class EmailServiceTest {
 
         emailService.sendWelcomeEmail(user, Locale.ENGLISH)
 
+        verify(restService, never()).sendMessage(any())
+    }
+
+    @Test
+    fun `Sending a pulling up email`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
+        user.firstName = "abc"
+        user.email = "abc@xyz.io"
+        pet.id = 338L
+        pet.user = user
+        whenever(petService.getPetById(any())).thenReturn(pet)
+        emailService.sendPullingUpEmail(1L, Locale.ENGLISH)
+
+        verify(localeService).getMessage("email.subject", Locale.ENGLISH)
+        verify(restService).sendMessage(any())
+    }
+
+    @Test
+    fun `Not sending a pulling up email due to an exception`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
+        user.firstName = "abc"
+        user.email = "abc@xyz.io"
+        pet.id = 338L
+        pet.user = user
+        whenever(petService.getPetById(any())).thenReturn(pet)
+        whenever(restService.sendMessage(any())).thenThrow(IOException("Error"))
+
+        assertThrows<BusinessException> {
+            emailService.sendPullingUpEmail(1L, Locale.ENGLISH)
+        }
+    }
+
+    @Test
+    fun `Not sending a pulling up email if user is not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        pet.id = 338L
+        whenever(petService.getPetById(1L)).thenReturn(pet)
+        assertThrows<UserNotFoundException> {
+            emailService.sendPullingUpEmail(1L, Locale.ENGLISH)
+        }
         verify(restService, never()).sendMessage(any())
     }
 }

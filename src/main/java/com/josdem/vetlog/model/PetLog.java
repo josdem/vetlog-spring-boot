@@ -60,4 +60,7 @@ public class PetLog {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id")
     private Pet pet;
+
+    @Column(name = "username", nullable = false)
+    private String username;
 }

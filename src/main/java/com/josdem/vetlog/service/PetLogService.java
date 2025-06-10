@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PetLogService {
-    PetLog save(Command command) throws IOException;
+    PetLog save(Command command, String username) throws IOException;
 
     PetLog update(Command command) throws IOException;
 

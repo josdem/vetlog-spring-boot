@@ -123,7 +123,7 @@ public class PetLogController {
             modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
             return fillModelAndView(modelAndView, pets, request);
         }
-        petLogService.save(petLogCommand);
+        petLogService.save(petLogCommand, currentUser.getUsername());
         modelAndView.addObject("message", localeService.getMessage("petlog.created", request));
         modelAndView.addObject(PET_LOG_COMMAND, new PetLogCommand());
         return fillModelAndView(modelAndView, pets, request);

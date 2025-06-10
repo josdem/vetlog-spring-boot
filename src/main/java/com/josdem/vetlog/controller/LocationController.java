@@ -17,14 +17,17 @@
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.cache.ApplicationCache;
-import com.josdem.vetlog.command.PetGeolocation;
 import com.josdem.vetlog.model.Location;
+import com.josdem.vetlog.service.EmailService;
+import com.josdem.vetlog.util.PetSplitter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,17 +38,45 @@ public class LocationController {
 
     public static final String DOMAIN = "vetlog.org";
 
-    @GetMapping(value = "/location", consumes = "application/json")
+    @Autowired
+    private EmailService emailService;
+
+    @GetMapping(value = "/location/{latitude:.+}/{longitude:.+}")
     public ResponseEntity<String> showLocation(
-            @RequestBody PetGeolocation petGeolocation, HttpServletResponse response) {
-        log.info("Storing location for pet: {}", petGeolocation.getId());
+            @PathVariable("latitude") double latitude,
+            @PathVariable("longitude") double longitude,
+            HttpServletResponse response) {
+        log.info("Storing location : {},{}", latitude, longitude);
 
         response.addHeader("Access-Control-Allow-Methods", "GET");
         response.addHeader("Access-Control-Allow-Origin", DOMAIN);
 
-        ApplicationCache.locations.put(
-                petGeolocation.getId(), new Location(petGeolocation.getLatitude(), petGeolocation.getLongitude()));
+        var pets = ApplicationCache.locations.keySet();
+        pets.forEach(petId -> ApplicationCache.locations.put(petId, new Location(latitude, longitude)));
 
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/store/{pets}")
+    public ResponseEntity<String> storePets(@PathVariable("pets") String pets, HttpServletResponse response) {
+        log.info("Storing pets: {}", pets);
+
+        response.addHeader("Access-Control-Allow-Methods", "GET");
+        response.addHeader("Access-Control-Allow-Origin", DOMAIN);
+
+        var petIds = PetSplitter.split(pets);
+        petIds.forEach(id -> {
+            ApplicationCache.locations.put(id, new Location(0.0, 0.0)); // Default location
+        });
+
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/pullup/{petId}")
+    public ResponseEntity<String> sendEmailNotification(@PathVariable("petId") Long petId, HttpServletRequest request) {
+        log.info("Sending pulling up email notification for pet: {}", petId);
+        var locale = request.getLocale();
+        emailService.sendPullingUpEmail(petId, locale);
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 }

@@ -23,7 +23,7 @@ https://github.com/josdem/vetlog-spring-boot/wiki
 
 **Note:** Vetlog uses Jmailer project as a third-party service:
 
-https://github.com/josdem/jmailer-spring-boot
+https://github.com/josdem/gmailer-spring-boot
 
 ## Contributors ✨
 
@@ -72,7 +72,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/sardorjumamuratov"><img src="https://avatars.githubusercontent.com/u/49103067?v=4?s=100" width="100px;" alt="Sardor Jumamuratov"/><br /><sub><b>Sardor Jumamuratov</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=sardorjumamuratov" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Komplexee"><img src="https://avatars.githubusercontent.com/u/146031431?v=4?s=100" width="100px;" alt="Komplexee"/><br /><sub><b>Komplexee</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Komplexee" title="Code">💻</a> <a href="#design-Komplexee" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Komplexee"><img src="https://avatars.githubusercontent.com/u/146031431?v=4?s=100" width="100px;" alt="Komplexee"/><br /><sub><b>Komplexee</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Komplexee" title="Code">💻</a> <a href="#design-Komplexee" title="Design">🎨</a></td>      
+      <td align="center" valign="top" width="14.28%"><a href="https://raveendra11.github.io/portfolio"><img src="https://avatars.githubusercontent.com/u/72726513?v=4?s=100" width="100px;" alt="Raveendra Pujari"/><br /><sub><b>Raveendra Pujari</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=raveendra11" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/CoderRamya"><img src="https://avatars.githubusercontent.com/u/196118698?v=4?s=100" width="100px;" alt="ramyaprakash"/><br /><sub><b>ramyaprakash</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=CoderRamya" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ayush0407"><img src="https://avatars.githubusercontent.com/u/37773583?v=4?s=100" width="100px;" alt="Ayush Jha"/><br /><sub><b>Ayush Jha</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=ayush0407" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
