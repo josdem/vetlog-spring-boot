@@ -2,9 +2,9 @@ package com.josdem.vetlog.util
 
 import com.josdem.vetlog.service.LocaleService
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.whenever
@@ -16,12 +16,8 @@ class DateFormatterTest {
     @Mock
     private lateinit var localeService: LocaleService
 
+    @InjectMocks
     private lateinit var dateFormatter: DateFormatter
-
-    @BeforeEach
-    fun setup() {
-        dateFormatter = DateFormatter(localeService)
-    }
 
     @Test
     fun `should format date for US locale`() {
