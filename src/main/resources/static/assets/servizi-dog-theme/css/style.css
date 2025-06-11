@@ -944,3 +944,22 @@ footer img {
 		display: none;
 	}
 }
+
+.row.equal-height-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.row.equal-height-row > [class^="col-"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 767px) {
+    .row.equal-height-row {
+        display: block;
+    }
+    .row.equal-height-row > [class^="col-"] {
+        display: block;
+    }
+}
