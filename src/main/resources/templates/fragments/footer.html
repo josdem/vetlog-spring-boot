@@ -1,4 +1,4 @@
-<html>
+<html xmlns="http://www.w3.org/1999/html">
   <footer>
   <div class="container">
     <p></p>
@@ -21,7 +21,9 @@
     <div class="row">
       <div class="col-md-12 col-sm-12 text-center">
         <a th:href="#{app.mailto}"><p style="font-size:18px" th:text="#{app.contact.us}"/></a>
-        <br/><br/>
+        <br/>
+        <p style="font-size:16px" th:text="#{home.footer.address}"/>
+        <p style="font-size:16px" th:text="#{home.footer.phone}"/>
         <p>© Copyright 2025, Vetlog.</p>
         <a th:href="#{home.footer.link}"><p th:text="#{home.footer.name}"/></a>
       </div>
