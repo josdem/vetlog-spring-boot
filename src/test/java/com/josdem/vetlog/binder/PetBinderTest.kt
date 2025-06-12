@@ -79,7 +79,7 @@ internal class PetBinderTest {
         assertEquals(1L, result.id)
         assertEquals(pet.uuid, result.uuid)
         assertEquals("Cremita", result.name)
-        assertEquals("2021-01-17T00:00", result.birthDate.toString())
+        assertEquals("2021-01-17", result.birthDate.toString())
         assertTrue(result.dewormed)
         assertTrue(result.sterilized)
         assertTrue(result.vaccinated)

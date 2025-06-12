@@ -27,6 +27,7 @@ import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.util.UuidGenerator;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,7 @@ public class PetBinder {
 
     private final BreedRepository breedRepository;
     private final VaccinationRepository vaccinationRepository;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
@@ -75,7 +77,8 @@ public class PetBinder {
         command.setId(pet.getId());
         command.setUuid(pet.getUuid());
         command.setName(pet.getName());
-        command.setBirthDate(pet.getBirthDate().toString());
+        var birthDate = formatter.format(pet.getBirthDate());
+        command.setBirthDate(birthDate);
         command.setDewormed(pet.getDewormed());
         command.setSterilized(pet.getSterilized());
         command.setVaccinated(pet.getVaccinated());
