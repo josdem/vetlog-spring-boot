@@ -9,19 +9,19 @@ buildscript {
 }
 
 plugins {
-  id("org.springframework.boot") version "3.4.4"
+  id("org.springframework.boot") version "3.5.0"
   id("io.spring.dependency-management") version "1.1.7"
   id("org.flywaydb.flyway") version "11.8.0"
-  id("org.sonarqube") version "6.1.0.5360"
+  id("org.sonarqube") version "6.2.0.5505"
   id("jacoco")
   id("java")
-  id("com.diffplug.spotless") version "7.0.3"
-  id("org.jetbrains.kotlin.jvm") version "2.1.20"
+  id("com.diffplug.spotless") version "7.0.4"
+  id("org.jetbrains.kotlin.jvm") version "2.1.21"
 }
 
-val gcpVersion by extra("6.1.1")
-val retrofitVersion by extra("2.11.0")
-val mockitoCoreVersion by extra("5.17.0")
+val gcpVersion by extra("6.2.1")
+val retrofitVersion by extra("3.0.0")
+val mockitoCoreVersion by extra("5.18.0")
 val annotationsVersion by extra("26.0.2")
 val jsonSmartVersion by extra("2.5.2")
 val jaxbVersion by extra("2.3.1")
@@ -29,7 +29,7 @@ val cglibVersion by extra("3.3.0")
 val mockitoKotlinVersion by extra("5.4.0")
 
 group = "com.josdem.vetlog"
-version = "2.6.6"
+version = "2.7.0"
 
 configurations {
   compileOnly {
