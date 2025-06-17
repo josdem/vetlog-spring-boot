@@ -76,12 +76,11 @@ public class EmailServiceImpl implements EmailService {
         if (!user.isEnabled()) {
             return;
         }
-        var template = TemplateLocaleResolver.getTemplate(templateProperties.getPullingUp(), locale.getLanguage());
         try {
             var command = new MessageCommand();
             command.setEmail(user.getEmail());
             command.setName(user.getFirstName());
-            command.setTemplate(template);
+            command.setTemplate(templateProperties.getPullingUp());
             command.setSubject(localeService.getMessage("email.subject", locale));
             command.setMessage(pet.getName());
             command.setToken(clientToken);
