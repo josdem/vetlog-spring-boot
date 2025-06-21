@@ -42,7 +42,7 @@ public class LocationController {
     private EmailService emailService;
 
     @GetMapping(value = "/location/{latitude:.+}/{longitude:.+}")
-    public ResponseEntity<String> showLocation(
+    public ResponseEntity<String> storeLocation(
             @PathVariable("latitude") double latitude,
             @PathVariable("longitude") double longitude,
             HttpServletResponse response) {
