@@ -75,10 +75,10 @@ internal class LocationControllerTest {
         log.info(testInfo.displayName)
         val request =
             get("/geolocation/location/37.7749/-122.4194")
+                .header("token", "userToken")
         mockMvc
-            .perform(
-                request,
-            ).andExpect(status().isOk)
+            .perform(request)
+            .andExpect(status().isOk)
 
         val epsilon = 0.001
         assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
