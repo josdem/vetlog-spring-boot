@@ -55,6 +55,7 @@ prescriptionBucket: prescription-bucket
 gcpUrl: https://storage.googleapis.com/
 defaultImage: default-image.png
 token: userToken
+geoToken: userToken
 veterinarians:
   - "vet-1"
   - "vet-2"
@@ -69,6 +70,5 @@ google:
   url: "https://www.googleapis.com/geolocation/v1/"
   apiKey: ${GOOGLE_API_KEY}
 geolocation:
-  latitude: 19.3699467
-  longitude: -99.2231394
-
+  latitude: 19.376699
+  longitude: -99.211900

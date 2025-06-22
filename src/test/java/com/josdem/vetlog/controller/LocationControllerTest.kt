@@ -71,14 +71,26 @@ internal class LocationControllerTest {
 
     @Test
     @Order(2)
-    fun `should show my pet location`(testInfo: TestInfo) {
+    fun `should not store my pet location due to invalid token`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val request =
             get("/geolocation/location/37.7749/-122.4194")
+                .header("token", "invalidToken")
         mockMvc
-            .perform(
-                request,
-            ).andExpect(status().isOk)
+            .perform(request)
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    @Order(3)
+    fun `should store my pet location`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val request =
+            get("/geolocation/location/37.7749/-122.4194")
+                .header("token", "userToken")
+        mockMvc
+            .perform(request)
+            .andExpect(status().isOk)
 
         val epsilon = 0.001
         assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
