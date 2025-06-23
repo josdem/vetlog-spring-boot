@@ -4,14 +4,14 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:3.4.4")
-    classpath("org.flywaydb:flyway-mysql:11.8.0")
+    classpath("org.flywaydb:flyway-mysql:11.9.1")
   }
 }
 
 plugins {
   id("org.springframework.boot") version "3.5.0"
   id("io.spring.dependency-management") version "1.1.7"
-  id("org.flywaydb.flyway") version "11.8.0"
+  id("org.flywaydb.flyway") version "11.9.1"
   id("org.sonarqube") version "6.2.0.5505"
   id("jacoco")
   id("java")
@@ -19,7 +19,7 @@ plugins {
   id("org.jetbrains.kotlin.jvm") version "2.1.21"
 }
 
-val gcpVersion by extra("6.2.1")
+val gcpVersion by extra("6.2.2")
 val retrofitVersion by extra("3.0.0")
 val mockitoCoreVersion by extra("5.18.0")
 val annotationsVersion by extra("26.0.2")
@@ -43,6 +43,8 @@ repositories {
 
 flyway {
   url = "jdbc:mysql://localhost:3306/vetlog"
+  user = "root"
+  password = ""
 }
 
 sonar {
