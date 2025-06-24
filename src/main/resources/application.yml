@@ -1,8 +1,8 @@
 spring:
   datasource:
     url:  jdbc:mysql://localhost:3306/vetlog
-    username: root
-    password: 
+    username: ${USER}
+    password: ${PASSWORD}
     driverClassName: com.mysql.jdbc.Driver
     maxActive:  50
     maxIdle: 5
