@@ -43,8 +43,6 @@ repositories {
 
 flyway {
   url = "jdbc:mysql://localhost:3306/vetlog"
-  user = "root"
-  password = ""
 }
 
 sonar {
