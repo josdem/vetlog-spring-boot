@@ -17,6 +17,7 @@
 package com.josdem.vetlog.util
 
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.mockito.InjectMocks
@@ -25,7 +26,6 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.util.Locale
-import kotlin.test.BeforeTest
 
 class VaccineFormatterTest {
     private val log = LoggerFactory.getLogger(this::class.java)
@@ -36,7 +36,7 @@ class VaccineFormatterTest {
     @Mock
     private lateinit var locale: Locale
 
-    @BeforeTest
+    @BeforeEach
     fun setUp() {
         MockitoAnnotations.openMocks(this)
     }
