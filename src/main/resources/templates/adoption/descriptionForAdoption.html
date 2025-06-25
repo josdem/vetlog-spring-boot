@@ -20,9 +20,7 @@
                     <h3 th:text="${pet.name}"></h3>
                     <p th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                     <p th:text="${pet.breed.name}"/>
-                    <p th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                     <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
-                    <p th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
                     <br/>
                     <form id="description" th:action="@{/adoption/save}" th:object="${adoptionCommand}" method="post"
                           class="form-horizontal">

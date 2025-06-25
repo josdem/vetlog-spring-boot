@@ -64,9 +64,7 @@
                         <h3 th:data-testid="petName" th:text="${pet.name}"></h3>
                         <p th:data-testid="petBirhdate" th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                         <p th:data-testid="petBreed" th:text="${pet.breed.name}"/>
-                        <p th:data-testid="petDewormed" th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                         <p th:data-testid="petSterilized" th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
-                        <p th:data-testid="petVaccinated" th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
                         <p th:data-testid="petAdoptionDescription" th:text="${pet.adoption?.description}"/>
                         <br/>
                         <a th:href="@{/telephone/adopt(uuid=${pet.uuid})}" class="btn btn-success">

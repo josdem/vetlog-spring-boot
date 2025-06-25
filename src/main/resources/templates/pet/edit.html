@@ -67,20 +67,10 @@
                             <input th:data-testid="birthDate" th:type="date" id="birthDate" th:name="birthDate" th:field="*{birthDate}" class="form-control">
                             <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
                             <br/>
-                            <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
-                            <input type="checkbox" name='dewormed' th:data-testid="petDewormed" th:field="*{dewormed}" class="form-control"
-                                   placeholder="dewormed" id='dewormed'/>
-                            <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
-                            <br/>
                             <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
                             <input type="checkbox" name='sterilized' th:data-testid="petSterilized" th:field="*{sterilized}" class="form-control"
                                    placeholder="sterilized" id='sterilized'/>
                             <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
-                            <br/>
-                            <label for="vaccinated"><h4 th:text="#{pet.vaccinated}"/></label>
-                            <input type="checkbox" name='vaccinated' th:data-testid="petVaccinated" th:field="*{vaccinated}" class="form-control"
-                                   placeholder="vaccinated" id='vaccinated'/>
-                            <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
                             <br/>
                             <table th:if="${!petCommand.vaccines.isEmpty()}">
                                 <thead>

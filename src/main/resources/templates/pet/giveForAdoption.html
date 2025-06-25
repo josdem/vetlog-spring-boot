@@ -28,9 +28,7 @@
                         <ul>
                             <li th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                             <li th:text="${pet.breed.name}"/>
-                            <li th:text="${pet.dewormed}? #{pet.dewormed} : #{pet.not.dewormed}"/>
                             <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
-                            <li th:text="${pet.vaccinated}? #{pet.vaccinated} : #{pet.not.vaccinated}"/>
                         </ul>
                         </p>
                         <br/>
