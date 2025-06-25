@@ -22,6 +22,7 @@ import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.Breed;
+import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.BreedService;
 import com.josdem.vetlog.service.LocaleService;
@@ -115,7 +116,8 @@ public class PetController {
             modelAndView.addObject(PET_COMMAND, petCommand);
             return fillModelAndView(modelAndView);
         }
-        petService.update(petCommand);
+        Pet updatedPet = petService.update(petCommand);
+        petCommand = petBinder.bindPet(updatedPet);
         modelAndView.addObject(MESSAGE, localeService.getMessage("pet.updated", request));
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject(PET_COMMAND, petCommand);
