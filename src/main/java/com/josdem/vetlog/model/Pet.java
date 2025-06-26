@@ -57,13 +57,7 @@ public class Pet {
     private LocalDateTime birthDate;
 
     @Column(nullable = false)
-    private Boolean dewormed = false;
-
-    @Column(nullable = false)
     private Boolean sterilized = false;
-
-    @Column(nullable = false)
-    private Boolean vaccinated = false;
 
     @Column(nullable = false)
     private LocalDateTime dateCreated = LocalDateTime.now();
