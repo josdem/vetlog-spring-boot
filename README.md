@@ -79,6 +79,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MadhuKashyap"><img src="https://avatars.githubusercontent.com/u/40714383?v=4?s=100" width="100px;" alt="Kumari  Madhu"/><br /><sub><b>Kumari  Madhu</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=MadhuKashyap" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MehulSuthar-000"><img src="https://avatars.githubusercontent.com/u/84217273?v=4?s=100" width="100px;" alt="Mehul Suthar"/><br /><sub><b>Mehul Suthar</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=MehulSuthar-000" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jose-espericueta"><img src="https://avatars.githubusercontent.com/u/196234029?v=4?s=100" width="100px;" alt="jose-espericueta"/><br /><sub><b>jose-espericueta</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=jose-espericueta" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
