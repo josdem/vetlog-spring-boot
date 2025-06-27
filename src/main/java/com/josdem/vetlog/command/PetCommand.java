@@ -43,11 +43,7 @@ public class PetCommand implements Command {
     @NotNull
     private String birthDate;
 
-    private Boolean dewormed = false;
-
     private Boolean sterilized = false;
-
-    private Boolean vaccinated = false;
 
     @Min(1L)
     private Long breed;

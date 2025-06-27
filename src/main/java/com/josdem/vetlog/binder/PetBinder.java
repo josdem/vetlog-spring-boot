@@ -54,9 +54,7 @@ public class PetBinder {
         } else {
             pet.setBirthDate(LocalDateTime.parse(petCommand.getBirthDate()));
         }
-        pet.setDewormed(petCommand.getDewormed());
         pet.setSterilized(petCommand.getSterilized());
-        pet.setVaccinated(petCommand.getVaccinated());
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
         pet.setVaccines(petCommand.getVaccines());
@@ -79,9 +77,7 @@ public class PetBinder {
         command.setName(pet.getName());
         var birthDate = formatter.format(pet.getBirthDate());
         command.setBirthDate(birthDate);
-        command.setDewormed(pet.getDewormed());
         command.setSterilized(pet.getSterilized());
-        command.setVaccinated(pet.getVaccinated());
         command.setStatus(pet.getStatus());
         command.setImages(pet.getImages());
         command.setBreed(pet.getBreed().getId());

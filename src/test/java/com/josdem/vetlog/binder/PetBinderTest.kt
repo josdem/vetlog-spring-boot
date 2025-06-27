@@ -80,9 +80,7 @@ internal class PetBinderTest {
         assertEquals(pet.uuid, result.uuid)
         assertEquals("Cremita", result.name)
         assertEquals("2021-01-17", result.birthDate.toString())
-        assertTrue(result.dewormed)
         assertTrue(result.sterilized)
-        assertTrue(result.vaccinated)
         assertFalse(result.images.isEmpty())
         assertEquals(5L, result.breed)
         assertEquals(1L, result.user)
@@ -139,9 +137,7 @@ internal class PetBinderTest {
             id = 2L
             name = "Marla"
             status = PetStatus.IN_ADOPTION
-            dewormed = true
             sterilized = true
-            vaccinated = true
             images = listOf(PetImage())
             breed = 1L
             vaccines = vaccines
@@ -153,9 +149,7 @@ internal class PetBinderTest {
             id = 1L
             this.uuid = uuid
             name = "Cremita"
-            dewormed = true
             sterilized = true
-            vaccinated = true
             images = listOf(PetImage())
             birthDate = LocalDateTime.of(2021, 1, 17, 0, 0)
             user =

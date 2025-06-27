@@ -115,8 +115,6 @@ class TelephoneControllerTest {
                 .param("name", "Cremita")
                 .param("uuid", PET_UUID)
                 .param("birthDate", "2024-08-22")
-                .param("dewormed", "true")
-                .param("vaccinated", "true")
                 .param("sterilized", "true")
                 .param("breed", "11")
                 .param("user", "1")
