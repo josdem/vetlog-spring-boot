@@ -66,4 +66,20 @@ class CatVaccinationStrategyTest {
 
         verify(vaccinationRepository, never()).save(any())
     }
+
+    @Test
+    fun `should apply FeLV vaccine for adult cats`() {
+        log.info("Running test: should apply FeLV vaccine for adult cats")
+        pet.birthDate = LocalDateTime.now().minusWeeks(20)
+
+        catVaccinationStrategy.vaccinate(pet)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "FeLV" &&
+                    vaccination.status == VaccinationStatus.PENDING &&
+                    vaccination.pet == pet
+            },
+        )
+    }
 }
