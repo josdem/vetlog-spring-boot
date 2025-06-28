@@ -25,12 +25,12 @@ import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.util.UuidGenerator;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -38,7 +38,6 @@ public class PetBinder {
 
     private final BreedRepository breedRepository;
     private final VaccinationRepository vaccinationRepository;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
@@ -50,9 +49,9 @@ public class PetBinder {
         }
         pet.setName(petCommand.getName());
         if (petCommand.getBirthDate().isEmpty()) {
-            pet.setBirthDate(LocalDateTime.now());
+            pet.setBirthDate(LocalDate.now());
         } else {
-            pet.setBirthDate(LocalDateTime.parse(petCommand.getBirthDate()));
+            pet.setBirthDate(LocalDate.parse(petCommand.getBirthDate()));
         }
         pet.setSterilized(petCommand.getSterilized());
         pet.setImages(petCommand.getImages());
@@ -75,7 +74,7 @@ public class PetBinder {
         command.setId(pet.getId());
         command.setUuid(pet.getUuid());
         command.setName(pet.getName());
-        var birthDate = formatter.format(pet.getBirthDate());
+        var birthDate = pet.getBirthDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
         command.setBirthDate(birthDate);
         command.setSterilized(pet.getSterilized());
         command.setStatus(pet.getStatus());

@@ -5,12 +5,12 @@ import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Slf4j
 @Service
@@ -25,7 +25,7 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
 
     @Override
     public void vaccinate(Pet pet) {
-        long weeks = ChronoUnit.WEEKS.between(pet.getBirthDate(), LocalDateTime.now());
+        long weeks = ChronoUnit.WEEKS.between(pet.getBirthDate(), LocalDate.now());
 
         switch ((int) weeks) {
             case 0, 1, 2, 3, 4, 5, 6, 7, 8 -> log.info("No vaccination needed");
