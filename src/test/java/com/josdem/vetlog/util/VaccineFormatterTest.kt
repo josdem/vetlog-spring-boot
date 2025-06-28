@@ -78,7 +78,7 @@ class VaccineFormatterTest {
         log.info(testInfo.displayName)
         whenever(locale.language).thenReturn("es")
 
-        assertEquals("Tripe Felina", vaccineFormatter.format("FVRCP", locale))
+        assertEquals("Trivalente Felina", vaccineFormatter.format("FVRCP", locale))
     }
 
     @Test
