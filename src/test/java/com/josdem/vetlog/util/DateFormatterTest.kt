@@ -24,7 +24,7 @@ import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.whenever
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.Locale
 
 @ExtendWith(MockitoExtension::class)
@@ -37,7 +37,7 @@ class DateFormatterTest {
 
     @Test
     fun `should format date for US locale`() {
-        val date = LocalDateTime.parse("2021-11-17T10:15:00")
+        val date = LocalDate.parse("2021-11-17")
         val usLocale = Locale.forLanguageTag("en-US")
         val expectedFormat = "MM/dd/yyyy"
         val expectedDateString = "11/17/2021"
@@ -52,7 +52,7 @@ class DateFormatterTest {
 
     @Test
     fun `should format date for ES locale`() {
-        val date = LocalDateTime.parse("1999-08-18T10:14:00")
+        val date = LocalDate.parse("1999-08-18")
         val esLocale = Locale.forLanguageTag("es-ES")
         val expectedFormat = "dd/MM/yyyy"
         val expectedDateString = "18/08/1999"

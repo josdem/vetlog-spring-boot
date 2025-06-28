@@ -17,7 +17,7 @@
 package com.josdem.vetlog.util;
 
 import com.josdem.vetlog.service.LocaleService;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class DateFormatter {
 
     private final LocaleService localeService;
 
-    public String formatToDate(LocalDateTime dateToFormat, Locale locale) {
+    public String formatToDate(LocalDate dateToFormat, Locale locale) {
         var format = localeService.getMessage("format.date", locale);
         return dateToFormat.format(DateTimeFormatter.ofPattern(format));
     }
