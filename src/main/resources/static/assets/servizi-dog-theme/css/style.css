@@ -239,7 +239,7 @@ section.darker.section-bg .section-content {
 section.darker.section-bg .section-content .content {
 	margin: 0;
 	display: table-cell;
-	vertical-align: middle; 
+	vertical-align: middle;
 }
 
 section.section-darker {
@@ -304,6 +304,10 @@ section.section-darker img {
 	background-color: #FF9227;
 	color: #fff !important;
 	margin: 0;
+}
+
+.nav li a p {
+    margin: 0;
 }
 
 .navbar-default .navbar-nav > .active > a,
@@ -465,6 +469,14 @@ p.title {
 
 .btn-red:hover, .btn-red:focus, .btn-red:active {
 	background-color: #D64414;
+}
+
+.btn p {
+	margin: 0;
+}
+
+.btn h5 {
+	padding: 0;
 }
 
 .darker .btn {
@@ -825,7 +837,7 @@ footer img {
 		font-size: 100%;
 		margin-top: 10px;
 	}
-	
+
 	.header-text h1 {
 		font-size: 40px;
 	}
