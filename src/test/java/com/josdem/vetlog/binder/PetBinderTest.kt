@@ -79,7 +79,7 @@ internal class PetBinderTest {
         assertEquals(1L, result.id)
         assertEquals(pet.uuid, result.uuid)
         assertEquals("Cremita", result.name)
-        assertEquals("2021-01-17", result.birthDate.toString())
+        assertEquals("2021-01-17", result.birthDate)
         assertTrue(result.sterilized)
         assertFalse(result.images.isEmpty())
         assertEquals(5L, result.breed)
@@ -91,7 +91,7 @@ internal class PetBinderTest {
     fun `binding a pet from command`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         var petCommand = getPetCommand()
-        petCommand.birthDate = "2021-01-17T00:00"
+        petCommand.birthDate = "2021-01-17"
         setBreedExpectations()
 
         val result = petBinder.bindPet(petCommand)
@@ -151,7 +151,7 @@ internal class PetBinderTest {
             name = "Cremita"
             sterilized = true
             images = listOf(PetImage())
-            birthDate = LocalDateTime.of(2021, 1, 17, 0, 0)
+            birthDate = LocalDate.of(2021, 1, 17)
             user =
                 User().apply {
                     id = 1L

@@ -5,12 +5,11 @@ import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 @Slf4j
 @Service

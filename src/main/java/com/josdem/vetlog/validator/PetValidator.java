@@ -17,11 +17,10 @@
 package com.josdem.vetlog.validator;
 
 import com.josdem.vetlog.command.PetCommand;
+import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
-import java.time.LocalDate;
 
 @Component
 public class PetValidator implements Validator {
