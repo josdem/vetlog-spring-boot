@@ -73,8 +73,7 @@ public class PetBinder {
         command.setId(pet.getId());
         command.setUuid(pet.getUuid());
         command.setName(pet.getName());
-        var birthDate = pet.getBirthDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-        command.setBirthDate(birthDate);
+        command.setBirthDate(pet.getBirthDate().toString());
         command.setSterilized(pet.getSterilized());
         command.setStatus(pet.getStatus());
         command.setImages(pet.getImages());
