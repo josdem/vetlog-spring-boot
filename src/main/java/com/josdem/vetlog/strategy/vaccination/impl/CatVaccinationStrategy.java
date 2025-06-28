@@ -19,6 +19,7 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
     private static final String FVRCP = "FVRCP";
     private static final String DEWORMING = "Deworming";
     private static final String RABIES = "Rabies";
+    private static final String FELV = "FeLV";
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -43,6 +44,7 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
                 registerVaccination(FVRCP, pet);
                 registerVaccination(DEWORMING, pet);
                 registerVaccination(RABIES, pet);
+                registerVaccination(FELV, pet);
             }
         }
     }

@@ -90,6 +90,14 @@ class VaccineFormatterTest {
     }
 
     @Test
+    fun `should format FeLV if locale is Spanish`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(locale.language).thenReturn("es")
+
+        assertEquals("Leucemia Felina", vaccineFormatter.format("FeLV", locale))
+    }
+
+    @Test
     fun `should format pending status if locale is Spanish`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(locale.language).thenReturn("es")
