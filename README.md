@@ -81,6 +81,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/jose-espericueta"><img src="https://avatars.githubusercontent.com/u/196234029?v=4?s=100" width="100px;" alt="jose-espericueta"/><br /><sub><b>jose-espericueta</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=jose-espericueta" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/bestemic"><img src="https://avatars.githubusercontent.com/u/33027221?v=4?s=100" width="100px;" alt="Przemek Pawlik "/><br /><sub><b>Przemek Pawlik </b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=bestemic" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
