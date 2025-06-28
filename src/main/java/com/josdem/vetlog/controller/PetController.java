@@ -137,6 +137,7 @@ public class PetController {
         petService.save(petCommand, user);
         modelAndView.addObject(MESSAGE, localeService.getMessage("pet.created", request));
         petCommand = new PetCommand();
+        petCommand.setStatus(PetStatus.OWNED);
         modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
     }
