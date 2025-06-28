@@ -17,7 +17,7 @@
 package com.josdem.vetlog.validator;
 
 import com.josdem.vetlog.command.PetCommand;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -37,12 +37,14 @@ public class PetValidator implements Validator {
     }
 
     private void validateBirthdate(Errors errors, PetCommand petCommand) {
-        if (petCommand.getBirthDate().isEmpty()) {
+        String birthDateStr = petCommand.getBirthDate();
+
+        if (birthDateStr.isEmpty()) {
             return;
         }
-        petCommand.defaultBirthDateAndTime();
-        LocalDateTime now = LocalDateTime.now();
-        if (now.isBefore(LocalDateTime.parse(petCommand.getBirthDate()))) {
+
+        LocalDate birthDate = LocalDate.parse(birthDateStr);
+        if (birthDate.isAfter(LocalDate.now())) {
             errors.rejectValue("birthDate", "pet.error.birthDate.past");
         }
     }

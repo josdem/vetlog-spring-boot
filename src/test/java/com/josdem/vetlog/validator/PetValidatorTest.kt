@@ -9,6 +9,7 @@ import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.slf4j.LoggerFactory
 import org.springframework.validation.Errors
+import java.time.LocalDate
 
 internal class PetValidatorTest {
     companion object {
@@ -37,7 +38,8 @@ internal class PetValidatorTest {
     @Test
     fun `should reject a birthdate`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        val petCommand = getPetCommand("2026-01-17")
+        val futureDate = LocalDate.now().plusMonths(1).toString()
+        val petCommand = getPetCommand(futureDate)
         validator.validate(petCommand, errors)
         verify(errors).rejectValue("birthDate", "pet.error.birthDate.past")
     }

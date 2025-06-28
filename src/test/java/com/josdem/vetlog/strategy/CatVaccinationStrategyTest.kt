@@ -18,7 +18,6 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class CatVaccinationStrategyTest {
     private val log = LoggerFactory.getLogger(DogVaccinationStrategyTest::class.java)
@@ -43,7 +42,7 @@ class CatVaccinationStrategyTest {
         times: Int,
     ) {
         log.info("Running test: saving vaccines")
-        pet.birthDate = LocalDateTime.now().minusWeeks(weeks.toLong())
+        pet.birthDate = LocalDate.now().minusWeeks(weeks.toLong())
 
         catVaccinationStrategy.vaccinate(pet)
 
@@ -60,7 +59,7 @@ class CatVaccinationStrategyTest {
     @Test
     fun `should not save vaccination when pet is not old enough`(testInfo: TestInfo) {
         log.info("Running test: {}", testInfo.displayName)
-        pet.birthDate = LocalDateTime.now().minusWeeks(1)
+        pet.birthDate = LocalDate.now().minusWeeks(1)
 
         catVaccinationStrategy.vaccinate(pet)
 
@@ -70,7 +69,7 @@ class CatVaccinationStrategyTest {
     @Test
     fun `should apply FeLV vaccine for adult cats`() {
         log.info("Running test: should apply FeLV vaccine for adult cats")
-        pet.birthDate = LocalDateTime.now().minusWeeks(20)
+        pet.birthDate = LocalDate.now().minusWeeks(20)
 
         catVaccinationStrategy.vaccinate(pet)
 

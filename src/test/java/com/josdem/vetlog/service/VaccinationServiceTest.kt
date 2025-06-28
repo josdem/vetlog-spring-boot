@@ -41,7 +41,6 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
-import java.time.LocalDateTime
 import kotlin.test.Test
 
 internal class VaccinationServiceTest {
@@ -88,7 +87,7 @@ internal class VaccinationServiceTest {
     ) {
         log.info("Running test: Saving vaccines")
         pet.breed.type = PetType.DOG
-        pet.birthDate = LocalDateTime.now().minusWeeks(weeks.toLong())
+        pet.birthDate = LocalDate.now().minusWeeks(weeks.toLong())
         vaccinationService.save(pet)
         verify(vaccinationRepository, times(times)).save(any())
     }
@@ -97,7 +96,7 @@ internal class VaccinationServiceTest {
     fun `Not saving vaccination due to not being old enough`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         pet.breed.type = PetType.DOG
-        pet.birthDate = LocalDateTime.now().minusWeeks(1)
+        pet.birthDate = LocalDate.now().minusWeeks(1)
         vaccinationService.save(pet)
         verify(vaccinationRepository, never()).save(any())
     }
