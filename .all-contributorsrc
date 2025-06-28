@@ -355,7 +355,8 @@
       "contributions": [
         "code",
         "ideas",
-        "review"
+        "review",
+        "bug"
       ]
     }
   ],
