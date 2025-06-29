@@ -1,0 +1,65 @@
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: vetlog-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: vetlog
+      MYSQL_USER: vetlog_user
+      MYSQL_PASSWORD: vetlog_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - vetlog-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-prootpassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot Application
+  vetlog-app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: vetlog-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # Database configuration
+      USER: vetlog_user
+      PASSWORD: vetlog_password
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/vetlog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: vetlog_user
+      SPRING_DATASOURCE_PASSWORD: vetlog_password
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      
+      # Flyway configuration
+      SPRING_FLYWAY_URL: jdbc:mysql://mysql:3306/vetlog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_FLYWAY_USER: vetlog_user
+      SPRING_FLYWAY_PASSWORD: vetlog_password
+      
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - vetlog-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  vetlog-network:
+    driver: bridge 
