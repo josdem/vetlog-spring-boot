@@ -32,9 +32,10 @@ import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.validator.PetValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -137,6 +138,7 @@ public class PetController {
         petService.save(petCommand, user);
         modelAndView.addObject(MESSAGE, localeService.getMessage("pet.created", request));
         petCommand = new PetCommand();
+        petCommand.setStatus(PetStatus.OWNED);
         modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
     }
@@ -147,9 +149,7 @@ public class PetController {
                 breedService.getBreedsByType(PetType.DOG).stream()
                         .sorted(Comparator.comparing(
                                 Breed::getName)) // for sorting the initial dog listings alphabetically
-                        .collect(
-                                Collectors
-                                        .toList())); // this overlaps with the breed controller, will there be a way to
+                        .toList()); // this overlaps with the breed controller, will there be a way to
         // unify this?
         modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
         return modelAndView;
