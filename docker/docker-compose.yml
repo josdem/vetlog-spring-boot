@@ -31,7 +31,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      # Database configuration
+      # Database configuration - using same credentials as MySQL service
       USER: vetlog_user
       PASSWORD: vetlog_password
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/vetlog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
@@ -39,10 +39,11 @@ services:
       SPRING_DATASOURCE_PASSWORD: vetlog_password
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       
-      # Flyway configuration
+      # Flyway configuration - using same credentials as MySQL service
       SPRING_FLYWAY_URL: jdbc:mysql://mysql:3306/vetlog?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_FLYWAY_USER: vetlog_user
       SPRING_FLYWAY_PASSWORD: vetlog_password
+      
       
     depends_on:
       mysql:

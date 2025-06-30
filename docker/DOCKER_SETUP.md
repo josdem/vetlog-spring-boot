@@ -64,10 +64,32 @@ docker-compose down
 # Start only MySQL container
 cd docker
 docker-compose up mysql
-
-# Run Spring Boot app from your IDE
-# The app will connect to localhost:3306
 ```
+### Run Spring Boot app from your IDE
+#### The app will connect to localhost:3306
+
+**Important for Hybrid Development:**
+- **You must manually update `src/main/resources/application.yml`** to use hardcoded credentials:
+  ```yaml
+  spring:
+    datasource:
+      username: vetlog_user
+      password: vetlog_password
+  ```
+- **You must also update `build.gradle.kts`** to use hardcoded Flyway credentials:
+  ```kotlin
+  flyway {
+    url = "jdbc:mysql://localhost:3306/vetlog"
+    user = "vetlog_user"
+    password = "vetlog_password"
+  }
+   ```
+
+- Replace the environment variable references (`${USER}` and `${PASSWORD}`) with the hardcoded values
+- These credentials must match the Docker MySQL container setup:
+  - Username: `vetlog_user`
+  - Password: `vetlog_password`
+- No environment variables or .env file needed for local development
 
 ### Making Code Changes
 1. **Full containerized approach**:
@@ -77,10 +99,55 @@ docker-compose up mysql
    docker-compose up -d vetlog-app
    ```
 
-2. **Hybrid approach**:
+2. **Hybrid approach**:(Recommended)
    - Make changes in your IDE
    - Restart the application from IDE
    - No Docker rebuild needed
+
+## Testing
+
+### Recommended Way to Run Tests (Hybrid Approach)
+
+1. **Start MySQL (in Docker):**
+   ```sh
+   cd docker
+   docker-compose up -d mysql
+   ```
+
+2. **From your project root, run tests using your local Gradle or from your IDE:**
+   ```sh
+   ./gradlew test
+   ```
+   - Or run specific test classes:
+   ```sh
+   ./gradlew test --tests PetControllerTest
+   ./gradlew test --tests UserServiceTest
+   ```
+
+**Notes:**
+- The application and tests connect to MySQL at `localhost:3306`.
+- The runtime container is only for running the built app, not for testing.
+- All tests must run in an environment with Gradle and JDK (your local machine).
+
+### Example Database Configuration for Hybrid Testing
+
+In `src/main/resources/application.yml`:
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/vetlog
+    username: vetlog_user
+    password: vetlog_password
+```
+
+In `build.gradle.kts`:
+```kotlin
+flyway {
+  url = "jdbc:mysql://localhost:3306/vetlog"
+  user = "vetlog_user"
+  password = "vetlog_password"
+}
+```
 
 ## Useful Commands
 
