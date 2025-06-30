@@ -97,6 +97,8 @@ dependencies {
 
   // Database and ORM
   runtimeOnly("com.mysql:mysql-connector-j")
+  implementation("org.flywaydb:flyway-core")
+  runtimeOnly("org.flywaydb:flyway-mysql")
 
   // Compile-time dependencies
   compileOnly("org.projectlombok:lombok")
