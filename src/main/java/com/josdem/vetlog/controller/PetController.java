@@ -32,10 +32,8 @@ import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.validator.PetValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-
 import java.io.IOException;
 import java.util.Comparator;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
