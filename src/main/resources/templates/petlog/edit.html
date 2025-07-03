@@ -50,6 +50,7 @@
                                           placeholder="Medicine" id='medicine'/>
                                 <label th:if="${#fields.hasErrors('medicine')}" th:errors="*{medicine}"></label>
                                 <br/><br/>
+                                <input type="hidden" th:name="uuid" th:value="${petLogCommand.uuid}" />
                                 <input type="hidden" th:name="id" th:value="${petLogCommand.id}" />
                                 <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><p
                                         th:text="#{button.submit}"/></button>
