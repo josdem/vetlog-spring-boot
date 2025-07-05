@@ -360,6 +360,15 @@
         "bug",
         "design"
       ]
+    },
+    {
+      "login": "CecyRamirez",
+      "name": "Cecilia Ramírez",
+      "avatar_url": "https://avatars.githubusercontent.com/u/89950410?v=4",
+      "profile": "https://github.com/CecyRamirez",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
