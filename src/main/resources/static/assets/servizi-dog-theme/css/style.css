@@ -262,6 +262,10 @@ section.section-darker img {
 	box-shadow: 0px 0px 5px #555;
 }
 
+.navbar-brand {
+	height: 100% !important;
+}
+
 .navbar-brand img {
 	width: 250px;
 }
