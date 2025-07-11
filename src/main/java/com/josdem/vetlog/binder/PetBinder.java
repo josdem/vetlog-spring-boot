@@ -39,6 +39,8 @@ public class PetBinder {
     private final BreedRepository breedRepository;
     private final VaccinationRepository vaccinationRepository;
 
+    private static final String RABIES_VACCINE = "Rabies";
+
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
         Pet pet = new Pet();
@@ -67,20 +69,17 @@ public class PetBinder {
 
         // Check if Rabies vaccine was changed from PENDING to APPLIED
         for (Vaccination newVaccine : petCommand.getVaccines()) {
-            if ("Rabies".equalsIgnoreCase(newVaccine.getName())
+            if (RABIES_VACCINE.equalsIgnoreCase(newVaccine.getName())
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
                 previousVaccines.stream()
-                        .filter(v -> "Rabies".equalsIgnoreCase(v.getName()))
+                        .filter(v -> RABIES_VACCINE.equalsIgnoreCase(v.getName()))
                         .findFirst()
                         .ifPresent(oldVaccine -> {
-                            System.out.println("DEBUG: Previous Rabies status was: " + oldVaccine.getStatus());
                             if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
                                 // Create a new Rabies vaccine for one year later
                                 Vaccination futureRabies = new Vaccination(
-                                        null, "Rabies", LocalDate.now().plusYears(1), VaccinationStatus.NEW, pet);
+                                        null, RABIES_VACCINE, LocalDate.now().plusYears(1), VaccinationStatus.NEW, pet);
                                 vaccinationRepository.save(futureRabies);
-                                System.out.println(
-                                        "DEBUG: Future Rabies vaccine created for date: " + futureRabies.getDate());
                             }
                         });
             }
