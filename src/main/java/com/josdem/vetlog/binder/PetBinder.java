@@ -22,10 +22,12 @@ import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
+import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.util.UuidGenerator;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -36,6 +38,8 @@ public class PetBinder {
 
     private final BreedRepository breedRepository;
     private final VaccinationRepository vaccinationRepository;
+
+    private static final String RABIES_VACCINE = "Rabies";
 
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
@@ -54,11 +58,40 @@ public class PetBinder {
         pet.setSterilized(petCommand.getSterilized());
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
+
+        // Load previous vaccines from the database using the original Pet object (if updating)
+        List<Vaccination> previousVaccines = List.of();
+        if (petCommand.getId() != null) {
+            Pet existingPet = new Pet();
+            existingPet.setId(petCommand.getId());
+            previousVaccines = vaccinationRepository.findAllByPet(existingPet);
+        }
+
+        // Check if Rabies vaccine was changed from PENDING to APPLIED
+        for (Vaccination newVaccine : petCommand.getVaccines()) {
+            if (RABIES_VACCINE.equalsIgnoreCase(newVaccine.getName())
+                    && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
+                previousVaccines.stream()
+                        .filter(v -> RABIES_VACCINE.equalsIgnoreCase(v.getName()))
+                        .findFirst()
+                        .ifPresent(oldVaccine -> {
+                            if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
+                                // Create a new Rabies vaccine for one year later
+                                Vaccination futureRabies = new Vaccination(
+                                        null, RABIES_VACCINE, LocalDate.now().plusYears(1), VaccinationStatus.NEW, pet);
+                                vaccinationRepository.save(futureRabies);
+                            }
+                        });
+            }
+        }
+
+        /// Save updated vaccines
         pet.setVaccines(petCommand.getVaccines());
         petCommand.getVaccines().forEach(vaccine -> {
             vaccine.setDate(LocalDate.now());
             vaccinationRepository.save(vaccine);
         });
+
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
         if (breed.isEmpty()) {
             throw new BusinessException("Breed was not found for pet: " + pet.getName());
