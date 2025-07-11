@@ -18,7 +18,8 @@ package com.josdem.vetlog.enums;
 
 public enum VaccinationStatus {
     PENDING("Pending"),
-    APPLIED("Applied");
+    APPLIED("Applied"),
+    NEW("New");
 
     private final String value;
 
