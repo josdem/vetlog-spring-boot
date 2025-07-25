@@ -26,7 +26,8 @@
                                    id='username'/>
                             <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></label>
                             <br/><br/>
-                            <input th:data-testid="submitButton" type="submit" class="btn btn-primary btn-block"/>
+                            <button th:data-testid="submitButton" id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><p
+                                    th:text="#{button.submit}"/></button>
                         </fieldset>
                     </form>
                 </div>
