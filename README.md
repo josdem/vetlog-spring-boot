@@ -89,6 +89,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/CecyRamirez"><img src="https://avatars.githubusercontent.com/u/89950410?v=4?s=100" width="100px;" alt="Cecilia Ramírez"/><br /><sub><b>Cecilia Ramírez</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=CecyRamirez" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/62arondsouza"><img src="https://avatars.githubusercontent.com/u/96406889?v=4?s=100" width="100px;" alt="62arondsouza"/><br /><sub><b>62arondsouza</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=62arondsouza" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://hrishikeshu.vercel.app/"><img src="https://avatars.githubusercontent.com/u/135912491?v=4?s=100" width="100px;" alt="Hrishikesh Uchake"/><br /><sub><b>Hrishikesh Uchake</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=HrishikeshUchake" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ernestorbemx"><img src="https://avatars.githubusercontent.com/u/204041962?v=4?s=100" width="100px;" alt="ernestorbemx"/><br /><sub><b>ernestorbemx</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=ernestorbemx" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
