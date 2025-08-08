@@ -1,3 +1,11 @@
+# -- NPM installation stage
+FROM node:22.18 AS npm-install
+
+WORKDIR /app
+
+COPY src/main/resources/static/assets/servizi-dog-theme/package*.json ./
+RUN npm install
+
 # --- Build Stage ---
 FROM gradle:8.8-jdk21 AS build
 WORKDIR /app
@@ -11,6 +19,9 @@ RUN gradle --no-daemon dependencies
 
 # Copy the rest of the source code
 COPY . .
+
+# Copy the npm installation from the npm-install stage
+COPY --from=npm-install /app/node_modules /app/src/main/resources/static/assets/servizi-dog-theme/node_modules
 
 # Run spotless to format the code
 RUN gradle --no-daemon spotlessApply
