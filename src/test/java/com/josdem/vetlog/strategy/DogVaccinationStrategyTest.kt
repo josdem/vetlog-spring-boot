@@ -36,7 +36,7 @@ class DogVaccinationStrategyTest {
     }
 
     @ParameterizedTest
-    @CsvSource("6, 2", "8, 2", "9, 2", "12, 2", "20, 4")
+    @CsvSource("6, 2", "8, 2", "9, 2", "12, 2", "20, 3")
     fun `should  save  vaccines  based  on  pet  age`(
         weeks: Int,
         times: Int,
@@ -64,5 +64,24 @@ class DogVaccinationStrategyTest {
         dogVaccinationStrategy.vaccinate(pet)
 
         verify(vaccinationRepository, never()).save(any())
+    }
+
+    @ParameterizedTest
+    @CsvSource("13, 3", "16, 3", "20, 3", "52, 3")
+    fun `should only register expected vaccines for pets older than 12 weeks`(
+        weeks: Int,
+        times: Int,
+    ) {
+        pet.birthDate = LocalDate.now().minusWeeks(weeks.toLong())
+
+        dogVaccinationStrategy.vaccinate(pet)
+
+        val expectedVaccines = setOf("DA2PP", "Deworming", "Rabies")
+
+        verify(vaccinationRepository, times(times)).save(
+            argThat { vaccination ->
+                vaccination.pet == pet && vaccination.name in expectedVaccines
+            },
+        )
     }
 }

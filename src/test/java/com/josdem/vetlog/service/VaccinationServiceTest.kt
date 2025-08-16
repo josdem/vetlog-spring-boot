@@ -80,7 +80,7 @@ internal class VaccinationServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource("7, 2", "10, 2", "20, 4")
+    @CsvSource("7, 2", "10, 2", "20, 3")
     fun `Saving vaccines`(
         weeks: Int,
         times: Int,
