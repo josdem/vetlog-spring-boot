@@ -18,7 +18,6 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
 
     private static final String DA2PP = "DA2PP";
     private static final String DEWORMING = "Deworming";
-    private static final String BORDETELLA = "Bordetella";
     private static final String RABIES = "Rabies";
 
     private final VaccinationRepository vaccinationRepository;
@@ -44,7 +43,6 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
                 registerVaccination(DA2PP, pet);
                 registerVaccination(DEWORMING, pet);
                 registerVaccination(RABIES, pet);
-                registerVaccination(BORDETELLA, pet);
             }
         }
     }
