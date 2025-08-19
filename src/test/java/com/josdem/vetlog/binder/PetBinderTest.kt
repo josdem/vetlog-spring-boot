@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.any
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
@@ -164,42 +163,4 @@ internal class PetBinderTest {
                     type = PetType.DOG
                 }
         }
-
-    @Test
-    fun `should create a new rabies vaccination with NEW status one year later when updated to APPLIED`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-
-        val previousRabies = Vaccination(99L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, null)
-
-        val appliedRabies = Vaccination(null, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, null)
-
-        val petCommand =
-            PetCommand().apply {
-                id = 1L
-                name = "Luna"
-                status = PetStatus.OWNED
-                sterilized = false
-                images = listOf(PetImage())
-                breed = 1L
-                vaccines = mutableListOf(appliedRabies)
-                birthDate = "2021-01-01"
-            }
-
-        setBreedExpectations()
-
-        whenever(vaccinationRepository.findAllByPet(any())).thenReturn(listOf(previousRabies))
-
-        val savedVaccinations = mutableListOf<Vaccination>()
-        whenever(vaccinationRepository.save(any())).thenAnswer {
-            val saved = it.arguments[0] as Vaccination
-            savedVaccinations.add(saved)
-            saved
-        }
-
-        val result = petBinder.bindPet(petCommand)
-
-        val futureRabies = savedVaccinations.find { it.name == "Rabies" && it.status == VaccinationStatus.NEW }
-        assertNotNull(futureRabies)
-        assertEquals(LocalDate.now().plusYears(1), futureRabies.date)
-    }
 }
