@@ -16,6 +16,7 @@
 
 package com.josdem.vetlog.service.impl;
 
+import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
@@ -66,5 +67,10 @@ public class VaccinationServiceImpl implements VaccinationService {
     @Override
     public void deleteVaccinesByPet(Pet pet) {
         vaccinationRepository.deleteAllByPet(pet);
+    }
+
+    @Override
+    public Pet updateVaccinations(PetCommand petCommand) {
+        return null;
     }
 }

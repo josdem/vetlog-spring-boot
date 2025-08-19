@@ -15,6 +15,8 @@
 */
 package com.josdem.vetlog.service
 
+import com.josdem.vetlog.command.PetCommand
+import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
 import com.josdem.vetlog.exception.BusinessException
@@ -120,4 +122,26 @@ internal class VaccinationServiceTest {
         vaccinationService.deleteVaccinesByPet(pet)
         verify(vaccinationRepository).deleteAllByPet(pet)
     }
+
+    @Test
+    fun `should update rabies vaccination status to APPLIED`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val rabiesVaccination = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        whenever(vaccinationRepository.findById(1L)).thenReturn(java.util.Optional.of(rabiesVaccination))
+
+        vaccinationService.updateVaccinations(getPetCommand())
+
+        verify(vaccinationRepository).save(any())
+    }
+
+    private fun getPetCommand() =
+        PetCommand().apply {
+            id = 1L
+            name = "Cremita"
+            breed = 5L
+            status = PetStatus.OWNED
+            sterilized = true
+            type = PetType.DOG
+            vaccines = listOf(Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet))
+        }
 }
