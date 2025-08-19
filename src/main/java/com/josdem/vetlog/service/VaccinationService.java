@@ -16,6 +16,7 @@
 
 package com.josdem.vetlog.service;
 
+import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
@@ -29,4 +30,6 @@ public interface VaccinationService {
     List<Vaccination> getVaccinesByStatus(Pet pet, VaccinationStatus status);
 
     void deleteVaccinesByPet(Pet pet);
+
+    void updateVaccinations(PetCommand petCommand, Pet pet);
 }
