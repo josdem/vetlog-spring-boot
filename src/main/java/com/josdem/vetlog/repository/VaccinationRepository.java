@@ -28,4 +28,6 @@ public interface VaccinationRepository extends JpaRepository<Vaccination, Long> 
     List<Vaccination> findAllByPet(Pet pet);
 
     void deleteAllByPet(Pet pet);
+
+    List<Vaccination> findAllByPetId(Long petId);
 }

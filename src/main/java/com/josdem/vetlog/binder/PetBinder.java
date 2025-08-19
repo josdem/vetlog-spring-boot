@@ -24,6 +24,7 @@ import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
+import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.util.UuidGenerator;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -35,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class PetBinder {
 
     private final BreedRepository breedRepository;
+    private final VaccinationService vaccinationService;
     private final VaccinationRepository vaccinationRepository;
 
     private static final String RABIES_VACCINE = "Rabies";
@@ -56,6 +58,8 @@ public class PetBinder {
         pet.setSterilized(petCommand.getSterilized());
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
+
+        vaccinationService.updateVaccinations(petCommand, pet);
 
         /// Save updated vaccines
         pet.setVaccines(petCommand.getVaccines());

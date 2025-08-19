@@ -74,9 +74,7 @@ public class VaccinationServiceImpl implements VaccinationService {
 
     @Override
     public void updateVaccinations(PetCommand petCommand, Pet pet) {
-        var existingPet = new Pet();
-        existingPet.setId(petCommand.getId());
-        var previousVaccines = vaccinationRepository.findAllByPet(existingPet);
+        var previousVaccines = vaccinationRepository.findAllByPetId(petCommand.getId());
 
         // Check if Rabies vaccine was changed from PENDING to APPLIED
         for (Vaccination newVaccine : petCommand.getVaccines()) {

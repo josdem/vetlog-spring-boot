@@ -28,6 +28,7 @@ import com.josdem.vetlog.model.Vaccination
 import com.josdem.vetlog.repository.BreedRepository
 import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.service.AdoptionServiceTest
+import com.josdem.vetlog.service.VaccinationService
 import org.jetbrains.annotations.NotNull
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -36,6 +37,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
@@ -50,6 +52,9 @@ internal class PetBinderTest {
 
     @Mock
     private lateinit var breedRepository: BreedRepository
+
+    @Mock
+    private lateinit var vaccinationService: VaccinationService
 
     @Mock
     private lateinit var vaccinationRepository: VaccinationRepository
@@ -67,7 +72,7 @@ internal class PetBinderTest {
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        petBinder = PetBinder(breedRepository, vaccinationRepository)
+        petBinder = PetBinder(breedRepository, vaccinationService, vaccinationRepository)
     }
 
     @Test
@@ -90,7 +95,7 @@ internal class PetBinderTest {
     @Test
     fun `binding a pet from command`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        var petCommand = getPetCommand()
+        val petCommand = getPetCommand()
         petCommand.birthDate = "2021-01-17"
         setBreedExpectations()
 
@@ -105,12 +110,13 @@ internal class PetBinderTest {
         vaccines.forEach {
             assertEquals(LocalDate.now(), it.date)
         }
+        verify(vaccinationService).updateVaccinations(petCommand, result)
     }
 
     @Test
     fun `binding a pet from command even without birthdate`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        var petCommand = getPetCommand()
+        val petCommand = getPetCommand()
         petCommand.birthDate = ""
         setBreedExpectations()
 
