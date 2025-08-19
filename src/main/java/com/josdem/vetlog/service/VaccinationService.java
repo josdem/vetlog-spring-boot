@@ -31,5 +31,5 @@ public interface VaccinationService {
 
     void deleteVaccinesByPet(Pet pet);
 
-    void updateVaccinations(PetCommand petCommand, Pet pet) throws Exception;
+    void updateVaccinations(PetCommand petCommand, Pet pet);
 }
