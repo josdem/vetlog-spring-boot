@@ -126,10 +126,11 @@ internal class VaccinationServiceTest {
     @Test
     fun `should update rabies vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        pet.id = 1L
         val rabiesVaccination = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
-        whenever(vaccinationRepository.findById(1L)).thenReturn(java.util.Optional.of(rabiesVaccination))
+        whenever(vaccinationRepository.findAllByPet(any())).thenReturn(listOf(rabiesVaccination))
 
-        vaccinationService.updateVaccinations(getPetCommand())
+        vaccinationService.updateVaccinations(getPetCommand(), pet)
 
         verify(vaccinationRepository).save(any())
     }
