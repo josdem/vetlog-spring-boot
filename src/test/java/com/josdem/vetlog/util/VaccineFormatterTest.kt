@@ -42,11 +42,11 @@ class VaccineFormatterTest {
     }
 
     @Test
-    fun `should format DA2PP if locale is Spanish`(testInfo: TestInfo) {
+    fun `should format C6CV if locale is Spanish`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(locale.language).thenReturn("es")
 
-        assertEquals("Quintuple Canina", vaccineFormatter.format("DA2PP", locale))
+        assertEquals("Sextuple Canina", vaccineFormatter.format("C6CV", locale))
     }
 
     @Test
@@ -82,11 +82,11 @@ class VaccineFormatterTest {
     }
 
     @Test
-    fun `should not format DA2PP if locale is English`(testInfo: TestInfo) {
+    fun `should not format C6CV if locale is English`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(locale.language).thenReturn("en")
 
-        assertEquals("DA2PP", vaccineFormatter.format("DA2PP", locale))
+        assertEquals("C6CV", vaccineFormatter.format("C6CV", locale))
     }
 
     @Test

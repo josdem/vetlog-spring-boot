@@ -61,7 +61,7 @@ internal class PetBinderTest {
 
     private val vaccines =
         listOf(
-            Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.APPLIED, null),
+            Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, null),
             Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.PENDING, null),
         )
 
