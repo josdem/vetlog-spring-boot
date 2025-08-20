@@ -108,7 +108,7 @@ internal class VaccinationServiceTest {
         log.info(testInfo.displayName)
         whenever(vaccinationRepository.findAllByPet(pet)).thenReturn(
             listOf(
-                Vaccination(1L, "DA2PP", LocalDate.now(), VaccinationStatus.PENDING, pet),
+                Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet),
                 Vaccination(2L, "Deworming", LocalDate.now(), VaccinationStatus.APPLIED, pet),
             ),
         )

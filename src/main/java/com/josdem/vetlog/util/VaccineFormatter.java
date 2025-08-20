@@ -27,7 +27,7 @@ public class VaccineFormatter {
             return name;
         }
         return switch (name) {
-            case "DA2PP" -> "Quintuple Canina";
+            case "C6CV" -> "Sextuple Canina";
             case "Deworming" -> "Desparasitación";
             case "Rabies" -> "Rabia";
             case "FVRCP" -> "Trivalente Felina";
