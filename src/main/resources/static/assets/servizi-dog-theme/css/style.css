@@ -839,6 +839,7 @@ footer img {
 @media all and (max-width: 768px) {
 	.navbar-brand h1 {
 		font-size: 100%;
+		margin-top: 10px;
 	}
 
 	.header-text h1 {
