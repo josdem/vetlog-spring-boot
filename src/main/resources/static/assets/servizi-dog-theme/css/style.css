@@ -296,7 +296,7 @@ section.section-darker img {
 	font-size: 15px;
 	font-weight: 300;
 	text-transform: uppercase;
-	padding: 40px 25px;
+	padding: 48px 25px;
 	color: #555 !important;
 	transition: all 0.3s;
 	-webkit-transition: all 0.3s;
@@ -839,7 +839,6 @@ footer img {
 @media all and (max-width: 768px) {
 	.navbar-brand h1 {
 		font-size: 100%;
-		margin-top: 10px;
 	}
 
 	.header-text h1 {
