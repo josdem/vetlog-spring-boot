@@ -25,6 +25,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -54,8 +55,8 @@ public class PetLog {
 
     private boolean hasAttachment = false;
 
-    @Column(nullable = false)
-    private LocalDateTime dateCreated = LocalDateTime.now();
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dateCreated;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id")
@@ -63,4 +64,9 @@ public class PetLog {
 
     @Column(name = "username", nullable = false)
     private String username;
+
+    @PrePersist
+    protected void onCreate() {
+        dateCreated = LocalDateTime.now();
+    }
 }
