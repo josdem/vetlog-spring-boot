@@ -154,13 +154,6 @@ public class PetController {
             // fallback: maybe default to DOG or empty list
             modelAndView.addObject("breeds", List.of());
         }
-        // modelAndView.addObject(
-        //         "breeds",
-        //         breedService.getBreedsByType(PetType.DOG).stream()
-        //                 .sorted(Comparator.comparing(
-        //                         Breed::getName)) // for sorting the initial dog listings alphabetically
-        //                 .toList()); // this overlaps with the breed controller, will there be a way to
-        // // unify this?
         modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
         return modelAndView;
     }
