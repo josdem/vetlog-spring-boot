@@ -151,7 +151,6 @@ public class PetController {
                             .sorted(Comparator.comparing(Breed::getName))
                             .toList());
         } else {
-            // fallback: maybe default to DOG or empty list
             modelAndView.addObject("breeds", List.of());
         }
         modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
