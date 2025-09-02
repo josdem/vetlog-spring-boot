@@ -19,7 +19,6 @@ package com.josdem.vetlog.controller;
 import com.josdem.vetlog.binder.PetBinder;
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
-import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
@@ -34,6 +33,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.Comparator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -142,13 +142,17 @@ public class PetController {
     }
 
     private ModelAndView fillModelAndView(ModelAndView modelAndView) {
-        modelAndView.addObject(
-                "breeds",
-                breedService.getBreedsByType(PetType.DOG).stream()
-                        .sorted(Comparator.comparing(
-                                Breed::getName)) // for sorting the initial dog listings alphabetically
-                        .toList()); // this overlaps with the breed controller, will there be a way to
-        // unify this?
+        PetCommand petCommand = (PetCommand) modelAndView.getModel().get(PET_COMMAND);
+
+        if (petCommand != null && petCommand.getType() != null) {
+            modelAndView.addObject(
+                    "breeds",
+                    breedService.getBreedsByType(petCommand.getType()).stream()
+                            .sorted(Comparator.comparing(Breed::getName))
+                            .toList());
+        } else {
+            modelAndView.addObject("breeds", List.of());
+        }
         modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
         return modelAndView;
     }
