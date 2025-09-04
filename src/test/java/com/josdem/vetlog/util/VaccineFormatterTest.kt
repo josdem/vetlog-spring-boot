@@ -42,6 +42,31 @@ class VaccineFormatterTest {
     }
 
     @Test
+    fun `should not format Puppy irrespective of language`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(locale.language).thenReturn("es")
+        assertEquals("Puppy", vaccineFormatter.format("Puppy", locale))
+        whenever(locale.language).thenReturn("en")
+        assertEquals("Puppy", vaccineFormatter.format("Puppy", locale))
+    }
+
+    @Test
+    fun `should format C4CV if locale is Spanish`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(locale.language).thenReturn("es")
+
+        assertEquals("Quintuple Canina", vaccineFormatter.format("C4CV", locale))
+    }
+
+    @Test
+    fun `should not format C4CV if locale is English`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(locale.language).thenReturn("en")
+
+        assertEquals("C4CV", vaccineFormatter.format("C4CV", locale))
+    }
+
+    @Test
     fun `should format C6CV if locale is Spanish`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(locale.language).thenReturn("es")
