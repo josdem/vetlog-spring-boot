@@ -27,6 +27,7 @@ public class VaccineFormatter {
             return name;
         }
         return switch (name) {
+            case "C4CV" -> "Quintuple Canina";
             case "C6CV" -> "Sextuple Canina";
             case "Deworming" -> "Desparasitación";
             case "Rabies" -> "Rabia";
