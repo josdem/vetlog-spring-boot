@@ -30,7 +30,7 @@ public class VaccineFormatter {
             case "C6CV" -> "Sextuple Canina";
             case "Deworming" -> "Desparasitación";
             case "Rabies" -> "Rabia";
-            case "FVRCP" -> "Trivalente Felina";
+            case "TRICAT" -> "Trivalente Felina";
             case "FeLV" -> "Leucemia Felina";
             default -> name;
         };

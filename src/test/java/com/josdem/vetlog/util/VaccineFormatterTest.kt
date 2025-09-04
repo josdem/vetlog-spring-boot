@@ -74,11 +74,11 @@ class VaccineFormatterTest {
     }
 
     @Test
-    fun `should format FVRCP if locale is Spanish`(testInfo: TestInfo) {
+    fun `should format TRICAT if locale is Spanish`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(locale.language).thenReturn("es")
 
-        assertEquals("Trivalente Felina", vaccineFormatter.format("FVRCP", locale))
+        assertEquals("Trivalente Felina", vaccineFormatter.format("TRICAT", locale))
     }
 
     @Test
