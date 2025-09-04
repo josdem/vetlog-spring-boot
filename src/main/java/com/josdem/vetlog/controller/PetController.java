@@ -19,6 +19,7 @@ package com.josdem.vetlog.controller;
 import com.josdem.vetlog.binder.PetBinder;
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
+import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
@@ -33,7 +34,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.Comparator;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -144,15 +144,14 @@ public class PetController {
     private ModelAndView fillModelAndView(ModelAndView modelAndView) {
         PetCommand petCommand = (PetCommand) modelAndView.getModel().get(PET_COMMAND);
 
-        if (petCommand != null && petCommand.getType() != null) {
-            modelAndView.addObject(
-                    "breeds",
-                    breedService.getBreedsByType(petCommand.getType()).stream()
-                            .sorted(Comparator.comparing(Breed::getName))
-                            .toList());
-        } else {
-            modelAndView.addObject("breeds", List.of());
-        }
+        var petType = petCommand.getType() == null ? PetType.DOG : petCommand.getType();
+
+        modelAndView.addObject(
+                "breeds",
+                breedService.getBreedsByType(petType).stream()
+                        .sorted(Comparator.comparing(Breed::getName))
+                        .toList());
+
         modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
         return modelAndView;
     }
