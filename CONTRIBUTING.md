@@ -67,7 +67,9 @@ docker-compose up -d
 
 ## How to Contribute
 
-1. **Clone** the repository
+1. **Get the repository**
+   - If you are a **new contributor**: **Fork** the repository
+   - If you already have **write access**: **Clone** the repository
 2. **Create a feature branch**:
     ```bash
     git checkout -b feature/<short-description>
