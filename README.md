@@ -94,6 +94,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/abhicode"><img src="https://avatars.githubusercontent.com/u/25343742?v=4?s=100" width="100px;" alt="Abhishek Raj"/><br /><sub><b>Abhishek Raj</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=abhicode" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Stano963"><img src="https://avatars.githubusercontent.com/u/150450669?v=4?s=100" width="100px;" alt="Stanislav Humeník"/><br /><sub><b>Stanislav Humeník</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Stano963" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
