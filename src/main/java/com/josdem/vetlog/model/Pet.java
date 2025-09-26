@@ -20,9 +20,12 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 import com.josdem.vetlog.enums.PetStatus;
+import com.josdem.vetlog.enums.WeightUnits;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +34,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -71,6 +78,15 @@ public class Pet {
     @JoinColumn(name = "breed_id")
     private Breed breed;
 
+    @Column(nullable = false)
+    @Min(value = 0, message = "Weight must be at least 0")
+    @Max(value = 100, message = "Weight cannot exceed 100")
+    private BigDecimal weight;
+
+    @Column(nullable = false)
+    @Enumerated(STRING)
+    private WeightUnits unit;
+
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pet_id")
     private PetAdoption adoption;
@@ -89,4 +105,5 @@ public class Pet {
 
     @Transient
     private List<Vaccination> vaccines;
+    
 }

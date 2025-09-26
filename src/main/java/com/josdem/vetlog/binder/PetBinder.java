@@ -58,7 +58,8 @@ public class PetBinder {
         pet.setSterilized(petCommand.getSterilized());
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
-
+        pet.setWeight(petCommand.getWeight());
+        pet.setUnit(petCommand.getUnit());
         vaccinationService.updateVaccinations(petCommand, pet);
 
         /// Save updated vaccines
@@ -88,6 +89,8 @@ public class PetBinder {
         command.setBreed(pet.getBreed().getId());
         command.setUser(pet.getUser().getId());
         command.setType(pet.getBreed().getType());
+        command.setWeight(pet.getWeight());
+        command.setUnit(pet.getUnit());
         var vaccines = vaccinationRepository.findAllByPet(pet).stream()
                 .filter(vaccine -> vaccine.getStatus().equals(VaccinationStatus.PENDING))
                 .toList();
