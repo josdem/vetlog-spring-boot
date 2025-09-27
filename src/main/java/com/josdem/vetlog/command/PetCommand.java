@@ -45,6 +45,8 @@ public class PetCommand implements Command {
 
     private Boolean sterilized = false;
 
+    private String chip_id = "800000000000001";
+
     @Min(1L)
     private Long breed;
 
