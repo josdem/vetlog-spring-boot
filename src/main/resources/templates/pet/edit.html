@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress ALL -->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:lang="${#locale.language}">
 <head>
@@ -71,6 +72,11 @@
                             <input type="checkbox" name='sterilized' th:data-testid="petSterilized" th:field="*{sterilized}" class="form-control"
                                    placeholder="sterilized" id='sterilized'/>
                             <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
+                            <br/>
+                            <label for="chip-id"><h4 th:text="#{pet.chip.id}"/></label>
+                            <input type="text" name='chip-id' th:field="*{chip_id}" class="form-control"
+                                   id='chip-id' minlength="15" maxlength="15" th:value="*{chip_id}">
+                            <label th:if="${#fields.hasErrors('chip_id')}" th:errors="*{chip_id}"></label>
                             <br/>
                             <table th:if="${!petCommand.vaccines.isEmpty()}">
                                 <thead>
