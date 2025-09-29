@@ -35,6 +35,8 @@ import org.springframework.web.multipart.MultipartFile;
 @ToString
 public class PetCommand implements Command {
 
+    public static final String DEFAULT_CHIP_ID = "800000000000001";
+
     private Long id;
 
     @Size(min = 1, max = 50)
@@ -45,7 +47,7 @@ public class PetCommand implements Command {
 
     private Boolean sterilized = false;
 
-    private String chip_id = "800000000000001";
+    private String chip_id = DEFAULT_CHIP_ID;
 
     @Min(1L)
     private Long breed;
