@@ -121,7 +121,18 @@
                                 <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"
                                         th:selected="(${breed.id} == *{breed})"/>
                             </select>
-                            <br/><br/>
+                            <br/>
+                            <label for="weight"><h4 th:text="#{pet.weight}"/></label>
+                            <input type="number" name="weight" th:data-testid="petWeight" th:field="*{weight}" class="form-control" placeholder="weight" id="weight" min="0" max="100" step="0.01"/>
+                            <label th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></label>
+                            <br/>
+                            <label for="unit"><h4 th:text="#{pet.unit}"/></label>
+                            <select id="unitSelector" name="unit" th:data-testid="weightUnit" th:field="*{unit}" class="form-control">
+                                <option th:each="unit : ${T(com.josdem.vetlog.enums.WeightUnits).values()}"
+                                        th:value="${unit}" th:text="${unit.value}" th:selected="(${unit} == *{unit})"></option>
+                            </select>
+                            <br/>
+                            <br/>
                             <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
                             <input id="breed" type="hidden" th:field="*{breed}"/>
                             <input type="hidden" th:field="*{id}"/>
