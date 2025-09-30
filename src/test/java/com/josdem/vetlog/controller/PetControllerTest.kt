@@ -18,6 +18,7 @@ package com.josdem.vetlog.controller
 
 import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
+import com.josdem.vetlog.enums.WeightUnits
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.UserRepository
 import jakarta.transaction.Transactional
@@ -133,6 +134,8 @@ class PetControllerTest {
                 .param("birthDate", "2024-08-22")
                 .param("sterilized", "true")
                 .param("breed", "11")
+                .param("weight", "6.50")
+                .param("unit", WeightUnits.KG.name)
                 .param("user", user.id.toString())
                 .param("status", PetStatus.OWNED.toString())
                 .param("type", PetType.DOG.toString())
@@ -236,6 +239,8 @@ class PetControllerTest {
                 .param("sterilized", "true")
                 .param("breed", "11")
                 .param("user", "1")
+                .param("weight", "6.50")
+                .param("unit", WeightUnits.KG.name)
                 .param("status", status.toString())
                 .param("type", PetType.DOG.toString())
         mockMvc
