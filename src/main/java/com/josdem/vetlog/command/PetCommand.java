@@ -26,7 +26,6 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,7 @@ public class PetCommand implements Command {
 
     @Min(1L)
     private Long breed;
-    
+
     @NotNull(message = "Weight should not be empty")
     @DecimalMin(value = "0.0")
     @DecimalMax(value = "100.0")
@@ -60,7 +59,6 @@ public class PetCommand implements Command {
 
     @NotNull
     private WeightUnits unit;
-
 
     @Min(1L)
     private Long user;

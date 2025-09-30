@@ -21,7 +21,6 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.WeightUnits;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,7 +34,6 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -104,5 +102,4 @@ public class Pet {
 
     @Transient
     private List<Vaccination> vaccines;
-    
 }

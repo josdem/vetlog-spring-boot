@@ -1,28 +1,25 @@
 package com.josdem.vetlog.enums;
 
 public enum WeightUnits {
-	
-	KG("KG"),
-	LBS("LBS");
-	
-	 private final String value;
+    KG("KG"),
+    LBS("LBS");
 
-	 WeightUnits(String value) {
-	        this.value = value;
-	    }
+    private final String value;
 
-	    public String getValue() {
-	        return value;
-	    }
+    WeightUnits(String value) {
+        this.value = value;
+    }
 
-	    public static WeightUnits getWeightUnitsByValue(String value) {
-	        for (WeightUnits unit : WeightUnits.values()) {
-	            if (value.equals(unit.value)) {
-	                return unit;
-	            }
-	        }
-	        return null;
-	    }
-	
+    public String getValue() {
+        return value;
+    }
 
+    public static WeightUnits getWeightUnitsByValue(String value) {
+        for (WeightUnits unit : WeightUnits.values()) {
+            if (value.equals(unit.value)) {
+                return unit;
+            }
+        }
+        return null;
+    }
 }
