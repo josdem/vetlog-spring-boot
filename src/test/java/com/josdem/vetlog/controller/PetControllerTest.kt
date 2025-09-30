@@ -134,6 +134,8 @@ class PetControllerTest {
                 .param("birthDate", "2024-08-22")
                 .param("sterilized", "true")
                 .param("breed", "11")
+                .param("weight", "6.50")
+                .param("unit", WeightUnits.KG.name)
                 .param("user", user.id.toString())
                 .param("status", PetStatus.OWNED.toString())
                 .param("type", PetType.DOG.toString())
