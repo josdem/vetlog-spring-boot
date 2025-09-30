@@ -19,6 +19,7 @@ package com.josdem.vetlog.controller
 import com.josdem.vetlog.controller.PetControllerTest.Companion.PET_UUID
 import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
+import com.josdem.vetlog.enums.WeightUnits
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -118,6 +119,8 @@ class TelephoneControllerTest {
                 .param("sterilized", "true")
                 .param("breed", "11")
                 .param("user", "1")
+                .param("weight", "6.50")
+                .param("unit", WeightUnits.KG.name)
                 .param("status", PetStatus.OWNED.toString())
                 .param("type", PetType.DOG.toString())
         mockMvc
