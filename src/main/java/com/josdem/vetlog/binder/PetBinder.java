@@ -56,6 +56,7 @@ public class PetBinder {
             pet.setBirthDate(LocalDate.parse(petCommand.getBirthDate()));
         }
         pet.setSterilized(petCommand.getSterilized());
+        pet.setChip_id(petCommand.getChip_id());
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
         pet.setWeight(petCommand.getWeight());
@@ -84,6 +85,7 @@ public class PetBinder {
         command.setName(pet.getName());
         command.setBirthDate(pet.getBirthDate().toString());
         command.setSterilized(pet.getSterilized());
+        command.setChip_id(pet.getChip_id());
         command.setStatus(pet.getStatus());
         command.setImages(pet.getImages());
         command.setBreed(pet.getBreed().getId());

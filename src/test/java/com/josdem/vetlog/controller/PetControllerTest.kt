@@ -237,6 +237,7 @@ class PetControllerTest {
                 .param("uuid", PET_UUID)
                 .param("birthDate", "2024-08-22")
                 .param("sterilized", "true")
+                .param("chip_id", "123456789012345")
                 .param("breed", "11")
                 .param("user", "1")
                 .param("weight", "6.50")

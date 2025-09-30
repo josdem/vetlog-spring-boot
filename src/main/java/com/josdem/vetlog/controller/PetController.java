@@ -198,6 +198,7 @@ public class PetController {
         var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
+        modelAndView.addObject("default_chip_id", PetCommand.DEFAULT_CHIP_ID);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;
