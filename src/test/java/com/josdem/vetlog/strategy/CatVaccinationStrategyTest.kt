@@ -6,7 +6,6 @@ import com.josdem.vetlog.model.Vaccination
 import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mock
@@ -58,17 +57,24 @@ class CatVaccinationStrategyTest {
         )
     }
 
-    @Test
-    fun `should apply deworming vaccine for kittens`() {
-        log.info("Running test: should apply deworming vaccine for kittens")
-        pet.birthDate = LocalDate.now().minusWeeks(5)
+    @ParameterizedTest
+    @CsvSource(
+        "5, Deworming",
+        "20, FeLV",
+    )
+    fun `should apply correct vaccine based on cat age`(
+        weeks: Int,
+        expectedVaccine: String,
+    ) {
+        log.info("Running test with age=$weeks weeks, expecting vaccine=$expectedVaccine")
+        pet.birthDate = LocalDate.now().minusWeeks(weeks.toLong())
 
         catVaccinationStrategy.vaccinate(pet)
 
         verify(vaccinationRepository).saveAll(
             argThat { vaccinations: List<Vaccination> ->
                 vaccinations.any { vaccination ->
-                    vaccination.name == "Deworming" &&
+                    vaccination.name == expectedVaccine &&
                         vaccination.status == VaccinationStatus.PENDING &&
                         vaccination.pet == pet
                 }
