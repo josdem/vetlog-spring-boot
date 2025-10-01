@@ -30,15 +30,13 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
 
         switch ((int) weeks) {
             case 0, 1, 2, 3, 4, 5 -> log.info("No vaccination needed");
-            case 6, 7, 8 -> {
-                log.info("First vaccination");
+            case 6, 7, 8, 9, 10, 11, 12 -> {
+                log.info("Vaccination needed");
                 registerVaccination(PUPPY, pet);
                 registerVaccination(DEWORMING, pet);
-            }
-            case 9, 10, 11, 12 -> {
-                log.info("Second vaccination");
                 registerVaccination(C4CV, pet);
-                registerVaccination(DEWORMING, pet);
+                registerVaccination(C6CV, pet);
+                registerVaccination(RABIES, pet);
             }
             default -> {
                 log.info("Annual vaccination");
