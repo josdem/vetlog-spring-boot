@@ -6,13 +6,16 @@ import com.josdem.vetlog.model.Vaccination
 import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.strategy.vaccination.impl.DogVaccinationStrategy
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mock
 import org.mockito.Mockito.argThat
-import org.mockito.Mockito.times
+import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
 
@@ -54,5 +57,15 @@ class DogVaccinationStrategyTest {
                 }
             },
         )
+    }
+
+    @Test
+    fun `should not save vaccination when pet is not old enough`(testInfo: TestInfo) {
+        log.info("Running test: {}", testInfo.displayName)
+        pet.birthDate = LocalDate.now().minusWeeks(1)
+
+        dogVaccinationStrategy.vaccinate(pet)
+
+        verify(vaccinationRepository, never()).save(any())
     }
 }
