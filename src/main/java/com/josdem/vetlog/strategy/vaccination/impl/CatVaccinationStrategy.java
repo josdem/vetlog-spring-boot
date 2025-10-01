@@ -30,9 +30,10 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
         long weeks = ChronoUnit.WEEKS.between(pet.getBirthDate(), LocalDate.now());
 
         if (weeks >= 0 && weeks <= 8) {
-            log.info("No vaccination needed");
+            log.info("First vaccination");
+            registerVaccinations(pet, DEWORMING);
         } else if (weeks >= 9 && weeks <= 16) {
-            log.info("Initial vaccination");
+            log.info("Second vaccination");
             registerVaccinations(pet, TRICAT, TRICAT_BOOST, DEWORMING, RABIES, FELV);
         } else {
             log.info("Annual vaccination");

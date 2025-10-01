@@ -7,13 +7,10 @@ import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.argThat
-import org.mockito.Mockito.never
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
@@ -62,26 +59,16 @@ class CatVaccinationStrategyTest {
     }
 
     @Test
-    fun `should not save vaccination when pet is not old enough`(testInfo: TestInfo) {
-        log.info("Running test: {}", testInfo.displayName)
-        pet.birthDate = LocalDate.now().minusWeeks(1)
-
-        catVaccinationStrategy.vaccinate(pet)
-
-        verify(vaccinationRepository, never()).saveAll(Mockito.any<List<Vaccination>>())
-    }
-
-    @Test
-    fun `should apply FeLV vaccine for adult cats`() {
-        log.info("Running test: should apply FeLV vaccine for adult cats")
-        pet.birthDate = LocalDate.now().minusWeeks(20)
+    fun `should apply deworming vaccine for kittens`() {
+        log.info("Running test: should apply deworming vaccine for kittens")
+        pet.birthDate = LocalDate.now().minusWeeks(5)
 
         catVaccinationStrategy.vaccinate(pet)
 
         verify(vaccinationRepository).saveAll(
             argThat { vaccinations: List<Vaccination> ->
                 vaccinations.any { vaccination ->
-                    vaccination.name == "FeLV" &&
+                    vaccination.name == "Deworming" &&
                         vaccination.status == VaccinationStatus.PENDING &&
                         vaccination.pet == pet
                 }
