@@ -46,6 +46,7 @@ public class LocationController {
     @Value("${geoToken}")
     private String geoToken;
 
+    //Designated for removal
     @GetMapping(value = "/location/{latitude:.+}/{longitude:.+}")
     public ResponseEntity<String> storeLocation(
             @PathVariable("latitude") double latitude,
