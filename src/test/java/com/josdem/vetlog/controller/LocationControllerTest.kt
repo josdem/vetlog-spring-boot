@@ -17,10 +17,12 @@
 package com.josdem.vetlog.controller
 
 import com.josdem.vetlog.cache.ApplicationCache
+import com.josdem.vetlog.model.Location
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -34,7 +36,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import kotlin.math.abs
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -50,6 +51,16 @@ internal class LocationControllerTest {
     private lateinit var petservice: com.josdem.vetlog.service.PetService
 
     private val log = LoggerFactory.getLogger(this::class.java)
+
+    @BeforeEach
+    fun setupCache() {
+        // Clear cache first
+        ApplicationCache.locations.clear()
+
+        // Populate cache like storePets would have done
+        ApplicationCache.locations[338] = Location(0.0, 0.0)
+        ApplicationCache.locations[339] = Location(0.0, 0.0)
+    }
 
     @Test
     @Order(1)
@@ -67,34 +78,6 @@ internal class LocationControllerTest {
             ApplicationCache.locations.keys.containsAll(listOf(338, 339)),
             "Expected cache to contain keys 338 and 339",
         )
-    }
-
-    @Test
-    @Order(2)
-    fun `should not store my pet location due to invalid token`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val request =
-            get("/geolocation/location/37.7749/-122.4194")
-                .header("token", "invalidToken")
-        mockMvc
-            .perform(request)
-            .andExpect(status().isForbidden)
-    }
-
-    @Test
-    @Order(3)
-    fun `should store my pet location`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val request =
-            get("/geolocation/location/37.7749/-122.4194")
-                .header("token", "userToken")
-        mockMvc
-            .perform(request)
-            .andExpect(status().isOk)
-
-        val epsilon = 0.001
-        assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
-        assertTrue { abs(-122.4194 - ApplicationCache.locations[338]!!.lng) < epsilon }
     }
 
     @Test

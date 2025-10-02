@@ -29,7 +29,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,28 +44,6 @@ public class LocationController {
 
     @Value("${geoToken}")
     private String geoToken;
-
-    @GetMapping(value = "/location/{latitude:.+}/{longitude:.+}")
-    public ResponseEntity<String> storeLocation(
-            @PathVariable("latitude") double latitude,
-            @PathVariable("longitude") double longitude,
-            @RequestHeader("token") String token,
-            HttpServletResponse response) {
-
-        response.addHeader("Access-Control-Allow-Methods", "GET");
-        response.addHeader("Access-Control-Allow-Origin", DOMAIN);
-
-        if (!geoToken.equals(token)) {
-            return new ResponseEntity<>("FORBIDDEN", HttpStatus.FORBIDDEN);
-        }
-
-        log.info("Storing location : {},{}", latitude, longitude);
-
-        var pets = ApplicationCache.locations.keySet();
-        pets.forEach(petId -> ApplicationCache.locations.put(petId, new Location(latitude, longitude)));
-
-        return new ResponseEntity<>("OK", HttpStatus.OK);
-    }
 
     @GetMapping(value = "/store/{pets}")
     public ResponseEntity<String> storePets(@PathVariable("pets") String pets, HttpServletResponse response) {
