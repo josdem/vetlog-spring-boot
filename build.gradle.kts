@@ -4,24 +4,24 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.5")
-    classpath("org.flywaydb:flyway-mysql:11.13.2") //Needs to updated to 11.13.2
+    classpath("org.flywaydb:flyway-mysql:11.13.2")
   }
 }
 
 plugins {
-  id("org.springframework.boot") version "3.5.6" //Needs to be updated to 3.5.6
+  id("org.springframework.boot") version "3.5.6"
   id("io.spring.dependency-management") version "1.1.7"
-  id("org.flywaydb.flyway") version "11.13.2" //I think this needs to be updated to 11.13.2
+  id("org.flywaydb.flyway") version "11.13.2"
   id("org.sonarqube") version "6.3.1.5724"
   id("jacoco")
   id("java")
-  id("com.diffplug.spotless") version "8.0.0" //Needs to be updated to 8.0.0
-  id("org.jetbrains.kotlin.jvm") version "2.2.20" //Needs to be updated to 2.2.20
+  id("com.diffplug.spotless") version "8.0.0"
+  id("org.jetbrains.kotlin.jvm") version "2.2.20"
 }
 
-val gcpVersion by extra("7.3.1") //I think this needs to be changed to 7.3.1
+val gcpVersion by extra("7.3.1")
 val retrofitVersion by extra("3.0.0")
-val mockitoCoreVersion by extra("5.20.0") //Needs to be updated to 5.20.0
+val mockitoCoreVersion by extra("5.20.0")
 val annotationsVersion by extra("26.0.2")
 val jsonSmartVersion by extra("2.6.0")
 val jaxbVersion by extra("2.3.1")
