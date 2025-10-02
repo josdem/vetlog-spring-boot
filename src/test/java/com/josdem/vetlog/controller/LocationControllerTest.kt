@@ -86,8 +86,8 @@ internal class LocationControllerTest {
             .andExpect(status().isOk)
 
         val epsilon = 0.001
-        assertTrue { abs(37.7749 - ApplicationCache.locations[338L]!!.lat) < epsilon }
-        assertTrue { abs(-122.4194 - ApplicationCache.locations[338L]!!.lng) < epsilon }
+        assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
+        assertTrue { abs(-122.4194 - ApplicationCache.locations[338]!!.lng) < epsilon }
     }
 
     @Test
