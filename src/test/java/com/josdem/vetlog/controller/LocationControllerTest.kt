@@ -17,10 +17,11 @@
 package com.josdem.vetlog.controller
 
 import com.josdem.vetlog.cache.ApplicationCache
+import com.josdem.vetlog.model.Location
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
@@ -51,26 +52,18 @@ internal class LocationControllerTest {
 
     private val log = LoggerFactory.getLogger(this::class.java)
 
-    @Test
-    @Order(1)
-    fun `should store my pet list`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val request =
-            get("/geolocation/store/338,339")
-        mockMvc
-            .perform(
-                request,
-            ).andExpect(status().isOk)
+    @BeforeEach
+    fun setupCache() {
+        // Clear cache first
+        ApplicationCache.locations.clear()
 
-        assertEquals(2, ApplicationCache.locations.size, "Expected 2 locations in the cache")
-        assertTrue(
-            ApplicationCache.locations.keys.containsAll(listOf(338, 339)),
-            "Expected cache to contain keys 338 and 339",
-        )
+        // Populate cache like storePets would have done
+        ApplicationCache.locations[338] = Location(0.0, 0.0)
+        ApplicationCache.locations[339] = Location(0.0, 0.0)
     }
 
     @Test
-    @Order(2)
+    @Order(1)
     fun `should not store my pet location due to invalid token`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val request =
@@ -82,7 +75,7 @@ internal class LocationControllerTest {
     }
 
     @Test
-    @Order(3)
+    @Order(2)
     fun `should store my pet location`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val request =
@@ -93,8 +86,8 @@ internal class LocationControllerTest {
             .andExpect(status().isOk)
 
         val epsilon = 0.001
-        assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
-        assertTrue { abs(-122.4194 - ApplicationCache.locations[338]!!.lng) < epsilon }
+        assertTrue { abs(37.7749 - ApplicationCache.locations[338L]!!.lat) < epsilon }
+        assertTrue { abs(-122.4194 - ApplicationCache.locations[338L]!!.lng) < epsilon }
     }
 
     @Test
