@@ -35,7 +35,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import kotlin.math.abs
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -64,30 +63,20 @@ internal class LocationControllerTest {
 
     @Test
     @Order(1)
-    fun `should not store my pet location due to invalid token`(testInfo: TestInfo) {
+    fun `should store my pet list`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val request =
-            get("/geolocation/location/37.7749/-122.4194")
-                .header("token", "invalidToken")
+            get("/geolocation/store/338,339")
         mockMvc
-            .perform(request)
-            .andExpect(status().isForbidden)
-    }
+            .perform(
+                request,
+            ).andExpect(status().isOk)
 
-    @Test
-    @Order(2)
-    fun `should store my pet location`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val request =
-            get("/geolocation/location/37.7749/-122.4194")
-                .header("token", "userToken")
-        mockMvc
-            .perform(request)
-            .andExpect(status().isOk)
-
-        val epsilon = 0.001
-        assertTrue { abs(37.7749 - ApplicationCache.locations[338]!!.lat) < epsilon }
-        assertTrue { abs(-122.4194 - ApplicationCache.locations[338]!!.lng) < epsilon }
+        assertEquals(2, ApplicationCache.locations.size, "Expected 2 locations in the cache")
+        assertTrue(
+            ApplicationCache.locations.keys.containsAll(listOf(338, 339)),
+            "Expected cache to contain keys 338 and 339",
+        )
     }
 
     @Test
