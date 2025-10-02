@@ -1,14 +1,10 @@
 package com.josdem.vetlog.strategy.vaccination.impl;
 
-import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,24 +28,16 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
         switch ((int) weeks) {
             case 0, 1, 2, 3, 4, 5, 6, 7, 8 -> {
                 log.info("First vaccination");
-                registerVaccinations(pet, DEWORMING);
+                registerVaccinations(vaccinationRepository, pet, DEWORMING);
             }
             case 9, 10, 11, 12, 13, 14, 15, 16 -> {
                 log.info("Second vaccination");
-                registerVaccinations(pet, TRICAT, TRICAT_BOOST, DEWORMING, RABIES, FELV);
+                registerVaccinations(vaccinationRepository, pet, TRICAT, TRICAT_BOOST, DEWORMING, RABIES, FELV);
             }
             default -> {
                 log.info("Annual vaccination");
-                registerVaccinations(pet, TRICAT, DEWORMING, RABIES, FELV);
+                registerVaccinations(vaccinationRepository, pet, TRICAT, DEWORMING, RABIES, FELV);
             }
         }
-    }
-
-    private void registerVaccinations(Pet pet, String... names) {
-        List<Vaccination> vaccinations = Arrays.stream(names)
-                .map(name -> new Vaccination(null, name, LocalDate.now(), VaccinationStatus.PENDING, pet))
-                .toList();
-
-        vaccinationRepository.saveAll(vaccinations);
     }
 }

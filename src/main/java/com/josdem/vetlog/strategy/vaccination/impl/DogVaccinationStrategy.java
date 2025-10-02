@@ -1,14 +1,10 @@
 package com.josdem.vetlog.strategy.vaccination.impl;
 
-import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Arrays;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,20 +30,12 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
             case 0, 1, 2, 3, 4, 5 -> log.info("No vaccination needed");
             case 6, 7, 8, 9, 10, 11, 12 -> {
                 log.info("Vaccination needed");
-                registerVaccinations(pet, PUPPY, DEWORMING, C4CV, C6CV, RABIES);
+                registerVaccinations(vaccinationRepository, pet, PUPPY, DEWORMING, C4CV, C6CV, RABIES);
             }
             default -> {
                 log.info("Annual vaccination");
-                registerVaccinations(pet, C6CV, DEWORMING, RABIES);
+                registerVaccinations(vaccinationRepository, pet, C6CV, DEWORMING, RABIES);
             }
         }
-    }
-
-    private void registerVaccinations(Pet pet, String... names) {
-        List<Vaccination> vaccinations = Arrays.stream(names)
-                .map(name -> new Vaccination(null, name, LocalDate.now(), VaccinationStatus.PENDING, pet))
-                .toList();
-
-        vaccinationRepository.saveAll(vaccinations);
     }
 }
