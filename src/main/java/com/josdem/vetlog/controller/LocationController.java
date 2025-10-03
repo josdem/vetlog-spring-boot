@@ -16,14 +16,10 @@
 
 package com.josdem.vetlog.controller;
 
-import com.josdem.vetlog.cache.ApplicationCache;
-import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.service.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,24 +36,6 @@ public class LocationController {
 
     @Autowired
     private EmailService emailService;
-
-    @Value("${geoToken}")
-    private String geoToken;
-
-    @GetMapping(value = "/store/{pets}")
-    public ResponseEntity<String> storePets(@PathVariable("pets") String pets, HttpServletResponse response) {
-        log.info("Storing pets: {}", pets);
-
-        response.addHeader("Access-Control-Allow-Methods", "GET");
-        response.addHeader("Access-Control-Allow-Origin", DOMAIN);
-
-        var petIds = PetSplitter.split(pets);
-        petIds.forEach(id -> {
-            ApplicationCache.locations.put(id, new Location(0.0, 0.0)); // Default location
-        });
-
-        return new ResponseEntity<>("OK", HttpStatus.OK);
-    }
 
     @GetMapping(value = "/pullup/{petId}")
     public ResponseEntity<String> sendEmailNotification(@PathVariable("petId") Long petId, HttpServletRequest request) {

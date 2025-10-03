@@ -20,6 +20,7 @@ import com.josdem.vetlog.cache.ApplicationCache
 import com.josdem.vetlog.model.Location
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer
@@ -43,12 +44,6 @@ internal class LocationControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    @MockitoBean
-    private lateinit var emailService: com.josdem.vetlog.service.EmailService
-
-    @MockitoBean
-    private lateinit var petservice: com.josdem.vetlog.service.PetService
-
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @BeforeEach
@@ -59,24 +54,6 @@ internal class LocationControllerTest {
         // Populate cache like storePets would have done
         ApplicationCache.locations[338] = Location(0.0, 0.0)
         ApplicationCache.locations[339] = Location(0.0, 0.0)
-    }
-
-    @Test
-    @Order(1)
-    fun `should store my pet list`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val request =
-            get("/geolocation/store/338,339")
-        mockMvc
-            .perform(
-                request,
-            ).andExpect(status().isOk)
-
-        assertEquals(2, ApplicationCache.locations.size, "Expected 2 locations in the cache")
-        assertTrue(
-            ApplicationCache.locations.keys.containsAll(listOf(338, 339)),
-            "Expected cache to contain keys 338 and 339",
-        )
     }
 
     @Test
