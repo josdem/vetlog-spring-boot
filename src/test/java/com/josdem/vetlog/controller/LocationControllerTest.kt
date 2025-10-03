@@ -20,7 +20,6 @@ import com.josdem.vetlog.cache.ApplicationCache
 import com.josdem.vetlog.model.Location
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.MethodOrderer

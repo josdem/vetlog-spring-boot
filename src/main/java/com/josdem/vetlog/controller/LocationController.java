@@ -19,7 +19,6 @@ package com.josdem.vetlog.controller;
 import com.josdem.vetlog.cache.ApplicationCache;
 import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.service.EmailService;
-import com.josdem.vetlog.util.PetSplitter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
