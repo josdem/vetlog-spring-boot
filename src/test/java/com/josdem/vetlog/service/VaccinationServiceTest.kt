@@ -34,6 +34,7 @@ import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import org.mockito.ArgumentMatchers.argThat
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
@@ -91,7 +92,18 @@ internal class VaccinationServiceTest {
         pet.breed.type = PetType.DOG
         pet.birthDate = LocalDate.now().minusWeeks(weeks.toLong())
         vaccinationService.save(pet)
-        verify(vaccinationRepository, times(times)).save(any())
+
+        verify(vaccinationRepository).saveAll(
+            argThat<List<Vaccination>> { vaccinations ->
+                if (vaccinations.size != times) return@argThat false
+
+                vaccinations.all { vaccination ->
+                    vaccination.date == LocalDate.now() &&
+                        vaccination.status == VaccinationStatus.PENDING &&
+                        vaccination.pet == pet
+                }
+            },
+        )
     }
 
     @Test
