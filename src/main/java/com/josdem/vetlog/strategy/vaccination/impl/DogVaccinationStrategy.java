@@ -27,9 +27,12 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
         long weeks = ChronoUnit.WEEKS.between(pet.getBirthDate(), LocalDate.now());
 
         switch ((int) weeks) {
-            case 0, 1, 2, 3, 4, 5 -> log.info("No vaccination needed");
+            case 0, 1, 2, 3, 4, 5 -> {
+                log.info("First vaccination");
+                registerVaccinations(vaccinationRepository, pet, DEWORMING);
+            }
             case 6, 7, 8, 9, 10, 11, 12 -> {
-                log.info("Vaccination needed");
+                log.info("Second Vaccination");
                 registerVaccinations(vaccinationRepository, pet, PUPPY, DEWORMING, C4CV, C6CV, RABIES);
             }
             default -> {
