@@ -17,12 +17,12 @@
 package com.josdem.vetlog.service.impl;
 
 import com.josdem.vetlog.binder.PetBinder;
-import com.josdem.vetlog.command.Command;
-import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
+import com.josdem.vetlog.record.IRecord;
+import com.josdem.vetlog.record.PetRecord;
 import com.josdem.vetlog.repository.AdoptionRepository;
 import com.josdem.vetlog.repository.PetRepository;
 import com.josdem.vetlog.repository.UserRepository;
@@ -54,28 +54,32 @@ public class PetServiceImpl implements PetService {
     private final PetLogService petLogService;
 
     @Transactional
-    public Pet save(Command command, User user) throws IOException {
-        var pet = petBinder.bindPet(command);
+    public Pet save(IRecord record, User user) throws IOException {
+        var pet = petBinder.bindPet(record);
         pet.setUser(user);
-        petImageService.attachFile(command);
+        petImageService.attachFile(record);
         petRepository.save(pet);
         vaccinationService.save(pet);
         return pet;
     }
 
     @Transactional
-    public Pet update(Command command) throws IOException {
-        var petCommand = (PetCommand) command;
-        recoveryImages(petCommand);
-        var pet = petBinder.bindPet(petCommand);
-        var user = getUser(petCommand.getUser());
+    public Pet update(IRecord record) throws IOException {
+        var petRecord = (PetRecord) record;
+
+        var pet = petBinder.bindPet(petRecord);
+        var user = getUser(petRecord.user());
         user.ifPresentOrElse(pet::setUser, () -> {
-            throw new BusinessException(NO_USER_WAS_FOUND_WITH_ID + petCommand.getUser());
+            throw new BusinessException(NO_USER_WAS_FOUND_WITH_ID + petRecord.user());
         });
-        var adopter = getUser(petCommand.getAdopter());
+        var adopter = getUser(petRecord.adopter());
         adopter.ifPresent(pet::setAdopter);
         user.ifPresent(pet::setUser);
-        petImageService.attachFile(petCommand);
+        var petImg = recoveryImages(petRecord.id());
+        petImg.ifPresentOrElse(value -> pet.setImages(value.getImages()), () -> {
+            throw new BusinessException(NO_PET_WAS_FOUND_WITH_ID + petRecord.id());
+        });
+        petImageService.attachFile(petRecord);
         petRepository.save(pet);
         return pet;
     }
@@ -123,11 +127,9 @@ public class PetServiceImpl implements PetService {
         petRepository.delete(pet);
     }
 
-    private void recoveryImages(PetCommand command) {
-        var pet = petRepository.findById(command.getId());
-        pet.ifPresentOrElse(value -> command.setImages(value.getImages()), () -> {
-            throw new BusinessException(NO_PET_WAS_FOUND_WITH_ID + command.getId());
-        });
+    private Optional<Pet> recoveryImages(Long id) {
+
+        return id == null ? Optional.empty() : petRepository.findById(id);
     }
 
     private Optional<User> getUser(Long id) {

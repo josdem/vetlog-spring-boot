@@ -19,7 +19,7 @@
             <div class="portlet portlet-green">
                 <div class="portlet-body">
                     <div th:data-testid="petEditMessage" th:if="${message}" class="alert alert-success" th:text="${message}"/>
-                    <form id="register" th:action="@{/pet/update}" th:object="${petCommand}" method="post"
+                    <form id="register" th:action="@{/pet/update}" th:object="${petRecord}" method="post"
                           class="form-horizontal" enctype="multipart/form-data">
                         <fieldset>
                             <legend th:text="#{pet.edit}"/>
@@ -28,7 +28,7 @@
                                    id='name'/>
                             <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
                             <br/>
-                            <div th:if="${!petCommand.images.isEmpty()}">
+                            <div th:if="${!petRecord.images.isEmpty()}">
                                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                                     <ol class="carousel-indicators">
                                         <li data-target="#carousel-example-generic" data-slide-to="0"
@@ -39,8 +39,8 @@
 
                                     <!-- Wrapper for slides -->
                                     <div class="carousel-inner" role="listbox">
-                                        <div th:each="image : ${petCommand.images}" class="item"
-                                             th:classappend="|${petCommand.images.indexOf(image) == 0 ? 'active' : ''}|"
+                                        <div th:each="image : ${petRecord.images}" class="item"
+                                             th:classappend="|${petRecord.images.indexOf(image) == 0 ? 'active' : ''}|"
                                              align="center">
                                             <img th:alt="image" style="width:350px;height:300px;"
                                                  th:attr="src=@{${gcpImageUrl} + ${image.uuid}}"/>
@@ -72,7 +72,7 @@
                                    placeholder="sterilized" id='sterilized'/>
                             <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
                             <br/>
-                            <table th:if="${!petCommand.vaccines.isEmpty()}">
+                            <table th:if="${!petRecord.vaccines.isEmpty()}">
                                 <thead>
                                 <tr>
                                     <th></th>

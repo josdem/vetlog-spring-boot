@@ -16,7 +16,7 @@
 
 package com.josdem.vetlog.validator;
 
-import com.josdem.vetlog.command.PetCommand;
+import com.josdem.vetlog.record.PetRecord;
 import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -27,17 +27,17 @@ public class PetValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return PetCommand.class.equals(clazz);
+        return PetRecord.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        PetCommand petCommand = (PetCommand) target;
-        validateBirthdate(errors, petCommand);
+        PetRecord petRecord = (PetRecord) target;
+        validateBirthdate(errors, petRecord);
     }
 
-    private void validateBirthdate(Errors errors, PetCommand petCommand) {
-        String birthDateStr = petCommand.getBirthDate();
+    private void validateBirthdate(Errors errors, PetRecord petRecord) {
+        String birthDateStr = petRecord.birthDate();
 
         if (birthDateStr.isEmpty()) {
             return;

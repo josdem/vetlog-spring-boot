@@ -16,17 +16,17 @@
 
 package com.josdem.vetlog.service;
 
-import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
+import com.josdem.vetlog.record.IRecord;
 import java.io.IOException;
 import java.util.List;
 
 public interface PetService {
-    Pet save(Command command, User user) throws IOException;
+    Pet save(IRecord record, User user) throws IOException;
 
-    Pet update(Command command) throws IOException;
+    Pet update(IRecord record) throws IOException;
 
     Pet getPetByUuid(String uuid);
 

@@ -16,12 +16,12 @@
 
 package com.josdem.vetlog.service.impl;
 
-import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
+import com.josdem.vetlog.record.PetRecord;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
@@ -72,12 +72,11 @@ public class VaccinationServiceImpl implements VaccinationService {
         vaccinationRepository.deleteAllByPet(pet);
     }
 
-    @Override
-    public void updateVaccinations(PetCommand petCommand, Pet pet) {
-        var previousVaccines = vaccinationRepository.findAllByPetId(petCommand.getId());
+    public void updateVaccinations(PetRecord petRecord, Pet pet) {
+        var previousVaccines = vaccinationRepository.findAllByPetId(petRecord.id());
 
         // Check if Rabies vaccine was changed from PENDING to APPLIED
-        for (Vaccination newVaccine : petCommand.getVaccines()) {
+        for (Vaccination newVaccine : petRecord.vaccines()) {
             if (RABIES_VACCINE.equalsIgnoreCase(newVaccine.getName())
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
                 previousVaccines.stream()
