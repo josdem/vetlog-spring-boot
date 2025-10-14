@@ -27,4 +27,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("backend")
 public class VetlogBackendProperties {
     private String url;
+    private String token;
 }

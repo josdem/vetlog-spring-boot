@@ -18,6 +18,7 @@ package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.config.GeolocationProperties;
 import com.josdem.vetlog.config.GoogleProperties;
+import com.josdem.vetlog.config.VetlogBackendProperties;
 import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.LocaleService;
@@ -49,6 +50,7 @@ public class GoogleMapController {
     private final LocationService locationService;
     private final GoogleProperties googleProperties;
     private final GeolocationProperties geolocationProperties;
+    private final VetlogBackendProperties vetlogBackendProperties;
 
     @Value("${gcpUrl}")
     private String gcpUrl;
@@ -59,9 +61,6 @@ public class GoogleMapController {
     @Value("${defaultImage}")
     private String defaultImage;
 
-    @Value("${backend.token}")
-    private String backendToken;
-
     @GetMapping("/view")
     public String showMap(@RequestParam Optional<Long> id, Model model, HttpServletRequest request) throws IOException {
         log.info("Pet id: {}", id);
@@ -70,7 +69,7 @@ public class GoogleMapController {
         if (id.isPresent()) {
             log.info("Is present");
             pet = petService.getPetById(id.get());
-            var call = locationService.getLocation(backendToken, pet.getId());
+            var call = locationService.getLocation(vetlogBackendProperties.getToken(), pet.getId());
             var result = call.execute();
             currentPetLocation = result.body();
             log.info("Current pet location: {}", currentPetLocation);

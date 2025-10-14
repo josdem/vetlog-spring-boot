@@ -16,6 +16,7 @@
 
 package com.josdem.vetlog.service
 
+import com.josdem.vetlog.config.VetlogBackendProperties
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
@@ -28,12 +29,15 @@ internal class LocationServiceTest {
     @Autowired
     private lateinit var locationService: LocationService
 
+    @Autowired
+    private lateinit var vetlogBackendProperties: VetlogBackendProperties
+
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
     fun `should get geolocation`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        val call = locationService.getLocation("userToken", 1L)
+        val call = locationService.getLocation(vetlogBackendProperties.token, 1L)
         val result = call.execute()
         val location = result.body()
         log.info("Location: $location")
