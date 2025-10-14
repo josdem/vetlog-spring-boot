@@ -74,6 +74,7 @@ google:
   apiKey: ${GOOGLE_API_KEY}
 backend:
   url: "https://vetlog-backend.josdem.io/geolocation/"
+  token: "userToken"
 geolocation:
   latitude: 19.376699
   longitude: -99.211900

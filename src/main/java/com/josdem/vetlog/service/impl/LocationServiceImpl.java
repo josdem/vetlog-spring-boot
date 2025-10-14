@@ -16,12 +16,12 @@
 
 package com.josdem.vetlog.service.impl;
 
+import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.service.LocationService;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.ResponseBody;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -40,9 +40,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Call<ResponseBody> getLocation(Long petId) throws IOException {
-        var call = locationService.getLocation(petId);
-        call.execute();
-        return call;
+    public Call<Location> getLocation(String token, Long petId) throws IOException {
+        return locationService.getLocation(token, petId);
     }
 }

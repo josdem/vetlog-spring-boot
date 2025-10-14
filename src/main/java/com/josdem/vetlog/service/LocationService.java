@@ -16,13 +16,14 @@
 
 package com.josdem.vetlog.service;
 
+import com.josdem.vetlog.model.Location;
 import java.io.IOException;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Path;
 
 public interface LocationService {
     @GET("storeLocation/{petId}")
-    Call<ResponseBody> getLocation(@Path("petId") Long petId) throws IOException;
+    Call<Location> getLocation(@Header("token") String token, @Path("petId") Long petId) throws IOException;
 }
