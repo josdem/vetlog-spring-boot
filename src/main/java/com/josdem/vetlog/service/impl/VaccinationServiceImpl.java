@@ -72,6 +72,7 @@ public class VaccinationServiceImpl implements VaccinationService {
         vaccinationRepository.deleteAllByPet(pet);
     }
 
+    @Override
     public void updateVaccinations(PetRecord petRecord, Pet pet) {
         var previousVaccines = vaccinationRepository.findAllByPetId(petRecord.id());
 
