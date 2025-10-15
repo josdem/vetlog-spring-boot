@@ -39,7 +39,7 @@ public class PetValidator implements Validator {
     private void validateBirthdate(Errors errors, PetRecord petRecord) {
         String birthDateStr = petRecord.birthDate();
 
-        if (birthDateStr.isEmpty()) {
+        if (birthDateStr == null || birthDateStr.isBlank()) {
             return;
         }
 
