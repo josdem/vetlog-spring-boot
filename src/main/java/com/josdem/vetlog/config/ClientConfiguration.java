@@ -29,6 +29,7 @@ public class ClientConfiguration {
 
     private final GmailerProperties gmailerProperties;
     private final GoogleProperties googleProperties;
+    private final VetlogBackendProperties vetlogBackendProperties;
     private final OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
 
     @Bean
@@ -44,6 +45,15 @@ public class ClientConfiguration {
     public Retrofit googleRetrofit() {
         return new Retrofit.Builder()
                 .baseUrl(googleProperties.getUrl())
+                .client(okHttpClient.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
+    @Bean
+    public Retrofit vetlogRetrofit() {
+        return new Retrofit.Builder()
+                .baseUrl(vetlogBackendProperties.getUrl())
                 .client(okHttpClient.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

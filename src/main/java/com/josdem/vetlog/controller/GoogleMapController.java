@@ -16,15 +16,17 @@
 
 package com.josdem.vetlog.controller;
 
-import com.josdem.vetlog.cache.ApplicationCache;
 import com.josdem.vetlog.config.GeolocationProperties;
 import com.josdem.vetlog.config.GoogleProperties;
+import com.josdem.vetlog.config.VetlogBackendProperties;
 import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.LocaleService;
+import com.josdem.vetlog.service.LocationService;
 import com.josdem.vetlog.service.PetService;
 import com.josdem.vetlog.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,8 +47,10 @@ public class GoogleMapController {
     private final PetService petService;
     private final UserService userService;
     private final LocaleService localeService;
+    private final LocationService locationService;
     private final GoogleProperties googleProperties;
     private final GeolocationProperties geolocationProperties;
+    private final VetlogBackendProperties vetlogBackendProperties;
 
     @Value("${gcpUrl}")
     private String gcpUrl;
@@ -58,14 +62,16 @@ public class GoogleMapController {
     private String defaultImage;
 
     @GetMapping("/view")
-    public String showMap(@RequestParam Optional<Long> id, Model model, HttpServletRequest request) {
+    public String showMap(@RequestParam Optional<Long> id, Model model, HttpServletRequest request) throws IOException {
         log.info("Pet id: {}", id);
         Location currentPetLocation = null;
         Pet pet = null;
         if (id.isPresent()) {
             log.info("Is present");
             pet = petService.getPetById(id.get());
-            currentPetLocation = ApplicationCache.locations.get(pet.getId());
+            var call = locationService.getLocation(vetlogBackendProperties.getToken(), pet.getId());
+            var result = call.execute();
+            currentPetLocation = result.body();
             log.info("Current pet location: {}", currentPetLocation);
         }
         var latitude = currentPetLocation != null && currentPetLocation.getLat() != 0.0
