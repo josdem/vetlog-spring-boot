@@ -57,8 +57,8 @@ public record PetRecord(
     public PetRecord {
         sterilized = sterilized != null ? sterilized : false;
         chip_id = chip_id != null ? chip_id : DEFAULT_CHIP_ID;
-        images = images != null ? images : List.of();
-        vaccines = vaccines != null ? vaccines : List.of();
+        images = images != null ? images : new java.util.ArrayList<>();
+        vaccines = vaccines != null ? vaccines : new java.util.ArrayList<>();
     }
 
     // ✅ Builder pattern
