@@ -14,22 +14,8 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.service;
+package com.josdem.vetlog.record;
 
-import com.josdem.vetlog.enums.VaccinationStatus;
-import com.josdem.vetlog.model.Pet;
-import com.josdem.vetlog.model.Vaccination;
-import com.josdem.vetlog.record.PetRecord;
-import java.util.List;
+import java.io.Serializable;
 
-public interface VaccinationService {
-    void save(Pet pet);
-
-    List<Vaccination> getVaccinationsByPet(Pet pet);
-
-    List<Vaccination> getVaccinesByStatus(Pet pet, VaccinationStatus status);
-
-    void deleteVaccinesByPet(Pet pet);
-
-    void updateVaccinations(PetRecord petRecord, Pet pet);
-}
+public interface IRecord extends Serializable {}

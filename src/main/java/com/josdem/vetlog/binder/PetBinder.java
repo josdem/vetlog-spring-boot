@@ -16,8 +16,9 @@
 
 package com.josdem.vetlog.binder;
 
-import com.josdem.vetlog.command.Command;
-import com.josdem.vetlog.command.PetCommand;
+import com.josdem.vetlog.record.IRecord;
+import com.josdem.vetlog.record.PetRecord;
+import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Breed;
@@ -41,36 +42,36 @@ public class PetBinder {
 
     private static final String RABIES_VACCINE = "Rabies";
 
-    public Pet bindPet(Command command) {
-        PetCommand petCommand = (PetCommand) command;
+    public Pet bindPet(IRecord record) {
+        PetRecord petRecord = (PetRecord) record;
         Pet pet = new Pet();
-        pet.setId(petCommand.getId());
+        pet.setId(petRecord.id());
         pet.setUuid(UuidGenerator.generateUuid());
-        if (petCommand.getUuid() != null) {
-            pet.setUuid(petCommand.getUuid());
+        if (petRecord.uuid() != null) {
+            pet.setUuid(petRecord.uuid());
         }
-        pet.setName(petCommand.getName());
-        if (petCommand.getBirthDate().isEmpty()) {
+        pet.setName(petRecord.name());
+        if (petRecord.birthDate().isEmpty()) {
             pet.setBirthDate(LocalDate.now());
         } else {
-            pet.setBirthDate(LocalDate.parse(petCommand.getBirthDate()));
+            pet.setBirthDate(LocalDate.parse(petRecord.birthDate()));
         }
-        pet.setSterilized(petCommand.getSterilized());
-        pet.setChip_id(petCommand.getChip_id());
-        pet.setImages(petCommand.getImages());
-        pet.setStatus(petCommand.getStatus());
-        pet.setWeight(petCommand.getWeight());
-        pet.setUnit(petCommand.getUnit());
-        vaccinationService.updateVaccinations(petCommand, pet);
+        pet.setSterilized(petRecord.sterilized());
+        pet.setChip_id(petRecord.chip_id());
+        pet.setImages(petRecord.images());
+        pet.setStatus(petRecord.status());
+        pet.setWeight(petRecord.weight());
+        pet.setUnit(petRecord.unit());
+        vaccinationService.updateVaccinations(petRecord, pet);
 
         /// Save updated vaccines
-        pet.setVaccines(petCommand.getVaccines());
-        petCommand.getVaccines().forEach(vaccine -> {
+        pet.setVaccines(petRecord.vaccines());
+        petRecord.vaccines().forEach(vaccine -> {
             vaccine.setDate(LocalDate.now());
             vaccinationRepository.save(vaccine);
         });
 
-        Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
+        Optional<Breed> breed = breedRepository.findById(petRecord.breed());
         if (breed.isEmpty()) {
             throw new BusinessException("Breed was not found for pet: " + pet.getName());
         }
@@ -78,25 +79,39 @@ public class PetBinder {
         return pet;
     }
 
-    public PetCommand bindPet(Pet pet) {
-        PetCommand command = new PetCommand();
-        command.setId(pet.getId());
-        command.setUuid(pet.getUuid());
-        command.setName(pet.getName());
-        command.setBirthDate(pet.getBirthDate().toString());
-        command.setSterilized(pet.getSterilized());
-        command.setChip_id(pet.getChip_id());
-        command.setStatus(pet.getStatus());
-        command.setImages(pet.getImages());
-        command.setBreed(pet.getBreed().getId());
-        command.setUser(pet.getUser().getId());
-        command.setType(pet.getBreed().getType());
-        command.setWeight(pet.getWeight());
-        command.setUnit(pet.getUnit());
+    public PetRecord bindPet(Pet pet) {
+
+
         var vaccines = vaccinationRepository.findAllByPet(pet).stream()
                 .filter(vaccine -> vaccine.getStatus().equals(VaccinationStatus.PENDING))
                 .toList();
-        command.setVaccines(vaccines);
-        return command;
+        
+        Long adopter=null;
+
+        if (pet.getAdopter() != null) {
+        	adopter=pet.getAdopter().getId();
+        }
+        
+        PetRecord petRecord = PetRecord.builder()
+                .id(pet.getId())
+                .name(pet.getName())
+                .birthDate(pet.getBirthDate().toString())
+                .breed(pet.getBreed().getId())
+                .sterilized(pet.getSterilized())
+                .chipId(pet.getChip_id())
+                .weight(pet.getWeight())
+                .unit(pet.getUnit())
+                .user(pet.getUser().getId())
+                .adopter(adopter)
+                .uuid(pet.getUuid())
+                .type(pet.getBreed().getType())
+                .status(PetStatus.OWNED)
+                .image(null)
+                .images(pet.getImages())
+                .vaccines(vaccines)
+                .build();
+
+        return petRecord;
     }
+
 }

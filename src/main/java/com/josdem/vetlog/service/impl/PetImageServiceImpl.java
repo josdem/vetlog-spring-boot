@@ -17,9 +17,9 @@
 package com.josdem.vetlog.service.impl;
 
 import com.josdem.vetlog.client.GoogleStorageWriter;
-import com.josdem.vetlog.command.Command;
-import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.model.PetImage;
+import com.josdem.vetlog.record.IRecord;
+import com.josdem.vetlog.record.PetRecord;
 import com.josdem.vetlog.repository.PetImageRepository;
 import com.josdem.vetlog.service.PetImageService;
 import com.josdem.vetlog.util.UuidGenerator;
@@ -47,16 +47,16 @@ public class PetImageServiceImpl implements PetImageService {
         return petImage;
     }
 
-    public void attachFile(Command command) throws IOException {
-        var petCommand = (PetCommand) command;
-        if (petCommand.getImage() == null) {
+    public void attachFile(IRecord record) throws IOException {
+        var petRecord = (PetRecord) record;
+        if (petRecord.image() == null) {
             return;
         }
-        if (petCommand.getImage().getInputStream().available() > 0) {
+        if (petRecord.image().getInputStream().available() > 0) {
             var petImage = save();
-            petCommand.getImages().add(petImage);
+            petRecord.images().add(petImage);
             googleStorageWriter.uploadToBucket(
-                    bucket, petImage.getUuid(), petCommand.getImage().getInputStream(), CONTENT_TYPE);
+                    bucket, petImage.getUuid(), petRecord.image().getInputStream(), CONTENT_TYPE);
         }
     }
 }

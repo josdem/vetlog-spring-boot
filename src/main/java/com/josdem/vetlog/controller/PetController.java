@@ -17,7 +17,7 @@
 package com.josdem.vetlog.controller;
 
 import com.josdem.vetlog.binder.PetBinder;
-import com.josdem.vetlog.command.PetCommand;
+import com.josdem.vetlog.record.PetRecord;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
@@ -53,7 +53,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequiredArgsConstructor
 public class PetController {
 
-    public static final String PET_COMMAND = "petCommand";
+    public static final String PET_RECORD = "petRecord";
     public static final String GCP_IMAGE_URL = "gcpImageUrl";
     public static final String MESSAGE = "message";
 
@@ -77,7 +77,7 @@ public class PetController {
     @Value("${defaultImage}")
     private String defaultImage;
 
-    @InitBinder("petCommand")
+    @InitBinder("petRecord")
     private void initBinder(WebDataBinder binder) {
         binder.addValidators(petValidator);
     }
@@ -85,10 +85,33 @@ public class PetController {
     @GetMapping(value = "/create")
     public ModelAndView create(@RequestParam(value = "type", required = false) String type) {
         var modelAndView = new ModelAndView("pet/create");
-        var petCommand = new PetCommand();
-        petCommand.setStatus(PetStatus.OWNED);
-        modelAndView.addObject(PET_COMMAND, petCommand);
+        var petRecord = createPetRecord();
+        modelAndView.addObject(PET_RECORD, petRecord);
         return fillModelAndView(modelAndView);
+    }
+
+    public PetRecord createPetRecord() {
+
+        PetRecord petRecord = PetRecord.builder()
+                .id(null)
+                .name(null)
+                .birthDate(null)
+                .breed(null)
+                .sterilized(null)
+                .chipId(null)
+                .weight(null)
+                .unit(null)
+                .user(null)
+                .adopter(null)
+                .uuid(null)
+                .type(null)
+                .status(PetStatus.OWNED)
+                .image(null)
+                .images(null)
+                .vaccines(null)
+                .build();
+
+        return petRecord;
     }
 
     @GetMapping(value = "/edit")
@@ -96,55 +119,51 @@ public class PetController {
         log.info("Editing pet: {}", uuid);
         var pet = petService.getPetByUuid(uuid);
         var modelAndView = new ModelAndView();
-        final PetCommand petCommand = petBinder.bindPet(pet);
+        final PetRecord petRecord = petBinder.bindPet(pet);
         final User adopter = pet.getAdopter();
-        if (adopter != null) {
-            petCommand.setAdopter(pet.getAdopter().getId());
-        }
-        modelAndView.addObject(PET_COMMAND, petCommand);
+        modelAndView.addObject(PET_RECORD, petRecord);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         return fillModelAndView(modelAndView);
     }
 
     @PostMapping(value = "/update")
-    public ModelAndView update(@Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
+    public ModelAndView update(@Valid PetRecord petRecord, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
-        log.info("Updating pet: {}", petCommand.getName());
+        log.info("Updating pet: {}", petRecord.name());
         var modelAndView = new ModelAndView("pet/edit");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject(PET_COMMAND, petCommand);
+            modelAndView.addObject(PET_RECORD, petRecord);
             return fillModelAndView(modelAndView);
         }
-        Pet updatedPet = petService.update(petCommand);
-        petCommand = petBinder.bindPet(updatedPet);
+        Pet updatedPet = petService.update(petRecord);
+        petRecord = petBinder.bindPet(updatedPet);
         modelAndView.addObject(MESSAGE, localeService.getMessage("pet.updated", request));
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
-        modelAndView.addObject(PET_COMMAND, petCommand);
+        modelAndView.addObject(PET_RECORD, petRecord);
         return fillModelAndView(modelAndView);
     }
 
     @PostMapping(value = "/save")
-    public ModelAndView save(@Valid PetCommand petCommand, BindingResult bindingResult, HttpServletRequest request)
+    public ModelAndView save(@Valid PetRecord petRecord, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
-        log.info("Creating pet: {}", petCommand.getName());
+        log.info("Creating pet: {}", petRecord.name());
         var modelAndView = new ModelAndView("pet/create");
         if (bindingResult.hasErrors()) {
-            modelAndView.addObject(PET_COMMAND, petCommand);
+            modelAndView.addObject(PET_RECORD, petRecord);
             return fillModelAndView(modelAndView);
         }
         var user = userService.getCurrentUser();
-        petService.save(petCommand, user);
+        petService.save(petRecord, user);
         modelAndView.addObject(MESSAGE, localeService.getMessage("pet.created", request));
-        petCommand = new PetCommand();
-        petCommand.setStatus(PetStatus.OWNED);
-        modelAndView.addObject(PET_COMMAND, petCommand);
+        petRecord = createPetRecord();
+        modelAndView.addObject(PET_RECORD, petRecord);
         return fillModelAndView(modelAndView);
     }
 
     private ModelAndView fillModelAndView(ModelAndView modelAndView) {
-        PetCommand petCommand = (PetCommand) modelAndView.getModel().get(PET_COMMAND);
+    	PetRecord petRecord = (PetRecord) modelAndView.getModel().get(PET_RECORD);
 
-        var petType = petCommand.getType() == null ? PetType.DOG : petCommand.getType();
+        var petType = petRecord.type() == null ? PetType.DOG : petRecord.type();
 
         modelAndView.addObject(
                 "breeds",
@@ -198,7 +217,7 @@ public class PetController {
         var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
-        modelAndView.addObject("default_chip_id", PetCommand.DEFAULT_CHIP_ID);
+        modelAndView.addObject("default_chip_id", PetRecord.DEFAULT_CHIP_ID);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;

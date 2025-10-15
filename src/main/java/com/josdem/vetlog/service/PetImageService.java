@@ -16,9 +16,9 @@
 
 package com.josdem.vetlog.service;
 
-import com.josdem.vetlog.command.Command;
+import com.josdem.vetlog.record.IRecord;
 import java.io.IOException;
 
 public interface PetImageService {
-    void attachFile(Command command) throws IOException;
+    void attachFile(IRecord record) throws IOException;
 }

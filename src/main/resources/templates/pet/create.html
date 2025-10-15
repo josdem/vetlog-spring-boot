@@ -23,7 +23,7 @@
             <div class="portlet portlet-green">
                 <div class="portlet-body">
                     <div th:data-testid="petRegistered" th:if="${message}" class="alert alert-success" th:text="${message}"/>
-                    <form id="register" th:action="@{/pet/save}" th:object="${petCommand}" method="post"
+                    <form id="register" th:action="@{/pet/save}" th:object="${petRecord}" method="post"
                           class="form-horizontal" enctype="multipart/form-data">
                         <fieldset>
                             <label for="name"><h4 th:text="#{pet.name}"/></label>
