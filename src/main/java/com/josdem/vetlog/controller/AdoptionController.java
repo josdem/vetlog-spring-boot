@@ -16,7 +16,7 @@
 
 package com.josdem.vetlog.controller;
 
-import com.josdem.vetlog.command.AdoptionCommand;
+import com.josdem.vetlog.record.AdoptionRecord;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.service.AdoptionService;
 import com.josdem.vetlog.service.PetService;
@@ -50,26 +50,26 @@ public class AdoptionController {
     @Value("${imageBucket}")
     private String imageBucket;
 
-    @InitBinder("adoptionCommand")
+    @InitBinder("adoptionRecord")
     private void initBinder(WebDataBinder binder) {
         binder.addValidators(adoptionValidator);
     }
 
     @GetMapping(value = "/descriptionForAdoption")
-    public ModelAndView descriptionForAdoption(AdoptionCommand adoptionCommand) {
-        log.info("Adding description to pet with uuid: {}", adoptionCommand.getUuid());
-        return fillPetAndAdoptionCommand(new ModelAndView(), adoptionCommand);
+    public ModelAndView descriptionForAdoption(AdoptionRecord adoptionRecord) {
+        log.info("Adding description to pet with uuid: {}", adoptionRecord.uuid());
+        return fillPetAndAdoptionRecord(new ModelAndView(), adoptionRecord);
     }
 
     @PostMapping(value = "/save")
-    public ModelAndView save(@Valid AdoptionCommand adoptionCommand, BindingResult bindingResult) {
-        log.info("Creating adoption description for pet: {}", adoptionCommand.getUuid());
+    public ModelAndView save(@Valid AdoptionRecord adoptionRecord, BindingResult bindingResult) {
+        log.info("Creating adoption description for pet: {}", adoptionRecord.uuid());
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("adoption/descriptionForAdoption");
-            fillPetAndAdoptionCommand(modelAndView, adoptionCommand);
+            fillPetAndAdoptionRecord(modelAndView, adoptionRecord);
             return modelAndView;
         }
-        adoptionService.save(adoptionCommand);
+        adoptionService.save(adoptionRecord);
         var pets = petService.getPetsByStatus(PetStatus.IN_ADOPTION);
         var modelAndView = new ModelAndView("pet/listForAdoption");
         modelAndView.addObject("pets", pets);
@@ -77,10 +77,10 @@ public class AdoptionController {
         return modelAndView;
     }
 
-    private ModelAndView fillPetAndAdoptionCommand(ModelAndView modelAndView, AdoptionCommand adoptionCommand) {
-        var pet = petService.getPetByUuid(adoptionCommand.getUuid());
+    private ModelAndView fillPetAndAdoptionRecord(ModelAndView modelAndView, AdoptionRecord adoptionRecord) {
+        var pet = petService.getPetByUuid(adoptionRecord.uuid());
         modelAndView.addObject("pet", pet);
-        modelAndView.addObject("adoptionCommand", adoptionCommand);
+        modelAndView.addObject("adoptionRecord", adoptionRecord);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         return modelAndView;
     }

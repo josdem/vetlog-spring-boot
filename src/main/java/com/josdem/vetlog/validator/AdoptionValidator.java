@@ -16,7 +16,7 @@
 
 package com.josdem.vetlog.validator;
 
-import com.josdem.vetlog.command.AdoptionCommand;
+import com.josdem.vetlog.record.AdoptionRecord;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -28,13 +28,13 @@ public class AdoptionValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return AdoptionCommand.class.equals(clazz);
+        return AdoptionRecord.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        AdoptionCommand adoptionCommand = (AdoptionCommand) target;
-        if (!adoptionCommand.getUuid().matches(REGEX)) {
+        AdoptionRecord adoptionRecord = (AdoptionRecord) target;
+        if (!adoptionRecord.uuid().matches(REGEX)) {
             errors.rejectValue("uuid", "adoption.error.uuid.invalid");
         }
     }

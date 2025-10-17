@@ -85,12 +85,12 @@ public class PetController {
     @GetMapping(value = "/create")
     public ModelAndView create(@RequestParam(value = "type", required = false) String type) {
         var modelAndView = new ModelAndView("pet/create");
-        var petRecord = createPetRecord();
+        var petRecord = createPetRecord(PetStatus.OWNED);
         modelAndView.addObject(PET_RECORD, petRecord);
         return fillModelAndView(modelAndView);
     }
 
-    public PetRecord createPetRecord() {
+    public PetRecord createPetRecord(PetStatus status) {
 
         PetRecord petRecord = PetRecord.builder()
                 .id(null)
@@ -105,7 +105,7 @@ public class PetController {
                 .adopter(null)
                 .uuid(null)
                 .type(null)
-                .status(PetStatus.OWNED)
+                .status(status)
                 .image(null)
                 .images(null)
                 .vaccines(null)
@@ -155,7 +155,7 @@ public class PetController {
         var user = userService.getCurrentUser();
         petService.save(petRecord, user);
         modelAndView.addObject(MESSAGE, localeService.getMessage("pet.created", request));
-        petRecord = createPetRecord();
+        petRecord = createPetRecord(PetStatus.OWNED);
         modelAndView.addObject(PET_RECORD, petRecord);
         return fillModelAndView(modelAndView);
     }

@@ -88,7 +88,7 @@
                                 <label for="vaccines"><h4 th:text="#{pet.vaccines}"/></label>
                                 <tr th:each="vaccination, itemStat : *{vaccines}">
                                     <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].id}"/></td>
-                                    <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].pet}"/></td>
+                                    <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].pet.id}"/></td>
                                     <td><input type="text" th:field="*{vaccines[__${itemStat.index}__].name}" readonly style="height: 50px;"/></td>
                                     <td>
                                         <select th:field="*{vaccines[__${itemStat.index}__].status}" style="height: 50px;">

@@ -16,9 +16,9 @@
 
 package com.josdem.vetlog.service;
 
-import com.josdem.vetlog.command.Command;
+import com.josdem.vetlog.record.IRecord;
 import com.josdem.vetlog.model.PetAdoption;
 
 public interface AdoptionService {
-    PetAdoption save(Command command);
+    PetAdoption save(IRecord record);
 }
