@@ -120,7 +120,6 @@ public class PetController {
         var pet = petService.getPetByUuid(uuid);
         var modelAndView = new ModelAndView();
         final PetRecord petRecord = petBinder.bindPet(pet);
-        final User adopter = pet.getAdopter();
         modelAndView.addObject(PET_RECORD, petRecord);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         return fillModelAndView(modelAndView);
