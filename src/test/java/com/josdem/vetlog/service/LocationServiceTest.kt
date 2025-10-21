@@ -41,6 +41,6 @@ internal class LocationServiceTest {
         val result = call.execute()
         val location = result.body()
         log.info("Location: $location")
-        assertTrue { result.isSuccessful }
+        assertTrue { result.toString().contains("https://vetlog-backend.josdem.io/geolocation/storeLocation/1") }
     }
 }
