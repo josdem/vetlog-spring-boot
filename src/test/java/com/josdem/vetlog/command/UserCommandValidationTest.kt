@@ -1,12 +1,13 @@
 package com.josdem.vetlog.command
 
 import jakarta.validation.Validation
+import jakarta.validation.Validator
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class UserCommandValidationTest {
-    private lateinit var validator: jakarta.validation.Validator
+    private lateinit var validator: Validator
 
     @BeforeEach
     fun setup() {
