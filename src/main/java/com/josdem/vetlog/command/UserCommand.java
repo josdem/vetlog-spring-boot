@@ -28,10 +28,10 @@ public class UserCommand implements Command {
     @Size(min = 6, max = 50)
     private String username;
 
-    @Size(min = 8, max = 50)
+    @Size(min = 7, max = 50)
     private String password;
 
-    @Size(min = 8, max = 50)
+    @Size(min = 7, max = 50)
     private String passwordConfirmation;
 
     @Size(min = 1, max = 50)
