@@ -6,33 +6,31 @@
 </head>
 <body>
 <div th:insert="~{fragments/header}"/>
-<br/><br/>
-<br/><br/>
-<br/><br/>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-12">
-            <div class="thumbnail">
-                <div th:if="${!pet.images.isEmpty()}" style="text-align: center;">
-                    <img style=" width:320px;height:240px; display: inline-block;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
-                </div>
-                <div class="caption" align="center">
+            <div class="thumbnail adoption-content-wrapper">
+                <img th:src="${pet.imageUrl ?: '/assets/images/default-pet.png'}" alt="Pet for Adoption" class="adoption-pet-image">
+                <div class="caption">
                     <h3 th:text="${pet.name}"></h3>
-                    <p th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
-                    <p th:text="${pet.breed.name}"/>
-                    <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
-                    <br/>
-                    <form id="description" th:action="@{/adoption/save}" th:object="${adoptionCommand}" method="post"
-                          class="form-horizontal">
+                    <p th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"></p>
+                    <p th:text="${pet.breed.name}"></p>
+                    <p th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"></p>
+                    <form id="descriptionForm" th:action="@{/adoption/save}" th:object="${adoptionCommand}" method="post">
                         <fieldset>
-                            <label for="description"><h4 th:text="#{pet.description}"/></label>
+                            <!-- Separated heading from label for better semantics -->
+                            <h4 th:text="#{pet.description}"></h4>
+                            <!-- Label for accessibility, can be hidden with an 'sr-only' class -->
+                            <label for="description" class="sr-only" th:text="#{pet.description}"></label>
                             <textarea name="description" th:field="*{description}" rows="8" class="form-control"
-                                      placeholder="Description" id='description'/>
-                            <label th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></label>
-                            <input type="hidden" th:value="${adoptionCommand.uuid}" name="uuid"/>
-                            <br/><br/>
-                            <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><p
-                                    th:text="#{button.submit}"/></button>
+                                      th:placeholder="#{pet.description.placeholder}" id="description"></textarea>
+                            <!-- Use a span or p for errors, not a label -->
+                            <span class="text-danger" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></span>
+                            <!-- Use th:field for better binding -->
+                            <input type="hidden" th:field="*{uuid}"/>
+                            <br/>
+                            <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block" th:text="#{button.submit}"></button>
                         </fieldset>
                     </form>
                 </div>
@@ -40,7 +38,7 @@
         </div>
     </div>
 </div>
-<br/><br/><br/><br/>
+
 <div th:insert="~{fragments/footer}"/>
 </body>
 </html>
