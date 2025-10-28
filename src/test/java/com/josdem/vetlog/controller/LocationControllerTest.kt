@@ -16,7 +16,6 @@
 
 package com.josdem.vetlog.controller
 
-import com.josdem.vetlog.cache.ApplicationCache
 import com.josdem.vetlog.model.Location
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
