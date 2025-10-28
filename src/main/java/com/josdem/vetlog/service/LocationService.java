@@ -16,7 +16,7 @@
 
 package com.josdem.vetlog.service;
 
-import com.josdem.vetlog.model.Location;
+import com.josdem.vetlog.model.LocationDto;
 import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -25,5 +25,5 @@ import retrofit2.http.Path;
 
 public interface LocationService {
     @GET("storeLocation/{petId}")
-    Call<Location> getLocation(@Header("token") String token, @Path("petId") Long petId) throws IOException;
+    Call<LocationDto> getLocation(@Header("token") String token, @Path("petId") Long petId) throws IOException;
 }

@@ -5,7 +5,7 @@
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
 
-  http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,13 +14,14 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.cache;
+package com.josdem.vetlog.model;
 
-import com.josdem.vetlog.model.Location;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-public class ApplicationCache {
-
-    public static final Map<Long, Location> locations = new ConcurrentHashMap<>();
+@Data
+@AllArgsConstructor
+public class LocationDto {
+    private double latitude;
+    private double longitude;
 }

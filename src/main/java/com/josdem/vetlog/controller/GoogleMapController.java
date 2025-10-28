@@ -19,7 +19,7 @@ package com.josdem.vetlog.controller;
 import com.josdem.vetlog.config.GeolocationProperties;
 import com.josdem.vetlog.config.GoogleProperties;
 import com.josdem.vetlog.config.VetlogBackendProperties;
-import com.josdem.vetlog.model.Location;
+import com.josdem.vetlog.model.LocationDto;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.LocationService;
@@ -64,7 +64,7 @@ public class GoogleMapController {
     @GetMapping("/view")
     public String showMap(@RequestParam Optional<Long> id, Model model, HttpServletRequest request) throws IOException {
         log.info("Pet id: {}", id);
-        Location currentPetLocation = null;
+        LocationDto currentPetLocation = null;
         Pet pet = null;
         if (id.isPresent()) {
             log.info("Is present");
@@ -74,11 +74,11 @@ public class GoogleMapController {
             currentPetLocation = result.body();
             log.info("Current pet location: {}", currentPetLocation);
         }
-        var latitude = currentPetLocation != null && currentPetLocation.getLat() != 0.0
-                ? currentPetLocation.getLat()
+        var latitude = currentPetLocation != null && currentPetLocation.getLatitude() != 0.0
+                ? currentPetLocation.getLatitude()
                 : geolocationProperties.getLatitude();
-        var longitude = currentPetLocation != null && currentPetLocation.getLng() != 0.0
-                ? currentPetLocation.getLng()
+        var longitude = currentPetLocation != null && currentPetLocation.getLongitude() != 0.0
+                ? currentPetLocation.getLongitude()
                 : geolocationProperties.getLongitude();
         var message = currentPetLocation != null
                 ? pet.getName() + " " + localeService.getMessage("map.pet.geolocation", request)

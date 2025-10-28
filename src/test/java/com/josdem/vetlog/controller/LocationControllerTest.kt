@@ -16,7 +16,6 @@
 
 package com.josdem.vetlog.controller
 
-import com.josdem.vetlog.cache.ApplicationCache
 import com.josdem.vetlog.model.Location
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
@@ -45,16 +44,6 @@ internal class LocationControllerTest {
     private lateinit var mockMvc: MockMvc
 
     private val log = LoggerFactory.getLogger(this::class.java)
-
-    @BeforeEach
-    fun setupCache() {
-        // Clear cache first
-        ApplicationCache.locations.clear()
-
-        // Populate cache like storePets would have done
-        ApplicationCache.locations[338] = Location(0.0, 0.0)
-        ApplicationCache.locations[339] = Location(0.0, 0.0)
-    }
 
     @Test
     fun `should send pulling up email notification`(testInfo: TestInfo) {
