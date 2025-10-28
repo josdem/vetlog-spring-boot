@@ -16,9 +16,8 @@
 
 package com.josdem.vetlog.service;
 
-import java.io.IOException;
-
 import com.josdem.vetlog.model.LocationDto;
+import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;

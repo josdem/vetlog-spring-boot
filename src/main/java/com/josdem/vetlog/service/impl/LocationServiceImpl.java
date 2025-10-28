@@ -16,7 +16,6 @@
 
 package com.josdem.vetlog.service.impl;
 
-import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.model.LocationDto;
 import com.josdem.vetlog.service.LocationService;
 import java.io.IOException;

@@ -19,7 +19,6 @@ package com.josdem.vetlog.controller;
 import com.josdem.vetlog.config.GeolocationProperties;
 import com.josdem.vetlog.config.GoogleProperties;
 import com.josdem.vetlog.config.VetlogBackendProperties;
-import com.josdem.vetlog.model.Location;
 import com.josdem.vetlog.model.LocationDto;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.service.LocaleService;
