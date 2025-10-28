@@ -50,6 +50,9 @@ public class AdoptionController {
     @Value("${imageBucket}")
     private String imageBucket;
 
+    @Value("${defaultImage}")
+    private String defaultImage;
+
     @InitBinder("adoptionCommand")
     private void initBinder(WebDataBinder binder) {
         binder.addValidators(adoptionValidator);
@@ -74,6 +77,7 @@ public class AdoptionController {
         var modelAndView = new ModelAndView("pet/listForAdoption");
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
+        modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;
     }
 
