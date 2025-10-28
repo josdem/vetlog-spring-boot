@@ -14,17 +14,14 @@
   limitations under the License.
 */
 
-package com.josdem.vetlog.service;
+package com.josdem.vetlog.model;
 
-import java.io.IOException;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-import com.josdem.vetlog.model.LocationDto;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Path;
-
-public interface LocationService {
-    @GET("storeLocation/{petId}")
-    Call<LocationDto> getLocation(@Header("token") String token, @Path("petId") Long petId) throws IOException;
+@Data
+@AllArgsConstructor
+public class LocationDto {
+    private double latitude;
+    private double longitude;
 }

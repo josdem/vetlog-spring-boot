@@ -17,6 +17,7 @@
 package com.josdem.vetlog.service.impl;
 
 import com.josdem.vetlog.model.Location;
+import com.josdem.vetlog.model.LocationDto;
 import com.josdem.vetlog.service.LocationService;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
@@ -40,7 +41,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Call<Location> getLocation(String token, Long petId) throws IOException {
+    public Call<LocationDto> getLocation(String token, Long petId) throws IOException {
         return locationService.getLocation(token, petId);
     }
 }
