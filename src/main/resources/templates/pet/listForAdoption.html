@@ -60,6 +60,9 @@
                             </a>
                         </div>
                     </div>
+                    <div th:if="${pet.images.isEmpty()}" align="center">
+                        <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${defaultImage}}"/>
+                    </div>
                     <div th:data-testid="adoptionContainer" class="caption">
                         <h3 th:data-testid="petName" th:text="${pet.name}"></h3>
                         <p th:data-testid="petBirhdate" th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
