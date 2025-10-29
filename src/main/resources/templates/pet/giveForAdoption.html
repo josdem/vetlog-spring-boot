@@ -20,14 +20,14 @@
             <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
                 <div class="thumbnail">
                     <div th:if="${!pet.images.isEmpty()}">
-                        <img style="width:320px;height:240px;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
+                        <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
+                    </div>
+                    <div th:if="${pet.images.isEmpty()}">
+                        <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${defaultImage}}"/>
                     </div>
                     <div class="caption" align="center">
                         <h3 th:text="${pet.name}"></h3>
                         <p>
-                        <div th:if="${pet.images.isEmpty()}" align="center">
-                            <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${defaultImage}}"/>
-                        </div>
                         <br/>
                         <div align="left">
                             <ul>
