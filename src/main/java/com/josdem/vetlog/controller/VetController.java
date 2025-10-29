@@ -62,7 +62,7 @@ public class VetController {
     ModelAndView search(@Valid UsernameCommand command) {
         log.info("Listing pets");
         var modelAndView = new ModelAndView("vet/list");
-        var user = userService.getByUsername(command.getUsername());
+        var user = userService.getByUsername(command.getUsername().trim());
         var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
