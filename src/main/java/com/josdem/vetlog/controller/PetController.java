@@ -180,6 +180,7 @@ public class PetController {
         petService.getPetsAdoption(pets);
         modelAndView.addObject("pets", pets);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
+        modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;
     }
 
