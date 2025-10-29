@@ -17,19 +17,25 @@
             </div>
         </div>
         <div th:each="pet : ${pets}">
-            <div class="col-sm-6 col-md-4">
+            <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
                 <div class="thumbnail">
                     <div th:if="${!pet.images.isEmpty()}">
                         <img style="width:320px;height:240px;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
                     </div>
-                    <div class="caption">
+                    <div class="caption" align="center">
                         <h3 th:text="${pet.name}"></h3>
                         <p>
-                        <ul>
-                            <li th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
-                            <li th:text="${pet.breed.name}"/>
-                            <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
-                        </ul>
+                        <div th:if="${pet.images.isEmpty()}" align="center">
+                            <img style="width:320px;height:300px;" th:attr="src=@{${gcpImageUrl} + ${defaultImage}}"/>
+                        </div>
+                        <br/>
+                        <div align="left">
+                            <ul>
+                                <li th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
+                                <li th:text="${pet.breed.name}"/>
+                                <li th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
+                            </ul>
+                        </div>
                         </p>
                         <br/>
                         <center>
