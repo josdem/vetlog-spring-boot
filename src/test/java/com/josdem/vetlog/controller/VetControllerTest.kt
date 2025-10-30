@@ -89,7 +89,7 @@ class VetControllerTest {
         val request =
             post("/vet/search")
                 .with(csrf())
-                .param("username", "josdem")
+                .param("username", " josdem ")
         mockMvc
             .perform(request)
             .andExpect(status().isOk())

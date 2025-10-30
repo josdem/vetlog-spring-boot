@@ -26,4 +26,9 @@ public class UsernameCommand implements Command {
 
     @Size(min = 6, max = 50)
     private String username;
+
+    public UsernameCommand setUsername(@Size(min = 6, max = 50) String username) {
+        this.username = username.strip();
+        return this;
+    }
 }
