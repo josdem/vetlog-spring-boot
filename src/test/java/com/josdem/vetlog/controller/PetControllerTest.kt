@@ -167,6 +167,7 @@ class PetControllerTest {
             .perform(get("/pet/listForAdoption"))
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("pets"))
+            .andExpect(model().attributeExists("defaultImage"))
             .andExpect(view().name("pet/listForAdoption"))
     }
 

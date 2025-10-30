@@ -103,6 +103,7 @@ internal class AdoptionControllerTest {
         mockMvc
             .perform(request)
             .andExpect(status().isOk())
+            .andExpect(model().attributeExists("defaultImage"))
             .andExpect(view().name("pet/listForAdoption"))
     }
 
