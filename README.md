@@ -105,6 +105,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Ludoviko451"><img src="https://avatars.githubusercontent.com/u/142056498?v=4?s=100" width="100px;" alt="Luis Angel Quiros Florez"/><br /><sub><b>Luis Angel Quiros Florez</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Ludoviko451" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/technologic-technologic"><img src="https://avatars.githubusercontent.com/u/214138184?v=4?s=100" width="100px;" alt="Leonardo Trevizo"/><br /><sub><b>Leonardo Trevizo</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=technologic-technologic" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ali-mirsalari"><img src="https://avatars.githubusercontent.com/u/214962720?v=4?s=100" width="100px;" alt="Ali Mirsalari"/><br /><sub><b>Ali Mirsalari</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=ali-mirsalari" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://mahnsi.dev"><img src="https://avatars.githubusercontent.com/u/90293053?v=4?s=100" width="100px;" alt="Mahnsi"/><br /><sub><b>Mahnsi</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=mahnsi" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
