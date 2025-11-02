@@ -79,6 +79,7 @@
                                 <ul>
                                     <li th:data-testid="petBirhdate" th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                                     <li th:data-testid="petBreed" th:text="${pet.breed.name}"/>
+                                    <li th:data-testid="petWeight" th:text="${pet.weight+ ' ' + pet.unit}"/>
                                     <li th:data-testid="petSterilized" th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
                                     <li th:data-testid="petChip" th:if="${pet.chip_id} neq ${default_chip_id}" th:text="*{pet.chip_id}"/>
                                 </ul>
