@@ -75,8 +75,8 @@
                                 <ul>
                                     <li th:data-testid="petBirthdate" th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                                     <li th:data-testid="petBreed" th:text="${pet.breed.name}"/>
-                                    <li th:data-testid="petWeight" th:text="${pet.weight+ ' ' + pet.unit}"/>
                                     <li th:data-testid="petSterilized" th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
+                                    <li th:data-testid="petWeight" th:text="${pet.weight+ ' ' + pet.unit}"/>
                                 </ul>
                                 <br>
                                 <table th:if="${!pet.vaccines.isEmpty()}">
