@@ -56,7 +56,6 @@ public class PetCommand implements Command {
     @Min(1L)
     private Long breed;
 
-    @NotNull(message = "Weight should not be empty")
     @DecimalMin(value = "0.0")
     @DecimalMax(value = "100.0")
     private BigDecimal weight;
