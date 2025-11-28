@@ -40,6 +40,7 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Optional
@@ -124,6 +125,20 @@ internal class PetBinderTest {
 
         val diff: Int = LocalDateTime.now().dayOfYear - result.birthDate.dayOfYear
         assertEquals(0, diff)
+    }
+
+    @Test
+    fun `binding a pet from command even without weight`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petCommand = getPetCommand()
+        petCommand.birthDate = "2021-01-17"
+        petCommand.weight = null
+        setBreedExpectations()
+
+        val result = petBinder.bindPet(petCommand)
+
+        assertNotNull(result.weight)
+        assertEquals(BigDecimal.ZERO, result.weight)
     }
 
     private fun setBreedExpectations() {

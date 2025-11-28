@@ -26,6 +26,7 @@ import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.util.UuidGenerator;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +60,7 @@ public class PetBinder {
         pet.setChip_id(petCommand.getChip_id());
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
-        pet.setWeight(petCommand.getWeight());
+        pet.setWeight(petCommand.getWeight() == null ? BigDecimal.ZERO : petCommand.getWeight());
         pet.setUnit(petCommand.getUnit());
         vaccinationService.updateVaccinations(petCommand, pet);
 
