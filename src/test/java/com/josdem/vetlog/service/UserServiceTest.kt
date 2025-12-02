@@ -75,15 +75,36 @@ internal class UserServiceTest {
     fun `Getting user by username`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user))
-        val result = service.getByUsername(USERNAME)
+        val result = service.getUser(USERNAME)
         assertEquals(user, result)
     }
 
     @Test
-    fun `Not finding user by username`(testInfo: TestInfo) {
+    fun `Getting user by mobile when username not found`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
-        assertThrows<UserNotFoundException> { service.getByUsername(USERNAME) }
+        whenever(userRepository.findByMobile(USERNAME)).thenReturn(Optional.of(user))
+        val result = service.getUser(USERNAME)
+        assertEquals(user, result)
+    }
+
+    @Test
+    fun `Getting user by email when username and mobile not found`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByMobile(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByEmail(USERNAME)).thenReturn(Optional.of(user))
+        val result = service.getUser(USERNAME)
+        assertEquals(user, result)
+    }
+
+    @Test
+    fun `Not finding user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByMobile(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByEmail(USERNAME)).thenReturn(Optional.empty())
+        assertThrows<UserNotFoundException> { service.getUser(USERNAME) }
     }
 
     @Test
