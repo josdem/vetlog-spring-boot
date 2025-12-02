@@ -99,9 +99,11 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `Not finding user by username`(testInfo: TestInfo) {
+    fun `Not finding user`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByMobile(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByEmail(USERNAME)).thenReturn(Optional.empty())
         assertThrows<UserNotFoundException> { service.getUser(USERNAME) }
     }
 
