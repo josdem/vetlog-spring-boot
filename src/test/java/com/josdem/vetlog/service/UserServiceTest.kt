@@ -89,7 +89,7 @@ internal class UserServiceTest {
     }
 
     @Test
-    fun `Getting user by username, mobile and email`(testInfo: TestInfo) {
+    fun `Getting user by email when username and mobile not found`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
         whenever(userRepository.findByMobile(USERNAME)).thenReturn(Optional.empty())
