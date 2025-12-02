@@ -75,7 +75,7 @@ internal class UserServiceTest {
     fun `Getting user by username`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.of(user))
-        val result = service.getByUsername(USERNAME)
+        val result = service.getUser(USERNAME)
         assertEquals(user, result)
     }
 
@@ -83,7 +83,7 @@ internal class UserServiceTest {
     fun `Not finding user by username`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
-        assertThrows<UserNotFoundException> { service.getByUsername(USERNAME) }
+        assertThrows<UserNotFoundException> { service.getUser(USERNAME) }
     }
 
     @Test

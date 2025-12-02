@@ -21,7 +21,7 @@ import com.josdem.vetlog.model.User;
 import java.util.Locale;
 
 public interface UserService {
-    User getByUsername(String username);
+    User getUser(String username);
 
     User getByEmail(String email);
 

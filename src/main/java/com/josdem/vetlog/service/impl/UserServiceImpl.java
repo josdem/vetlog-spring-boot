@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     private final ApplicationProperties applicationProperties;
     private final EmailService emailService;
 
-    public User getByUsername(String username) {
+    public User getUser(String username) {
         return userRepository
                 .findByUsername(username)
                 .or(() -> userRepository.findByMobile(username))
