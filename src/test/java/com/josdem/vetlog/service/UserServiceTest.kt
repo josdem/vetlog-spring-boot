@@ -80,6 +80,25 @@ internal class UserServiceTest {
     }
 
     @Test
+    fun `Getting user by username and mobile`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByMobile(USERNAME)).thenReturn(Optional.of(user))
+        val result = service.getUser(USERNAME)
+        assertEquals(user, result)
+    }
+
+    @Test
+    fun `Getting user by username, mobile and email`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByMobile(USERNAME)).thenReturn(Optional.empty())
+        whenever(userRepository.findByEmail(USERNAME)).thenReturn(Optional.of(user))
+        val result = service.getUser(USERNAME)
+        assertEquals(user, result)
+    }
+
+    @Test
     fun `Not finding user by username`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(userRepository.findByUsername(USERNAME)).thenReturn(Optional.empty())

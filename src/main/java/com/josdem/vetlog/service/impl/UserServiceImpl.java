@@ -48,6 +48,7 @@ public class UserServiceImpl implements UserService {
         return userRepository
                 .findByUsername(username)
                 .or(() -> userRepository.findByMobile(username))
+                .or(() -> userRepository.findByEmail(username))
                 .orElseThrow(() -> new UserNotFoundException("User " + NOT_FOUND));
     }
 
