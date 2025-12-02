@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
     private final ApplicationProperties applicationProperties;
     private final EmailService emailService;
 
-    public User getUser(String username) {
+    public User getUser(String identifier) {
         return userRepository
-                .findByUsername(username)
-                .or(() -> userRepository.findByMobile(username))
-                .or(() -> userRepository.findByEmail(username))
+                .findByUsername(identifier)
+                .or(() -> userRepository.findByMobile(identifier))
+                .or(() -> userRepository.findByEmail(identifier))
                 .orElseThrow(() -> new UserNotFoundException("User " + NOT_FOUND));
     }
 
