@@ -16,6 +16,32 @@ class UserCommandValidationTest {
     }
 
     @Test
+    fun `should accept username between 5 and 50 characters`() {
+        val command =
+            UserCommand().apply {
+                username = "josdem"
+            }
+
+        val violations = validator.validate(command)
+        assertTrue(violations.isEmpty(), "Username within range should pass validation")
+    }
+
+    @Test
+    fun `should reject username shorter than 5 characters`() {
+        val command =
+            UserCommand().apply {
+                username = "test"
+            }
+
+        val violation = validator.validate(command)
+
+        assertTrue(
+            violation.any { it.propertyPath.toString() == "username" },
+            "Expected username size validation error",
+        )
+    }
+
+    @Test
     fun `should reject password shorter than 7 characters`() {
         val command =
             UserCommand().apply {

@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 public class UserCommand implements Command {
 
-    @Size(min = 6, max = 50)
+    @Size(min = 5, max = 50)
     private String username;
 
     @Size(min = 7, max = 50)
