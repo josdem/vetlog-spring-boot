@@ -18,7 +18,6 @@ package com.josdem.vetlog.service.impl;
 
 import com.josdem.vetlog.binder.UserBinder;
 import com.josdem.vetlog.command.Command;
-import com.josdem.vetlog.config.ApplicationProperties;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.UserRepository;
@@ -27,13 +26,11 @@ import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.util.UserContextHolderProvider;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@EnableConfigurationProperties(ApplicationProperties.class)
 public class UserServiceImpl implements UserService {
 
     public static final String NOT_FOUND = " not found";
@@ -41,7 +38,6 @@ public class UserServiceImpl implements UserService {
     private final UserBinder userBinder;
     private final UserRepository userRepository;
     private final UserContextHolderProvider provider;
-    private final ApplicationProperties applicationProperties;
     private final EmailService emailService;
 
     public User getUser(String identifier) {
@@ -68,9 +64,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User save(Command command, Locale locale) {
         var user = userBinder.bindUser(command);
-        if (applicationProperties.getCountryCodes().contains(user.getCountryCode())) {
-            user.setEnabled(false);
-        }
         emailService.sendWelcomeEmail(user, locale);
         userRepository.save(user);
         return user;
