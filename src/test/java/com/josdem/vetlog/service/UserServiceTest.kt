@@ -145,7 +145,7 @@ internal class UserServiceTest {
 
         verify(userRepository).save(user)
         assertEquals(user, result)
-        assertTrue(user.isEnabled, "User should be enables")
+        assertTrue(user.isEnabled, "User should be enabled")
     }
 
     @Test
