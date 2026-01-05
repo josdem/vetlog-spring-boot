@@ -62,8 +62,6 @@ geoToken: userToken
 veterinarians:
   - "vet-1"
   - "vet-2"
-countryCodes:
-  - "+countryCodeOne"
 management:
   endpoints:
     web:

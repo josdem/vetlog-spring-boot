@@ -17,7 +17,6 @@ package com.josdem.vetlog.service
 
 import com.josdem.vetlog.binder.UserBinder
 import com.josdem.vetlog.command.Command
-import com.josdem.vetlog.config.ApplicationProperties
 import com.josdem.vetlog.exception.UserNotFoundException
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.UserRepository
@@ -25,6 +24,7 @@ import com.josdem.vetlog.service.impl.UserServiceImpl
 import com.josdem.vetlog.util.UserContextHolderProvider
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
@@ -53,9 +53,6 @@ internal class UserServiceTest {
     private lateinit var provider: UserContextHolderProvider
 
     @Mock
-    private lateinit var applicationProperties: ApplicationProperties
-
-    @Mock
     private lateinit var emailService: EmailService
 
     companion object {
@@ -68,7 +65,7 @@ internal class UserServiceTest {
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        service = UserServiceImpl(userBinder, userRepository, provider, applicationProperties, emailService)
+        service = UserServiceImpl(userBinder, userRepository, provider, emailService)
     }
 
     @Test
@@ -142,14 +139,13 @@ internal class UserServiceTest {
         val command: Command = mock()
         user.email = EMAIL
         user.countryCode = "+countryCodeOne"
-        whenever(applicationProperties.countryCodes).thenReturn(mutableListOf("+countryCodeOne"))
         whenever(userBinder.bindUser(command)).thenReturn(user)
 
         val result = service.save(command, Locale.ENGLISH)
 
         verify(userRepository).save(user)
         assertEquals(user, result)
-        assertFalse(user.isEnabled, "User should be disabled")
+        assertTrue(user.isEnabled, "User should be enabled")
     }
 
     @Test
