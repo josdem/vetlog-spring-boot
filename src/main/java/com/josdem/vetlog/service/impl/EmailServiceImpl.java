@@ -81,6 +81,9 @@ public class EmailServiceImpl implements EmailService {
         if (!user.isEnabled()) {
             return;
         }
+        if (!userUtil.isValid(user)) {
+            return;
+        }
         try {
             var command = new MessageCommand();
             command.setEmail(user.getEmail());

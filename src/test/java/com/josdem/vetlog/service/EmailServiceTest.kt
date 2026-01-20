@@ -117,6 +117,7 @@ internal class EmailServiceTest {
     @Test
     fun `Sending a pulling up email`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        whenever(userUtil.isValid(user)).thenReturn(true)
         whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
         user.firstName = "abc"
         user.email = "abc@xyz.io"
@@ -130,8 +131,25 @@ internal class EmailServiceTest {
     }
 
     @Test
+    fun `Not ending a pulling up email due to invalid user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userUtil.isValid(user)).thenReturn(false)
+        whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
+        user.firstName = "abc"
+        user.email = "abc@xyz.io"
+        pet.id = 338L
+        pet.user = user
+        whenever(petService.getPetById(any())).thenReturn(pet)
+        emailService.sendPullingUpEmail(1L, Locale.ENGLISH)
+
+        verify(localeService, never()).getMessage("email.subject", Locale.forLanguageTag("es"))
+        verify(restService, never()).sendMessage(any())
+    }
+
+    @Test
     fun `Not sending a pulling up email due to an exception`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        whenever(userUtil.isValid(user)).thenReturn(true)
         whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
         user.firstName = "abc"
         user.email = "abc@xyz.io"
