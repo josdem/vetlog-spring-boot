@@ -43,7 +43,7 @@ spring:
 message: Hello Vetlog!
 gmailer:
   url: https://gmailer.josdem.io/emailer/
-  path: message
+  factor: 0.5
 baseUrl: https://vetlog.org/
 template:
   forgot:
