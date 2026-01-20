@@ -94,6 +94,17 @@ internal class EmailServiceTest {
     }
 
     @Test
+    fun `Not sending a welcome email due to not valid user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userUtil.isValid(user)).thenReturn(false)
+
+        emailService.sendWelcomeEmail(user, Locale.ENGLISH)
+
+        verify(localeService, never()).getMessage("user.welcome.message", Locale.ENGLISH)
+        verify(restService, never()).sendMessage(any())
+    }
+
+    @Test
     fun `Not sending email if user is not enabled`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         user.isEnabled = false
