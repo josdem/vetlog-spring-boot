@@ -23,6 +23,7 @@ import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import kotlin.test.assertFalse
 
 @SpringBootTest
 internal class UserUtilTest {
@@ -37,6 +38,14 @@ internal class UserUtilTest {
         val user = getUser()
         user.username = "josdem"
         assertTrue { userValidator.isValid(user) }
+    }
+
+    @Test
+    fun `should return false as valid user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val user = getUser()
+        user.username = "NHUQfuLarRMDj"
+        assertFalse { userValidator.isValid(user) }
     }
 
     private fun getUser(): User =
