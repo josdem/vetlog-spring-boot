@@ -27,4 +27,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("gmailer")
 public class GmailerProperties {
     private String url;
+    private double factor;
 }
