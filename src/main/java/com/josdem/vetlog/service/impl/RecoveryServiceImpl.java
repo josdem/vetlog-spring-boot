@@ -30,6 +30,7 @@ import com.josdem.vetlog.service.RecoveryService;
 import com.josdem.vetlog.service.RegistrationService;
 import com.josdem.vetlog.service.RestService;
 import com.josdem.vetlog.util.TemplateLocaleResolver;
+import com.josdem.vetlog.util.UserUtil;
 import java.io.IOException;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;
@@ -43,12 +44,6 @@ public class RecoveryServiceImpl implements RecoveryService {
 
     public static final String USER_NOT_FOUND = "user.not.found";
 
-    private final RestService restService;
-    private final RegistrationService registrationService;
-    private final UserRepository userRepository;
-    private final RegistrationCodeRepository repository;
-    private final LocaleService localeService;
-
     @Value("${baseUrl}")
     private String baseUrl;
 
@@ -60,6 +55,13 @@ public class RecoveryServiceImpl implements RecoveryService {
 
     @Value("${template.forgot.path}")
     private String forgotPath;
+
+    private final RestService restService;
+    private final RegistrationService registrationService;
+    private final UserRepository userRepository;
+    private final RegistrationCodeRepository repository;
+    private final LocaleService localeService;
+    private final UserUtil userUtil;
 
     public User confirmAccountForToken(String token) {
         var user = getUserByToken(token);
@@ -83,6 +85,9 @@ public class RecoveryServiceImpl implements RecoveryService {
                 .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(USER_NOT_FOUND)));
         if (!user.isEnabled()) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
+        }
+        if (!userUtil.isValid(user)) {
+            return;
         }
         try {
             var token = registrationService.generateToken(email);

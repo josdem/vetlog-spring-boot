@@ -24,6 +24,7 @@ import com.josdem.vetlog.model.User
 import com.josdem.vetlog.repository.RegistrationCodeRepository
 import com.josdem.vetlog.repository.UserRepository
 import com.josdem.vetlog.service.impl.RecoveryServiceImpl
+import com.josdem.vetlog.util.UserUtil
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -33,6 +34,7 @@ import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
+import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
@@ -60,6 +62,9 @@ internal class RecoveryServiceTest {
     @Mock
     private lateinit var localeService: LocaleService
 
+    @Mock
+    private lateinit var userUtil: UserUtil
+
     companion object {
         private val log = LoggerFactory.getLogger(RecoveryServiceTest::class.java)
         private const val TOKEN = "token"
@@ -69,7 +74,7 @@ internal class RecoveryServiceTest {
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        service = RecoveryServiceImpl(restService, registrationService, userRepository, repository, localeService)
+        service = RecoveryServiceImpl(restService, registrationService, userRepository, repository, localeService, userUtil)
     }
 
     @Test
@@ -102,11 +107,25 @@ internal class RecoveryServiceTest {
     fun `Generating token to change password`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         user.isEnabled = true
+        whenever(userUtil.isValid(user)).thenReturn(true)
         whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
         whenever(registrationService.generateToken(EMAIL)).thenReturn(TOKEN)
 
         service.generateRegistrationCodeForEmail(EMAIL, Locale.ENGLISH)
         verify(restService).sendMessage(any<MessageCommand>())
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun `Not generating token to change password due to invalid user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        user.isEnabled = true
+        whenever(userUtil.isValid(user)).thenReturn(false)
+        whenever(userRepository.findByEmail(EMAIL)).thenReturn(Optional.of(user))
+        whenever(registrationService.generateToken(EMAIL)).thenReturn(TOKEN)
+
+        service.generateRegistrationCodeForEmail(EMAIL, Locale.ENGLISH)
+        verify(restService, never()).sendMessage(any<MessageCommand>())
     }
 
     @Test
