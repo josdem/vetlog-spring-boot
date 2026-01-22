@@ -16,19 +16,19 @@
 
 package com.josdem.vetlog.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum PetStatus {
     OWNED("Owned"),
     IN_ADOPTION("In Adoption"),
-    ADOPTED("Adopted");
+    ADOPTED("Adopted"),
+    DECEASED("Deceased");
 
     private final String value;
 
     PetStatus(String value) {
         this.value = value;
-    }
-
-    public String getValue() {
-        return value;
     }
 
     public static PetStatus getPetStatusByValue(String value) {

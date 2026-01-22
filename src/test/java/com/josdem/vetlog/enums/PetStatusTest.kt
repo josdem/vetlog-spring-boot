@@ -22,17 +22,26 @@ import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 
 class PetStatusTest {
-    private val petStatus = PetStatus.OWNED
+    private var petStatus = PetStatus.OWNED
 
     companion object {
         private val log = LoggerFactory.getLogger(this::class.java)
     }
 
     @Test
-    fun `should return pet status`(testInfo: TestInfo) {
+    fun `should return owned pet status`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         assertEquals("OWNED", petStatus.name)
         assertEquals("Owned", petStatus.value)
         assertEquals(PetStatus.OWNED, PetStatus.getPetStatusByValue("Owned"))
+    }
+
+    @Test
+    fun `should return deceased pet status`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        petStatus = PetStatus.DECEASED
+        assertEquals("DECEASED", petStatus.name)
+        assertEquals("Deceased", petStatus.value)
+        assertEquals(PetStatus.DECEASED, PetStatus.getPetStatusByValue("Deceased"))
     }
 }
