@@ -17,9 +17,10 @@
 package com.josdem.vetlog.util;
 
 import java.util.Locale;
-import org.springframework.stereotype.Component;
 
-@Component
+import org.springframework.stereotype.Service;
+
+@Service
 public class PetStatusFormatter {
 
     public String format(String name, Locale locale) {
