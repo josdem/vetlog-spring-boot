@@ -77,7 +77,7 @@
                                     <li th:data-testid="petBreed" th:text="${pet.breed.name}"/>
                                     <li th:data-testid="petSterilized" th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
                                     <li th:data-testid="petStatus" th:text="${@petStatusFormatter.format(pet.status.value, #locale)}"/>
-                                    <li th:data-testid="petChip" th:if="${pet.chip_id} neq ${default_chip_id}" th:text="*{pet.chip_id}"/>
+                                    <li th:data-testid="petChip" th:if="${pet.chip_id} neq ${default_chip_id}" th:text="${pet.chip_id}"/>
                                     <li th:data-testid="petWeight" th:text="${pet.weight+ ' ' + pet.unit}"/>
                                 </ul>
                                 <br>
