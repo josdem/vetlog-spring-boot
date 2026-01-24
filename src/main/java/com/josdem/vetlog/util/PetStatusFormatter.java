@@ -17,7 +17,6 @@
 package com.josdem.vetlog.util;
 
 import java.util.Locale;
-
 import org.springframework.stereotype.Component;
 
 @Component
