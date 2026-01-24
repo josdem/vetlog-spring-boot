@@ -16,6 +16,7 @@
 
 package com.josdem.vetlog.controller;
 
+import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.command.UsernameCommand;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.service.PetService;
@@ -67,6 +68,7 @@ public class VetController {
         pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
+        modelAndView.addObject("default_chip_id", PetCommand.DEFAULT_CHIP_ID);
         modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;
     }
