@@ -4,14 +4,14 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.10")
-    classpath("org.flywaydb:flyway-mysql:11.15.0")
+    classpath("org.flywaydb:flyway-mysql:11.20.2")
   }
 }
 
 plugins {
   id("org.springframework.boot") version "3.5.10"
   id("io.spring.dependency-management") version "1.1.7"
-  id("org.flywaydb.flyway") version "11.15.0"
+  id("org.flywaydb.flyway") version "11.20.2"
   id("org.sonarqube") version "6.3.1.5724"
   id("jacoco")
   id("java")
