@@ -3,33 +3,33 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.7")
-    classpath("org.flywaydb:flyway-mysql:11.15.0")
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.10")
+    classpath("org.flywaydb:flyway-mysql:11.20.2")
   }
 }
 
 plugins {
-  id("org.springframework.boot") version "3.5.7"
+  id("org.springframework.boot") version "3.5.10"
   id("io.spring.dependency-management") version "1.1.7"
-  id("org.flywaydb.flyway") version "11.15.0"
-  id("org.sonarqube") version "6.3.1.5724"
+  id("org.flywaydb.flyway") version "11.20.2"
+  id("org.sonarqube") version "7.2.2.6593"
   id("jacoco")
   id("java")
-  id("com.diffplug.spotless") version "8.0.0"
-  id("org.jetbrains.kotlin.jvm") version "2.2.21"
+  id("com.diffplug.spotless") version "8.1.0"
+  id("org.jetbrains.kotlin.jvm") version "2.3.0"
 }
 
-val gcpVersion by extra("7.4.0")
+val gcpVersion by extra("7.4.2")
 val retrofitVersion by extra("3.0.0")
-val mockitoCoreVersion by extra("5.20.0")
+val mockitoCoreVersion by extra("5.21.0")
 val annotationsVersion by extra("26.0.2")
 val jsonSmartVersion by extra("2.6.0")
-val jaxbVersion by extra("2.3.1")
+val jaxbVersion by extra("4.0.4")
 val cglibVersion by extra("3.3.0")
-val mockitoKotlinVersion by extra("6.1.0")
+val mockitoKotlinVersion by extra("6.2.1")
 
 group = "com.josdem.vetlog"
-version = "3.3.12"
+version = "3.4.0"
 
 configurations {
   compileOnly {
@@ -91,7 +91,7 @@ dependencies {
 
   // Utility libraries (JSON, XML, Annotations)
   implementation("net.minidev:json-smart:$jsonSmartVersion")
-  implementation("javax.xml.bind:jaxb-api:$jaxbVersion")
+  implementation("jakarta.xml.bind:jakarta.xml.bind-api:$jaxbVersion")
   implementation("org.jetbrains:annotations:$annotationsVersion")
   implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
