@@ -58,7 +58,7 @@ public class PetCommand implements Command {
 
     @DecimalMin(value = "0.0")
     @DecimalMax(value = "100.0")
-    private BigDecimal weight;
+    private BigDecimal weight = new BigDecimal("0.00");
 
     @NotNull
     private WeightUnits unit;
