@@ -29,7 +29,7 @@ val cglibVersion by extra("3.3.0")
 val mockitoKotlinVersion by extra("6.2.1")
 
 group = "com.josdem.vetlog"
-version = "3.4.0"
+version = "3.4.1"
 
 configurations {
   compileOnly {
