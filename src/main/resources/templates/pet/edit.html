@@ -91,6 +91,7 @@
                                     <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].pet}"/></td>
                                     <td>
                                         <div th:with="name=*{vaccines[__${itemStat.index}__].name}">
+                                            <input type="hidden" th:field="*{vaccines[__${itemStat.index}__].name}"/>
                                             <input type="text" th:value="${@vaccineFormatter.format(name, #locale)}" readonly style="height: 50px;"/>
                                         </div>
                                     </td>
