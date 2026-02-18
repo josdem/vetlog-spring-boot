@@ -40,10 +40,10 @@ class UserControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    private val log = LoggerFactory.getLogger(this::class.java)
-
     @Autowired
     private lateinit var webApplicationContext: WebApplicationContext
+
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @BeforeEach
     fun setUp() {
@@ -61,7 +61,7 @@ class UserControllerTest {
         val request =
             post("/user/save")
                 .with(csrf())
-                .param("username", "vetlog")
+                .param("username", "VeTLoG")
                 .param("password", "12345678")
                 .param("passwordConfirmation", "12345678")
                 .param("firstname", "vetlog")
