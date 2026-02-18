@@ -36,7 +36,7 @@ public class WebSecurityConfig {
     private final UserDetailsService userDetailsService;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http.authorizeHttpRequests(requests -> requests.requestMatchers(
                                 "/",
                                 "/actuator/**",
