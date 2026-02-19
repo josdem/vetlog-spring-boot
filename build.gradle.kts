@@ -9,7 +9,7 @@ buildscript {
 }
 
 plugins {
-  id("org.springframework.boot") version "3.5.10"
+  id("org.springframework.boot") version "4.0.2"
   id("io.spring.dependency-management") version "1.1.7"
   id("org.flywaydb.flyway") version "11.20.2"
   id("org.sonarqube") version "7.2.2.6593"
@@ -29,7 +29,7 @@ val cglibVersion by extra("3.3.0")
 val mockitoKotlinVersion by extra("6.2.1")
 
 group = "com.josdem.vetlog"
-version = "3.4.2"
+version = "3.4.3"
 
 configurations {
   compileOnly {
@@ -75,7 +75,7 @@ spotless {
 dependencies {
   // Spring Boot Core
   implementation("org.springframework.boot:spring-boot-starter-web")
-  implementation("org.springframework.boot:spring-boot-starter-aop")
+  implementation("org.springframework.boot:spring-boot-starter-aspectj")
   implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
   implementation("org.springframework.boot:spring-boot-starter-security")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -106,6 +106,7 @@ dependencies {
 
   // Test dependencies
   testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
   testImplementation("org.springframework.security:spring-security-test")
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")

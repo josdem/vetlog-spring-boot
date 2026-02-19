@@ -64,7 +64,7 @@ public class Pet {
     @Column(nullable = false)
     private Boolean sterilized = false;
 
-    @Column(columnDefinition = "CHAR(15)")
+    @Column(nullable = false, columnDefinition = "CHAR(15)")
     private String chip_id;
 
     @Column(nullable = false)
