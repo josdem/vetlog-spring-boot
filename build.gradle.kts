@@ -154,3 +154,20 @@ tasks.withType<JavaExec> {
 springBoot {
   buildInfo()
 }
+
+tasks.register<Copy>("settingCredentials") {
+  group = "setup"
+  description = "Copy vetlog credentials into resources directory"
+
+  val home = System.getProperty("user.home")
+  val credentials = file("$home/.vetlog/vetlog.json")
+
+  doFirst {
+    if (!credentials.exists()) {
+      throw GradleException("Missing credentials at ${credentials.absolutePath}")
+    }
+  }
+
+  from(credentials)
+  into(layout.projectDirectory.dir("src/main/resources"))
+}
