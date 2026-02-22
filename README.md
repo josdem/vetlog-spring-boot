@@ -110,6 +110,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://arushitaneja.vercel.app/"><img src="https://avatars.githubusercontent.com/u/179645386?v=4?s=100" width="100px;" alt="Arushi Taneja"/><br /><sub><b>Arushi Taneja</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=arushi0207" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MarcosAndreBueno"><img src="https://avatars.githubusercontent.com/u/105759509?v=4?s=100" width="100px;" alt="Marcos Bueno"/><br /><sub><b>Marcos Bueno</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=MarcosAndreBueno" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/aligator51"><img src="https://avatars.githubusercontent.com/u/89272663?v=4?s=100" width="100px;" alt="rapitor3"/><br /><sub><b>rapitor3</b></sub></a><br /><a href="#infra-aligator51" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    </tr>
   </tbody>
 </table>
 
