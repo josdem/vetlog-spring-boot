@@ -19,7 +19,6 @@ package com.josdem.vetlog.service.impl;
 import com.josdem.vetlog.model.LocationDto;
 import com.josdem.vetlog.service.LocationService;
 import java.io.IOException;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,13 +33,11 @@ public class LocationServiceImpl implements LocationService {
     private final Retrofit vetlogRetrofit;
     private LocationService locationService;
 
-    @PostConstruct
-    public void setup() {
-        locationService = vetlogRetrofit.create(LocationService.class);
-    }
-
     @Override
     public Call<LocationDto> getLocation(String token, Long petId) throws IOException {
+        if (locationService == null) {
+            locationService = vetlogRetrofit.create(LocationService.class);
+        }
         return locationService.getLocation(token, petId);
     }
 }
