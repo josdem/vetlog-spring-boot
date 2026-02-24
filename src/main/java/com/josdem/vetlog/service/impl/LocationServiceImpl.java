@@ -35,8 +35,10 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Call<LocationDto> getLocation(String token, Long petId) throws IOException {
-        if (locationService == null) {
-            locationService = vetlogRetrofit.create(LocationService.class);
+        synchronized (this) {
+            if (locationService == null) {
+                locationService = vetlogRetrofit.create(LocationService.class);
+            }
         }
         return locationService.getLocation(token, petId);
     }

@@ -39,8 +39,10 @@ public class GoogleServiceImpl implements GoogleService {
     @Override
     public Call<GoogleResponse> getGeolocation(@Query("key") String key, @Body MobileCommand command)
             throws IOException {
-        if (googleService == null) {
-            googleService = googleRetrofit.create(GoogleService.class);
+        synchronized (this) {
+            if (googleService == null) {
+                googleService = googleRetrofit.create(GoogleService.class);
+            }
         }
         return googleService.getGeolocation(key, command);
     }

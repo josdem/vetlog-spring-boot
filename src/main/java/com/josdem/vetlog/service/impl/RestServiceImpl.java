@@ -37,9 +37,12 @@ public class RestServiceImpl implements RestService {
 
     @Override
     public Call<ResponseBody> sendMessage(@Body MessageCommand command) throws IOException {
-        if (restService == null) {
-            restService = retrofit.create(RestService.class);
+        synchronized (this) {
+            if (restService == null) {
+                restService = retrofit.create(RestService.class);
+            }
         }
+
         var call = restService.sendMessage(command);
         call.execute();
         return call;
