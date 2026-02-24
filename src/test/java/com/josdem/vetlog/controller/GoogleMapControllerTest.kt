@@ -123,6 +123,7 @@ class GoogleMapControllerTest {
             .andExpect(status().isOk())
             .andExpect(model().attributeExists("pets"))
             .andExpect(model().attributeExists("defaultImage"))
+            .andExpect(model().attributeExists("gcpImageUrl"))
             .andExpect(view().name("map/list"))
     }
 }
