@@ -19,7 +19,6 @@ package com.josdem.vetlog.service.impl;
 import com.josdem.vetlog.command.MessageCommand;
 import com.josdem.vetlog.service.RestService;
 import java.io.IOException;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.ResponseBody;
@@ -36,13 +35,14 @@ public class RestServiceImpl implements RestService {
     private final Retrofit retrofit;
     private RestService restService;
 
-    @PostConstruct
-    public void setup() {
-        restService = retrofit.create(RestService.class);
-    }
-
     @Override
     public Call<ResponseBody> sendMessage(@Body MessageCommand command) throws IOException {
+        synchronized (this) {
+            if (restService == null) {
+                restService = retrofit.create(RestService.class);
+            }
+        }
+
         var call = restService.sendMessage(command);
         call.execute();
         return call;

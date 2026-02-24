@@ -20,7 +20,6 @@ import com.josdem.vetlog.command.MobileCommand;
 import com.josdem.vetlog.model.GoogleResponse;
 import com.josdem.vetlog.service.GoogleService;
 import java.io.IOException;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,14 +36,14 @@ public class GoogleServiceImpl implements GoogleService {
     private final Retrofit googleRetrofit;
     private GoogleService googleService;
 
-    @PostConstruct
-    public void setup() {
-        googleService = googleRetrofit.create(GoogleService.class);
-    }
-
     @Override
     public Call<GoogleResponse> getGeolocation(@Query("key") String key, @Body MobileCommand command)
             throws IOException {
+        synchronized (this) {
+            if (googleService == null) {
+                googleService = googleRetrofit.create(GoogleService.class);
+            }
+        }
         return googleService.getGeolocation(key, command);
     }
 }

@@ -9,7 +9,7 @@ buildscript {
 }
 
 plugins {
-  id("org.springframework.boot") version "4.0.2"
+  id("org.springframework.boot") version "4.0.3"
   id("io.spring.dependency-management") version "1.1.7"
   id("org.flywaydb.flyway") version "11.20.2"
   id("org.sonarqube") version "7.2.2.6593"
@@ -29,7 +29,7 @@ val cglibVersion by extra("3.3.0")
 val mockitoKotlinVersion by extra("6.2.1")
 
 group = "com.josdem.vetlog"
-version = "3.4.3"
+version = "3.4.4"
 
 configurations {
   compileOnly {

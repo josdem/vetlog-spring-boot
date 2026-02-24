@@ -59,7 +59,6 @@ internal class RestServiceTest {
         whenever(retrofit.create(RestService::class.java)).thenReturn(restService)
         whenever(restService.sendMessage(messageCommand)).thenReturn(call)
 
-        service.setup()
         service.sendMessage(messageCommand)
 
         verify(call).execute()
