@@ -39,8 +39,8 @@ public class GoogleStorageWriter {
 
     public void uploadToBucket(String bucket, String fileName, InputStream inputStream, String contentType)
             throws IOException {
-        synchronized (this) {
-            if (storage == null) {
+        if (storage == null) {
+            synchronized (this) {
                 storage = storageOptionsHelper
                         .getStorageOptions()
                         .setProjectId(gcpProjectIdProvider.getProjectId())
