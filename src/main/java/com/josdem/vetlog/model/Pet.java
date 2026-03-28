@@ -64,6 +64,9 @@ public class Pet {
     @Column(nullable = false)
     private Boolean sterilized = false;
 
+    @Column(nullable = false)
+    private Boolean goingOutOften = true;
+
     @Column(nullable = false, columnDefinition = "CHAR(15)")
     private String chip_id;
 

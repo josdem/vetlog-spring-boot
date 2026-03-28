@@ -133,6 +133,7 @@ class PetControllerTest {
                 .param("uuid", PET_UUID)
                 .param("birthDate", "2024-08-22")
                 .param("sterilized", "true")
+                .param("goingOutOften", "true")
                 .param("breed", "11")
                 .param("weight", "6.50")
                 .param("unit", WeightUnits.KG.name)

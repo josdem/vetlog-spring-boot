@@ -51,6 +51,8 @@ public class PetCommand implements Command {
 
     private Boolean sterilized = false;
 
+    private Boolean goingOutOften = true;
+
     private String chip_id = DEFAULT_CHIP_ID;
 
     @Min(1L)

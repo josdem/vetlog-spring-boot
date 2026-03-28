@@ -43,6 +43,11 @@
                                    placeholder="sterilized" id='sterilized'/>
                             <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
                             <br/>
+                            <label for="goingOutOften"><h4 th:text="#{pet.goingOutOften}"/></label>
+                            <input type="checkbox" name='goingOutOften' th:field="*{goingOutOften}" class="form-control"
+                                   placeholder="goingOutOften" id='goingOutOften'/>
+                            <label th:if="${#fields.hasErrors('goingOutOften')}" th:errors="*{goingOutOften}"></label>
+                            <br/>
                             <label for="chip-id"><h4 th:text="#{pet.chip.id}"/></label>
                             <input type="text" name='chip-id' th:field="*{chip_id}" class="form-control"
                                    id='chip-id' minlength="15" maxlength="15" th:value="*{chip_id}">
