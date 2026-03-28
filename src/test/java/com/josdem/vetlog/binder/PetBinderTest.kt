@@ -87,6 +87,7 @@ internal class PetBinderTest {
         assertEquals("Cremita", result.name)
         assertEquals("2021-01-17", result.birthDate)
         assertTrue(result.sterilized)
+        assertTrue(result.goingOutOften)
         assertFalse(result.images.isEmpty())
         assertEquals(5L, result.breed)
         assertEquals(1L, result.user)
@@ -107,6 +108,7 @@ internal class PetBinderTest {
         assertEquals("Marla", result.name)
         assertEquals(PetStatus.IN_ADOPTION, result.status)
         assertNotNull(result.images)
+        assertTrue(result.goingOutOften)
         assertEquals(1L, result.breed.id)
         vaccines.forEach {
             assertEquals(LocalDate.now(), it.date)
