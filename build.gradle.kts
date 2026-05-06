@@ -4,29 +4,29 @@ buildscript {
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.10")
-    classpath("org.flywaydb:flyway-mysql:11.20.2")
+    classpath("org.flywaydb:flyway-mysql:12.5.0")
   }
 }
 
 plugins {
-  id("org.springframework.boot") version "4.0.3"
+  id("org.springframework.boot") version "4.0.6"
   id("io.spring.dependency-management") version "1.1.7"
-  id("org.flywaydb.flyway") version "11.20.2"
+  id("org.flywaydb.flyway") version "12.5.0"
   id("org.sonarqube") version "7.2.2.6593"
   id("jacoco")
   id("java")
-  id("com.diffplug.spotless") version "8.1.0"
-  id("org.jetbrains.kotlin.jvm") version "2.3.0"
+  id("com.diffplug.spotless") version "8.4.0"
+  id("org.jetbrains.kotlin.jvm") version "2.3.21"
 }
 
-val gcpVersion by extra("7.4.2")
+val gcpVersion by extra("8.0.2")
 val retrofitVersion by extra("3.0.0")
-val mockitoCoreVersion by extra("5.21.0")
-val annotationsVersion by extra("26.0.2")
+val mockitoCoreVersion by extra("5.23.0")
+val annotationsVersion by extra("26.1.0")
 val jsonSmartVersion by extra("2.6.0")
-val jaxbVersion by extra("4.0.4")
+val jaxbVersion by extra("4.0.5")
 val cglibVersion by extra("3.3.0")
-val mockitoKotlinVersion by extra("6.2.1")
+val mockitoKotlinVersion by extra("6.3.0")
 
 group = "com.josdem.vetlog"
 version = "3.5.0"
@@ -43,6 +43,8 @@ repositories {
 
 flyway {
     url = "jdbc:mysql://localhost:3306/vetlog"
+    user = System.getenv("USER") ?: "vetlog_user"
+    password = System.getenv("PASSWORD") ?: "vetlog_password"
 }
 
 sonar {
@@ -98,7 +100,7 @@ dependencies {
   // Database and ORM
   runtimeOnly("com.mysql:mysql-connector-j")
   implementation("org.flywaydb:flyway-core")
-  runtimeOnly("org.flywaydb:flyway-mysql:11.15.0")
+  runtimeOnly("org.flywaydb:flyway-mysql:12.5.0")
 
   // Compile-time dependencies
   compileOnly("org.projectlombok:lombok")
