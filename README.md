@@ -112,6 +112,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/aligator51"><img src="https://avatars.githubusercontent.com/u/89272663?v=4?s=100" width="100px;" alt="rapitor3"/><br /><sub><b>rapitor3</b></sub></a><br /><a href="#infra-aligator51" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/programmerloverun"><img src="https://avatars.githubusercontent.com/u/123237285?v=4?s=100" width="100px;" alt="雷炯"/><br /><sub><b>雷炯</b></sub></a><br /><a href="#infra-programmerloverun" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     </tr>
   </tbody>
 </table>
