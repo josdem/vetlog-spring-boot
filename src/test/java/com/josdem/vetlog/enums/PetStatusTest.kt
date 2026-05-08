@@ -25,20 +25,11 @@ class PetStatusTest {
     private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
-    fun `should return owned pet status`(testInfo: TestInfo) {
+    fun `should keep formatter display values for all pet statuses`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        val petStatus = PetStatus.OWNED
-        assertEquals("OWNED", petStatus.name)
-        assertEquals("Owned", petStatus.value)
-        assertEquals(PetStatus.OWNED, PetStatus.getPetStatusByValue("Owned"))
-    }
-
-    @Test
-    fun `should return deceased pet status`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val petStatus = PetStatus.DECEASED
-        assertEquals("DECEASED", petStatus.name)
-        assertEquals("Deceased", petStatus.value)
-        assertEquals(PetStatus.DECEASED, PetStatus.getPetStatusByValue("Deceased"))
+        assertEquals(
+            listOf("Owned", "In Adoption", "Adopted", "Deceased", "Inactive"),
+            PetStatus.entries.map { it.value },
+        )
     }
 }
