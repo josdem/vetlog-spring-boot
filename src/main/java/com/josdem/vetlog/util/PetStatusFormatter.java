@@ -31,6 +31,7 @@ public class PetStatusFormatter {
             case "In Adoption" -> "En Adopción";
             case "Adopted" -> "Adoptado";
             case "Deceased" -> "En el Cielo";
+            case "Inactive" -> "Deshabilitado";
             default -> name;
         };
     }
