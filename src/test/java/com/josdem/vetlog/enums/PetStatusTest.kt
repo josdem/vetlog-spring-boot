@@ -41,4 +41,13 @@ class PetStatusTest {
         assertEquals("Deceased", petStatus.value)
         assertEquals(PetStatus.DECEASED, PetStatus.getPetStatusByValue("Deceased"))
     }
+
+    @Test
+    fun `should return inactive pet status`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petStatus = PetStatus.INACTIVE
+        assertEquals("INACTIVE", petStatus.name)
+        assertEquals("Inactive", petStatus.value)
+        assertEquals(PetStatus.INACTIVE, PetStatus.getPetStatusByValue("Inactive"))
+    }
 }

@@ -23,7 +23,8 @@ public enum PetStatus {
     OWNED("Owned"),
     IN_ADOPTION("In Adoption"),
     ADOPTED("Adopted"),
-    DECEASED("Deceased");
+    DECEASED("Deceased"),
+    INACTIVE("Inactive");
 
     private final String value;
 
