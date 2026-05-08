@@ -50,4 +50,13 @@ class PetStatusTest {
         assertEquals("Inactive", petStatus.value)
         assertEquals(PetStatus.INACTIVE, PetStatus.getPetStatusByValue("Inactive"))
     }
+
+    @Test
+    fun `should keep formatter display values for all pet statuses`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        assertEquals(
+            listOf("Owned", "Deceased", "Inactive"),
+            PetStatus.entries.map { it.value }
+        )
+    }
 }
