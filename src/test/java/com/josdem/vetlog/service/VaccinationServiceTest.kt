@@ -20,6 +20,7 @@ import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
 import com.josdem.vetlog.exception.BusinessException
+import com.josdem.vetlog.helper.VaccinationHelper
 import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.Vaccination
@@ -35,9 +36,11 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.ArgumentMatchers.argThat
+import org.mockito.ArgumentMatchers.isA
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
+import org.mockito.kotlin.isA
 import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -51,6 +54,9 @@ internal class VaccinationServiceTest {
 
     @Mock
     private lateinit var vaccinationRepository: VaccinationRepository
+
+    @Mock
+    private lateinit var vaccinationHelper: VaccinationHelper
 
     private val pet = Pet()
 
@@ -71,7 +77,7 @@ internal class VaccinationServiceTest {
                 PetType.CAT to catVaccinationStrategy,
             )
 
-        vaccinationService = VaccinationServiceImpl(vaccinationRepository, vaccinationStrategies)
+        vaccinationService = VaccinationServiceImpl(vaccinationRepository, vaccinationHelper, vaccinationStrategies)
         pet.breed = Breed()
     }
 
@@ -138,12 +144,10 @@ internal class VaccinationServiceTest {
     @Test
     fun `should update rabies vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        val rabiesVaccination = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
-        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(rabiesVaccination))
 
         vaccinationService.updateVaccinations(getPetCommand(), pet)
 
-        verify(vaccinationRepository).save(any())
+        verify(vaccinationHelper).validateRabiesVaccine(any(), any(), any())
     }
 
     private fun getPetCommand() =
