@@ -33,6 +33,7 @@ public class VaccinationHelper {
 
     private static final String RABIES_VACCINE = "Rabies";
     private static final String PUPPY_VACCINE = "Puppy";
+    private static final String C4CV_VACCINE = "C4CV";
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -55,11 +56,21 @@ public class VaccinationHelper {
         }
     }
 
-    public void updatePuppyVaccines(List<Vaccination> newVaccines, Pet pet) {
+    public void validatePuppyVaccines(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
         for (Vaccination newVaccine : newVaccines) {
             if (PUPPY_VACCINE.equalsIgnoreCase(newVaccine.getName())
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
-                log.info("Update all vaccines for pet {} except Puppy", pet);
+                previousVaccines.stream()
+                        .filter(v -> PUPPY_VACCINE.equalsIgnoreCase(v.getName()))
+                        .findFirst()
+                        .ifPresent(oldVaccine -> {
+                            if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
+                                // Create next vaccine
+                                Vaccination futureRabies = new Vaccination(
+                                        null, C4CV_VACCINE, LocalDate.now().plusDays(15), VaccinationStatus.NEW, pet);
+                                vaccinationRepository.save(futureRabies);
+                            }
+                        });
             }
         }
     }
