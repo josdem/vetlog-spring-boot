@@ -66,9 +66,9 @@ public class VaccinationHelper {
                         .ifPresent(oldVaccine -> {
                             if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
                                 // Create next vaccine
-                                Vaccination futureRabies = new Vaccination(
+                                Vaccination futureC4cv = new Vaccination(
                                         null, C4CV_VACCINE, LocalDate.now().plusDays(15), VaccinationStatus.NEW, pet);
-                                vaccinationRepository.save(futureRabies);
+                                vaccinationRepository.save(futureC4cv);
                             }
                         });
             }
