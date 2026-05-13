@@ -38,8 +38,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VaccinationServiceImpl implements VaccinationService {
 
-    private static final String RABIES_VACCINE = "Rabies";
-
     private final VaccinationRepository vaccinationRepository;
     private final VaccinationHelper vaccinationHelper;
 
