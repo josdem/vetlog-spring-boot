@@ -58,4 +58,16 @@ class VaccinationHelperTest {
 
         verify(vaccinationRepository).save(any())
     }
+
+    @Test
+    fun `should update puppy vaccination status to APPLIED`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val previousVaccines = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validatePuppyVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository).save(any())
+    }
 }
