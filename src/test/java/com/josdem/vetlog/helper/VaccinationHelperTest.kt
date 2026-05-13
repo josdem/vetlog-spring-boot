@@ -24,7 +24,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.mockito.kotlin.any
+import org.mockito.kotlin.argThat
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
@@ -56,7 +56,15 @@ class VaccinationHelperTest {
 
         vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
 
-        verify(vaccinationRepository).save(any())
+        val expectedDate = LocalDate.now().plusYears(1)
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
     }
 
     @Test
@@ -68,6 +76,14 @@ class VaccinationHelperTest {
 
         vaccinationHelper.validatePuppyVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
-        verify(vaccinationRepository).save(any())
+        val expectedDate = LocalDate.now().plusDays(15)
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "C4CV" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
     }
 }
