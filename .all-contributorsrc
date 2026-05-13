@@ -549,6 +549,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "devcom33",
+      "name": "MOUAD ELBOUCHRAOUI",
+      "avatar_url": "https://avatars.githubusercontent.com/u/126575832?v=4",
+      "profile": "https://mouadelb.vercel.app/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
