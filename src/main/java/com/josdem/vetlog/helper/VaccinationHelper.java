@@ -23,13 +23,16 @@ import com.josdem.vetlog.repository.VaccinationRepository;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class VaccinationHelper {
 
     private static final String RABIES_VACCINE = "Rabies";
+    private static final String PUPPY_VACCINE = "Puppy";
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -48,6 +51,15 @@ public class VaccinationHelper {
                                 vaccinationRepository.save(futureRabies);
                             }
                         });
+            }
+        }
+    }
+
+    public void updatePuppyVaccines(List<Vaccination> newVaccines, Pet pet) {
+        for (Vaccination newVaccine : newVaccines) {
+            if (PUPPY_VACCINE.equalsIgnoreCase(newVaccine.getName())
+                    && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
+                log.info("Update all vaccines for pet {} except Puppy", pet);
             }
         }
     }

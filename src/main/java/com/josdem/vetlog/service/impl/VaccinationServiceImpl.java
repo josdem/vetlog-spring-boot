@@ -77,5 +77,6 @@ public class VaccinationServiceImpl implements VaccinationService {
     public void updateVaccinations(PetCommand petCommand, Pet pet) {
         var previousVaccines = vaccinationRepository.findAllByPetId(petCommand.getId());
         vaccinationHelper.validateRabiesVaccine(previousVaccines, petCommand.getVaccines(), pet);
+        vaccinationHelper.updatePuppyVaccines(petCommand.getVaccines(), pet);
     }
 }
