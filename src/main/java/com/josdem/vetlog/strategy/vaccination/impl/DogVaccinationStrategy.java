@@ -18,7 +18,6 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
     private static final String DEWORMING = "Deworming";
     private static final String RABIES = "Rabies";
     private static final String PUPPY = "Puppy";
-    private static final String C4CV = "C4CV";
 
     private final VaccinationRepository vaccinationRepository;
 
