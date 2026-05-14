@@ -33,7 +33,7 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
             }
             case 6, 7, 8, 9, 10, 11, 12 -> {
                 log.info("Second vaccination");
-                registerVaccinations(vaccinationRepository, pet, PUPPY, DEWORMING, C4CV, C6CV, RABIES);
+                registerVaccinations(vaccinationRepository, pet, PUPPY, DEWORMING);
             }
             default -> {
                 log.info("Annual vaccination");
