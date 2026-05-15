@@ -38,9 +38,6 @@ public class VaccinationHelper {
 
     private final VaccinationRepository vaccinationRepository;
 
-    /*
-     * Could we optimize this function to use less streams inside the loop? Or its fine in this way?
-     * */
     public void validateRabiesVaccine(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
         for (Vaccination newVaccine : newVaccines) {
             if (C6CV_VACCINE.equalsIgnoreCase(newVaccine.getName())
