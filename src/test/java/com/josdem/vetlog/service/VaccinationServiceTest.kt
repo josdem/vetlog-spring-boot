@@ -157,6 +157,10 @@ internal class VaccinationServiceTest {
             status = PetStatus.OWNED
             sterilized = true
             type = PetType.DOG
-            vaccines = listOf(Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet))
+            vaccines =
+                listOf(
+                    Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+                    Vaccination(2L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+                )
         }
 }

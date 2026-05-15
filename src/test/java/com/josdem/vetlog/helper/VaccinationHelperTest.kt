@@ -68,6 +68,24 @@ class VaccinationHelperTest {
     }
 
     @Test
+    fun `should update c6cv vaccination status to APPLIED`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val previousVaccines = Vaccination(2L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(2L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+        val expectedDate = LocalDate.now().plusDays(15)
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
     fun `should update puppy vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val previousVaccines = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.PENDING, pet)

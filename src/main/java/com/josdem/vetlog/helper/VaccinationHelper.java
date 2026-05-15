@@ -22,6 +22,8 @@ import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -34,21 +36,33 @@ public class VaccinationHelper {
     private static final String RABIES_VACCINE = "Rabies";
     private static final String PUPPY_VACCINE = "Puppy";
     private static final String C4CV_VACCINE = "C4CV";
+    private static final String C6CV_VACCINE = "C6CV";
 
     private final VaccinationRepository vaccinationRepository;
 
     public void validateRabiesVaccine(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
+        Set<String> validationVaccines = Set.of(C6CV_VACCINE.toUpperCase(), RABIES_VACCINE.toUpperCase());
+        Map<String, Integer> daysAfterVaccineApplied = Map.of(
+                C6CV_VACCINE.toUpperCase(), 15,
+                /* Create new rabies vaccine after one year */
+                RABIES_VACCINE.toUpperCase(), 365);
         for (Vaccination newVaccine : newVaccines) {
-            if (RABIES_VACCINE.equalsIgnoreCase(newVaccine.getName())
+            if (validationVaccines.contains(newVaccine.getName().toUpperCase())
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
                 previousVaccines.stream()
-                        .filter(v -> RABIES_VACCINE.equalsIgnoreCase(v.getName()))
+                        .filter(v -> validationVaccines.contains(v.getName().toUpperCase()))
                         .findFirst()
                         .ifPresent(oldVaccine -> {
                             if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
-                                // Create a new Rabies vaccine for one year later
+
+                                int days = daysAfterVaccineApplied.get(
+                                        oldVaccine.getName().toUpperCase());
                                 Vaccination futureRabies = new Vaccination(
-                                        null, RABIES_VACCINE, LocalDate.now().plusYears(1), VaccinationStatus.NEW, pet);
+                                        null,
+                                        RABIES_VACCINE,
+                                        LocalDate.now().plusDays(days),
+                                        VaccinationStatus.NEW,
+                                        pet);
                                 vaccinationRepository.save(futureRabies);
                             }
                         });
