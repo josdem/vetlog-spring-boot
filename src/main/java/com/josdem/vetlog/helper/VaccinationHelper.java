@@ -22,6 +22,8 @@ import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -38,33 +40,29 @@ public class VaccinationHelper {
 
     private final VaccinationRepository vaccinationRepository;
 
-    /*
-     * Could we optimize this function to use less streams inside the loop? Or its fine in this way?
-     * */
     public void validateRabiesVaccine(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
+        Set<String> validationVaccines = Set.of(C6CV_VACCINE.toUpperCase(), RABIES_VACCINE.toUpperCase());
+        Map<String, Integer> daysAfterVaccineApplied = Map.of(
+                C6CV_VACCINE.toUpperCase(), 15,
+                /* Create new rabies vaccine after one year */
+                RABIES_VACCINE.toUpperCase(), 365);
         for (Vaccination newVaccine : newVaccines) {
-            if (C6CV_VACCINE.equalsIgnoreCase(newVaccine.getName())
+            if (validationVaccines.contains(newVaccine.getName().toUpperCase())
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
                 previousVaccines.stream()
-                        .filter(v -> C6CV_VACCINE.equalsIgnoreCase(v.getName())
-                                && v.getStatus() == VaccinationStatus.PENDING)
-                        .findFirst()
-                        .ifPresent(oldVaccine -> {
-                            Vaccination futureRabies = new Vaccination(
-                                    null, RABIES_VACCINE, LocalDate.now().plusDays(15), VaccinationStatus.NEW, pet);
-                            vaccinationRepository.save(futureRabies);
-                        });
-            }
-            if (RABIES_VACCINE.equalsIgnoreCase(newVaccine.getName())
-                    && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
-                previousVaccines.stream()
-                        .filter(v -> RABIES_VACCINE.equalsIgnoreCase(v.getName()))
+                        .filter(v -> validationVaccines.contains(v.getName().toUpperCase()))
                         .findFirst()
                         .ifPresent(oldVaccine -> {
                             if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
-                                // Create a new Rabies vaccine for one year later
+
+                                int days = daysAfterVaccineApplied.get(
+                                        oldVaccine.getName().toUpperCase());
                                 Vaccination futureRabies = new Vaccination(
-                                        null, RABIES_VACCINE, LocalDate.now().plusYears(1), VaccinationStatus.NEW, pet);
+                                        null,
+                                        RABIES_VACCINE,
+                                        LocalDate.now().plusDays(days),
+                                        VaccinationStatus.NEW,
+                                        pet);
                                 vaccinationRepository.save(futureRabies);
                             }
                         });
