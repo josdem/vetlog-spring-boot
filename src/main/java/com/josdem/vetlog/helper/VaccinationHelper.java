@@ -34,11 +34,27 @@ public class VaccinationHelper {
     private static final String RABIES_VACCINE = "Rabies";
     private static final String PUPPY_VACCINE = "Puppy";
     private static final String C4CV_VACCINE = "C4CV";
+    private static final String C6CV_VACCINE = "C6CV";
 
     private final VaccinationRepository vaccinationRepository;
 
+    /*
+     * Could we optimize this function to use less streams inside the loop? Or its fine in this way?
+     * */
     public void validateRabiesVaccine(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
         for (Vaccination newVaccine : newVaccines) {
+            if (C6CV_VACCINE.equalsIgnoreCase(newVaccine.getName())
+                    && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
+                previousVaccines.stream()
+                        .filter(v -> C6CV_VACCINE.equalsIgnoreCase(v.getName())
+                                && v.getStatus() == VaccinationStatus.PENDING)
+                        .findFirst()
+                        .ifPresent(oldVaccine -> {
+                            Vaccination futureRabies = new Vaccination(
+                                    null, RABIES_VACCINE, LocalDate.now().plusDays(15), VaccinationStatus.NEW, pet);
+                            vaccinationRepository.save(futureRabies);
+                        });
+            }
             if (RABIES_VACCINE.equalsIgnoreCase(newVaccine.getName())
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
                 previousVaccines.stream()
