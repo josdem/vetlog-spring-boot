@@ -86,4 +86,24 @@ class VaccinationHelperTest {
             },
         )
     }
+
+    @Test
+    fun `should create C6CV 15 days later when C4CV applied`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val previousVaccines = Vaccination(1L, "C4CV", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "C4CV", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateC4cvVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        val expectedDate = LocalDate.now().plusDays(15)
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "C6CV" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
+    }
 }
