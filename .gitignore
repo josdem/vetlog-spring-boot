@@ -7,3 +7,4 @@
 *.log
 bower.json
 **package-lock.json
+gradle.properties
