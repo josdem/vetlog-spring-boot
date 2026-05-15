@@ -74,7 +74,7 @@ class VaccinationHelperTest {
         val newVaccines = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.APPLIED, pet)
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
 
-        vaccinationHelper.validatePuppyVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
         val expectedDate = LocalDate.now().plusDays(15)
         verify(vaccinationRepository).save(
@@ -94,7 +94,7 @@ class VaccinationHelperTest {
         val newVaccines = Vaccination(1L, "C4CV", LocalDate.now(), VaccinationStatus.APPLIED, pet)
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
 
-        vaccinationHelper.validateC4cvVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
         val expectedDate = LocalDate.now().plusDays(15)
         verify(vaccinationRepository).save(
