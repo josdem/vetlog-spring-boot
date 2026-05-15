@@ -141,7 +141,6 @@ kotlin {
 }
 
 tasks.withType<Test> {
-  maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
   useJUnitPlatform()
   systemProperties.putAll(System.getProperties().map { it.key.toString() to it.value.toString() })
   dependsOn("spotlessApply")
