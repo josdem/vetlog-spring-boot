@@ -86,6 +86,37 @@ class VaccinationHelperTest {
     }
 
     @Test
+    fun `should update both c6cv and rabies vaccination status to APPLIED`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val previousC6cvVaccine = Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val previousRabiesVaccine = Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newC6cvVaccine = Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        val newRabiesVaccine = Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousC6cvVaccine, previousRabiesVaccine))
+        vaccinationHelper.validateRabiesVaccine(
+            listOf(previousC6cvVaccine, previousRabiesVaccine),
+            listOf(newC6cvVaccine, newRabiesVaccine),
+            pet,
+        )
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == LocalDate.now().plusDays(15) &&
+                    vaccination.pet == pet
+            },
+        )
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == LocalDate.now().plusYears(1) &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
     fun `should update puppy vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val previousVaccines = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.PENDING, pet)
