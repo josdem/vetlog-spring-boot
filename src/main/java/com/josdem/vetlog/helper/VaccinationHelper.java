@@ -23,7 +23,6 @@ import com.josdem.vetlog.repository.VaccinationRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -38,7 +37,6 @@ public class VaccinationHelper {
     private static final String C4CV_VACCINE = "C4CV";
     private static final String C6CV_VACCINE = "C6CV";
 
-
     private static final Map<String, String> NEXT_VACCINE = Map.of(
             PUPPY_VACCINE, C4CV_VACCINE,
             C4CV_VACCINE, C6CV_VACCINE);
@@ -47,31 +45,26 @@ public class VaccinationHelper {
             PUPPY_VACCINE, java.time.Period.ofDays(15),
             C4CV_VACCINE, java.time.Period.ofDays(15));
 
+    private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
+            C6CV_VACCINE, java.time.Period.ofDays(15),
+            RABIES_VACCINE, java.time.Period.ofYears(1));
+
     private final VaccinationRepository vaccinationRepository;
 
     public void validateRabiesVaccine(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
-        Set<String> validationVaccines = Set.of(C6CV_VACCINE.toUpperCase(), RABIES_VACCINE.toUpperCase());
-        Map<String, Integer> daysAfterVaccineApplied = Map.of(
-                C6CV_VACCINE.toUpperCase(), 15,
-                /* Create new rabies vaccine after one year */
-                RABIES_VACCINE.toUpperCase(), 365);
         for (Vaccination newVaccine : newVaccines) {
-            if (validationVaccines.contains(newVaccine.getName().toUpperCase())
+            String appliedName = newVaccine.getName();
+            if (NEXT_RABIES_VACCINE_OFFSET.containsKey(appliedName)
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
                 previousVaccines.stream()
-                        .filter(v -> validationVaccines.contains(v.getName().toUpperCase()))
+                        .filter(v -> appliedName.equalsIgnoreCase(v.getName()))
                         .findFirst()
                         .ifPresent(oldVaccine -> {
                             if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
-
-                                int days = daysAfterVaccineApplied.get(
-                                        oldVaccine.getName().toUpperCase());
+                                java.time.Period offset = NEXT_RABIES_VACCINE_OFFSET.getOrDefault(
+                                        appliedName, java.time.Period.ofYears(1));
                                 Vaccination futureRabies = new Vaccination(
-                                        null,
-                                        RABIES_VACCINE,
-                                        LocalDate.now().plusDays(days),
-                                        VaccinationStatus.NEW,
-                                        pet);
+                                        null, RABIES_VACCINE, LocalDate.now().plus(offset), VaccinationStatus.NEW, pet);
                                 vaccinationRepository.save(futureRabies);
                             }
                         });
