@@ -38,6 +38,15 @@ public class VaccinationHelper {
     private static final String C4CV_VACCINE = "C4CV";
     private static final String C6CV_VACCINE = "C6CV";
 
+
+    private static final Map<String, String> NEXT_VACCINE = Map.of(
+            PUPPY_VACCINE, C4CV_VACCINE,
+            C4CV_VACCINE, C6CV_VACCINE);
+
+    private static final Map<String, java.time.Period> NEXT_VACCINE_OFFSET = Map.of(
+            PUPPY_VACCINE, java.time.Period.ofDays(15),
+            C4CV_VACCINE, java.time.Period.ofDays(15));
+
     private final VaccinationRepository vaccinationRepository;
 
     public void validateRabiesVaccine(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
@@ -70,19 +79,21 @@ public class VaccinationHelper {
         }
     }
 
-    public void validatePuppyVaccines(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
+    public void validateNextVaccines(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
         for (Vaccination newVaccine : newVaccines) {
-            if (PUPPY_VACCINE.equalsIgnoreCase(newVaccine.getName())
-                    && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
+            String appliedName = newVaccine.getName();
+            if (NEXT_VACCINE.containsKey(appliedName) && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
                 previousVaccines.stream()
-                        .filter(v -> PUPPY_VACCINE.equalsIgnoreCase(v.getName()))
+                        .filter(v -> appliedName.equalsIgnoreCase(v.getName()))
                         .findFirst()
                         .ifPresent(oldVaccine -> {
                             if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
-                                // Create next vaccine
-                                Vaccination futureC4cv = new Vaccination(
-                                        null, C4CV_VACCINE, LocalDate.now().plusDays(15), VaccinationStatus.NEW, pet);
-                                vaccinationRepository.save(futureC4cv);
+                                String nextName = NEXT_VACCINE.get(appliedName);
+                                java.time.Period offset =
+                                        NEXT_VACCINE_OFFSET.getOrDefault(appliedName, java.time.Period.ofDays(15));
+                                Vaccination future = new Vaccination(
+                                        null, nextName, LocalDate.now().plus(offset), VaccinationStatus.NEW, pet);
+                                vaccinationRepository.save(future);
                             }
                         });
             }
