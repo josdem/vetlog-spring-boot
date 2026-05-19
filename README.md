@@ -115,6 +115,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/programmerloverun"><img src="https://avatars.githubusercontent.com/u/123237285?v=4?s=100" width="100px;" alt="雷炯"/><br /><sub><b>雷炯</b></sub></a><br /><a href="#infra-programmerloverun" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://mouadelb.vercel.app/"><img src="https://avatars.githubusercontent.com/u/126575832?v=4?s=100" width="100px;" alt="MOUAD ELBOUCHRAOUI"/><br /><sub><b>MOUAD ELBOUCHRAOUI</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=devcom33" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Bobacho"><img src="https://avatars.githubusercontent.com/u/105739811?v=4?s=100" width="100px;" alt="Luciano"/><br /><sub><b>Luciano</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Bobacho" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/prajp98"><img src="https://avatars.githubusercontent.com/u/38401032?v=4?s=100" width="100px;" alt="Prajwala P"/><br /><sub><b>Prajwala P</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=prajp98" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
