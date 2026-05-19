@@ -92,8 +92,8 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="vaccination : ${pet.vaccines}">
-                                        <td th:text="${vaccination.name}"></td>
-                                        <td th:text="${vaccination.status}"></td>
+                                        <td th:text="${@vaccineFormatter.format(vaccination.name, #locale)}"></td>
+                                        <td th:text="${@vaccineFormatter.formatStatus(vaccination.status, #locale)}"></td>
                                         <td th:text="${@dateFormatter.formatToDate(vaccination.date, #locale)}"></td>
                                     </tr>
                                     </tbody>
