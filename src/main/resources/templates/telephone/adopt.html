@@ -33,7 +33,7 @@
                             <label for="mobile"><h4 th:text="#{adoption.mobile}"/></label>
                             <input type="text" name="mobile" class="form-control" placeholder="Mobile" id='mobile'/>
                             <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
-
+                            <input type="hidden" th:value="${telephoneCommand.uuid}" name="uuid"/>
                             <label for="address"><h4 th:text="#{adoption.address}"/></label>
                             <input type="text"
                                    name="address"
