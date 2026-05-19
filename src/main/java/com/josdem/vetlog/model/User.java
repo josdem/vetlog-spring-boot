@@ -59,6 +59,9 @@ public class User implements Serializable {
     @Column
     private String email;
 
+    @Column
+    private String address;
+
     @Column(nullable = false)
     @Enumerated(STRING)
     private Role role;

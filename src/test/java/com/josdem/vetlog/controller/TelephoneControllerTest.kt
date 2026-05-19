@@ -98,6 +98,7 @@ class TelephoneControllerTest {
             post("/telephone/save")
                 .with(csrf())
                 .param("uuid", PET_UUID)
+                .param("address", "Street 12")
                 .param("mobile", "123")
         mockMvc
             .perform(request)

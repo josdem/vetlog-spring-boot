@@ -30,4 +30,8 @@ public class TelephoneCommand implements Command {
 
     @Size(min = 10, max = 10)
     private String mobile;
+
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String address;
 }

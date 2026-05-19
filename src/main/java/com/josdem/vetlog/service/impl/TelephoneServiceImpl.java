@@ -61,6 +61,7 @@ public class TelephoneServiceImpl implements TelephoneService {
         var pet = petService.getPetByUuid(telephoneCommand.getUuid());
         pet.setStatus(PetStatus.ADOPTED);
         adopter.setMobile(telephoneCommand.getMobile());
+        adopter.setAddress(telephoneCommand.getAddress());
         pet.setAdopter(adopter);
         petRepository.save(pet);
         userRepository.save(adopter);
