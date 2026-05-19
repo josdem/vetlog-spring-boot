@@ -91,12 +91,14 @@
                                     <tr>
                                         <th th:text="#{pet.table.header.vaccines}"></th>
                                         <th th:text="#{pet.table.header.status}"></th>
+                                        <th th:text="#{pet.table.header.date}"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr th:each="vaccination : ${pet.vaccines}">
                                         <td th:text="${@vaccineFormatter.format(vaccination.name, #locale)}"></td>
                                         <td th:text="${@vaccineFormatter.formatStatus(vaccination.status, #locale)}"></td>
+                                        <td th:text="${@dateFormatter.formatToDate(vaccination.date, #locale)}"></td>
                                     </tr>
                                     </tbody>
                                 </table>
