@@ -56,7 +56,8 @@ public class TelephoneController {
         log.info("Saving adoption for pet: {}", telephoneCommand.getUuid());
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("telephone/adopt");
-            modelAndView.addObject("errorMessage", localeService.getMessage("user.error.mobile", request));
+            modelAndView.addObject(
+                    "errorMessage", localeService.getMessage(resolveValidationMessageKey(bindingResult), request));
             return fillPetAndTelephoneCommand(modelAndView, telephoneCommand);
         }
         var user = userService.getCurrentUser();
@@ -80,5 +81,15 @@ public class TelephoneController {
         modelAndView.addObject("telephoneCommand", telephoneCommand);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         return modelAndView;
+    }
+
+    private String resolveValidationMessageKey(BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors("mobile")) {
+            return "user.error.mobile";
+        }
+        if (bindingResult.hasFieldErrors("address")) {
+            return "user.error.address";
+        }
+        return "user.error.validation";
     }
 }

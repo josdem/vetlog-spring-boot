@@ -72,6 +72,7 @@ internal class TelephoneServiceTest {
             TelephoneCommand().apply {
                 uuid = "uuid"
                 mobile = "7346041832"
+                address = "Broadway 123"
             }
 
         val owner = getUser("contact@josdem.io")
@@ -86,6 +87,7 @@ internal class TelephoneServiceTest {
         verify(restService).sendMessage(any<MessageCommand>())
         assertEquals(PetStatus.ADOPTED, pet.status)
         assertEquals(adopter, pet.adopter)
+        assertEquals("Broadway 123", adopter.address)
     }
 
     private fun getPet(

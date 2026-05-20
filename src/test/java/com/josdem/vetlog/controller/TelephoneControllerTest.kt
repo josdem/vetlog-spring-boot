@@ -91,6 +91,27 @@ class TelephoneControllerTest {
     @Test
     @Transactional
     @WithMockUser(username = "josdem", password = "12345678", roles = ["USER"])
+    fun `should not save adoption due to missing address`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        registerPet()
+        val request =
+            post("/telephone/save")
+                .with(csrf())
+                .param("uuid", PET_UUID)
+                .param("mobile", "1234567890")
+        mockMvc
+            .perform(request)
+            .andExpect(status().isOk())
+            .andExpect(view().name("telephone/adopt"))
+            .andExpect(model().attributeExists("pet"))
+            .andExpect(model().attributeExists("telephoneCommand"))
+            .andExpect(model().attribute("errorMessage", "Address is required"))
+            .andExpect(status().isOk())
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(username = "josdem", password = "12345678", roles = ["USER"])
     fun `should not save adoption due to invalid phone number`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         registerPet()
@@ -98,6 +119,7 @@ class TelephoneControllerTest {
             post("/telephone/save")
                 .with(csrf())
                 .param("uuid", PET_UUID)
+                .param("address", "Street 12")
                 .param("mobile", "123")
         mockMvc
             .perform(request)
@@ -105,6 +127,7 @@ class TelephoneControllerTest {
             .andExpect(view().name("telephone/adopt"))
             .andExpect(model().attributeExists("pet"))
             .andExpect(model().attributeExists("telephoneCommand"))
+            .andExpect(model().attribute("errorMessage", "Invalid mobile format"))
             .andExpect(status().isOk())
     }
 

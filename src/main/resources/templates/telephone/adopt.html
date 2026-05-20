@@ -36,7 +36,7 @@
                             <input type="hidden" th:value="${telephoneCommand.uuid}" name="uuid"/>
                             <label for="address"><h4 th:text="#{adoption.address}"/></label>
                             <input type="text"
-                                   name="address"
+                                   th:field="*{address}"
                                    class="form-control"
                                    th:placeholder="#{adoption.address.placeholder}"
                                    id="address"/>
