@@ -7,6 +7,7 @@ import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.strategy.vaccination.impl.CatVaccinationStrategy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mock
@@ -59,8 +60,8 @@ class CatVaccinationStrategyTest {
     }
 
     @Test
-    fun `should save annual vaccines for cat older than 16 weeks`() {
-        log.info("Running test: annual vaccination for cat older than 16 weeks")
+    fun `should save annual vaccines for cat older than 16 weeks`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
         pet.birthDate = LocalDate.now().minusWeeks(23)
 
         catVaccinationStrategy.vaccinate(pet)
