@@ -36,7 +36,7 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
             }
             default -> {
                 log.info("Annual vaccination");
-                registerVaccinations(vaccinationRepository, pet, TRICAT, DEWORMING, RABIES, FELV);
+                registerVaccinations(vaccinationRepository, pet, TRICAT, DEWORMING);
             }
         }
     }

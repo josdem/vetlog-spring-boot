@@ -34,7 +34,7 @@ class CatVaccinationStrategyTest {
     }
 
     @ParameterizedTest
-    @CsvSource("9, 5", "12, 5", "13, 5", "16, 5", "23, 4")
+    @CsvSource("9, 5", "12, 5", "13, 5", "16, 5", "23, 2")
     fun `should save vaccines based on pet age`(
         weeks: Int,
         times: Int,
@@ -60,7 +60,7 @@ class CatVaccinationStrategyTest {
     @ParameterizedTest
     @CsvSource(
         "5, Deworming",
-        "20, FeLV",
+        "20, TRICAT",
     )
     fun `should apply correct vaccine based on cat age`(
         weeks: Int,
