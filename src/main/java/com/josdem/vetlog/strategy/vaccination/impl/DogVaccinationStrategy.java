@@ -36,7 +36,7 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
             }
             default -> {
                 log.info("Annual vaccination");
-                registerVaccinations(vaccinationRepository, pet, C6CV, DEWORMING, RABIES);
+                registerVaccinations(vaccinationRepository, pet, C6CV, DEWORMING);
             }
         }
     }
