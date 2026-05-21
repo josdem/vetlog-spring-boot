@@ -90,10 +90,17 @@ class CatVaccinationStrategyTest {
 
         verify(vaccinationRepository).saveAll(
             argThat { vaccinations: List<Vaccination> ->
-                vaccinations.any { vaccination ->
-                    vaccination.name == expectedVaccine &&
-                        vaccination.status == VaccinationStatus.PENDING &&
-                        vaccination.pet == pet
+                val isAnnualSchedule = weeks > 16
+                if (isAnnualSchedule) {
+                    vaccinations.size == 2 &&
+                        vaccinations.any { it.name == "TRICAT" } &&
+                        vaccinations.any { it.name == "Deworming" }
+                } else {
+                    vaccinations.any { vaccination ->
+                        vaccination.name == expectedVaccine &&
+                            vaccination.status == VaccinationStatus.PENDING &&
+                            vaccination.pet == pet
+                    }
                 }
             },
         )
