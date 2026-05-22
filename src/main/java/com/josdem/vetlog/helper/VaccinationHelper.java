@@ -82,7 +82,7 @@ public class VaccinationHelper {
                             .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)) {
                 String nextName = NEXT_VACCINE.get(appliedName);
-                if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, nextName, pet)) return;
+                if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, nextName, pet)) continue;
                 saveNewVaccine(nextName, LocalDate.now().plus(NEXT_VACCINE_OFFSET.get(appliedName)), pet);
             }
         }
