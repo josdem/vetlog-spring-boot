@@ -16,7 +16,9 @@
 
 package com.josdem.vetlog.helper
 
+import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
+import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.Vaccination
 import com.josdem.vetlog.repository.VaccinationRepository
@@ -24,8 +26,11 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import org.mockito.kotlin.argThat
+import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoInteractions
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
@@ -163,5 +168,63 @@ class VaccinationHelperTest {
                     vaccination.pet == pet
             },
         )
+    }
+
+    @Test
+    fun `should create TRICAT_BOOST 45 days later when TRICAT applied when pet is a cat aged 9 to 16 weeks`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        val breed = Breed()
+        breed.type = PetType.CAT
+        pet.breed = breed
+        pet.birthDate = LocalDate.now().minusWeeks(9)
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        val expectedDate = LocalDate.now().plusDays(45)
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "TRICAT_BOOST" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should not create TRICAT_BOOST 45 days later when TRICAT applied and pet is cat not aged 9 to 16 weeks`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        val breed = Breed()
+        breed.type = PetType.CAT
+        pet.breed = breed
+        pet.birthDate = LocalDate.now().minusWeeks(5)
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, times(0)).save(any())
+    }
+
+    @Test
+    fun `should not create TRICAT_BOOST 45 days later when TRICAT applied and pet is not cat`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        val breed = Breed()
+        breed.type = PetType.DOG
+        pet.breed = breed
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, times(0)).save(any())
     }
 }
