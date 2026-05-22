@@ -111,7 +111,7 @@ class CatVaccinationStrategyTest {
             argThat { vaccinations: List<Vaccination> ->
                 val isSecondVaccine = weeks in 9..16
                 val isAnnualSchedule = weeks > 16
-                if (isSecondVaccine or isAnnualSchedule) {
+                if (isSecondVaccine || isAnnualSchedule) {
                     vaccinations.size == 2 &&
                         vaccinations.any { it.name == "TRICAT" } &&
                         vaccinations.any { it.name == "Deworming" }
