@@ -112,12 +112,13 @@ class VaccinationHelperTest {
                 java.time.Period.ofYears(1),
                 java.time.Period.ofDays(45),
             )
+        val baseDate = previousVaccines.first().date
         offsets.forEach { p ->
             verify(vaccinationRepository).save(
                 argThat { vaccination ->
                     vaccination.name == "Rabies" &&
                         vaccination.status == VaccinationStatus.NEW &&
-                        vaccination.date == LocalDate.now().plus(p) &&
+                        vaccination.date == baseDate.plus(p) &&
                         vaccination.pet == pet
                 },
             )
