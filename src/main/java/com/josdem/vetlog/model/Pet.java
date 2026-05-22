@@ -32,6 +32,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Transient;
+import jakarta.persistence.PrePersist;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
@@ -70,8 +71,8 @@ public class Pet {
     @Column(nullable = false, columnDefinition = "CHAR(15)")
     private String chip_id;
 
-    @Column(nullable = false)
-    private LocalDateTime dateCreated = LocalDateTime.now();
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dateCreated;
 
     @Column(nullable = false)
     @Enumerated(STRING)
@@ -108,4 +109,9 @@ public class Pet {
 
     @Transient
     private List<Vaccination> vaccines;
+
+    @PrePersist
+    void onCreate() {
+        dateCreated = LocalDateTime.now();
+    }
 }
