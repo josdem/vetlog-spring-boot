@@ -171,7 +171,7 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should create TRICAT_BOOST 45 days later when TRICAT applied when pet is a cat aged 9 to 16 weeks`(testInfo: TestInfo) {
+    fun `should create TRICAT_BOOST 45 days later when TRICAT applied and pet is a cat aged 9 to 16 weeks`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()
         val breed = Breed()
