@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -27,12 +27,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
-@ToString
 public class PetAdoption {
 
     @Id

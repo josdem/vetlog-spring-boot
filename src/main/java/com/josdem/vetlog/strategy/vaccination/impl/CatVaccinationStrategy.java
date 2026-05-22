@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CatVaccinationStrategy implements VaccinationStrategy {
     private static final String TRICAT = "TRICAT";
-    private static final String TRICAT_BOOST = "TRICAT_BOOST";
     private static final String DEWORMING = "Deworming";
-    private static final String RABIES = "Rabies";
-    private static final String FELV = "FeLV";
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -32,11 +29,11 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
             }
             case 9, 10, 11, 12, 13, 14, 15, 16 -> {
                 log.info("Second vaccination");
-                registerVaccinations(vaccinationRepository, pet, TRICAT, TRICAT_BOOST, DEWORMING, RABIES, FELV);
+                registerVaccinations(vaccinationRepository, pet, TRICAT, DEWORMING);
             }
             default -> {
                 log.info("Annual vaccination");
-                registerVaccinations(vaccinationRepository, pet, TRICAT, DEWORMING, RABIES, FELV);
+                registerVaccinations(vaccinationRepository, pet, TRICAT, DEWORMING);
             }
         }
     }

@@ -16,9 +16,7 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
 
     private static final String C6CV = "C6CV";
     private static final String DEWORMING = "Deworming";
-    private static final String RABIES = "Rabies";
     private static final String PUPPY = "Puppy";
-    private static final String C4CV = "C4CV";
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -33,11 +31,11 @@ public class DogVaccinationStrategy implements VaccinationStrategy {
             }
             case 6, 7, 8, 9, 10, 11, 12 -> {
                 log.info("Second vaccination");
-                registerVaccinations(vaccinationRepository, pet, PUPPY, DEWORMING, C4CV, C6CV, RABIES);
+                registerVaccinations(vaccinationRepository, pet, PUPPY, DEWORMING);
             }
             default -> {
                 log.info("Annual vaccination");
-                registerVaccinations(vaccinationRepository, pet, C6CV, DEWORMING, RABIES);
+                registerVaccinations(vaccinationRepository, pet, C6CV, DEWORMING);
             }
         }
     }

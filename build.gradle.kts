@@ -3,33 +3,33 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.7")
-    classpath("org.flywaydb:flyway-mysql:11.15.0")
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:3.5.10")
+    classpath("org.flywaydb:flyway-mysql:12.5.0")
   }
 }
 
 plugins {
-  id("org.springframework.boot") version "3.5.7"
+  id("org.springframework.boot") version "4.0.6"
   id("io.spring.dependency-management") version "1.1.7"
-  id("org.flywaydb.flyway") version "11.15.0"
-  id("org.sonarqube") version "6.3.1.5724"
+  id("org.flywaydb.flyway") version "12.5.0"
+  id("org.sonarqube") version "7.2.2.6593"
   id("jacoco")
   id("java")
-  id("com.diffplug.spotless") version "8.0.0"
-  id("org.jetbrains.kotlin.jvm") version "2.2.21"
+  id("com.diffplug.spotless") version "8.4.0"
+  id("org.jetbrains.kotlin.jvm") version "2.3.21"
 }
 
-val gcpVersion by extra("7.4.0")
+val gcpVersion by extra("8.0.2")
 val retrofitVersion by extra("3.0.0")
-val mockitoCoreVersion by extra("5.20.0")
-val annotationsVersion by extra("26.0.2")
+val mockitoCoreVersion by extra("5.23.0")
+val annotationsVersion by extra("26.1.0")
 val jsonSmartVersion by extra("2.6.0")
-val jaxbVersion by extra("2.3.1")
+val jaxbVersion by extra("4.0.5")
 val cglibVersion by extra("3.3.0")
-val mockitoKotlinVersion by extra("6.1.0")
+val mockitoKotlinVersion by extra("6.3.0")
 
 group = "com.josdem.vetlog"
-version = "3.3.1"
+version = "3.6.4"
 
 configurations {
   compileOnly {
@@ -75,7 +75,7 @@ spotless {
 dependencies {
   // Spring Boot Core
   implementation("org.springframework.boot:spring-boot-starter-web")
-  implementation("org.springframework.boot:spring-boot-starter-aop")
+  implementation("org.springframework.boot:spring-boot-starter-aspectj")
   implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
   implementation("org.springframework.boot:spring-boot-starter-security")
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -91,14 +91,14 @@ dependencies {
 
   // Utility libraries (JSON, XML, Annotations)
   implementation("net.minidev:json-smart:$jsonSmartVersion")
-  implementation("javax.xml.bind:jaxb-api:$jaxbVersion")
+  implementation("jakarta.xml.bind:jakarta.xml.bind-api:$jaxbVersion")
   implementation("org.jetbrains:annotations:$annotationsVersion")
   implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
   // Database and ORM
   runtimeOnly("com.mysql:mysql-connector-j")
   implementation("org.flywaydb:flyway-core")
-  runtimeOnly("org.flywaydb:flyway-mysql:11.15.0")
+  runtimeOnly("org.flywaydb:flyway-mysql:12.5.0")
 
   // Compile-time dependencies
   compileOnly("org.projectlombok:lombok")
@@ -106,6 +106,7 @@ dependencies {
 
   // Test dependencies
   testImplementation("org.springframework.boot:spring-boot-starter-test")
+  testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
   testImplementation("org.springframework.security:spring-security-test")
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
@@ -152,4 +153,21 @@ tasks.withType<JavaExec> {
 
 springBoot {
   buildInfo()
+}
+
+tasks.register<Copy>("settingCredentials") {
+  group = "setup"
+  description = "Copy vetlog credentials into resources directory"
+
+  val home = System.getProperty("user.home")
+  val credentials = file("$home/.vetlog/vetlog.json")
+
+  doFirst {
+    if (!credentials.exists()) {
+      throw GradleException("Missing credentials at ${credentials.absolutePath}")
+    }
+  }
+
+  from(credentials)
+  into(layout.projectDirectory.dir("src/main/resources"))
 }

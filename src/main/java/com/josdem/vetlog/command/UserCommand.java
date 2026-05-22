@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import lombok.Setter;
 @Setter
 public class UserCommand implements Command {
 
-    @Size(min = 6, max = 50)
+    @Size(min = 5, max = 50)
     private String username;
 
     @Size(min = 7, max = 50)

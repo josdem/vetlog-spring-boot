@@ -34,6 +34,14 @@
                             <input type="text" name="mobile" class="form-control" placeholder="Mobile" id='mobile'/>
                             <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
                             <input type="hidden" th:value="${telephoneCommand.uuid}" name="uuid"/>
+                            <label for="address"><h4 th:text="#{adoption.address}"/></label>
+                            <input type="text"
+                                   th:field="*{address}"
+                                   class="form-control"
+                                   th:placeholder="#{adoption.address.placeholder}"
+                                   id="address"/>
+                            <label th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></label>
+                            <br/>
                             <br/><br/>
                             <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><p
                                     th:text="#{button.submit}"/></button>

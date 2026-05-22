@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -40,6 +40,7 @@ import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
+import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Optional
@@ -86,6 +87,7 @@ internal class PetBinderTest {
         assertEquals("Cremita", result.name)
         assertEquals("2021-01-17", result.birthDate)
         assertTrue(result.sterilized)
+        assertTrue(result.goingOutOften)
         assertFalse(result.images.isEmpty())
         assertEquals(5L, result.breed)
         assertEquals(1L, result.user)
@@ -106,6 +108,7 @@ internal class PetBinderTest {
         assertEquals("Marla", result.name)
         assertEquals(PetStatus.IN_ADOPTION, result.status)
         assertNotNull(result.images)
+        assertTrue(result.goingOutOften)
         assertEquals(1L, result.breed.id)
         vaccines.forEach {
             assertEquals(LocalDate.now(), it.date)
@@ -124,6 +127,20 @@ internal class PetBinderTest {
 
         val diff: Int = LocalDateTime.now().dayOfYear - result.birthDate.dayOfYear
         assertEquals(0, diff)
+    }
+
+    @Test
+    fun `binding a pet from command even without weight`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petCommand = getPetCommand()
+        petCommand.birthDate = "2021-01-17"
+        petCommand.weight = null
+        setBreedExpectations()
+
+        val result = petBinder.bindPet(petCommand)
+
+        assertNotNull(result.weight)
+        assertEquals(BigDecimal.ZERO, result.weight)
     }
 
     private fun setBreedExpectations() {

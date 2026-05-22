@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -30,4 +30,8 @@ public class TelephoneCommand implements Command {
 
     @Size(min = 10, max = 10)
     private String mobile;
+
+    @NotNull
+    @Size(min = 1, max = 255)
+    private String address;
 }

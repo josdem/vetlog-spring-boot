@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -27,4 +27,5 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties("gmailer")
 public class GmailerProperties {
     private String url;
+    private double factor;
 }

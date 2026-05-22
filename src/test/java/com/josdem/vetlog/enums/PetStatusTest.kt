@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -22,17 +22,14 @@ import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 
 class PetStatusTest {
-    private val petStatus = PetStatus.OWNED
-
-    companion object {
-        private val log = LoggerFactory.getLogger(this::class.java)
-    }
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @Test
-    fun `should return pet status`(testInfo: TestInfo) {
+    fun `should keep formatter display values for all pet statuses`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        assertEquals("OWNED", petStatus.name)
-        assertEquals("Owned", petStatus.value)
-        assertEquals(PetStatus.OWNED, PetStatus.getPetStatusByValue("Owned"))
+        assertEquals(
+            listOf("Owned", "In Adoption", "Adopted", "Deceased", "Inactive"),
+            PetStatus.entries.map { it.value },
+        )
     }
 }

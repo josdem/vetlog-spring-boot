@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
 import com.josdem.vetlog.exception.BusinessException
+import com.josdem.vetlog.helper.VaccinationHelper
 import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.Vaccination
@@ -52,6 +53,9 @@ internal class VaccinationServiceTest {
     @Mock
     private lateinit var vaccinationRepository: VaccinationRepository
 
+    @Mock
+    private lateinit var vaccinationHelper: VaccinationHelper
+
     private val pet = Pet()
 
     companion object {
@@ -71,7 +75,7 @@ internal class VaccinationServiceTest {
                 PetType.CAT to catVaccinationStrategy,
             )
 
-        vaccinationService = VaccinationServiceImpl(vaccinationRepository, vaccinationStrategies)
+        vaccinationService = VaccinationServiceImpl(vaccinationRepository, vaccinationHelper, vaccinationStrategies)
         pet.breed = Breed()
     }
 
@@ -83,7 +87,7 @@ internal class VaccinationServiceTest {
     }
 
     @ParameterizedTest
-    @CsvSource("7, 5", "10, 5", "20, 3")
+    @CsvSource("2, 1", "10, 2", "20, 2")
     fun `Saving vaccines`(
         weeks: Int,
         times: Int,
@@ -138,12 +142,11 @@ internal class VaccinationServiceTest {
     @Test
     fun `should update rabies vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        val rabiesVaccination = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
-        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(rabiesVaccination))
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(emptyList())
 
         vaccinationService.updateVaccinations(getPetCommand(), pet)
 
-        verify(vaccinationRepository).save(any())
+        verify(vaccinationHelper).validateRabiesVaccine(any(), any(), any())
     }
 
     private fun getPetCommand() =
@@ -154,6 +157,10 @@ internal class VaccinationServiceTest {
             status = PetStatus.OWNED
             sterilized = true
             type = PetType.DOG
-            vaccines = listOf(Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet))
+            vaccines =
+                listOf(
+                    Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+                    Vaccination(2L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+                )
         }
 }

@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import com.josdem.vetlog.model.User;
 import java.util.Locale;
 
 public interface UserService {
-    User getByUsername(String username);
+    User getUser(String identifier);
 
     User getByEmail(String email);
 

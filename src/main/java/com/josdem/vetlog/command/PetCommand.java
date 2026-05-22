@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -51,15 +51,16 @@ public class PetCommand implements Command {
 
     private Boolean sterilized = false;
 
+    private Boolean goingOutOften = true;
+
     private String chip_id = DEFAULT_CHIP_ID;
 
     @Min(1L)
     private Long breed;
 
-    @NotNull(message = "Weight should not be empty")
     @DecimalMin(value = "0.0")
     @DecimalMax(value = "100.0")
-    private BigDecimal weight;
+    private BigDecimal weight = new BigDecimal("0.00");
 
     @NotNull
     private WeightUnits unit;

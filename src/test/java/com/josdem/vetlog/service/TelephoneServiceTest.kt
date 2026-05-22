@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -72,6 +72,7 @@ internal class TelephoneServiceTest {
             TelephoneCommand().apply {
                 uuid = "uuid"
                 mobile = "7346041832"
+                address = "Broadway 123"
             }
 
         val owner = getUser("contact@josdem.io")
@@ -86,6 +87,7 @@ internal class TelephoneServiceTest {
         verify(restService).sendMessage(any<MessageCommand>())
         assertEquals(PetStatus.ADOPTED, pet.status)
         assertEquals(adopter, pet.adopter)
+        assertEquals("Broadway 123", adopter.address)
     }
 
     private fun getPet(

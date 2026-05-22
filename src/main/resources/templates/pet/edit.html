@@ -72,6 +72,11 @@
                                    placeholder="sterilized" id='sterilized'/>
                             <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
                             <br/>
+                            <label for="goingOutOften"><h4 th:text="#{pet.goingOutOften}"/></label>
+                            <input type="checkbox" name='goingOutOften' th:data-testid="goingOutOften" th:field="*{goingOutOften}" class="form-control"
+                                   placeholder="goingOutOften" id='goingOutOften'/>
+                            <label th:if="${#fields.hasErrors('goingOutOften')}" th:errors="*{goingOutOften}"></label>
+                            <br/>
                             <label for="chip-id"><h4 th:text="#{pet.chip.id}"/></label>
                             <input type="text" name='chip-id' th:field="*{chip_id}" class="form-control"
                                    id='chip-id' minlength="15" maxlength="15" th:value="*{chip_id}">
@@ -89,7 +94,12 @@
                                 <tr th:each="vaccination, itemStat : *{vaccines}">
                                     <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].id}"/></td>
                                     <td><input type="hidden" th:field="*{vaccines[__${itemStat.index}__].pet}"/></td>
-                                    <td><input type="text" th:field="*{vaccines[__${itemStat.index}__].name}" readonly style="height: 50px;"/></td>
+                                    <td>
+                                        <div th:with="name=*{vaccines[__${itemStat.index}__].name}">
+                                            <input type="hidden" th:field="*{vaccines[__${itemStat.index}__].name}"/>
+                                            <input type="text" th:value="${@vaccineFormatter.format(name, #locale)}" readonly style="height: 50px;"/>
+                                        </div>
+                                    </td>
                                     <td>
                                         <select th:field="*{vaccines[__${itemStat.index}__].status}" style="height: 50px;">
 
@@ -128,7 +138,7 @@
                             </select>
                             <br/>
                             <label for="weight"><h4 th:text="#{pet.weight}"/></label>
-                            <input type="number" name="weight" th:data-testid="petWeight" th:field="*{weight}" class="form-control" placeholder="weight" id="weight" min="0" max="100" step="0.01"/>
+                            <input type="number" name="weight" th:data-testid="petWeight" th:field="*{weight}" class="form-control" id="weight" min="0" max="100" step="0.01"/>
                             <label th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></label>
                             <br/>
                             <label for="unit"><h4 th:text="#{pet.unit}"/></label>

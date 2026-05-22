@@ -43,7 +43,7 @@ spring:
 message: Hello Vetlog!
 gmailer:
   url: https://gmailer.josdem.io/emailer/
-  path: message
+  factor: 0.5
 baseUrl: https://vetlog.org/
 template:
   forgot:
@@ -62,8 +62,6 @@ geoToken: userToken
 veterinarians:
   - "vet-1"
   - "vet-2"
-countryCodes:
-  - "+countryCodeOne"
 management:
   endpoints:
     web:

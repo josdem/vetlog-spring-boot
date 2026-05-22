@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.*;
 import com.josdem.vetlog.util.TemplateLocaleResolver;
+import com.josdem.vetlog.util.UserUtil;
 import java.io.IOException;
 import java.util.Locale;
 import lombok.RequiredArgsConstructor;
@@ -44,10 +45,14 @@ public class EmailServiceImpl implements EmailService {
     private final LocaleService localeService;
     private final TemplateProperties templateProperties;
     private final PetService petService;
+    private final UserUtil userUtil;
 
     public void sendWelcomeEmail(User user, Locale locale) {
         log.info("Sending welcome email to: {}", user.getFirstName());
         if (!user.isEnabled()) {
+            return;
+        }
+        if (!userUtil.isValid(user)) {
             return;
         }
         var template = TemplateLocaleResolver.getTemplate(templateProperties.getWelcome(), locale.getLanguage());

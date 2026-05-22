@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -61,6 +61,7 @@ public class TelephoneServiceImpl implements TelephoneService {
         var pet = petService.getPetByUuid(telephoneCommand.getUuid());
         pet.setStatus(PetStatus.ADOPTED);
         adopter.setMobile(telephoneCommand.getMobile());
+        adopter.setAddress(telephoneCommand.getAddress());
         pet.setAdopter(adopter);
         petRepository.save(pet);
         userRepository.save(adopter);

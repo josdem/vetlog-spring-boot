@@ -7,7 +7,7 @@ COPY src/main/resources/static/assets/servizi-dog-theme/package*.json ./
 RUN npm install
 
 # --- Build Stage ---
-FROM gradle:8.8-jdk21 AS build
+FROM gradle:8.14-jdk21 AS build
 WORKDIR /app
 
 # Copy only gradle files and project metadata first for better caching

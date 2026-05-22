@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 
 package com.josdem.vetlog.controller;
 
+import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.command.UsernameCommand;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.service.PetService;
@@ -62,11 +63,12 @@ public class VetController {
     ModelAndView search(@Valid UsernameCommand command) {
         log.info("Listing pets");
         var modelAndView = new ModelAndView("vet/list");
-        var user = userService.getByUsername(command.getUsername());
+        var user = userService.getUser(command.getUsername());
         var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
+        modelAndView.addObject("default_chip_id", PetCommand.DEFAULT_CHIP_ID);
         modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;
     }

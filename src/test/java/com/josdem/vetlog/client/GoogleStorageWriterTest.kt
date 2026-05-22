@@ -60,7 +60,6 @@ class GoogleStorageWriterTest {
         log.info(testInfo.displayName)
         setExpectations()
 
-        googleStorageWriter.setup()
         googleStorageWriter.uploadToBucket("bucket", "fileName", inputStream, "contentType")
         verify(inputStream).readAllBytes()
     }
@@ -70,7 +69,6 @@ class GoogleStorageWriterTest {
         log.info(testInfo.displayName)
         setExpectations()
 
-        googleStorageWriter.setup()
         `when`(inputStream.readAllBytes()).thenThrow(IllegalStateException("Error"))
         assertThrows<BusinessException> {
             googleStorageWriter.uploadToBucket("bucket", "fileName", inputStream, "contentType")

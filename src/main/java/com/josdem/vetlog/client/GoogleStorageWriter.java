@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.helper.StorageOptionsHelper;
 import java.io.IOException;
 import java.io.InputStream;
-import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,18 +37,18 @@ public class GoogleStorageWriter {
     private final StorageOptionsHelper storageOptionsHelper;
     private Storage storage;
 
-    @PostConstruct
-    void setup() throws IOException {
-        storage = storageOptionsHelper
-                .getStorageOptions()
-                .setProjectId(gcpProjectIdProvider.getProjectId())
-                .setCredentials(credentialsProvider.getCredentials())
-                .build()
-                .getService();
-    }
-
     public void uploadToBucket(String bucket, String fileName, InputStream inputStream, String contentType)
             throws IOException {
+        if (storage == null) {
+            synchronized (this) {
+                storage = storageOptionsHelper
+                        .getStorageOptions()
+                        .setProjectId(gcpProjectIdProvider.getProjectId())
+                        .setCredentials(credentialsProvider.getCredentials())
+                        .build()
+                        .getService();
+            }
+        }
         BlobId blobId = BlobId.of(bucket, fileName);
         BlobInfo blobInfo =
                 BlobInfo.newBuilder(blobId).setContentType(contentType).build();

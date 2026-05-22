@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import org.springframework.test.web.servlet.MockMvc
@@ -40,10 +40,10 @@ class UserControllerTest {
     @Autowired
     private lateinit var mockMvc: MockMvc
 
-    private val log = LoggerFactory.getLogger(this::class.java)
-
     @Autowired
     private lateinit var webApplicationContext: WebApplicationContext
+
+    private val log = LoggerFactory.getLogger(this::class.java)
 
     @BeforeEach
     fun setUp() {
@@ -61,7 +61,7 @@ class UserControllerTest {
         val request =
             post("/user/save")
                 .with(csrf())
-                .param("username", "vetlog")
+                .param("username", "VeTLoG")
                 .param("password", "12345678")
                 .param("passwordConfirmation", "12345678")
                 .param("firstname", "vetlog")

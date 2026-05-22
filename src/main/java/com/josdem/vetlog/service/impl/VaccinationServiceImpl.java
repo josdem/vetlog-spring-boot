@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -20,12 +20,12 @@ import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
+import com.josdem.vetlog.helper.VaccinationHelper;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,9 +38,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VaccinationServiceImpl implements VaccinationService {
 
-    private static final String RABIES_VACCINE = "Rabies";
-
     private final VaccinationRepository vaccinationRepository;
+    private final VaccinationHelper vaccinationHelper;
 
     private final Map<PetType, VaccinationStrategy> vaccinationStrategies;
 
@@ -75,23 +74,7 @@ public class VaccinationServiceImpl implements VaccinationService {
     @Override
     public void updateVaccinations(PetCommand petCommand, Pet pet) {
         var previousVaccines = vaccinationRepository.findAllByPetId(petCommand.getId());
-
-        // Check if Rabies vaccine was changed from PENDING to APPLIED
-        for (Vaccination newVaccine : petCommand.getVaccines()) {
-            if (RABIES_VACCINE.equalsIgnoreCase(newVaccine.getName())
-                    && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
-                previousVaccines.stream()
-                        .filter(v -> RABIES_VACCINE.equalsIgnoreCase(v.getName()))
-                        .findFirst()
-                        .ifPresent(oldVaccine -> {
-                            if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
-                                // Create a new Rabies vaccine for one year later
-                                Vaccination futureRabies = new Vaccination(
-                                        null, RABIES_VACCINE, LocalDate.now().plusYears(1), VaccinationStatus.NEW, pet);
-                                vaccinationRepository.save(futureRabies);
-                            }
-                        });
-            }
-        }
+        vaccinationHelper.validateRabiesVaccine(previousVaccines, petCommand.getVaccines(), pet);
+        vaccinationHelper.validateNextVaccines(previousVaccines, petCommand.getVaccines(), pet);
     }
 }

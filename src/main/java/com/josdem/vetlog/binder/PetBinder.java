@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.util.UuidGenerator;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -56,10 +57,11 @@ public class PetBinder {
             pet.setBirthDate(LocalDate.parse(petCommand.getBirthDate()));
         }
         pet.setSterilized(petCommand.getSterilized());
+        pet.setGoingOutOften(petCommand.getGoingOutOften());
         pet.setChip_id(petCommand.getChip_id());
         pet.setImages(petCommand.getImages());
         pet.setStatus(petCommand.getStatus());
-        pet.setWeight(petCommand.getWeight());
+        pet.setWeight(petCommand.getWeight() == null ? BigDecimal.ZERO : petCommand.getWeight());
         pet.setUnit(petCommand.getUnit());
         vaccinationService.updateVaccinations(petCommand, pet);
 
@@ -85,6 +87,7 @@ public class PetBinder {
         command.setName(pet.getName());
         command.setBirthDate(pet.getBirthDate().toString());
         command.setSterilized(pet.getSterilized());
+        command.setGoingOutOften(pet.getGoingOutOften());
         command.setChip_id(pet.getChip_id());
         command.setStatus(pet.getStatus());
         command.setImages(pet.getImages());

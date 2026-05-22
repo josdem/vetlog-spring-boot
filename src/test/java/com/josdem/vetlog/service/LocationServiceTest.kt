@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -39,8 +39,6 @@ internal class LocationServiceTest {
         log.info(testInfo.displayName)
         val call = locationService.getLocation(vetlogBackendProperties.token, 1L)
         val result = call.execute()
-        val location = result.body()
-        log.info("Location: $location")
         assertTrue { result.toString().contains("https://vetlog-backend.josdem.io/geolocation/storeLocation/1") }
     }
 }

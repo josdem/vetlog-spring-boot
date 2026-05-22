@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import com.josdem.vetlog.exception.UserNotFoundException
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.User
 import com.josdem.vetlog.service.impl.EmailServiceImpl
+import com.josdem.vetlog.util.UserUtil
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.TestInfo
 import org.junit.jupiter.api.assertThrows
@@ -51,6 +52,9 @@ internal class EmailServiceTest {
     @Mock
     private lateinit var templateProperties: TemplateProperties
 
+    @Mock
+    private lateinit var userUtil: UserUtil
+
     private val user = User()
     private val pet = Pet()
 
@@ -61,13 +65,14 @@ internal class EmailServiceTest {
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        emailService = EmailServiceImpl(restService, localeService, templateProperties, petService)
+        emailService = EmailServiceImpl(restService, localeService, templateProperties, petService, userUtil)
     }
 
     @Test
     fun `Sending a welcome email`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(templateProperties.welcome).thenReturn("welcome.ftl")
+        whenever(userUtil.isValid(user)).thenReturn(true)
         user.firstName = "Jose"
         user.email = "contact@josdem.io"
 
@@ -80,11 +85,23 @@ internal class EmailServiceTest {
     @Test
     fun `Not sending a welcome email due to an exception`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        whenever(userUtil.isValid(user)).thenReturn(true)
         whenever(restService.sendMessage(any())).thenThrow(IOException("Error"))
 
         assertThrows<BusinessException> {
             emailService.sendWelcomeEmail(user, Locale.ENGLISH)
         }
+    }
+
+    @Test
+    fun `Not sending a welcome email due to not valid user`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(userUtil.isValid(user)).thenReturn(false)
+
+        emailService.sendWelcomeEmail(user, Locale.ENGLISH)
+
+        verify(localeService, never()).getMessage("user.welcome.message", Locale.ENGLISH)
+        verify(restService, never()).sendMessage(any())
     }
 
     @Test
@@ -100,6 +117,7 @@ internal class EmailServiceTest {
     @Test
     fun `Sending a pulling up email`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        whenever(userUtil.isValid(user)).thenReturn(true)
         whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
         user.firstName = "abc"
         user.email = "abc@xyz.io"
@@ -115,6 +133,7 @@ internal class EmailServiceTest {
     @Test
     fun `Not sending a pulling up email due to an exception`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        whenever(userUtil.isValid(user)).thenReturn(true)
         whenever(templateProperties.pullingUp).thenReturn("pulling-up.ftl")
         user.firstName = "abc"
         user.email = "abc@xyz.io"

@@ -1,5 +1,5 @@
 /*
-  Copyright 2025 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -43,6 +43,7 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import java.time.LocalDateTime
 import java.util.Optional
 
 internal class PetServiceTest {
@@ -117,20 +118,27 @@ internal class PetServiceTest {
     @Throws(IOException::class)
     fun `Updating a pet`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        pet!!.images = mutableListOf()
+        val originalDateCreated = LocalDateTime.now().minusDays(10)
+        val persistedPet =
+            Pet().apply {
+                images = mutableListOf()
+                dateCreated = originalDateCreated
+            }
+        val updatedPet = Pet()
         val command: PetCommand = mock()
 
         whenever(command.id).thenReturn(2L)
-        whenever(petRepository.findById(2L)).thenReturn(Optional.of(pet!!))
-        whenever(petBinder.bindPet(command)).thenReturn(pet)
+        whenever(petRepository.findById(2L)).thenReturn(Optional.of(persistedPet))
+        whenever(petBinder.bindPet(command)).thenReturn(updatedPet)
         whenever(command.user).thenReturn(1L)
         whenever(command.adopter).thenReturn(3L)
         whenever(userRepository.findById(1L)).thenReturn(Optional.of(user!!))
         whenever(userRepository.findById(3L)).thenReturn(Optional.of(adopter!!))
 
         service.update(command)
-        assertEquals(user, pet!!.user)
-        assertEquals(adopter, pet!!.adopter)
+        assertEquals(user, updatedPet.user)
+        assertEquals(adopter, updatedPet.adopter)
+        assertEquals(originalDateCreated, updatedPet.dateCreated)
         verify(petImageService).attachFile(command)
         verify(petRepository).save(any())
         verify(command).images = any()
