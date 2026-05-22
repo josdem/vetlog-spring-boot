@@ -36,7 +36,7 @@ class CatVaccinationStrategyTest {
     }
 
     @ParameterizedTest
-    @CsvSource("9, 5", "12, 5", "13, 5", "16, 5")
+    @CsvSource("9, 2", "12, 2", "13, 2", "16, 2")
     fun `should save vaccines based on pet age`(
         weeks: Int,
         times: Int,
@@ -55,6 +55,23 @@ class CatVaccinationStrategyTest {
                         vaccination.status == VaccinationStatus.PENDING &&
                         vaccination.pet == pet
                 }
+            },
+        )
+    }
+
+    @ParameterizedTest
+    @CsvSource("9", "12", "16")
+    fun `should save second vaccines for cat between 9 to 16 weeks`(weeks: Int) {
+        log.info("Running test: should save second vaccines for cat between 9 to 16 weeks")
+        pet.birthDate = LocalDate.now().minusWeeks(weeks.toLong())
+
+        catVaccinationStrategy.vaccinate(pet)
+
+        verify(vaccinationRepository).saveAll(
+            argThat { vaccinations: List<Vaccination> ->
+                vaccinations.size == 2 &&
+                    vaccinations.any { it.name == "TRICAT" } &&
+                    vaccinations.any { it.name == "Deworming" }
             },
         )
     }
