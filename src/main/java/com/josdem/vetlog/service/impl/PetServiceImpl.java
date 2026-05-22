@@ -66,8 +66,9 @@ public class PetServiceImpl implements PetService {
     @Transactional
     public Pet update(Command command) throws IOException {
         var petCommand = (PetCommand) command;
-        recoveryImages(petCommand);
+        var persistedPet = recoveryImages(petCommand);
         var pet = petBinder.bindPet(petCommand);
+        pet.setDateCreated(persistedPet.getDateCreated());
         var user = getUser(petCommand.getUser());
         user.ifPresentOrElse(pet::setUser, () -> {
             throw new BusinessException(NO_USER_WAS_FOUND_WITH_ID + petCommand.getUser());
@@ -123,11 +124,12 @@ public class PetServiceImpl implements PetService {
         petRepository.delete(pet);
     }
 
-    private void recoveryImages(PetCommand command) {
-        var pet = petRepository.findById(command.getId());
-        pet.ifPresentOrElse(value -> command.setImages(value.getImages()), () -> {
-            throw new BusinessException(NO_PET_WAS_FOUND_WITH_ID + command.getId());
-        });
+    private Pet recoveryImages(PetCommand command) {
+        var pet = petRepository
+                .findById(command.getId())
+                .orElseThrow(() -> new BusinessException(NO_PET_WAS_FOUND_WITH_ID + command.getId()));
+        command.setImages(pet.getImages());
+        return pet;
     }
 
     private Optional<User> getUser(Long id) {
