@@ -92,13 +92,13 @@ class VaccinationHelperTest {
             listOf(
                 Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet),
                 Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet),
-                Vaccination(3L, "Tricast_boost", LocalDate.now(), VaccinationStatus.PENDING, pet),
+                Vaccination(3L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.PENDING, pet),
             )
         val newVaccines =
             listOf(
                 Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet),
                 Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet),
-                Vaccination(3L, "Tricast_boost", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+                Vaccination(3L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.APPLIED, pet),
             )
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(previousVaccines)
         vaccinationHelper.validateRabiesVaccine(
