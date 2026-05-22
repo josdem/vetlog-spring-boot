@@ -37,7 +37,7 @@ class DogVaccinationStrategyTest {
     }
 
     @ParameterizedTest
-    @CsvSource("3, 1", "6, 2", "8, 2", "9, 2", "12, 2", "20, 3")
+    @CsvSource("3, 1", "6, 2", "8, 2", "9, 2", "12, 2")
     fun `should  save  vaccines  based  on  pet  age`(
         weeks: Int,
         times: Int,
@@ -56,6 +56,22 @@ class DogVaccinationStrategyTest {
                         vaccination.status == VaccinationStatus.PENDING &&
                         vaccination.pet == pet
                 }
+            },
+        )
+    }
+
+    @Test
+    fun `should save annual vaccines for dogs older than 12 weeks`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        pet.birthDate = LocalDate.now().minusWeeks(23)
+
+        dogVaccinationStrategy.vaccinate(pet)
+
+        verify(vaccinationRepository).saveAll(
+            argThat { vaccinations: List<Vaccination> ->
+                vaccinations.size == 2 &&
+                    vaccinations.any { it.name == "C6CV" } &&
+                    vaccinations.any { it.name == "Deworming" }
             },
         )
     }

@@ -36,7 +36,7 @@ public class VaccinationHelper {
     private static final String PUPPY_VACCINE = "Puppy";
     private static final String C4CV_VACCINE = "C4CV";
     private static final String C6CV_VACCINE = "C6CV";
-    private static final String TRICAT_BOOST = "Tricast_boost";
+    private static final String TRICAT_BOOST_VACCINE = "TRICAT_BOOST";
 
     private static final Map<String, String> NEXT_VACCINE = Map.of(
             PUPPY_VACCINE, C4CV_VACCINE,
@@ -47,12 +47,9 @@ public class VaccinationHelper {
             C4CV_VACCINE, java.time.Period.ofDays(15));
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
-            C6CV_VACCINE,
-            java.time.Period.ofDays(15),
-            RABIES_VACCINE,
-            java.time.Period.ofYears(1),
-            TRICAT_BOOST,
-            java.time.Period.ofDays(45));
+            C6CV_VACCINE, java.time.Period.ofDays(15),
+            TRICAT_BOOST_VACCINE, java.time.Period.ofDays(45),
+            RABIES_VACCINE, java.time.Period.ofYears(1));
 
     private final VaccinationRepository vaccinationRepository;
 
