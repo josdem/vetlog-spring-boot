@@ -36,7 +36,7 @@ class CatVaccinationStrategyTest {
     }
 
     @ParameterizedTest
-    @CsvSource("9, 2", "12, 2", "13, 2", "16, 2")
+    @CsvSource("0, 1", "3, 1", "4, 1", "8, 1", "9, 2", "12, 2", "13, 2", "16, 2", "17, 2", "20, 2", "21, 2", "24, 2")
     fun `should save vaccines based on pet age`(
         weeks: Int,
         times: Int,
@@ -55,6 +55,22 @@ class CatVaccinationStrategyTest {
                         vaccination.status == VaccinationStatus.PENDING &&
                         vaccination.pet == pet
                 }
+            },
+        )
+    }
+
+    @ParameterizedTest
+    @CsvSource("0", "3", "8")
+    fun `should save first vaccines for cat between 0 to 8 weeks`(weeks: Int) {
+        log.info("Running test: should save first vaccines for cat between 0 to 8 weeks")
+        pet.birthDate = LocalDate.now().minusWeeks(weeks.toLong())
+
+        catVaccinationStrategy.vaccinate(pet)
+
+        verify(vaccinationRepository).saveAll(
+            argThat { vaccinations: List<Vaccination> ->
+                vaccinations.size == 1 &&
+                    vaccinations.any { it.name == "Deworming" }
             },
         )
     }
@@ -96,7 +112,9 @@ class CatVaccinationStrategyTest {
     @CsvSource(
         "5, Deworming",
         "10, TRICAT",
+        "10, Deworming",
         "20, TRICAT",
+        "20, Deworming",
     )
     fun `should apply correct vaccine based on cat age`(
         weeks: Int,
@@ -109,18 +127,10 @@ class CatVaccinationStrategyTest {
 
         verify(vaccinationRepository).saveAll(
             argThat { vaccinations: List<Vaccination> ->
-                val isSecondVaccine = weeks in 9..16
-                val isAnnualSchedule = weeks > 16
-                if (isSecondVaccine || isAnnualSchedule) {
-                    vaccinations.size == 2 &&
-                        vaccinations.any { it.name == "TRICAT" } &&
-                        vaccinations.any { it.name == "Deworming" }
-                } else {
-                    vaccinations.any { vaccination ->
-                        vaccination.name == expectedVaccine &&
-                            vaccination.status == VaccinationStatus.PENDING &&
-                            vaccination.pet == pet
-                    }
+                vaccinations.any { vaccination ->
+                    vaccination.name == expectedVaccine &&
+                        vaccination.status == VaccinationStatus.PENDING &&
+                        vaccination.pet == pet
                 }
             },
         )
