@@ -86,52 +86,43 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should update tricat_boost vaccination status to APPLIED`(testInfo: TestInfo) {
+    fun `should update every c6cv, tricat_boost and rabies vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        val previousVaccines = Vaccination(3L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.PENDING, pet)
-        val newVaccines = Vaccination(3L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.APPLIED, pet)
-        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
-        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
-        val expectedDate = LocalDate.now().plusDays(45)
-        verify(vaccinationRepository).save(
-            argThat { vaccination ->
-                vaccination.name == "Rabies" &&
-                    vaccination.status == VaccinationStatus.NEW &&
-                    vaccination.date == expectedDate &&
-                    vaccination.pet == pet
-            },
-        )
-    }
-
-    @Test
-    fun `should update both c6cv and rabies vaccination status to APPLIED`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val previousC6cvVaccine = Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet)
-        val previousRabiesVaccine = Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
-        val newC6cvVaccine = Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet)
-        val newRabiesVaccine = Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet)
-        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousC6cvVaccine, previousRabiesVaccine))
+        val previousVaccines =
+            listOf(
+                Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet),
+                Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet),
+                Vaccination(3L, "Tricast_boost", LocalDate.now(), VaccinationStatus.PENDING, pet),
+            )
+        val newVaccines =
+            listOf(
+                Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+                Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+                Vaccination(3L, "Tricast_boost", LocalDate.now(), VaccinationStatus.APPLIED, pet),
+            )
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(previousVaccines)
         vaccinationHelper.validateRabiesVaccine(
-            listOf(previousC6cvVaccine, previousRabiesVaccine),
-            listOf(newC6cvVaccine, newRabiesVaccine),
+            previousVaccines,
+            newVaccines,
             pet,
         )
-        verify(vaccinationRepository).save(
-            argThat { vaccination ->
-                vaccination.name == "Rabies" &&
-                    vaccination.status == VaccinationStatus.NEW &&
-                    vaccination.date == LocalDate.now().plusDays(15) &&
-                    vaccination.pet == pet
-            },
-        )
-        verify(vaccinationRepository).save(
-            argThat { vaccination ->
-                vaccination.name == "Rabies" &&
-                    vaccination.status == VaccinationStatus.NEW &&
-                    vaccination.date == LocalDate.now().plusYears(1) &&
-                    vaccination.pet == pet
-            },
-        )
+        val offsets =
+            listOf(
+                java.time.Period.ofDays(15),
+                java.time.Period.ofYears(1),
+                java.time.Period.ofDays(45),
+            )
+        val baseDate = previousVaccines.first().date
+        offsets.forEach { p ->
+            verify(vaccinationRepository).save(
+                argThat { vaccination ->
+                    vaccination.name == "Rabies" &&
+                        vaccination.status == VaccinationStatus.NEW &&
+                        vaccination.date == baseDate.plus(p) &&
+                        vaccination.pet == pet
+                },
+            )
+        }
     }
 
     @Test
