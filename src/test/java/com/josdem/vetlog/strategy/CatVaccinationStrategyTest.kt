@@ -59,10 +59,11 @@ class CatVaccinationStrategyTest {
         )
     }
 
-    @Test
-    fun `should save second vaccines for cat between 9 to 16 weeks`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        pet.birthDate = LocalDate.now().minusWeeks(9)
+    @ParameterizedTest
+    @CsvSource("9", "12", "16")
+    fun `should save second vaccines for cat between 9 to 16 weeks`(weeks: Int) {
+        log.info("Running test: should save second vaccines for cat between 9 to 16 weeks")
+        pet.birthDate = LocalDate.now().minusWeeks(weeks.toLong())
 
         catVaccinationStrategy.vaccinate(pet)
 
