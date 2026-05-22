@@ -36,7 +36,7 @@ class CatVaccinationStrategyTest {
     }
 
     @ParameterizedTest
-    @CsvSource("9, 5", "12, 5", "13, 5", "16, 5")
+    @CsvSource("9, 2", "12, 2", "13, 2", "16, 2")
     fun `should save vaccines based on pet age`(
         weeks: Int,
         times: Int,
@@ -60,6 +60,22 @@ class CatVaccinationStrategyTest {
     }
 
     @Test
+    fun `should save second vaccines for cat between 9 to 16 weeks`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        pet.birthDate = LocalDate.now().minusWeeks(9)
+
+        catVaccinationStrategy.vaccinate(pet)
+
+        verify(vaccinationRepository).saveAll(
+            argThat { vaccinations: List<Vaccination> ->
+                vaccinations.size == 2 &&
+                    vaccinations.any { it.name == "TRICAT" } &&
+                    vaccinations.any { it.name == "Deworming" }
+            },
+        )
+    }
+
+    @Test
     fun `should save annual vaccines for cat older than 16 weeks`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         pet.birthDate = LocalDate.now().minusWeeks(23)
@@ -78,6 +94,7 @@ class CatVaccinationStrategyTest {
     @ParameterizedTest
     @CsvSource(
         "5, Deworming",
+        "10, TRICAT",
         "20, TRICAT",
     )
     fun `should apply correct vaccine based on cat age`(
@@ -91,8 +108,9 @@ class CatVaccinationStrategyTest {
 
         verify(vaccinationRepository).saveAll(
             argThat { vaccinations: List<Vaccination> ->
+                val isSecondVaccine = weeks in 9..16
                 val isAnnualSchedule = weeks > 16
-                if (isAnnualSchedule) {
+                if (isSecondVaccine or isAnnualSchedule) {
                     vaccinations.size == 2 &&
                         vaccinations.any { it.name == "TRICAT" } &&
                         vaccinations.any { it.name == "Deworming" }
