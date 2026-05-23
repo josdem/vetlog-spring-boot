@@ -20,7 +20,6 @@ import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
-import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
@@ -28,7 +27,6 @@ import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.util.UuidGenerator;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -61,9 +59,10 @@ public class PetBinder {
         pet.setStatus(petCommand.getStatus());
         pet.setWeight(petCommand.getWeight() == null ? BigDecimal.ZERO : petCommand.getWeight());
         pet.setUnit(petCommand.getUnit());
+        pet.setBreed(breedRepository
+                .findById(petCommand.getBreed())
+                .orElseThrow(() -> new BusinessException("Breed was not found for pet: " + pet.getName())));
         vaccinationService.updateVaccinations(petCommand, pet);
-
-        /// Save updated vaccines
         pet.setVaccines(petCommand.getVaccines());
         petCommand.getVaccines().stream()
                 .filter(pc -> VaccinationStatus.APPLIED.equals(pc.getStatus()))
@@ -71,12 +70,6 @@ public class PetBinder {
                     vaccine.setDate(LocalDate.now());
                     vaccinationRepository.save(vaccine);
                 });
-
-        Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
-        if (breed.isEmpty()) {
-            throw new BusinessException("Breed was not found for pet: " + pet.getName());
-        }
-        pet.setBreed(breed.get());
         return pet;
     }
 
