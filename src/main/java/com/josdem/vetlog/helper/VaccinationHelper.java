@@ -16,13 +16,17 @@
 
 package com.josdem.vetlog.helper;
 
+import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
+import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -36,15 +40,18 @@ public class VaccinationHelper {
     private static final String PUPPY_VACCINE = "Puppy";
     private static final String C4CV_VACCINE = "C4CV";
     private static final String C6CV_VACCINE = "C6CV";
+    private static final String TRICAT_VACCINE = "TRICAT";
     private static final String TRICAT_BOOST_VACCINE = "TRICAT_BOOST";
 
     private static final Map<String, String> NEXT_VACCINE = Map.of(
             PUPPY_VACCINE, C4CV_VACCINE,
-            C4CV_VACCINE, C6CV_VACCINE);
+            C4CV_VACCINE, C6CV_VACCINE,
+            TRICAT_VACCINE, TRICAT_BOOST_VACCINE);
 
     private static final Map<String, java.time.Period> NEXT_VACCINE_OFFSET = Map.of(
             PUPPY_VACCINE, java.time.Period.ofDays(15),
-            C4CV_VACCINE, java.time.Period.ofDays(15));
+            C4CV_VACCINE, java.time.Period.ofDays(15),
+            TRICAT_VACCINE, java.time.Period.ofDays(45));
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
             C6CV_VACCINE, java.time.Period.ofDays(15),
@@ -57,19 +64,11 @@ public class VaccinationHelper {
         for (Vaccination newVaccine : newVaccines) {
             String appliedName = newVaccine.getName();
             if (NEXT_RABIES_VACCINE_OFFSET.containsKey(appliedName)
-                    && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
-                previousVaccines.stream()
-                        .filter(v -> appliedName.equalsIgnoreCase(v.getName()))
-                        .findFirst()
-                        .ifPresent(oldVaccine -> {
-                            if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
-                                java.time.Period offset = NEXT_RABIES_VACCINE_OFFSET.getOrDefault(
-                                        appliedName, java.time.Period.ofYears(1));
-                                Vaccination futureRabies = new Vaccination(
-                                        null, RABIES_VACCINE, LocalDate.now().plus(offset), VaccinationStatus.NEW, pet);
-                                vaccinationRepository.save(futureRabies);
-                            }
-                        });
+                    && newVaccine.getStatus() == VaccinationStatus.APPLIED
+                    && previousVaccines.stream()
+                            .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
+                                    && previousVaccine.getStatus() == VaccinationStatus.PENDING)) {
+                saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
             }
         }
     }
@@ -77,21 +76,34 @@ public class VaccinationHelper {
     public void validateNextVaccines(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
         for (Vaccination newVaccine : newVaccines) {
             String appliedName = newVaccine.getName();
-            if (NEXT_VACCINE.containsKey(appliedName) && newVaccine.getStatus() == VaccinationStatus.APPLIED) {
-                previousVaccines.stream()
-                        .filter(v -> appliedName.equalsIgnoreCase(v.getName()))
-                        .findFirst()
-                        .ifPresent(oldVaccine -> {
-                            if (oldVaccine.getStatus() == VaccinationStatus.PENDING) {
-                                String nextName = NEXT_VACCINE.get(appliedName);
-                                java.time.Period offset =
-                                        NEXT_VACCINE_OFFSET.getOrDefault(appliedName, java.time.Period.ofDays(15));
-                                Vaccination future = new Vaccination(
-                                        null, nextName, LocalDate.now().plus(offset), VaccinationStatus.NEW, pet);
-                                vaccinationRepository.save(future);
-                            }
-                        });
+            if (NEXT_VACCINE.containsKey(appliedName)
+                    && newVaccine.getStatus() == VaccinationStatus.APPLIED
+                    && previousVaccines.stream()
+                            .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
+                                    && previousVaccine.getStatus() == VaccinationStatus.PENDING)) {
+                String nextName = NEXT_VACCINE.get(appliedName);
+                if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, nextName, pet)) continue;
+                saveNewVaccine(nextName, LocalDate.now().plus(NEXT_VACCINE_OFFSET.get(appliedName)), pet);
             }
         }
+    }
+
+    private boolean isSpecificCriteriaSatisfiedForApplyingNextVaccine(String appliedName, String nextName, Pet pet) {
+        if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && TRICAT_BOOST_VACCINE.equalsIgnoreCase(nextName)) {
+            return Optional.ofNullable(pet)
+                    .map(Pet::getBreed)
+                    .map(Breed::getType)
+                    .filter(PetType.CAT::equals)
+                    .flatMap(type -> Optional.ofNullable(pet.getBirthDate()))
+                    .map(birthDate -> ChronoUnit.WEEKS.between(birthDate, LocalDate.now()))
+                    .map(weeks -> weeks >= 9 && weeks <= 16)
+                    .orElse(false);
+        }
+        return true;
+    }
+
+    private void saveNewVaccine(String name, LocalDate date, Pet pet) {
+        Vaccination future = new Vaccination(null, name, date, VaccinationStatus.NEW, pet);
+        vaccinationRepository.save(future);
     }
 }

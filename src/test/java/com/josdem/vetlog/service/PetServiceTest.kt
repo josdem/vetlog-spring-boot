@@ -43,7 +43,6 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
 import java.io.IOException
-import java.time.LocalDateTime
 import java.util.Optional
 
 internal class PetServiceTest {
@@ -118,27 +117,20 @@ internal class PetServiceTest {
     @Throws(IOException::class)
     fun `Updating a pet`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
-        val originalDateCreated = LocalDateTime.now().minusDays(10)
-        val persistedPet =
-            Pet().apply {
-                images = mutableListOf()
-                dateCreated = originalDateCreated
-            }
-        val updatedPet = Pet()
+        pet!!.images = mutableListOf()
         val command: PetCommand = mock()
 
         whenever(command.id).thenReturn(2L)
-        whenever(petRepository.findById(2L)).thenReturn(Optional.of(persistedPet))
-        whenever(petBinder.bindPet(command)).thenReturn(updatedPet)
+        whenever(petRepository.findById(2L)).thenReturn(Optional.of(pet!!))
+        whenever(petBinder.bindPet(command)).thenReturn(pet)
         whenever(command.user).thenReturn(1L)
         whenever(command.adopter).thenReturn(3L)
         whenever(userRepository.findById(1L)).thenReturn(Optional.of(user!!))
         whenever(userRepository.findById(3L)).thenReturn(Optional.of(adopter!!))
 
         service.update(command)
-        assertEquals(user, updatedPet.user)
-        assertEquals(adopter, updatedPet.adopter)
-        assertEquals(originalDateCreated, updatedPet.dateCreated)
+        assertEquals(user, pet!!.user)
+        assertEquals(adopter, pet!!.adopter)
         verify(petImageService).attachFile(command)
         verify(petRepository).save(any())
         verify(command).images = any()

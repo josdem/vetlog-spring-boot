@@ -25,6 +25,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,6 +48,11 @@ public class Breed {
     @Enumerated(STRING)
     private PetType type;
 
-    @Column(nullable = false)
-    private LocalDateTime dateCreated = LocalDateTime.now();
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dateCreated;
+
+    @PrePersist
+    void onCreate() {
+        dateCreated = LocalDateTime.now();
+    }
 }

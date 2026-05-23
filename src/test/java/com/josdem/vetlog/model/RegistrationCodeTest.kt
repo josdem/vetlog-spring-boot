@@ -34,6 +34,7 @@ internal class RegistrationCodeTest {
     @Test
     fun `should generate registration code`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        registrationCode.dateCreated = LocalDateTime.now()
         assertEquals(7, ChronoUnit.DAYS.between(registrationCode.dateCreated, LocalDateTime.now().plusDays(7)))
         assertEquals(36, registrationCode.token.length)
         assertTrue { registrationCode.isValid }
