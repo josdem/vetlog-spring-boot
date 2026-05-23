@@ -54,6 +54,7 @@ public class VaccinationHelper {
             TRICAT_VACCINE, java.time.Period.ofDays(45));
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
+            TRICAT_VACCINE, java.time.Period.ofDays(45),
             C6CV_VACCINE, java.time.Period.ofDays(15),
             TRICAT_BOOST_VACCINE, java.time.Period.ofDays(45),
             RABIES_VACCINE, java.time.Period.ofYears(1));
@@ -68,6 +69,7 @@ public class VaccinationHelper {
                     && previousVaccines.stream()
                             .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)) {
+                if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && !isPetOlderThan16Weeks(pet)) continue;
                 saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
             }
         }
@@ -100,6 +102,13 @@ public class VaccinationHelper {
                     .orElse(false);
         }
         return true;
+    }
+
+    private boolean isPetOlderThan16Weeks(Pet pet) {
+        return Optional.ofNullable(pet)
+                .map(Pet::getBirthDate)
+                .map(dob -> LocalDate.now().isAfter(dob.plusWeeks(16)))
+                .orElse(false);
     }
 
     private void saveNewVaccine(String name, LocalDate date, Pet pet) {
