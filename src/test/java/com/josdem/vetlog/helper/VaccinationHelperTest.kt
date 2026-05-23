@@ -226,4 +226,42 @@ class VaccinationHelperTest {
 
         verify(vaccinationRepository, times(0)).save(any())
     }
+
+    // positive test case for pet older 16 weeks -> rabies created
+    @Test
+    fun `should create Rabies 45 days later when TRICAT applied and pet is older than 16 weeks`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.birthDate = LocalDate.now().minusWeeks(20)
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        val expectedDate = LocalDate.now().plusDays(45)
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    // negative case pet younger -> rabies not created
+    @Test
+    fun `should not create Rabies when TRICAT applied and pet is 16 weeks or younger`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.birthDate = LocalDate.now().minusWeeks(12)
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, times(0)).save(any())
+    }
 }
