@@ -54,6 +54,7 @@ public class VaccinationHelper {
             TRICAT_VACCINE, java.time.Period.ofDays(45));
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
+            TRICAT_VACCINE, java.time.Period.ofDays(45),
             C6CV_VACCINE, java.time.Period.ofDays(15),
             TRICAT_BOOST_VACCINE, java.time.Period.ofDays(45),
             RABIES_VACCINE, java.time.Period.ofYears(1));
@@ -67,7 +68,8 @@ public class VaccinationHelper {
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED
                     && previousVaccines.stream()
                             .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
-                                    && previousVaccine.getStatus() == VaccinationStatus.PENDING)) {
+                                    && previousVaccine.getStatus() == VaccinationStatus.PENDING)
+                    && isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, RABIES_VACCINE, pet)) {
                 saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
             }
         }
@@ -97,6 +99,13 @@ public class VaccinationHelper {
                     .flatMap(type -> Optional.ofNullable(pet.getBirthDate()))
                     .map(birthDate -> ChronoUnit.WEEKS.between(birthDate, LocalDate.now()))
                     .map(weeks -> weeks >= 9 && weeks <= 16)
+                    .orElse(false);
+        }
+        if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && RABIES_VACCINE.equalsIgnoreCase(nextName)) {
+            return Optional.ofNullable(pet)
+                    .map(Pet::getBirthDate)
+                    .map(dob -> ChronoUnit.DAYS.between(dob, LocalDate.now()))
+                    .map(days -> days > (16 * 7))
                     .orElse(false);
         }
         return true;

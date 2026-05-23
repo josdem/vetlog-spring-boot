@@ -28,6 +28,7 @@ import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argThat
+import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -225,5 +226,69 @@ class VaccinationHelperTest {
         vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
         verify(vaccinationRepository, times(0)).save(any())
+    }
+
+    @Test
+    fun `should create Rabies 45 days later when TRICAT applied and pet is older than 16 weeks`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.birthDate = LocalDate.now().minusWeeks(20)
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        val expectedDate = LocalDate.now().plusDays(45)
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should not create Rabies when TRICAT applied and pet is 16 weeks or younger`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.birthDate = LocalDate.now().minusWeeks(12)
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, times(0)).save(any())
+    }
+
+    @Test
+    fun `should not create Rabies when pet is exactly 16 weeks old`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.birthDate = LocalDate.now().minusWeeks(16)
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, never()).save(any())
+    }
+
+    @Test
+    fun `should create Rabies when pet is older than 16 weeks by one day`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val today = LocalDate.now()
+        val pet = Pet()
+        pet.birthDate = today.minusWeeks(16).minusDays(1)
+        val previousVaccines = Vaccination(1L, "TRICAT", today, VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", today, VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository).save(any())
     }
 }
