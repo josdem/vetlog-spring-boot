@@ -38,8 +38,6 @@ public class PetBinder {
     private final VaccinationService vaccinationService;
     private final VaccinationRepository vaccinationRepository;
 
-    private static final String RABIES_VACCINE = "Rabies";
-
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
         Pet pet = new Pet();
@@ -66,10 +64,12 @@ public class PetBinder {
                 .orElseThrow(() -> new BusinessException("Breed was not found for pet: " + pet.getName())));
         vaccinationService.updateVaccinations(petCommand, pet);
         pet.setVaccines(petCommand.getVaccines());
-        petCommand.getVaccines().forEach(vaccine -> {
-            vaccine.setDate(LocalDate.now());
-            vaccinationRepository.save(vaccine);
-        });
+        petCommand.getVaccines().stream()
+                .filter(pc -> VaccinationStatus.APPLIED.equals(pc.getStatus()))
+                .forEach(vaccine -> {
+                    vaccine.setDate(LocalDate.now());
+                    vaccinationRepository.save(vaccine);
+                });
         return pet;
     }
 

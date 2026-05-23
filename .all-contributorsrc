@@ -512,7 +512,9 @@
       "profile": "https://github.com/khawaja-abdullah",
       "contributions": [
         "code",
-        "ideas"
+        "ideas",
+        "bug",
+        "review"
       ]
     },
     {
@@ -592,6 +594,15 @@
       "name": "Jsu",
       "avatar_url": "https://avatars.githubusercontent.com/u/57835745?v=4",
       "profile": "https://github.com/vincere-mori",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Fran-narang",
+      "name": "Francis-pracs",
+      "avatar_url": "https://avatars.githubusercontent.com/u/222741171?v=4",
+      "profile": "https://github.com/Fran-narang",
       "contributions": [
         "code"
       ]
