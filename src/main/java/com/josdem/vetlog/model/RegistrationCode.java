@@ -23,6 +23,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Getter;
@@ -40,8 +41,8 @@ public class RegistrationCode {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private LocalDateTime dateCreated = LocalDateTime.now();
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dateCreated;
 
     @Column(nullable = false)
     private String token = UUID.randomUUID().toString();
@@ -51,5 +52,10 @@ public class RegistrationCode {
 
     public Boolean isValid() {
         return status == RegistrationCodeStatus.VALID;
+    }
+
+    @PrePersist
+    void onCreate() {
+        dateCreated = LocalDateTime.now();
     }
 }
