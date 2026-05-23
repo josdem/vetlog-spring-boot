@@ -115,7 +115,7 @@ class VaccinationHelperTest {
             listOf(
                 java.time.Period.ofDays(15),
                 java.time.Period.ofYears(1),
-                java.time.Period.ofDays(45),
+                java.time.Period.ofDays(21),
             )
         val baseDate = previousVaccines.first().date
         offsets.forEach { p ->
@@ -171,7 +171,7 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should create TRICAT_BOOST 45 days later when TRICAT applied and pet is a cat aged 9 to 16 weeks`(testInfo: TestInfo) {
+    fun `should create TRICAT_BOOST 21 days later when TRICAT applied and pet is a cat aged 9 to 16 weeks`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()
         val breed = Breed()
@@ -184,7 +184,7 @@ class VaccinationHelperTest {
 
         vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
-        val expectedDate = LocalDate.now().plusDays(45)
+        val expectedDate = LocalDate.now().plusDays(21)
         verify(vaccinationRepository).save(
             argThat { vaccination ->
                 vaccination.name == "TRICAT_BOOST" &&
@@ -229,7 +229,7 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should create Rabies 45 days later when TRICAT applied and pet is older than 16 weeks`(testInfo: TestInfo) {
+    fun `should create Rabies 21 days later when TRICAT applied and pet is older than 16 weeks`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()
         pet.birthDate = LocalDate.now().minusWeeks(20)
@@ -239,7 +239,7 @@ class VaccinationHelperTest {
 
         vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
 
-        val expectedDate = LocalDate.now().plusDays(45)
+        val expectedDate = LocalDate.now().plusDays(21)
         verify(vaccinationRepository).save(
             argThat { vaccination ->
                 vaccination.name == "Rabies" &&

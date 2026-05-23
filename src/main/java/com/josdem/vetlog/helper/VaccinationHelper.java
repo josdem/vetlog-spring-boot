@@ -51,12 +51,12 @@ public class VaccinationHelper {
     private static final Map<String, java.time.Period> NEXT_VACCINE_OFFSET = Map.of(
             PUPPY_VACCINE, java.time.Period.ofDays(15),
             C4CV_VACCINE, java.time.Period.ofDays(15),
-            TRICAT_VACCINE, java.time.Period.ofDays(45));
+            TRICAT_VACCINE, java.time.Period.ofDays(21));
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
-            TRICAT_VACCINE, java.time.Period.ofDays(45),
+            TRICAT_VACCINE, java.time.Period.ofDays(21),
             C6CV_VACCINE, java.time.Period.ofDays(15),
-            TRICAT_BOOST_VACCINE, java.time.Period.ofDays(45),
+            TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
             RABIES_VACCINE, java.time.Period.ofYears(1));
 
     private final VaccinationRepository vaccinationRepository;
