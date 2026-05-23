@@ -40,8 +40,6 @@ public class PetBinder {
     private final VaccinationService vaccinationService;
     private final VaccinationRepository vaccinationRepository;
 
-    private static final String RABIES_VACCINE = "Rabies";
-
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
         Pet pet = new Pet();
@@ -67,10 +65,12 @@ public class PetBinder {
 
         /// Save updated vaccines
         pet.setVaccines(petCommand.getVaccines());
-        petCommand.getVaccines().forEach(vaccine -> {
-            vaccine.setDate(LocalDate.now());
-            vaccinationRepository.save(vaccine);
-        });
+        petCommand.getVaccines().stream()
+                .filter(pc -> VaccinationStatus.APPLIED.equals(pc.getStatus()))
+                .forEach(vaccine -> {
+                    vaccine.setDate(LocalDate.now());
+                    vaccinationRepository.save(vaccine);
+                });
 
         Optional<Breed> breed = breedRepository.findById(petCommand.getBreed());
         if (breed.isEmpty()) {
