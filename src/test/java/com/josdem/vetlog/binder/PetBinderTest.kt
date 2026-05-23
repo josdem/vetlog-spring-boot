@@ -37,6 +37,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import org.slf4j.LoggerFactory
@@ -141,6 +142,25 @@ internal class PetBinderTest {
 
         assertNotNull(result.weight)
         assertEquals(BigDecimal.ZERO, result.weight)
+    }
+
+    @Test
+    fun `should only update date of APPLIED vaccinations when binding a pet from command`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val petCommand = getPetCommand()
+        petCommand.birthDate = "2026-05-10"
+        setBreedExpectations()
+
+        val appliedVaccine = Vaccination(1L, "C6CV", LocalDate.of(2026, 5, 10), VaccinationStatus.APPLIED, null)
+        val pendingVaccine = Vaccination(2L, "Deworming", LocalDate.of(2026, 5, 10), VaccinationStatus.PENDING, null)
+        petCommand.vaccines = listOf(appliedVaccine, pendingVaccine)
+
+        petBinder.bindPet(petCommand)
+
+        verify(vaccinationRepository, times(1)).save(appliedVaccine)
+        assertEquals(LocalDate.now(), appliedVaccine.date)
+        verify(vaccinationRepository, times(0)).save(pendingVaccine)
+        assertEquals(LocalDate.of(2026, 5, 10), pendingVaccine.date)
     }
 
     private fun setBreedExpectations() {
