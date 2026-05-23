@@ -157,10 +157,10 @@ internal class PetBinderTest {
 
         petBinder.bindPet(petCommand)
 
-        verify(vaccinationRepository, times(1)).save(appliedVaccine)
         assertEquals(LocalDate.now(), appliedVaccine.date)
-        verify(vaccinationRepository, times(0)).save(pendingVaccine)
+        verify(vaccinationRepository, times(1)).save(appliedVaccine)
         assertEquals(LocalDate.of(2026, 5, 10), pendingVaccine.date)
+        verify(vaccinationRepository, times(0)).save(pendingVaccine)
     }
 
     private fun setBreedExpectations() {
