@@ -115,12 +115,10 @@ public class VaccinationHelper {
         return true;
     }
 
-    public boolean petNeedsLeukemiaVaccine(Pet pet) {
+    private boolean petNeedsLeukemiaVaccine(Pet pet) {
         return Optional.ofNullable(pet)
-                .map(Pet::getBreed)
-                .map(Breed::getType)
-                .filter(PetType.CAT::equals)
-                .flatMap(goingOutOften -> Optional.ofNullable(pet.getGoingOutOften()))
+                .filter(p -> p.getBreed() != null && PetType.CAT.equals(p.getBreed().getType()))
+                .map(Pet::getGoingOutOften)
                 .orElse(false);
     }
 
