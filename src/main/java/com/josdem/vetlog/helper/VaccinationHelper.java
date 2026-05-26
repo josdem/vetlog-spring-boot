@@ -42,6 +42,7 @@ public class VaccinationHelper {
     private static final String C6CV_VACCINE = "C6CV";
     private static final String TRICAT_VACCINE = "TRICAT";
     private static final String TRICAT_BOOST_VACCINE = "TRICAT_BOOST";
+    private static final String FELV_VACCINE = "FeLV";
 
     private static final Map<String, String> NEXT_VACCINE = Map.of(
             PUPPY_VACCINE, C4CV_VACCINE,
@@ -71,6 +72,9 @@ public class VaccinationHelper {
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)
                     && isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, RABIES_VACCINE, pet)) {
                 saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
+                if(petNeedsLeukemiaVaccine(pet)){
+                    saveNewVaccine(FELV_VACCINE, LocalDate.now().plusDays(21), pet);
+                }
             }
         }
     }
@@ -109,6 +113,15 @@ public class VaccinationHelper {
                     .orElse(false);
         }
         return true;
+    }
+
+    public boolean petNeedsLeukemiaVaccine(Pet pet){
+        return Optional.ofNullable(pet)
+                .map(Pet::getBreed)
+                .map(Breed::getType)
+                .filter(PetType.CAT::equals)
+                .flatMap(goingOutOften -> Optional.ofNullable(pet.getGoingOutOften()))
+                .orElse(false);
     }
 
     private void saveNewVaccine(String name, LocalDate date, Pet pet) {
