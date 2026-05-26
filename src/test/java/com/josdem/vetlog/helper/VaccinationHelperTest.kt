@@ -322,7 +322,7 @@ class VaccinationHelperTest {
         val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
 
         val expectedDate = LocalDate.now().plusDays(21)
-        whenever { vaccinationRepository.findAllByPetId(1L) }.thenReturn(listOf(previousVaccines))
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
 
         vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
 
