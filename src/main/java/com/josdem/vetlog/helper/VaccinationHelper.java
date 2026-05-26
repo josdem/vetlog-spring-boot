@@ -72,7 +72,7 @@ public class VaccinationHelper {
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)
                     && isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, RABIES_VACCINE, pet)) {
                 saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
-                if(petNeedsLeukemiaVaccine(pet)){
+                if (petNeedsLeukemiaVaccine(pet)) {
                     saveNewVaccine(FELV_VACCINE, LocalDate.now().plusDays(21), pet);
                 }
             }
@@ -115,7 +115,7 @@ public class VaccinationHelper {
         return true;
     }
 
-    public boolean petNeedsLeukemiaVaccine(Pet pet){
+    public boolean petNeedsLeukemiaVaccine(Pet pet) {
         return Optional.ofNullable(pet)
                 .map(Pet::getBreed)
                 .map(Breed::getType)
