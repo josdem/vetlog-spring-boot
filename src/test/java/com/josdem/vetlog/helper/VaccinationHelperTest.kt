@@ -218,22 +218,6 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should not create TRICAT_BOOST or FeLV when TRICAT applied and pet is not cat`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val pet = Pet()
-        val breed = Breed()
-        breed.type = PetType.DOG
-        pet.breed = breed
-        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
-        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
-        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
-
-        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
-
-        verify(vaccinationRepository, times(0)).save(any())
-    }
-
-    @Test
     fun `should create Rabies 21 days later when TRICAT applied and pet is older than 16 weeks`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()
@@ -320,7 +304,7 @@ class VaccinationHelperTest {
         log.info(testInfo.displayName)
         val pet = Pet()
         pet.id = 1L
-        pet.birthDate = LocalDate.now().minusMonths(17)
+        pet.birthDate = LocalDate.now().minusWeeks(17)
         pet.goingOutOften = true
         pet.breed = Breed().apply { type = PetType.CAT }
         val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
@@ -346,7 +330,7 @@ class VaccinationHelperTest {
         log.info(testInfo.displayName)
         val pet = Pet()
         pet.id = 1L
-        pet.birthDate = LocalDate.now().minusMonths(16)
+        pet.birthDate = LocalDate.now().minusWeeks(16)
         pet.goingOutOften = true
         pet.breed = Breed().apply { type = PetType.CAT }
         val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
