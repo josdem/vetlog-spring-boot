@@ -44,21 +44,21 @@ public class VaccinationHelper {
     private static final String TRICAT_BOOST_VACCINE = "TRICAT_BOOST";
     private static final String FELV_VACCINE = "FeLV";
 
-    private static final Map<String, String> NEXT_VACCINE = Map.of(
-            PUPPY_VACCINE, C4CV_VACCINE,
-            C4CV_VACCINE, C6CV_VACCINE,
-            TRICAT_VACCINE, TRICAT_BOOST_VACCINE);
-
-    private static final Map<String, java.time.Period> NEXT_VACCINE_OFFSET = Map.of(
-            PUPPY_VACCINE, java.time.Period.ofDays(15),
-            C4CV_VACCINE, java.time.Period.ofDays(15),
-            TRICAT_VACCINE, java.time.Period.ofDays(21));
+    private static final Map<String, Map<String, java.time.Period>> NEXT_VACCINE_AND_OFFSET = Map.of(
+            PUPPY_VACCINE, Map.of(C4CV_VACCINE, java.time.Period.ofDays(15)),
+            C4CV_VACCINE, Map.of(C6CV_VACCINE, java.time.Period.ofDays(15)),
+            TRICAT_VACCINE, Map.of(
+                TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
+                FELV_VACCINE, java.time.Period.ofDays(21)
+            )
+    );
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
             TRICAT_VACCINE, java.time.Period.ofDays(21),
             C6CV_VACCINE, java.time.Period.ofDays(15),
             TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
-            RABIES_VACCINE, java.time.Period.ofYears(1));
+            RABIES_VACCINE, java.time.Period.ofYears(1)
+    );
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -72,9 +72,6 @@ public class VaccinationHelper {
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)
                     && isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, RABIES_VACCINE, pet)) {
                 saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
-                if (petNeedsLeukemiaVaccine(pet)) {
-                    saveNewVaccine(FELV_VACCINE, LocalDate.now().plusDays(21), pet);
-                }
             }
         }
     }
@@ -82,14 +79,16 @@ public class VaccinationHelper {
     public void validateNextVaccines(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
         for (Vaccination newVaccine : newVaccines) {
             String appliedName = newVaccine.getName();
-            if (NEXT_VACCINE.containsKey(appliedName)
+            if (NEXT_VACCINE_AND_OFFSET.containsKey(appliedName)
                     && newVaccine.getStatus() == VaccinationStatus.APPLIED
                     && previousVaccines.stream()
                             .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)) {
-                String nextName = NEXT_VACCINE.get(appliedName);
-                if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, nextName, pet)) continue;
-                saveNewVaccine(nextName, LocalDate.now().plus(NEXT_VACCINE_OFFSET.get(appliedName)), pet);
+                Map<String, java.time.Period> nextNamesAndOffsets = NEXT_VACCINE_AND_OFFSET.get(appliedName);
+                for (Map.Entry<String, java.time.Period> nextNameAndOffset : nextNamesAndOffsets.entrySet()) {
+                    if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, nextNameAndOffset.getKey(), pet)) continue;
+                    saveNewVaccine(nextNameAndOffset.getKey(), LocalDate.now().plus(nextNameAndOffset.getValue()), pet);
+                }
             }
         }
     }
@@ -104,22 +103,21 @@ public class VaccinationHelper {
                     .map(birthDate -> ChronoUnit.WEEKS.between(birthDate, LocalDate.now()))
                     .map(weeks -> weeks >= 9 && weeks <= 16)
                     .orElse(false);
-        }
-        if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && RABIES_VACCINE.equalsIgnoreCase(nextName)) {
+        } else if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && RABIES_VACCINE.equalsIgnoreCase(nextName)) {
             return Optional.ofNullable(pet)
                     .map(Pet::getBirthDate)
                     .map(dob -> ChronoUnit.DAYS.between(dob, LocalDate.now()))
                     .map(days -> days > (16 * 7))
                     .orElse(false);
+        } else if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && FELV_VACCINE.equalsIgnoreCase(nextName)) {
+            return Optional.ofNullable(pet)
+                    .map(Pet::getBreed)
+                    .map(Breed::getType)
+                    .filter(PetType.CAT::equals)
+                    .flatMap(type -> Optional.ofNullable(pet.getGoingOutOften()))
+                    .orElse(false);
         }
         return true;
-    }
-
-    private boolean petNeedsLeukemiaVaccine(Pet pet) {
-        return Optional.ofNullable(pet)
-                .filter(p -> p.getBreed() != null && PetType.CAT.equals(p.getBreed().getType()))
-                .map(Pet::getGoingOutOften)
-                .orElse(false);
     }
 
     private void saveNewVaccine(String name, LocalDate date, Pet pet) {

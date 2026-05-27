@@ -196,7 +196,7 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should not create TRICAT_BOOST 21 days later when TRICAT applied and pet is cat not aged 9 to 16 weeks`(testInfo: TestInfo) {
+    fun `should not create TRICAT_BOOST when TRICAT applied and pet is cat not aged 9 to 16 weeks`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()
         val breed = Breed()
@@ -209,11 +209,16 @@ class VaccinationHelperTest {
 
         vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
-        verify(vaccinationRepository, times(0)).save(any())
+        verify(vaccinationRepository, times(0)).save(
+            argThat { vaccination ->
+                vaccination.name == "TRICAT_BOOST" &&
+                    vaccination.status == VaccinationStatus.NEW
+            },
+        )
     }
 
     @Test
-    fun `should not create TRICAT_BOOST 45 days later when TRICAT applied and pet is not cat`(testInfo: TestInfo) {
+    fun `should not create TRICAT_BOOST or FeLV when TRICAT applied and pet is not cat`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()
         val breed = Breed()
@@ -293,7 +298,7 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should update tricat_boost vaccination status to APPLIED`(testInfo: TestInfo) {
+    fun `should update TRICAT_BOOST vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val previousVaccines = Vaccination(3L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.PENDING, pet)
         val newVaccines = Vaccination(3L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.APPLIED, pet)
@@ -311,11 +316,9 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should create new FELV vaccine`(testInfo: TestInfo) {
+    fun `should create new FeLV vaccine when TRICAT is applied`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()
-        pet.id = 1L
-        pet.birthDate = LocalDate.now().minusWeeks(20)
         pet.goingOutOften = true
         pet.breed = Breed().apply { type = PetType.CAT }
         val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
@@ -324,7 +327,7 @@ class VaccinationHelperTest {
         val expectedDate = LocalDate.now().plusDays(21)
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
 
-        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
         verify(vaccinationRepository).save(
             argThat { vaccination ->
@@ -332,6 +335,28 @@ class VaccinationHelperTest {
                     vaccination.status == VaccinationStatus.NEW &&
                     vaccination.date == expectedDate &&
                     vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should not create FeLV when TRICAT applied and pet is cat and not going out often`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        val breed = Breed()
+        breed.type = PetType.CAT
+        pet.breed = breed
+        pet.goingOutOften = false
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, times(0)).save(
+            argThat { vaccination ->
+                vaccination.name == "FeLV" &&
+                    vaccination.status == VaccinationStatus.NEW
             },
         )
     }
