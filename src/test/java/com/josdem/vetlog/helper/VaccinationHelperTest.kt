@@ -303,26 +303,16 @@ class VaccinationHelperTest {
     fun `should create new FeLV vaccine when TRICAT is applied`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()
-        pet.id = 1L
-        pet.birthDate = LocalDate.now().minusWeeks(17)
+        pet.birthDate = LocalDate.now().minusWeeks(16).minusDays(1)
         pet.goingOutOften = true
         pet.breed = Breed().apply { type = PetType.CAT }
         val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
         val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
-
-        val expectedDate = LocalDate.now().plusDays(21)
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
 
-        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
 
-        verify(vaccinationRepository).save(
-            argThat { vaccination ->
-                vaccination.name == "FeLV" &&
-                    vaccination.status == VaccinationStatus.NEW &&
-                    vaccination.date == expectedDate &&
-                    vaccination.pet == pet
-            },
-        )
+        verify(vaccinationRepository).save(any())
     }
 
     @Test

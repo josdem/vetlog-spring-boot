@@ -47,16 +47,14 @@ public class VaccinationHelper {
     private static final Map<String, Map<String, java.time.Period>> NEXT_VACCINE_AND_OFFSET = Map.of(
             PUPPY_VACCINE, Map.of(C4CV_VACCINE, java.time.Period.ofDays(15)),
             C4CV_VACCINE, Map.of(C6CV_VACCINE, java.time.Period.ofDays(15)),
-            TRICAT_VACCINE,
-                    Map.of(
-                            TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
-                            FELV_VACCINE, java.time.Period.ofDays(21)));
+            TRICAT_VACCINE, Map.of(TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21)));
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
             TRICAT_VACCINE, java.time.Period.ofDays(21),
             C6CV_VACCINE, java.time.Period.ofDays(15),
             TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
-            RABIES_VACCINE, java.time.Period.ofYears(1));
+            RABIES_VACCINE, java.time.Period.ofYears(1),
+            FELV_VACCINE, java.time.Period.ofDays(21));
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -70,6 +68,10 @@ public class VaccinationHelper {
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)
                     && isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, RABIES_VACCINE, pet)) {
                 saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
+                if (RABIES_VACCINE.equalsIgnoreCase(appliedName)) {
+                    saveNewVaccine(
+                            FELV_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(FELV_VACCINE)), pet);
+                }
             }
         }
     }
@@ -108,27 +110,8 @@ public class VaccinationHelper {
                     .map(dob -> ChronoUnit.DAYS.between(dob, LocalDate.now()))
                     .map(days -> days > (16 * 7))
                     .orElse(false);
-        } else if (TRICAT_VACCINE.equalsIgnoreCase(appliedName)
-                && FELV_VACCINE.equalsIgnoreCase(nextName)
-                && petNeedsLeukemiaVaccine(pet)) {
-            return Optional.ofNullable(pet)
-                    .map(Pet::getBreed)
-                    .map(Breed::getType)
-                    .filter(PetType.CAT::equals)
-                    .flatMap(type -> Optional.ofNullable(pet.getGoingOutOften()))
-                    .orElse(false);
         }
         return true;
-    }
-
-    private boolean petNeedsLeukemiaVaccine(Pet pet) {
-        return Optional.ofNullable(pet)
-                .filter(p ->
-                        p.getBreed() != null && PetType.CAT.equals(p.getBreed().getType()))
-                .filter(p -> Boolean.TRUE.equals(p.getGoingOutOften()))
-                .map(Pet::getBirthDate)
-                .map(birthDate -> birthDate.isBefore(LocalDate.now().minusWeeks(16)))
-                .orElse(false);
     }
 
     private void saveNewVaccine(String name, LocalDate date, Pet pet) {
