@@ -315,7 +315,7 @@ class VaccinationHelperTest {
         log.info(testInfo.displayName)
         val pet = Pet()
         pet.id = 1L
-        pet.birthDate = LocalDate.now().minusWeeks(20)
+        pet.birthDate = LocalDate.now().minusMonths(17)
         pet.goingOutOften = true
         pet.breed = Breed().apply { type = PetType.CAT }
         val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
@@ -331,6 +331,29 @@ class VaccinationHelperTest {
                 vaccination.name == "FeLV" &&
                     vaccination.status == VaccinationStatus.NEW &&
                     vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should not create new FELV vaccine when cat is 16 months old or younger`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.id = 1L
+        pet.birthDate = LocalDate.now().minusMonths(16)
+        pet.goingOutOften = true
+        pet.breed = Breed().apply { type = PetType.CAT }
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, never()).save(
+            argThat { vaccination ->
+                vaccination.name == "FeLV" &&
+                    vaccination.status == VaccinationStatus.NEW &&
                     vaccination.pet == pet
             },
         )

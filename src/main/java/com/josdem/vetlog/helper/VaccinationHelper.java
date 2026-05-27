@@ -117,8 +117,11 @@ public class VaccinationHelper {
 
     private boolean petNeedsLeukemiaVaccine(Pet pet) {
         return Optional.ofNullable(pet)
-                .filter(p -> p.getBreed() != null && PetType.CAT.equals(p.getBreed().getType()))
-                .map(Pet::getGoingOutOften)
+                .filter(p ->
+                        p.getBreed() != null && PetType.CAT.equals(p.getBreed().getType()))
+                .filter(p -> Boolean.TRUE.equals(p.getGoingOutOften()))
+                .map(Pet::getBirthDate)
+                .map(birthDate -> birthDate.isBefore(LocalDate.now().minusMonths(16)))
                 .orElse(false);
     }
 
