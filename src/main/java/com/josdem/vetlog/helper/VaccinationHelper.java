@@ -44,13 +44,13 @@ public class VaccinationHelper {
     private static final String TRICAT_BOOST_VACCINE = "TRICAT_BOOST";
     private static final String FELV_VACCINE = "FeLV";
 
-    private static final Map<String, List<Map<String, java.time.Period>>> NEXT_VACCINE_AND_OFFSET = Map.of(
-            PUPPY_VACCINE, List.of(Map.of(C4CV_VACCINE, java.time.Period.ofDays(15))),
-            C4CV_VACCINE, List.of(Map.of(C6CV_VACCINE, java.time.Period.ofDays(15))),
+    private static final Map<String, Map<String, java.time.Period>> NEXT_VACCINE_AND_OFFSET = Map.of(
+            PUPPY_VACCINE, Map.of(C4CV_VACCINE, java.time.Period.ofDays(15)),
+            C4CV_VACCINE, Map.of(C6CV_VACCINE, java.time.Period.ofDays(15)),
             TRICAT_VACCINE,
-                    List.of(
-                            Map.of(TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21)),
-                            Map.of(FELV_VACCINE, java.time.Period.ofDays(21))
+                    Map.of(
+                            TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
+                            FELV_VACCINE, java.time.Period.ofDays(21)
                     )
     );
 
