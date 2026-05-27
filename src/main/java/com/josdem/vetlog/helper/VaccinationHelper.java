@@ -47,18 +47,18 @@ public class VaccinationHelper {
     private static final Map<String, Map<String, java.time.Period>> NEXT_VACCINE_AND_OFFSET = Map.of(
             PUPPY_VACCINE, Map.of(C4CV_VACCINE, java.time.Period.ofDays(15)),
             C4CV_VACCINE, Map.of(C6CV_VACCINE, java.time.Period.ofDays(15)),
-            TRICAT_VACCINE,
-                    Map.of(
-                            TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
-                            FELV_VACCINE, java.time.Period.ofDays(21)
-                    )
+            TRICAT_VACCINE, Map.of(
+                TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
+                FELV_VACCINE, java.time.Period.ofDays(21)
+            )
     );
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
             TRICAT_VACCINE, java.time.Period.ofDays(21),
             C6CV_VACCINE, java.time.Period.ofDays(15),
             TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21),
-            RABIES_VACCINE, java.time.Period.ofYears(1));
+            RABIES_VACCINE, java.time.Period.ofYears(1)
+    );
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -84,14 +84,11 @@ public class VaccinationHelper {
                     && previousVaccines.stream()
                             .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)) {
-                List<Map<String, java.time.Period>> nextNamesAndOffsets = NEXT_VACCINE_AND_OFFSET.get(appliedName);
-                nextNamesAndOffsets.stream()
-                        .flatMap(map -> map.entrySet().stream())
-                        .forEach(entry -> {
-                            if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, entry.getKey(), pet))
-                                return;
-                            saveNewVaccine(entry.getKey(), LocalDate.now().plus(entry.getValue()), pet);
-                        });
+                Map<String, java.time.Period> nextNamesAndOffsets = NEXT_VACCINE_AND_OFFSET.get(appliedName);
+                for (Map.Entry<String, java.time.Period> nextNameAndOffset : nextNamesAndOffsets.entrySet()) {
+                    if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, nextNameAndOffset.getKey(), pet)) continue;
+                    saveNewVaccine(nextNameAndOffset.getKey(), LocalDate.now().plus(nextNameAndOffset.getValue()), pet);
+                }
             }
         }
     }
