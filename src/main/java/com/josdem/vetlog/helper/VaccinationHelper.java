@@ -120,6 +120,16 @@ public class VaccinationHelper {
         return true;
     }
 
+    private boolean petNeedsLeukemiaVaccine(Pet pet) {
+        return Optional.ofNullable(pet)
+                .filter(p ->
+                        p.getBreed() != null && PetType.CAT.equals(p.getBreed().getType()))
+                .filter(p -> Boolean.TRUE.equals(p.getGoingOutOften()))
+                .map(Pet::getBirthDate)
+                .map(birthDate -> birthDate.isBefore(LocalDate.now().minusMonths(16)))
+                .orElse(false);
+    }
+
     private void saveNewVaccine(String name, LocalDate date, Pet pet) {
         Vaccination future = new Vaccination(null, name, date, VaccinationStatus.NEW, pet);
         vaccinationRepository.save(future);
