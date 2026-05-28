@@ -74,7 +74,6 @@ public class VaccinationServiceImpl implements VaccinationService {
     @Override
     public void updateVaccinations(PetCommand petCommand, Pet pet) {
         var previousVaccines = vaccinationRepository.findAllByPetId(petCommand.getId());
-        vaccinationHelper.validateRabiesVaccine(previousVaccines, petCommand.getVaccines(), pet);
         vaccinationHelper.validateNextVaccines(previousVaccines, petCommand.getVaccines(), pet);
     }
 }

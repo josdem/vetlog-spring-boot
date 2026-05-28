@@ -140,13 +140,13 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    fun `should update rabies vaccination status to APPLIED`(testInfo: TestInfo) {
+    fun `should update vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(emptyList())
 
         vaccinationService.updateVaccinations(getPetCommand(), pet)
 
-        verify(vaccinationHelper).validateRabiesVaccine(any(), any(), any())
+        verify(vaccinationHelper).validateNextVaccines(any(), any(), any())
     }
 
     private fun getPetCommand() =
