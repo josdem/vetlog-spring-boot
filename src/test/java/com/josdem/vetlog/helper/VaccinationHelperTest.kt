@@ -310,9 +310,15 @@ class VaccinationHelperTest {
         val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
 
-        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
-        verify(vaccinationRepository).save(any())
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "FeLV" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.pet == pet
+            },
+        )
     }
 
     @Test
@@ -327,7 +333,30 @@ class VaccinationHelperTest {
         val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
 
-        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, never()).save(
+            argThat { vaccination ->
+                vaccination.name == "FeLV" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should not create new FELV vaccine when cat is not going out often`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.id = 1L
+        pet.birthDate = LocalDate.now().minusWeeks(16).minusDays(1)
+        pet.goingOutOften = false
+        pet.breed = Breed().apply { type = PetType.CAT }
+        val previousVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateNextVaccines(listOf(previousVaccines), listOf(newVaccines), pet)
 
         verify(vaccinationRepository, never()).save(
             argThat { vaccination ->
