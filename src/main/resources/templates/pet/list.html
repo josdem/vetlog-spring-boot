@@ -82,6 +82,7 @@
                         <div class="pet-info-container">
                             <div class="col-lg-4">
                                 <ul>
+                                    <li th:data-testid="petId" th:text="|VetlogID: ${pet.id}|"/>
                                     <li th:data-testid="petBirhdate" th:text="${@dateFormatter.formatToDate(pet.birthDate, #locale)}"/>
                                     <li th:data-testid="petBreed" th:text="${pet.breed.name}"/>
                                     <li th:data-testid="petSterilized" th:text="${pet.sterilized}? #{pet.sterilized} : #{pet.not.sterilized}"/>
