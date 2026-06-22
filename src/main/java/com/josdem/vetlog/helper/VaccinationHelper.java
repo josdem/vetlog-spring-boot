@@ -63,17 +63,19 @@ public class VaccinationHelper {
     public void validateNextVaccines(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
         for (Vaccination newVaccine : newVaccines) {
             String appliedName = newVaccine.getName();
-            if (NEXT_VACCINE_AND_OFFSET.containsKey(appliedName)
-                    && newVaccine.getStatus() == VaccinationStatus.APPLIED
-                    && previousVaccines.stream()
-                            .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
+            if (!NEXT_VACCINE_AND_OFFSET.containsKey(appliedName)
+                    || newVaccine.getStatus() != VaccinationStatus.APPLIED
+                    || previousVaccines.stream()
+                            .noneMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)) {
-                Map<String, java.time.Period> nextNamesAndOffsets = NEXT_VACCINE_AND_OFFSET.get(appliedName);
-                for (Map.Entry<String, java.time.Period> nextNameAndOffset : nextNamesAndOffsets.entrySet()) {
-                    if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(
-                            appliedName, nextNameAndOffset.getKey(), pet)) continue;
-                    saveNewVaccine(nextNameAndOffset.getKey(), LocalDate.now().plus(nextNameAndOffset.getValue()), pet);
+                continue;
+            }
+            Map<String, java.time.Period> nextNamesAndOffsets = NEXT_VACCINE_AND_OFFSET.get(appliedName);
+            for (Map.Entry<String, java.time.Period> nextNameAndOffset : nextNamesAndOffsets.entrySet()) {
+                if (!isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, nextNameAndOffset.getKey(), pet)) {
+                    continue;
                 }
+                saveNewVaccine(nextNameAndOffset.getKey(), LocalDate.now().plus(nextNameAndOffset.getValue()), pet);
             }
         }
     }
@@ -100,9 +102,6 @@ public class VaccinationHelper {
                     .map(Breed::getType)
                     .filter(PetType.CAT::equals)
                     .flatMap(type -> Optional.ofNullable(pet.getGoingOutOften()))
-                    .filter(isGoingOutOften -> isGoingOutOften)
-                    .flatMap(isGoingOutOften -> Optional.ofNullable(pet.getBirthDate()))
-                    .map(birthDate -> birthDate.isBefore(LocalDate.now().minusWeeks(16)))
                     .orElse(false);
         }
         return true;
