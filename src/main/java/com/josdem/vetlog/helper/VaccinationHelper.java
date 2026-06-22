@@ -53,10 +53,12 @@ public class VaccinationHelper {
                             TRICAT_BOOST_VACCINE,
                             java.time.Period.ofDays(21),
                             RABIES_VACCINE,
+                            java.time.Period.ofDays(21),
+                            FELV_VACCINE,
                             java.time.Period.ofDays(21)),
             TRICAT_BOOST_VACCINE, Map.of(RABIES_VACCINE, java.time.Period.ofDays(21)),
             RABIES_VACCINE,
-                    Map.of(FELV_VACCINE, java.time.Period.ofDays(21), RABIES_VACCINE, java.time.Period.ofYears(1)));
+                    Map.of(RABIES_VACCINE, java.time.Period.ofYears(1), FELV_VACCINE, java.time.Period.ofDays(21)));
 
     private final VaccinationRepository vaccinationRepository;
 
@@ -96,7 +98,7 @@ public class VaccinationHelper {
                     .map(dob -> ChronoUnit.DAYS.between(dob, LocalDate.now()))
                     .map(days -> days > (16 * 7))
                     .orElse(false);
-        } else if (RABIES_VACCINE.equalsIgnoreCase(appliedName) && FELV_VACCINE.equalsIgnoreCase(nextName)) {
+        } else if (FELV_VACCINE.equalsIgnoreCase(nextName)) {
             return Optional.ofNullable(pet)
                     .map(Pet::getBreed)
                     .map(Breed::getType)
