@@ -101,7 +101,9 @@ public class VaccinationHelper {
                     .map(Pet::getBreed)
                     .map(Breed::getType)
                     .filter(PetType.CAT::equals)
-                    .flatMap(type -> Optional.ofNullable(pet.getGoingOutOften()))
+                    .flatMap(type -> Optional.ofNullable(pet.getBirthDate()))
+                    .filter(birthDate -> birthDate.isBefore(LocalDate.now().minusWeeks(16)))
+                    .flatMap(weeks -> Optional.ofNullable(pet.getGoingOutOften()))
                     .orElse(false);
         }
         return true;
