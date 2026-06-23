@@ -121,6 +121,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Fran-narang"><img src="https://avatars.githubusercontent.com/u/222741171?v=4?s=100" width="100px;" alt="Francis-pracs"/><br /><sub><b>Francis-pracs</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Fran-narang" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/AryamannSingh7"><img src="https://avatars.githubusercontent.com/u/107678802?v=4?s=100" width="100px;" alt="Aryamann Singh"/><br /><sub><b>Aryamann Singh</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=AryamannSingh7" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
