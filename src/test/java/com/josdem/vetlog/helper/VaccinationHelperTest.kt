@@ -337,4 +337,68 @@ class VaccinationHelperTest {
             },
         )
     }
+
+    @Test
+    fun `should create FeLV vaccine when Rabies applied and cat is going out often`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.goingOutOften = true
+        pet.breed = Breed().apply { type = PetType.CAT }
+        val previousVaccines = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        val expectedDate = LocalDate.now().plusDays(21)
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "FeLV" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should not create FeLV vaccine when Rabies applied and cat is not going out often`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.goingOutOften = false
+        pet.breed = Breed().apply { type = PetType.CAT }
+        val previousVaccines = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, never()).save(
+            argThat { vaccination -> vaccination.name == "FeLV" },
+        )
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should not create FeLV vaccine when Rabies applied and pet is a dog`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        val pet = Pet()
+        pet.goingOutOften = true
+        pet.breed = Breed().apply { type = PetType.DOG }
+        val previousVaccines = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val newVaccines = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
+
+        verify(vaccinationRepository, never()).save(
+            argThat { vaccination -> vaccination.name == "FeLV" },
+        )
+    }
 }
