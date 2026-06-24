@@ -122,7 +122,7 @@ public class VaccinationHelper {
                 .map(Breed::getType)
                 .filter(PetType.CAT::equals)
                 .isPresent();
-        return isCat && Boolean.TRUE.equals(pet.getGoingOutOften());
+        return isCat && pet.getGoingOutOften();
     }
 
     private void saveNewVaccine(String name, LocalDate date, Pet pet) {
