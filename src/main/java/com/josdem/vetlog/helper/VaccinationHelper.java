@@ -68,7 +68,7 @@ public class VaccinationHelper {
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)
                     && isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, RABIES_VACCINE, pet)) {
                 saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
-                if (RABIES_VACCINE.equalsIgnoreCase(appliedName)) {
+                if (RABIES_VACCINE.equalsIgnoreCase(appliedName) && isFelvVaccineApplicable(pet)) {
                     saveNewVaccine(
                             FELV_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(FELV_VACCINE)), pet);
                 }
@@ -112,6 +112,17 @@ public class VaccinationHelper {
                     .orElse(false);
         }
         return true;
+    }
+
+    private boolean isFelvVaccineApplicable(Pet pet) {
+        if (pet == null) {
+            return false;
+        }
+        boolean isCat = Optional.ofNullable(pet.getBreed())
+                .map(Breed::getType)
+                .filter(PetType.CAT::equals)
+                .isPresent();
+        return isCat && pet.getGoingOutOften();
     }
 
     private void saveNewVaccine(String name, LocalDate date, Pet pet) {
