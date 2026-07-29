@@ -171,6 +171,41 @@ class VaccinationHelperTest {
     }
 
     @Test
+    fun `should create C6CV one year later when C6CV applied`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+
+        val breed = Breed()
+        breed.type = PetType.DOG
+        pet.breed = breed
+
+        val previousVaccines =
+            Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet)
+
+        val newVaccines =
+            Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        whenever(vaccinationRepository.findAllByPetId(1L))
+            .thenReturn(listOf(previousVaccines))
+
+        vaccinationHelper.validateNextVaccines(
+            listOf(previousVaccines),
+            listOf(newVaccines),
+            pet,
+        )
+
+        val expectedDate = LocalDate.now().plusYears(1)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "C6CV" &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.date == expectedDate &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
     fun `should create TRICAT_BOOST 21 days later when TRICAT applied and pet is a cat aged 9 to 16 weeks`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val pet = Pet()

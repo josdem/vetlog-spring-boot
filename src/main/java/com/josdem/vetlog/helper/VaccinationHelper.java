@@ -22,14 +22,15 @@ import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
@@ -47,6 +48,7 @@ public class VaccinationHelper {
     private static final Map<String, Map<String, java.time.Period>> NEXT_VACCINE_AND_OFFSET = Map.of(
             PUPPY_VACCINE, Map.of(C4CV_VACCINE, java.time.Period.ofDays(15)),
             C4CV_VACCINE, Map.of(C6CV_VACCINE, java.time.Period.ofDays(15)),
+            C6CV_VACCINE, Map.of(C6CV_VACCINE, java.time.Period.ofYears(1)),
             TRICAT_VACCINE, Map.of(TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21)));
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
