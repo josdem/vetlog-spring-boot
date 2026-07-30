@@ -114,7 +114,7 @@ public class PetLogController {
     public ModelAndView save(
             @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
-        log.info("Creating petLog: {}", petLogCommand.getPet());
+        log.info("Creating petLog for pet with ID: {}", petLogCommand.getPet());
         var modelAndView = new ModelAndView("petlog/create");
         var pet = petService.getPetById(petLogCommand.getPet());
         var currentUser = userService.getCurrentUser();
