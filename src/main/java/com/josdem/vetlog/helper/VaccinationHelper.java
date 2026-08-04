@@ -96,6 +96,8 @@ public class VaccinationHelper {
     }
 
     private boolean isSpecificCriteriaSatisfiedForApplyingNextVaccine(String appliedName, String nextName, Pet pet) {
+        log.info("Pet: {}", pet);
+        log.info("Pet Breed: {}", pet.getBreed());
         if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && TRICAT_BOOST_VACCINE.equalsIgnoreCase(nextName)) {
             return Optional.ofNullable(pet)
                     .map(Pet::getBreed)
@@ -111,6 +113,12 @@ public class VaccinationHelper {
                     .map(dob -> ChronoUnit.DAYS.between(dob, LocalDate.now()))
                     .map(days -> days > (16 * 7))
                     .orElse(false);
+        } else if (RABIES_VACCINE.equalsIgnoreCase(nextName)) {
+            return Optional.ofNullable(pet)
+                    .map(Pet::getBreed)
+                    .map(Breed::getType)
+                    .filter(PetType.DOG::equals)
+                    .isEmpty();
         }
         return true;
     }
