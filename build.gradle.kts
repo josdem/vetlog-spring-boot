@@ -111,7 +111,6 @@ dependencies {
   testImplementation("io.projectreactor:reactor-test")
   testImplementation("org.mockito:mockito-core:$mockitoCoreVersion")
   testImplementation("cglib:cglib-nodep:$cglibVersion")
-  testImplementation("org.jetbrains.kotlin:kotlin-test")
   testImplementation(kotlin("test"))
   testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
   testAnnotationProcessor("org.projectlombok:lombok")
