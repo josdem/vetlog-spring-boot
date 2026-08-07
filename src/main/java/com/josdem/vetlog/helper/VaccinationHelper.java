@@ -113,7 +113,7 @@ public class VaccinationHelper {
                     .map(dob -> ChronoUnit.DAYS.between(dob, LocalDate.now()))
                     .map(days -> days > (16 * 7))
                     .orElse(false);
-        } else if (RABIES_VACCINE.equalsIgnoreCase(nextName)) {
+        } else if (!C6CV_VACCINE.equalsIgnoreCase(appliedName) && RABIES_VACCINE.equalsIgnoreCase(nextName)) {
             return Optional.ofNullable(pet)
                     .map(Pet::getBreed)
                     .map(Breed::getType)
