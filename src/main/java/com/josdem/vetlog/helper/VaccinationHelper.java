@@ -96,8 +96,6 @@ public class VaccinationHelper {
     }
 
     private boolean isSpecificCriteriaSatisfiedForApplyingNextVaccine(String appliedName, String nextName, Pet pet) {
-        log.info("Pet: {}", pet);
-        log.info("Pet Breed: {}", pet.getBreed());
         if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && TRICAT_BOOST_VACCINE.equalsIgnoreCase(nextName)) {
             return Optional.ofNullable(pet)
                     .map(Pet::getBreed)
