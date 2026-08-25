@@ -20,6 +20,7 @@ import com.josdem.vetlog.command.PetCommand
 import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
+import com.josdem.vetlog.exception.BusinessException
 import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.PetImage
@@ -28,6 +29,7 @@ import com.josdem.vetlog.model.Vaccination
 import com.josdem.vetlog.repository.BreedRepository
 import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.service.AdoptionServiceTest
+import com.josdem.vetlog.service.LocaleService
 import com.josdem.vetlog.service.VaccinationService
 import org.jetbrains.annotations.NotNull
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -35,6 +37,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInfo
+import org.junit.jupiter.api.assertThrows
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.times
@@ -61,6 +64,9 @@ internal class PetBinderTest {
     @Mock
     private lateinit var vaccinationRepository: VaccinationRepository
 
+    @Mock
+    private lateinit var localeService: LocaleService
+
     private val vaccines =
         listOf(
             Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, null),
@@ -74,7 +80,7 @@ internal class PetBinderTest {
     @BeforeEach
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        petBinder = PetBinder(breedRepository, vaccinationService, vaccinationRepository)
+        petBinder = PetBinder(breedRepository, vaccinationService, vaccinationRepository, localeService)
     }
 
     @Test
@@ -124,10 +130,9 @@ internal class PetBinderTest {
         petCommand.birthDate = ""
         setBreedExpectations()
 
-        val result = petBinder.bindPet(petCommand)
-
-        val diff: Int = LocalDateTime.now().dayOfYear - result.birthDate.dayOfYear
-        assertEquals(0, diff)
+        assertThrows<BusinessException> {
+            petBinder.bindPet(petCommand)
+        }
     }
 
     @Test
