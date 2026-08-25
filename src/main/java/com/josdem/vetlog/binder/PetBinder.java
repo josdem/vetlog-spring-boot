@@ -23,6 +23,7 @@ import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.repository.BreedRepository;
 import com.josdem.vetlog.repository.VaccinationRepository;
+import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.util.UuidGenerator;
 import java.math.BigDecimal;
@@ -37,6 +38,7 @@ public class PetBinder {
     private final BreedRepository breedRepository;
     private final VaccinationService vaccinationService;
     private final VaccinationRepository vaccinationRepository;
+    private final LocaleService localeService;
 
     public Pet bindPet(Command command) {
         PetCommand petCommand = (PetCommand) command;
@@ -48,7 +50,7 @@ public class PetBinder {
         }
         pet.setName(petCommand.getName());
         if (petCommand.getBirthDate().isEmpty()) {
-            pet.setBirthDate(LocalDate.now());
+            throw new BusinessException(localeService.getMessage("pet.create.empty.dob"));
         } else {
             pet.setBirthDate(LocalDate.parse(petCommand.getBirthDate()));
         }
