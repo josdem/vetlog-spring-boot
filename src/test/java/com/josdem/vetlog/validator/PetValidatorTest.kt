@@ -32,7 +32,7 @@ internal class PetValidatorTest {
         log.info(testInfo.displayName)
         val petCommand = getPetCommand("")
         validator.validate(petCommand, errors)
-        verify(errors, never()).rejectValue(any(), any())
+        verify(errors).rejectValue("birthDate", "pet.error.birthDate.past")
     }
 
     @Test

@@ -124,18 +124,6 @@ internal class PetBinderTest {
     }
 
     @Test
-    fun `binding a pet from command even without birthdate`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val petCommand = getPetCommand()
-        petCommand.birthDate = ""
-        setBreedExpectations()
-
-        assertThrows<BusinessException> {
-            petBinder.bindPet(petCommand)
-        }
-    }
-
-    @Test
     fun `binding a pet from command even without weight`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val petCommand = getPetCommand()
