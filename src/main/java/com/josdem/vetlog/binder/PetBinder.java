@@ -49,11 +49,7 @@ public class PetBinder {
             pet.setUuid(petCommand.getUuid());
         }
         pet.setName(petCommand.getName());
-        if (petCommand.getBirthDate().isEmpty()) {
-            throw new BusinessException(localeService.getMessage("pet.create.empty.dob"));
-        } else {
-            pet.setBirthDate(LocalDate.parse(petCommand.getBirthDate()));
-        }
+        pet.setBirthDate(LocalDate.parse(petCommand.getBirthDate()));
         pet.setSterilized(petCommand.getSterilized());
         pet.setGoingOutOften(petCommand.getGoingOutOften());
         pet.setChip_id(petCommand.getChip_id());

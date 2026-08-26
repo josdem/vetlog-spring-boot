@@ -40,6 +40,7 @@ public class PetValidator implements Validator {
         String birthDateStr = petCommand.getBirthDate();
 
         if (birthDateStr.isEmpty()) {
+            errors.rejectValue("birthDate", "pet.error.birthDate.past");
             return;
         }
 
