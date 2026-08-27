@@ -48,7 +48,8 @@ public class VaccinationHelper {
             PUPPY_VACCINE, Map.of(C4CV_VACCINE, java.time.Period.ofDays(15)),
             C4CV_VACCINE, Map.of(C6CV_VACCINE, java.time.Period.ofDays(15)),
             C6CV_VACCINE, Map.of(C6CV_VACCINE, java.time.Period.ofYears(1)),
-            TRICAT_VACCINE, Map.of(TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21)));
+            TRICAT_VACCINE, Map.of(TRICAT_BOOST_VACCINE, java.time.Period.ofDays(21)),
+            RABIES_VACCINE, Map.of(TRICAT_VACCINE, java.time.Period.ofYears(1)));
 
     private static final Map<String, java.time.Period> NEXT_RABIES_VACCINE_OFFSET = Map.of(
             TRICAT_VACCINE, java.time.Period.ofDays(21),
@@ -111,6 +112,12 @@ public class VaccinationHelper {
                     .map(dob -> ChronoUnit.DAYS.between(dob, LocalDate.now()))
                     .map(days -> days > (16 * 7))
                     .orElse(false);
+        } else if (RABIES_VACCINE.equalsIgnoreCase(appliedName) && TRICAT_VACCINE.equalsIgnoreCase(nextName)) {
+            return Optional.ofNullable(pet)
+                    .map(Pet::getBreed)
+                    .map(Breed::getType)
+                    .filter(PetType.CAT::equals)
+                    .isPresent();
         } else if (!C6CV_VACCINE.equalsIgnoreCase(appliedName) && RABIES_VACCINE.equalsIgnoreCase(nextName)) {
             return Optional.ofNullable(pet)
                     .map(Pet::getBreed)
