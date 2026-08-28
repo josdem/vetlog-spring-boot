@@ -70,10 +70,9 @@ public class VaccinationHelper {
                                     && previousVaccine.getStatus() == VaccinationStatus.PENDING)
                     && isSpecificCriteriaSatisfiedForApplyingNextVaccine(appliedName, RABIES_VACCINE, pet)) {
                 saveNewVaccine(RABIES_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(appliedName)), pet);
-                if (RABIES_VACCINE.equalsIgnoreCase(appliedName) && isFelvVaccineApplicable(pet)) {
-                    saveNewVaccine(
-                            FELV_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(FELV_VACCINE)), pet);
-                }
+            }
+            if (RABIES_VACCINE.equalsIgnoreCase(appliedName) && isFelvVaccineApplicable(pet)) {
+                saveNewVaccine(FELV_VACCINE, LocalDate.now().plus(NEXT_RABIES_VACCINE_OFFSET.get(FELV_VACCINE)), pet);
             }
         }
     }
@@ -97,6 +96,9 @@ public class VaccinationHelper {
     }
 
     private boolean isSpecificCriteriaSatisfiedForApplyingNextVaccine(String appliedName, String nextName, Pet pet) {
+        if (RABIES_VACCINE.equalsIgnoreCase(appliedName) && RABIES_VACCINE.equalsIgnoreCase(nextName)) {
+            return false; // Rabies vaccine should not be applied twice in a row
+        }
         if (TRICAT_VACCINE.equalsIgnoreCase(appliedName) && TRICAT_BOOST_VACCINE.equalsIgnoreCase(nextName)) {
             return Optional.ofNullable(pet)
                     .map(Pet::getBreed)

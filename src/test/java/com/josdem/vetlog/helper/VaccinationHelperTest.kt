@@ -53,26 +53,6 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should update rabies vaccination status to APPLIED`(testInfo: TestInfo) {
-        log.info(testInfo.displayName)
-        val previousVaccines = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
-        val newVaccines = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet)
-        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(listOf(previousVaccines))
-
-        vaccinationHelper.validateRabiesVaccine(listOf(previousVaccines), listOf(newVaccines), pet)
-
-        val expectedDate = LocalDate.now().plusYears(1)
-        verify(vaccinationRepository).save(
-            argThat { vaccination ->
-                vaccination.name == "Rabies" &&
-                    vaccination.status == VaccinationStatus.NEW &&
-                    vaccination.date == expectedDate &&
-                    vaccination.pet == pet
-            },
-        )
-    }
-
-    @Test
     fun `should update c6cv vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val previousVaccines = Vaccination(2L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet)
@@ -91,18 +71,16 @@ class VaccinationHelperTest {
     }
 
     @Test
-    fun `should update every c6cv, tricat_boost and rabies vaccination status to APPLIED`(testInfo: TestInfo) {
+    fun `should update every c6cv, tricat_boost vaccination status to APPLIED`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         val previousVaccines =
             listOf(
                 Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet),
-                Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet),
                 Vaccination(3L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.PENDING, pet),
             )
         val newVaccines =
             listOf(
                 Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet),
-                Vaccination(2L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet),
                 Vaccination(3L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.APPLIED, pet),
             )
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(previousVaccines)
@@ -114,7 +92,6 @@ class VaccinationHelperTest {
         val offsets =
             listOf(
                 java.time.Period.ofDays(15),
-                java.time.Period.ofYears(1),
                 java.time.Period.ofDays(21),
             )
         val baseDate = previousVaccines.first().date
@@ -466,13 +443,6 @@ class VaccinationHelperTest {
 
         verify(vaccinationRepository, never()).save(
             argThat { vaccination -> vaccination.name == "FeLV" },
-        )
-        verify(vaccinationRepository).save(
-            argThat { vaccination ->
-                vaccination.name == "Rabies" &&
-                    vaccination.status == VaccinationStatus.NEW &&
-                    vaccination.pet == pet
-            },
         )
     }
 
