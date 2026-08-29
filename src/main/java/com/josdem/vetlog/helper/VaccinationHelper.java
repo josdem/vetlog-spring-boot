@@ -18,11 +18,13 @@ package com.josdem.vetlog.helper;
 
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
+import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Breed;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class VaccinationHelper {
+    private static final int MAX_MONTHS_TO_APPLY_VACCINE = 6;
+    private static final String VACCINE_OUTDATED_MESSAGE =
+            "We can not update a vaccine if schedule date is six months or older";
 
     private static final String RABIES_VACCINE = "Rabies";
     private static final String PUPPY_VACCINE = "Puppy";
@@ -59,6 +64,25 @@ public class VaccinationHelper {
             FELV_VACCINE, java.time.Period.ofDays(21));
 
     private final VaccinationRepository vaccinationRepository;
+
+    public void validateVaccinationDate(List<Vaccination> previousVaccines, List<Vaccination> newVaccines) {
+        for (Vaccination newVaccine : newVaccines) {
+            if (newVaccine.getStatus() != VaccinationStatus.APPLIED) {
+                continue;
+            }
+            previousVaccines.stream()
+                    .filter(previousVaccine -> previousVaccine.getId().equals(newVaccine.getId()))
+                    .filter(previousVaccine -> previousVaccine.getStatus() == VaccinationStatus.PENDING)
+                    .findFirst()
+                    .ifPresent(previousVaccine -> {
+                        if (Period.between(previousVaccine.getDate(), LocalDate.now())
+                                        .toTotalMonths()
+                                >= MAX_MONTHS_TO_APPLY_VACCINE) {
+                            throw new BusinessException(VACCINE_OUTDATED_MESSAGE);
+                        }
+                    });
+        }
+    }
 
     public void validateRabiesVaccine(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet) {
         for (Vaccination newVaccine : newVaccines) {
