@@ -128,6 +128,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/shivamjg101"><img src="https://avatars.githubusercontent.com/u/106482996?v=4?s=100" width="100px;" alt="shivamjg101"/><br /><sub><b>shivamjg101</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=shivamjg101" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Thaitheya"><img src="https://avatars.githubusercontent.com/u/91272336?v=4?s=100" width="100px;" alt="Thaitheyasudan P K "/><br /><sub><b>Thaitheyasudan P K </b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Thaitheya" title="Code">💻</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Yaswanth05082006"><img src="https://avatars.githubusercontent.com/u/203451569?v=4?s=100" width="100px;" alt="Yaswanth05082006"/><br /><sub><b>Yaswanth05082006</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Yaswanth05082006" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
