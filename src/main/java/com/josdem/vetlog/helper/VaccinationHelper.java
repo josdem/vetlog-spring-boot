@@ -65,22 +65,13 @@ public class VaccinationHelper {
 
     private final VaccinationRepository vaccinationRepository;
 
-    public void validateVaccinationDate(List<Vaccination> previousVaccines, List<Vaccination> newVaccines) {
+    public void validateVaccinationDate(List<Vaccination> newVaccines) {
         for (Vaccination newVaccine : newVaccines) {
-            if (newVaccine.getStatus() != VaccinationStatus.APPLIED) {
-                continue;
+            if (newVaccine.getStatus() == VaccinationStatus.APPLIED
+                    && Period.between(newVaccine.getDate(), LocalDate.now()).toTotalMonths()
+                            >= MAX_MONTHS_TO_APPLY_VACCINE) {
+                throw new BusinessException(VACCINE_OUTDATED_MESSAGE);
             }
-            previousVaccines.stream()
-                    .filter(previousVaccine -> previousVaccine.getId().equals(newVaccine.getId()))
-                    .filter(previousVaccine -> previousVaccine.getStatus() == VaccinationStatus.PENDING)
-                    .findFirst()
-                    .ifPresent(previousVaccine -> {
-                        if (Period.between(previousVaccine.getDate(), LocalDate.now())
-                                        .toTotalMonths()
-                                >= MAX_MONTHS_TO_APPLY_VACCINE) {
-                            throw new BusinessException(VACCINE_OUTDATED_MESSAGE);
-                        }
-                    });
         }
     }
 
