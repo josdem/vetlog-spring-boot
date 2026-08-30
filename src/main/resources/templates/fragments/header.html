@@ -9,7 +9,7 @@
                 <i class="fa fa-paw list toggle-menu"></i>
             </button>
             <a class="navbar-brand" th:href="@{/}">
-                <img class="img-responsive" th:src="@{/images/logo-complete.png}" alt="Vetlog"/>
+                <img class="img-responsive" th:src="@{/images/logo_complete.png}" alt="Vetlog"/>
             </a>
         </div>
         <div sec:authorize="isAnonymous()">
@@ -26,6 +26,9 @@
                     </li>
                     <li>
                         <a class="page-scroll" th:href="@{/pet/create}"><p th:text="#{pet.view.create.title}"/></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" th:href="@{/map/list}"><p th:text="#{map.list.name}"/></a>
                     </li>
                 </ul>
             </div>
@@ -48,6 +51,9 @@
                     </li>
                     <li>
                         <a class="page-scroll" th:href="@{/pet/create}"><p th:text="#{pet.view.create.title}"/></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" th:href="@{/map/list}"><p th:text="#{map.list.name}"/></a>
                     </li>
                 </ul>
             </div>

@@ -1,0 +1,1 @@
+ALTER TABLE vaccination MODIFY status ENUM('APPLIED', 'PENDING', 'NEW') NOT NULL;

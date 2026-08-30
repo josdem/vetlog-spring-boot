@@ -1,0 +1,57 @@
+<!-- templates/map/map.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{map.view.title}"></title>
+    <head th:insert="~{fragments/include}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="15">
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/assets/servizi-dog-theme/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <style>
+        .map-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 1200px;
+        }
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Include header fragment -->
+    <div th:insert="~{fragments/header}"></div>
+    <br/><br/>
+    <br/><br/>
+    <br/><br/>
+    <div class="container">
+        <div th:data-testid="geolocationMessage" th:if="${message}" class="alert alert-success" th:text="${message}"/>
+    <main>
+        <div class="map-container">
+            <iframe
+                th:src="'https://www.google.com/maps/embed/v1/place?key=' + ${apiKey} + '&q=' + ${latitude} + ',' + ${longitude}"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </main>
+    </div>
+
+    <!-- Include footer fragment -->
+    <div th:insert="~{fragments/footer}"/>
+
+</body>
+</html>

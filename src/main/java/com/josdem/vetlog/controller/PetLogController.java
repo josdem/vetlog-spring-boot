@@ -1,22 +1,25 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.controller;
 
+import com.josdem.vetlog.binder.PetLogBinder;
 import com.josdem.vetlog.command.PetLogCommand;
+import com.josdem.vetlog.config.ApplicationProperties;
+import com.josdem.vetlog.exception.BusinessException;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.LocaleService;
@@ -30,6 +33,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,14 +46,18 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/petlog")
 @RequiredArgsConstructor
+@EnableConfigurationProperties(ApplicationProperties.class)
 public class PetLogController {
 
     public static final String PET_LOG_COMMAND = "petLogCommand";
+    public static final String MESSAGE = "message";
 
     private final PetService petService;
     private final PetLogService petLogService;
     private final UserService userService;
     private final LocaleService localeService;
+    private final PetLogBinder petLogBinder;
+    private final ApplicationProperties applicationProperties;
 
     @Value("${gcpUrl}")
     private String gcpUrl;
@@ -69,11 +77,44 @@ public class PetLogController {
         return fillModelAndView(modelAndView, pets, request);
     }
 
+    @GetMapping(value = "/edit")
+    public ModelAndView edit(@RequestParam("uuid") String uuid, HttpServletRequest request) {
+        log.info("Editing petLog: {}", uuid);
+        var modelAndView = new ModelAndView();
+        var petLog = petLogService.getPetLogByUuid(uuid).orElseThrow(() -> new BusinessException("PetLog not found"));
+        var pet = petService.getPetById(petLog.getPet().getId());
+        var currentUser = userService.getCurrentUser();
+        var pets = getPetsFromUser(pet, currentUser);
+        var petLogCommand = petLogBinder.bind(petLog);
+        petLogCommand.setPet(petLog.getPet().getId());
+        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
+        return fillModelAndView(modelAndView, pets, request);
+    }
+
+    @PostMapping(value = "/update")
+    public ModelAndView update(
+            @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request)
+            throws IOException {
+        log.info("Updating petLog: {}", petLogCommand.getUuid());
+        var modelAndView = new ModelAndView("petlog/edit");
+        var pet = petService.getPetById(petLogCommand.getPet());
+        var currentUser = userService.getCurrentUser();
+        var pets = getPetsFromUser(pet, currentUser);
+        if (bindingResult.hasErrors()) {
+            modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
+            return fillModelAndView(modelAndView, pets, request);
+        }
+        petLogService.update(petLogCommand);
+        modelAndView.addObject(MESSAGE, localeService.getMessage("petlog.updated", request));
+        modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
+        return fillModelAndView(modelAndView, pets, request);
+    }
+
     @PostMapping(value = "/save")
     public ModelAndView save(
             @Valid PetLogCommand petLogCommand, BindingResult bindingResult, HttpServletRequest request)
             throws IOException {
-        log.info("Creating petLog: {}", petLogCommand.getPet());
+        log.info("Creating petLog for pet with ID: {}", petLogCommand.getPet());
         var modelAndView = new ModelAndView("petlog/create");
         var pet = petService.getPetById(petLogCommand.getPet());
         var currentUser = userService.getCurrentUser();
@@ -82,7 +123,7 @@ public class PetLogController {
             modelAndView.addObject(PET_LOG_COMMAND, petLogCommand);
             return fillModelAndView(modelAndView, pets, request);
         }
-        petLogService.save(petLogCommand);
+        petLogService.save(petLogCommand, currentUser.getUsername());
         modelAndView.addObject("message", localeService.getMessage("petlog.created", request));
         modelAndView.addObject(PET_LOG_COMMAND, new PetLogCommand());
         return fillModelAndView(modelAndView, pets, request);
@@ -93,6 +134,8 @@ public class PetLogController {
         if (pets == null) {
             modelAndView.addObject("petListEmpty", localeService.getMessage("pet.list.empty", request));
         }
+        var veterinarians = applicationProperties.getVeterinarians();
+        modelAndView.addObject("veterinarians", veterinarians);
         return modelAndView;
     }
 

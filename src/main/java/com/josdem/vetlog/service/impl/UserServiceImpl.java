@@ -1,18 +1,18 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.service.impl;
 
@@ -21,8 +21,10 @@ import com.josdem.vetlog.command.Command;
 import com.josdem.vetlog.exception.UserNotFoundException;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.repository.UserRepository;
+import com.josdem.vetlog.service.EmailService;
 import com.josdem.vetlog.service.UserService;
 import com.josdem.vetlog.util.UserContextHolderProvider;
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,11 +38,14 @@ public class UserServiceImpl implements UserService {
     private final UserBinder userBinder;
     private final UserRepository userRepository;
     private final UserContextHolderProvider provider;
+    private final EmailService emailService;
 
-    public User getByUsername(String username) {
+    public User getUser(String identifier) {
         return userRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username: " + username + NOT_FOUND));
+                .findByUsername(identifier)
+                .or(() -> userRepository.findByMobile(identifier))
+                .or(() -> userRepository.findByEmail(identifier))
+                .orElseThrow(() -> new UserNotFoundException("User " + NOT_FOUND));
     }
 
     public User getByEmail(String email) {
@@ -49,9 +54,17 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("User with email: " + email + NOT_FOUND));
     }
 
+    @Override
+    public User getByMobile(String mobile) {
+        return userRepository
+                .findByMobile(mobile)
+                .orElseThrow(() -> new UserNotFoundException("User with mobile: " + mobile + NOT_FOUND));
+    }
+
     @Transactional
-    public User save(Command command) {
+    public User save(Command command, Locale locale) {
         var user = userBinder.bindUser(command);
+        emailService.sendWelcomeEmail(user, locale);
         userRepository.save(user);
         return user;
     }

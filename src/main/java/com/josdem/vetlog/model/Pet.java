@@ -1,18 +1,18 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.model;
 
@@ -20,6 +20,7 @@ import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 import com.josdem.vetlog.enums.PetStatus;
+import com.josdem.vetlog.enums.WeightUnits;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +31,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Getter;
@@ -54,19 +60,19 @@ public class Pet {
     private String name;
 
     @Column(nullable = false)
-    private LocalDateTime birthDate;
-
-    @Column(nullable = false)
-    private Boolean dewormed = false;
+    private LocalDate birthDate;
 
     @Column(nullable = false)
     private Boolean sterilized = false;
 
     @Column(nullable = false)
-    private Boolean vaccinated = false;
+    private Boolean goingOutOften = true;
 
-    @Column(nullable = false)
-    private LocalDateTime dateCreated = LocalDateTime.now();
+    @Column(nullable = false, columnDefinition = "CHAR(15)")
+    private String chip_id;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime dateCreated;
 
     @Column(nullable = false)
     @Enumerated(STRING)
@@ -75,6 +81,15 @@ public class Pet {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "breed_id")
     private Breed breed;
+
+    @Column(nullable = false)
+    @Min(value = 0, message = "Weight must be at least 0")
+    @Max(value = 100, message = "Weight cannot exceed 100")
+    private BigDecimal weight;
+
+    @Column(nullable = false)
+    @Enumerated(STRING)
+    private WeightUnits unit;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pet_id")
@@ -94,4 +109,9 @@ public class Pet {
 
     @Transient
     private List<Vaccination> vaccines;
+
+    @PrePersist
+    void onCreate() {
+        dateCreated = LocalDateTime.now();
+    }
 }

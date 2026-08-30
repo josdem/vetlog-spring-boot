@@ -1,18 +1,18 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.config;
 
@@ -47,21 +47,22 @@ public class Bootstrap implements ApplicationListener<ApplicationReadyEvent> {
     }
 
     void createDefaultUsers() {
-        createUserWithRole("josdem", SECRET, "joseluis.delacruz@gmail.com", Role.USER);
-        createUserWithRole("miriam", SECRET, "miriam@gmail.com", Role.USER);
-        createUserWithRole("admin", SECRET, "admin@email.com", Role.ADMIN);
+        createUserWithRole("josdem", "joseluis.delacruz@gmail.com", "1234567890", Role.USER);
+        createUserWithRole("miriam", "miriam@gmail.com", "1112223334", Role.USER);
+        createUserWithRole("admin", "admin@email.com", "5556667778", Role.ADMIN);
     }
 
-    void createUserWithRole(String username, String password, String email, Role authority) {
+    void createUserWithRole(String username, String email, String mobile, Role authority) {
         if (userRepository.findByUsername(username).isEmpty()) {
             log.info("Creating user: {}", username);
             User user = new User();
             user.setUsername(username);
-            user.setPassword(new BCryptPasswordEncoder().encode(password));
+            user.setPassword(new BCryptPasswordEncoder().encode(SECRET));
             user.setEmail(email);
             user.setRole(authority);
             user.setFirstName(username);
             user.setLastName(username);
+            user.setMobile(mobile);
             user.setEnabled(true);
             userRepository.save(user);
         }

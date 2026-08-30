@@ -1,18 +1,18 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.service.impl;
 
@@ -29,11 +29,10 @@ import com.josdem.vetlog.service.PetPrescriptionService;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PetLogServiceImpl implements PetLogService {
@@ -46,7 +45,7 @@ public class PetLogServiceImpl implements PetLogService {
 
     @Override
     @Transactional
-    public PetLog save(Command command) throws IOException {
+    public PetLog save(Command command, String username) throws IOException {
         var petLogCommand = (PetLogCommand) command;
         var petLog = petLogBinder.bind(petLogCommand);
         var pet = petRepository.findById(petLogCommand.getPet());
@@ -55,7 +54,24 @@ public class PetLogServiceImpl implements PetLogService {
         }
         petLog.setPet(pet.get());
         petPrescriptionService.attachFile(petLogCommand);
-        log.info("petLog: {}", petLogCommand);
+        petLog.setUsername(username);
+        petLogRepository.save(petLog);
+        return petLog;
+    }
+
+    @Transactional
+    public PetLog update(Command command) throws IOException {
+        var petLogCommand = (PetLogCommand) command;
+        var petLog = petLogBinder.bind(petLogCommand);
+        var pet = petRepository
+                .findById(petLogCommand.getPet())
+                .orElseThrow(() -> new BusinessException("No pet was found under id: " + petLogCommand.getPet()));
+        var username = petLogRepository
+                .findByUuid(petLogCommand.getUuid())
+                .orElseThrow(() -> new BusinessException("No pet log found with uuid: " + petLogCommand.getUuid()))
+                .getUsername();
+        petLog.setUsername(username);
+        petLog.setPet(pet);
         petLogRepository.save(petLog);
         return petLog;
     }
@@ -63,5 +79,10 @@ public class PetLogServiceImpl implements PetLogService {
     @Override
     public List<PetLog> getPetLogsByPet(Pet pet) {
         return petLogRepository.getAllByPet(pet);
+    }
+
+    @Override
+    public Optional<PetLog> getPetLogByUuid(String uuid) {
+        return petLogRepository.findByUuid(uuid);
     }
 }

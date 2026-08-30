@@ -5,6 +5,12 @@
     <head th:insert="~{fragments/include}"/>
     <script th:src="@{/assets/servizi-dog-theme/node_modules/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/javascript/selector.js}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('birthDate').setAttribute('max', today);
+        });
+    </script>
 </head>
 <body class="login">
 <div th:insert="~{fragments/header}"/>
@@ -29,24 +35,23 @@
                             <input type="file" name="image"/>
                             <br/>
                             <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
-                            <input th:data-testid="birthDate" type="datetime-local" id="birthDate" name="birthDate">
+                            <input th:data-testid="birthDate" type="date" id="birthDate" name="birthDate" min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
                             <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
-                            <br/>
-                            <label for="dewormed"><h4 th:text="#{pet.dewormed}"/></label>
-                            <input type="checkbox" name='dewormed' th:field="*{dewormed}" class="form-control"
-                                   placeholder="dewormed" id='dewormed'/>
-                            <label th:if="${#fields.hasErrors('dewormed')}" th:errors="*{dewormed}"></label>
                             <br/>
                             <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
                             <input type="checkbox" name='sterilized' th:field="*{sterilized}" class="form-control"
                                    placeholder="sterilized" id='sterilized'/>
                             <label th:if="${#fields.hasErrors('sterilized')}" th:errors="*{sterilized}"></label>
                             <br/>
-                            <label for="vaccinated"><h4 th:text="#{pet.vaccinated}"/></label>
-                            <input type="checkbox" name='vaccinated' th:field="*{vaccinated}" class="form-control"
-                                   placeholder="vaccinated" id='vaccinated'/>
-                            <label th:if="${#fields.hasErrors('vaccinated')}" th:errors="*{vaccinated}"></label>
+                            <label for="goingOutOften"><h4 th:text="#{pet.goingOutOften}"/></label>
+                            <input type="checkbox" name='goingOutOften' th:field="*{goingOutOften}" class="form-control"
+                                   placeholder="goingOutOften" id='goingOutOften'/>
+                            <label th:if="${#fields.hasErrors('goingOutOften')}" th:errors="*{goingOutOften}"></label>
                             <br/>
+                            <label for="chip-id"><h4 th:text="#{pet.chip.id}"/></label>
+                            <input type="text" name='chip-id' th:field="*{chip_id}" class="form-control"
+                                   id='chip-id' minlength="15" maxlength="15" th:value="*{chip_id}">
+                            <label th:if="${#fields.hasErrors('chip_id')}" th:errors="*{chip_id}"></label>
                             <br/>
                             <label for="type"><h4 th:text="#{pet.type}"/></label>
                             <select id="typeSelector" name="type" th:field="*{type}" class="form-control"
@@ -60,7 +65,17 @@
                                 <option th:each="breed : ${breeds}" th:value="${breed.id}"
                                         th:text="${breed.name}"></option>
                             </select>
-                            <br/><br/>
+                            <br/>
+                            <label for="weight"><h4 th:text="#{pet.weight}"/></label>
+                            <input type="number" name="weight" th:data-testid="petWeight" th:field="*{weight}" class="form-control" id="weight" min="0" max="100" step="0.01"/>
+                            <label th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></label>
+                            <br/>
+                            <label for="unit"><h4 th:text="#{pet.unit}"/></label>
+                            <select id="unitSelector" name="unit" th:field="*{unit}" class="form-control">
+                                <option th:each="unit : ${T(com.josdem.vetlog.enums.WeightUnits).values()}"
+                                        th:value="${unit}" th:text="${unit.value}" th:selected="(${unit} == *{unit})"></option>
+                            </select>
+                            <br/>
                             <input id="breedsByTypeUrl" type="hidden" th:value="${breedsByTypeUrl}"/>
                             <input type="hidden" th:field="*{status}"/>
                             <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><p

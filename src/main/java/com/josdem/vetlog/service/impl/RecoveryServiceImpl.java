@@ -1,18 +1,18 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.service.impl;
 
@@ -29,7 +29,10 @@ import com.josdem.vetlog.service.LocaleService;
 import com.josdem.vetlog.service.RecoveryService;
 import com.josdem.vetlog.service.RegistrationService;
 import com.josdem.vetlog.service.RestService;
+import com.josdem.vetlog.util.TemplateLocaleResolver;
+import com.josdem.vetlog.util.UserUtil;
 import java.io.IOException;
+import java.util.Locale;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,13 +42,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RecoveryServiceImpl implements RecoveryService {
 
-    public static final String EXCEPTION_USER_NOT_FOUND = "exception.user.not.found";
-
-    private final RestService restService;
-    private final RegistrationService registrationService;
-    private final UserRepository userRepository;
-    private final RegistrationCodeRepository repository;
-    private final LocaleService localeService;
+    public static final String USER_NOT_FOUND = "user.not.found";
 
     @Value("${baseUrl}")
     private String baseUrl;
@@ -53,17 +50,18 @@ public class RecoveryServiceImpl implements RecoveryService {
     @Value("${token}")
     private String clientToken;
 
-    @Value("${template.register.name}")
-    private String registerTemplate;
-
-    @Value("${template.register.path}")
-    private String registerPath;
-
     @Value("${template.forgot.name}")
     private String forgotTemplate;
 
     @Value("${template.forgot.path}")
     private String forgotPath;
+
+    private final RestService restService;
+    private final RegistrationService registrationService;
+    private final UserRepository userRepository;
+    private final RegistrationCodeRepository repository;
+    private final LocaleService localeService;
+    private final UserUtil userUtil;
 
     public User confirmAccountForToken(String token) {
         var user = getUserByToken(token);
@@ -78,22 +76,27 @@ public class RecoveryServiceImpl implements RecoveryService {
                 .orElseThrow(() -> new VetlogException(localeService.getMessage("exception.token.not.found")));
         return userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND)));
+                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(USER_NOT_FOUND)));
     }
 
-    public void generateRegistrationCodeForEmail(String email) {
+    public void generateRegistrationCodeForEmail(String email, Locale locale) {
         var user = userRepository
                 .findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(EXCEPTION_USER_NOT_FOUND)));
+                .orElseThrow(() -> new UserNotFoundException(localeService.getMessage(USER_NOT_FOUND)));
         if (!user.isEnabled()) {
             throw new VetlogException(localeService.getMessage("exception.account.not.activated"));
         }
+        if (!userUtil.isValid(user)) {
+            return;
+        }
         try {
             var token = registrationService.generateToken(email);
+            var template = TemplateLocaleResolver.getTemplate(forgotTemplate, locale.getLanguage());
             var command = new MessageCommand();
             command.setEmail(email);
             command.setName(email);
-            command.setTemplate(forgotTemplate);
+            command.setTemplate(template);
+            command.setSubject(localeService.getMessage("email.subject", locale));
             command.setMessage(baseUrl + forgotPath + token);
             command.setToken(clientToken);
             restService.sendMessage(command);

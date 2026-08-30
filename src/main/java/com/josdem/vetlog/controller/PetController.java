@@ -1,18 +1,18 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.controller;
 
@@ -21,6 +21,8 @@ import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetStatus;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
+import com.josdem.vetlog.model.Breed;
+import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.User;
 import com.josdem.vetlog.service.BreedService;
 import com.josdem.vetlog.service.LocaleService;
@@ -31,6 +33,7 @@ import com.josdem.vetlog.validator.PetValidator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
+import java.util.Comparator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -99,11 +102,8 @@ public class PetController {
             petCommand.setAdopter(pet.getAdopter().getId());
         }
         modelAndView.addObject(PET_COMMAND, petCommand);
-        modelAndView.addObject(
-                "breeds", breedService.getBreedsByType(pet.getBreed().getType()));
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
-        modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
-        return modelAndView;
+        return fillModelAndView(modelAndView);
     }
 
     @PostMapping(value = "/update")
@@ -115,7 +115,8 @@ public class PetController {
             modelAndView.addObject(PET_COMMAND, petCommand);
             return fillModelAndView(modelAndView);
         }
-        petService.update(petCommand);
+        Pet updatedPet = petService.update(petCommand);
+        petCommand = petBinder.bindPet(updatedPet);
         modelAndView.addObject(MESSAGE, localeService.getMessage("pet.updated", request));
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject(PET_COMMAND, petCommand);
@@ -135,12 +136,22 @@ public class PetController {
         petService.save(petCommand, user);
         modelAndView.addObject(MESSAGE, localeService.getMessage("pet.created", request));
         petCommand = new PetCommand();
+        petCommand.setStatus(PetStatus.OWNED);
         modelAndView.addObject(PET_COMMAND, petCommand);
         return fillModelAndView(modelAndView);
     }
 
     private ModelAndView fillModelAndView(ModelAndView modelAndView) {
-        modelAndView.addObject("breeds", breedService.getBreedsByType(PetType.DOG));
+        PetCommand petCommand = (PetCommand) modelAndView.getModel().get(PET_COMMAND);
+
+        var petType = petCommand.getType() == null ? PetType.DOG : petCommand.getType();
+
+        modelAndView.addObject(
+                "breeds",
+                breedService.getBreedsByType(petType).stream()
+                        .sorted(Comparator.comparing(Breed::getName))
+                        .toList());
+
         modelAndView.addObject("breedsByTypeUrl", breedsByTypeUrl);
         return modelAndView;
     }
@@ -169,6 +180,7 @@ public class PetController {
         petService.getPetsAdoption(pets);
         modelAndView.addObject("pets", pets);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
+        modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;
     }
 
@@ -187,6 +199,7 @@ public class PetController {
         var pets = petService.getPetsByUser(user);
         pets.forEach(pet -> pet.setVaccines(vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.PENDING)));
         modelAndView.addObject("pets", pets);
+        modelAndView.addObject("default_chip_id", PetCommand.DEFAULT_CHIP_ID);
         modelAndView.addObject(GCP_IMAGE_URL, gcpUrl + imageBucket + "/");
         modelAndView.addObject("defaultImage", defaultImage);
         return modelAndView;

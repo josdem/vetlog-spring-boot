@@ -12,8 +12,9 @@
 <br/><br/>
 <div class="container">
     <div class="row">
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
             <div class="thumbnail">
+                <div th:data-testid="errorMessage" th:if="${errorMessage}" class="alert alert-warning" th:text="${errorMessage}"/>
                 <div th:if="${!pet.images.isEmpty()}">
                     <img style="width:320px;height:240px;" th:attr="src=@{${gcpImageUrl} + ${pet.images.get(0).uuid}}"/>
                 </div>
@@ -33,8 +34,17 @@
                             <input type="text" name="mobile" class="form-control" placeholder="Mobile" id='mobile'/>
                             <label th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}"></label>
                             <input type="hidden" th:value="${telephoneCommand.uuid}" name="uuid"/>
+                            <label for="address"><h4 th:text="#{adoption.address}"/></label>
+                            <input type="text"
+                                   th:field="*{address}"
+                                   class="form-control"
+                                   th:placeholder="#{adoption.address.placeholder}"
+                                   id="address"/>
+                            <label th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></label>
+                            <br/>
                             <br/><br/>
-                            <input type="submit" class="btn btn-primary btn-block"/>
+                            <button id="btn-success" type="submit" class="btn btn-lg btn-primary btn-block"><p
+                                    th:text="#{button.submit}"/></button>
                         </fieldset>
                     </form>
                 </div>

@@ -1,24 +1,26 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.service.impl;
 
+import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
+import com.josdem.vetlog.helper.VaccinationHelper;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
@@ -37,6 +39,7 @@ import org.springframework.stereotype.Service;
 public class VaccinationServiceImpl implements VaccinationService {
 
     private final VaccinationRepository vaccinationRepository;
+    private final VaccinationHelper vaccinationHelper;
 
     private final Map<PetType, VaccinationStrategy> vaccinationStrategies;
 
@@ -66,5 +69,12 @@ public class VaccinationServiceImpl implements VaccinationService {
     @Override
     public void deleteVaccinesByPet(Pet pet) {
         vaccinationRepository.deleteAllByPet(pet);
+    }
+
+    @Override
+    public void updateVaccinations(PetCommand petCommand, Pet pet) {
+        var previousVaccines = vaccinationRepository.findAllByPetId(petCommand.getId());
+        vaccinationHelper.validateRabiesVaccine(previousVaccines, petCommand.getVaccines(), pet);
+        vaccinationHelper.validateNextVaccines(previousVaccines, petCommand.getVaccines(), pet);
     }
 }

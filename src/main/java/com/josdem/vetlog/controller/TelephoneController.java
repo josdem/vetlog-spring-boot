@@ -1,18 +1,18 @@
 /*
-Copyright 2024 Jose Morales contact@josdem.io
+  Copyright 2026 Jose Morales contact@josdem.io
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
- */
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+*/
 
 package com.josdem.vetlog.controller;
 
@@ -56,10 +56,13 @@ public class TelephoneController {
         log.info("Saving adoption for pet: {}", telephoneCommand.getUuid());
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("telephone/adopt");
+            modelAndView.addObject(
+                    "errorMessage", localeService.getMessage(resolveValidationMessageKey(bindingResult), request));
             return fillPetAndTelephoneCommand(modelAndView, telephoneCommand);
         }
         var user = userService.getCurrentUser();
-        telephoneService.save(telephoneCommand, user);
+        var locale = request.getLocale();
+        telephoneService.save(telephoneCommand, user, locale);
         var modelAndView = new ModelAndView("redirect:/");
         modelAndView.addObject("message", localeService.getMessage("adoption.email.sent", request));
         return modelAndView;
@@ -78,5 +81,15 @@ public class TelephoneController {
         modelAndView.addObject("telephoneCommand", telephoneCommand);
         modelAndView.addObject("gcpImageUrl", gcpUrl + imageBucket + "/");
         return modelAndView;
+    }
+
+    private String resolveValidationMessageKey(BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors("mobile")) {
+            return "user.error.mobile";
+        }
+        if (bindingResult.hasFieldErrors("address")) {
+            return "user.error.address";
+        }
+        return "user.error.validation";
     }
 }

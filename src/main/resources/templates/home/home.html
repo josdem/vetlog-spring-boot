@@ -13,19 +13,17 @@ background-color: #faf6e6;
 </style>
 <body>
 <div th:if="${message}">
-    <div class="space-div">...</div>
-    <div align="center" class="bg-warning">
-        <p style="color:blue;font-size:18px;" th:text="${message}"/>
-        <br/><br/>
-    </div>
+    <div class="space-div"></div>
+    <div th:data-testid="homeMessage" th:if="${message}" class="alert alert-success" th:text="${message}"/>
 </div>
 <div th:insert="~{fragments/header}"/>
 <header id="home">
     <div id="owl-demo">
         <div class="item" style="background:url('/images/slider1.png'); background-size:cover;">
             <div class="header-text">
+                <br><br><br>
                 <h1 class="title wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.25s">
-                    <img th:src="@{/images/logo-partial.png}" alt="Vetlog"/>
+                    <img th:src="@{/images/logo_partial.png}" alt="Vetlog"/>
                 </h1>
                 <div sec:authorize="isAnonymous()">
                     <a th:href="@{login}" class="btn btn-lg btn-primary page-scroll"><p th:text="#{login.action}"/></a>
@@ -48,7 +46,7 @@ background-color: #faf6e6;
 <!-- ABOUT -->
 
 <div id="about">
-    <div class="row">
+    <div class="row equal-height-row">
         <div class="col-md-4 col-sm-4 text-center wow fadeIn section-1" data-wow-duration="0.5s">
             <div class="fa fa-3x fa-lock"></div>
             <h4 th:text="#{home.care.title}"/>
