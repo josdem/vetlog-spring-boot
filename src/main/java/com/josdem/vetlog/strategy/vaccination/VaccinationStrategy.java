@@ -11,6 +11,8 @@ import java.util.List;
 public interface VaccinationStrategy {
     void vaccinate(Pet pet);
 
+    void updateVaccines(List<Vaccination> previousVaccines, List<Vaccination> newVaccines, Pet pet);
+
     default void registerVaccinations(VaccinationRepository vaccinationRepository, Pet pet, String... names) {
         List<Vaccination> vaccinations = Arrays.stream(names)
                 .map(name -> new Vaccination(null, name, LocalDate.now(), VaccinationStatus.PENDING, pet))

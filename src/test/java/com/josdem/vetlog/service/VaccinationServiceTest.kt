@@ -20,7 +20,6 @@ import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
 import com.josdem.vetlog.exception.BusinessException
-import com.josdem.vetlog.helper.VaccinationHelper
 import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.Vaccination
@@ -39,6 +38,7 @@ import org.mockito.ArgumentMatchers.argThat
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 import org.mockito.kotlin.any
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -52,9 +52,6 @@ internal class VaccinationServiceTest {
 
     @Mock
     private lateinit var vaccinationRepository: VaccinationRepository
-
-    @Mock
-    private lateinit var vaccinationHelper: VaccinationHelper
 
     private val pet = Pet()
 
@@ -75,7 +72,7 @@ internal class VaccinationServiceTest {
                 PetType.CAT to catVaccinationStrategy,
             )
 
-        vaccinationService = VaccinationServiceImpl(vaccinationRepository, vaccinationHelper, vaccinationStrategies)
+        vaccinationService = VaccinationServiceImpl(vaccinationRepository, vaccinationStrategies)
         pet.breed = Breed()
     }
 
@@ -140,13 +137,21 @@ internal class VaccinationServiceTest {
     }
 
     @Test
-    fun `should update rabies vaccination status to APPLIED`(testInfo: TestInfo) {
+    fun `should delegate vaccination updates to dog strategy`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+        val vaccinationStrategy = mock<VaccinationStrategy>()
+        vaccinationService =
+            VaccinationServiceImpl(
+                vaccinationRepository,
+                mapOf(PetType.DOG to vaccinationStrategy),
+            )
+        pet.breed.type = PetType.DOG
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(emptyList())
+        val petCommand = getPetCommand()
 
-        vaccinationService.updateVaccinations(getPetCommand(), pet)
+        vaccinationService.updateVaccinations(petCommand, pet)
 
-        verify(vaccinationHelper).validateRabiesVaccine(any(), any(), any())
+        verify(vaccinationStrategy).updateVaccines(emptyList(), petCommand.vaccines, pet)
     }
 
     private fun getPetCommand() =
