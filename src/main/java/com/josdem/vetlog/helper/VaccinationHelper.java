@@ -68,7 +68,7 @@ public class VaccinationHelper {
     public void validateVaccinationDate(List<Vaccination> newVaccines) {
         for (Vaccination newVaccine : newVaccines) {
             if (newVaccine.getStatus() == VaccinationStatus.APPLIED
-                    && Period.between(newVaccine.getDate(), LocalDate.now()).toTotalMonths()
+                    && Period.between(LocalDate.now(), newVaccine.getDate()).toTotalMonths()
                             >= MAX_MONTHS_TO_APPLY_VACCINE) {
                 throw new BusinessException(VACCINE_OUTDATED_MESSAGE);
             }
