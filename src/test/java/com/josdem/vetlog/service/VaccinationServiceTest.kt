@@ -153,11 +153,28 @@ internal class VaccinationServiceTest {
     @Test
     fun `should not update vaccinations if schedule date is six months or older`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
+
         whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(emptyList())
         whenever(vaccinationHelper.validateVaccinationDate(any()))
             .thenThrow(BusinessException("We can not update a vaccine if schedule date is six months or older"))
 
-        assertThrows<BusinessException> { vaccinationService.updateVaccinations(getPetCommand(), pet) }
+        val petCommand =
+            getPetCommand().apply {
+                vaccines =
+                    listOf(
+                        Vaccination(
+                            1L,
+                            "Rabies",
+                            LocalDate.now().plusMonths(6),
+                            VaccinationStatus.APPLIED,
+                            pet,
+                        ),
+                    )
+            }
+
+        assertThrows<BusinessException> {
+            vaccinationService.updateVaccinations(petCommand, pet)
+        }
 
         verify(vaccinationHelper, never()).validateRabiesVaccine(any(), any(), any())
         verify(vaccinationHelper, never()).validateNextVaccines(any(), any(), any())
