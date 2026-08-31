@@ -7,3 +7,5 @@
 *.log
 bower.json
 **package-lock.json
+bin
+.vscode
