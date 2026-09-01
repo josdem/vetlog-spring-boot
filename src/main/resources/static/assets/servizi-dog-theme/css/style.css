@@ -37,7 +37,6 @@ body {
 	font-weight: 300;
 	font-size: 14px;
 	line-height: 1.5em;
-  	color: #555;
 	background-color: #fff;
 }
 
@@ -980,3 +979,9 @@ footer img {
         display: block;
     }
 }
+
+.validation-error {
+	color: #D9534F;
+	font-weight: 700;
+}
+

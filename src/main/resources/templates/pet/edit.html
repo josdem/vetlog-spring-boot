@@ -26,7 +26,7 @@
                             <label for="name"><h4 th:text="#{pet.name}"/></label>
                             <input type="text" name='name' th:data-testid="petName" th:field="*{name}" class="form-control" placeholder="name"
                                    id='name'/>
-                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-error"></label>
                             <br/>
                             <div th:if="${!petCommand.images.isEmpty()}">
                                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
