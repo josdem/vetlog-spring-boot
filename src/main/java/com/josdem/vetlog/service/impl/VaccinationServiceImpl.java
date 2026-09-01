@@ -20,7 +20,6 @@ import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
-import com.josdem.vetlog.helper.VaccinationHelper;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
@@ -39,8 +38,6 @@ import org.springframework.stereotype.Service;
 public class VaccinationServiceImpl implements VaccinationService {
 
     private final VaccinationRepository vaccinationRepository;
-    private final VaccinationHelper vaccinationHelper;
-
     private final Map<PetType, VaccinationStrategy> vaccinationStrategies;
 
     @Override
@@ -74,8 +71,10 @@ public class VaccinationServiceImpl implements VaccinationService {
     @Override
     public void updateVaccinations(PetCommand petCommand, Pet pet) {
         var previousVaccines = vaccinationRepository.findAllByPetId(petCommand.getId());
-        vaccinationHelper.validateVaccinationDate(petCommand.getVaccines());
-        vaccinationHelper.validateRabiesVaccine(previousVaccines, petCommand.getVaccines(), pet);
-        vaccinationHelper.validateNextVaccines(previousVaccines, petCommand.getVaccines(), pet);
+        var strategy = Optional.ofNullable(
+                        vaccinationStrategies.get(pet.getBreed().getType()))
+                .orElseThrow(() -> new BusinessException("No vaccination strategy found for pet type: "
+                        + pet.getBreed().getType()));
+        strategy.updateVaccines(previousVaccines, petCommand.getVaccines(), pet);
     }
 }

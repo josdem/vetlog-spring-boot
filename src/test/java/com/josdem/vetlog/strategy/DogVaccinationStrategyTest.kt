@@ -75,4 +75,71 @@ class DogVaccinationStrategyTest {
             },
         )
     }
+
+    @Test
+    fun `should create C4CV 15 days after Puppy is applied`() {
+        val previous = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        dogVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "C4CV" &&
+                    vaccination.date == LocalDate.now().plusDays(15) &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should create C6CV 15 days after C4CV is applied`() {
+        val previous = Vaccination(1L, "C4CV", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "C4CV", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        dogVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "C6CV" &&
+                    vaccination.date == LocalDate.now().plusDays(15) &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should create annual C6CV and Rabies after C6CV is applied`() {
+        val previous = Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "C6CV", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        dogVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "C6CV" &&
+                    vaccination.date == LocalDate.now().plusYears(1) &&
+                    vaccination.status == VaccinationStatus.NEW
+            },
+        )
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.date == LocalDate.now().plusDays(15) &&
+                    vaccination.status == VaccinationStatus.NEW
+            },
+        )
+    }
+
+    @Test
+    fun `should not create next vaccine when status was not pending`() {
+        val previous = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+        val applied = Vaccination(1L, "Puppy", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        dogVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository, never()).save(any())
+    }
 }

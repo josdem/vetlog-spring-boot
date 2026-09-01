@@ -12,8 +12,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.mockito.Mock
 import org.mockito.Mockito.argThat
+import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
+import org.mockito.kotlin.any
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
 
@@ -131,6 +133,107 @@ class CatVaccinationStrategyTest {
                         vaccination.pet == pet
                 }
             },
+        )
+    }
+
+    @Test
+    fun `should create TRICAT boost for a 9 week old cat`() {
+        pet.birthDate = LocalDate.now().minusWeeks(9)
+        val previous = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        catVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "TRICAT_BOOST" &&
+                    vaccination.date == LocalDate.now().plusDays(21) &&
+                    vaccination.status == VaccinationStatus.NEW &&
+                    vaccination.pet == pet
+            },
+        )
+    }
+
+    @Test
+    fun `should create Rabies when TRICAT is applied after 16 weeks`() {
+        pet.birthDate = LocalDate.now().minusWeeks(16).minusDays(1)
+        val previous = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        catVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.date == LocalDate.now().plusDays(21) &&
+                    vaccination.status == VaccinationStatus.NEW
+            },
+        )
+    }
+
+    @Test
+    fun `should not create Rabies when cat is exactly 16 weeks old`() {
+        pet.birthDate = LocalDate.now().minusWeeks(16)
+        val previous = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "TRICAT", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        catVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository, never()).save(
+            argThat { vaccination -> vaccination.name == "Rabies" },
+        )
+    }
+
+    @Test
+    fun `should create Rabies when TRICAT boost is applied`() {
+        val previous = Vaccination(1L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "TRICAT_BOOST", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        catVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "Rabies" &&
+                    vaccination.date == LocalDate.now().plusDays(21) &&
+                    vaccination.status == VaccinationStatus.NEW
+            },
+        )
+    }
+
+    @Test
+    fun `should create TRICAT and FeLV when Rabies is applied to an outdoor cat`() {
+        pet.goingOutOften = true
+        val previous = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        catVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "TRICAT" &&
+                    vaccination.date == LocalDate.now().plusYears(1) &&
+                    vaccination.status == VaccinationStatus.NEW
+            },
+        )
+        verify(vaccinationRepository).save(
+            argThat { vaccination ->
+                vaccination.name == "FeLV" &&
+                    vaccination.date == LocalDate.now().plusDays(21) &&
+                    vaccination.status == VaccinationStatus.NEW
+            },
+        )
+    }
+
+    @Test
+    fun `should not create FeLV for an indoor cat`() {
+        pet.goingOutOften = false
+        val previous = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val applied = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.APPLIED, pet)
+
+        catVaccinationStrategy.updateVaccines(listOf(previous), listOf(applied), pet)
+
+        verify(vaccinationRepository, never()).save(
+            argThat { vaccination -> vaccination.name == "FeLV" },
         )
     }
 }
