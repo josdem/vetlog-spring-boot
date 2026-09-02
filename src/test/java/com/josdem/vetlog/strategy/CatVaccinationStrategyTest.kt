@@ -236,4 +236,17 @@ class CatVaccinationStrategyTest {
             argThat { vaccination -> vaccination.name == "FeLV" },
         )
     }
+
+    @Test
+    fun `should not create TRICAT when Rabies has not been applied`() {
+        pet.goingOutOften = false
+        val previous = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+        val pending = Vaccination(1L, "Rabies", LocalDate.now(), VaccinationStatus.PENDING, pet)
+
+        catVaccinationStrategy.updateVaccines(listOf(previous), listOf(pending), pet)
+
+        verify(vaccinationRepository, never()).save(
+            argThat { vaccination -> vaccination.name == "TRICAT" },
+        )
+    }
 }
