@@ -27,16 +27,15 @@
                           class="form-horizontal" enctype="multipart/form-data">
                         <fieldset>
                             <label for="name"><h4 th:text="#{pet.name}"/></label>
-                            <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name"
-                                   id='name'/>
-                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></label>
+                            <input type="text" name='name' th:field="*{name}" class="form-control" placeholder="name" id='name'/>
+                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-error"></label>
                             <br/>
                             <label for="image"><h4 th:text="#{pet.image}"/></label>
                             <input type="file" name="image"/>
                             <br/>
                             <label for="birthDate"><h4 th:text="#{pet.birthDate}"/></label>
                             <input th:data-testid="birthDate" type="date" id="birthDate" name="birthDate" min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}">
-                            <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></label>
+                            <label th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}" class="validation-error"></label>
                             <br/>
                             <label for="sterilized"><h4 th:text="#{pet.sterilized}"/></label>
                             <input type="checkbox" name='sterilized' th:field="*{sterilized}" class="form-control"

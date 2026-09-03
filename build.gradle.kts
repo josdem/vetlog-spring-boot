@@ -29,7 +29,7 @@ val cglibVersion by extra("3.3.0")
 val mockitoKotlinVersion by extra("6.3.0")
 
 group = "com.josdem.vetlog"
-version = "3.8.3"
+version = "3.8.6"
 
 configurations {
   compileOnly {
@@ -97,8 +97,9 @@ dependencies {
 
   // Database and ORM
   runtimeOnly("com.mysql:mysql-connector-j")
+  implementation("org.springframework.boot:spring-boot-flyway")
   implementation("org.flywaydb:flyway-core")
-  runtimeOnly("org.flywaydb:flyway-mysql:12.5.0")
+  runtimeOnly("org.flywaydb:flyway-mysql")
 
   // Compile-time dependencies
   compileOnly("org.projectlombok:lombok")
