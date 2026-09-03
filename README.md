@@ -131,6 +131,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Yaswanth05082006"><img src="https://avatars.githubusercontent.com/u/203451569?v=4?s=100" width="100px;" alt="Yaswanth05082006"/><br /><sub><b>Yaswanth05082006</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=Yaswanth05082006" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/aLTttY"><img src="https://avatars.githubusercontent.com/u/186583953?v=4?s=100" width="100px;" alt="alttt"/><br /><sub><b>alttt</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=aLTttY" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/yjinlee99"><img src="https://avatars.githubusercontent.com/u/73848116?v=4?s=100" width="100px;" alt="Yeongjin Lee"/><br /><sub><b>Yeongjin Lee</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=yjinlee99" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
