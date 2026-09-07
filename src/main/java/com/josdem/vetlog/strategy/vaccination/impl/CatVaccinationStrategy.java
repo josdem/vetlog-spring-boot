@@ -52,13 +52,13 @@ public class CatVaccinationStrategy implements VaccinationStrategy {
                     .anyMatch(previousVaccine -> appliedName.equalsIgnoreCase(previousVaccine.getName())
                             && previousVaccine.getStatus() == VaccinationStatus.PENDING);
 
+            if (newVaccine.getStatus() != VaccinationStatus.APPLIED || !wasPending) {
+                continue;
+            }
+
             if (RABIES.equalsIgnoreCase(appliedName) && Boolean.TRUE.equals(pet.getGoingOutOften())) {
                 vaccinationRepository.save(
                         new Vaccination(null, FELV, LocalDate.now().plusDays(21), VaccinationStatus.NEW, pet));
-            }
-
-            if (newVaccine.getStatus() != VaccinationStatus.APPLIED || !wasPending) {
-                continue;
             }
 
             if (TRICAT.equalsIgnoreCase(appliedName)) {
