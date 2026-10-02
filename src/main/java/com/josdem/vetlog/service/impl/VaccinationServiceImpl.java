@@ -20,6 +20,7 @@ import com.josdem.vetlog.command.PetCommand;
 import com.josdem.vetlog.enums.PetType;
 import com.josdem.vetlog.enums.VaccinationStatus;
 import com.josdem.vetlog.exception.BusinessException;
+import com.josdem.vetlog.helper.VaccinationHelper;
 import com.josdem.vetlog.model.Pet;
 import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VaccinationServiceImpl implements VaccinationService {
 
+    private final VaccinationHelper vaccinationHelper;
     private final VaccinationRepository vaccinationRepository;
     private final Map<PetType, VaccinationStrategy> vaccinationStrategies;
 
@@ -70,6 +72,7 @@ public class VaccinationServiceImpl implements VaccinationService {
 
     @Override
     public void updateVaccinations(PetCommand petCommand, Pet pet) {
+        vaccinationHelper.validateVaccinationDate(petCommand.getVaccines());
         var previousVaccines = vaccinationRepository.findAllByPetId(petCommand.getId());
         var strategy = Optional.ofNullable(
                         vaccinationStrategies.get(pet.getBreed().getType()))

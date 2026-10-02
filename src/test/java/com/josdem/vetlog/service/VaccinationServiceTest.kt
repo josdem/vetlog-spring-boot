@@ -20,9 +20,11 @@ import com.josdem.vetlog.enums.PetStatus
 import com.josdem.vetlog.enums.PetType
 import com.josdem.vetlog.enums.VaccinationStatus
 import com.josdem.vetlog.exception.BusinessException
+import com.josdem.vetlog.helper.VaccinationHelper
 import com.josdem.vetlog.model.Breed
 import com.josdem.vetlog.model.Pet
 import com.josdem.vetlog.model.Vaccination
+import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.VaccinationRepository
 import com.josdem.vetlog.service.impl.VaccinationServiceImpl
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy
@@ -53,6 +55,9 @@ internal class VaccinationServiceTest {
     @Mock
     private lateinit var vaccinationRepository: VaccinationRepository
 
+    @Mock
+    private lateinit var vaccinationHelper: VaccinationHelper
+
     private val pet = Pet()
 
     companion object {
@@ -72,7 +77,7 @@ internal class VaccinationServiceTest {
                 PetType.CAT to catVaccinationStrategy,
             )
 
-        vaccinationService = VaccinationServiceImpl(vaccinationRepository, vaccinationStrategies)
+        vaccinationService = VaccinationServiceImpl(vaccinationHelper, vaccinationRepository, vaccinationStrategies)
         pet.breed = Breed()
     }
 
@@ -142,6 +147,7 @@ internal class VaccinationServiceTest {
         val vaccinationStrategy = mock<VaccinationStrategy>()
         vaccinationService =
             VaccinationServiceImpl(
+                vaccinationHelper,
                 vaccinationRepository,
                 mapOf(PetType.DOG to vaccinationStrategy),
             )
@@ -152,6 +158,35 @@ internal class VaccinationServiceTest {
         vaccinationService.updateVaccinations(petCommand, pet)
 
         verify(vaccinationStrategy).updateVaccines(emptyList(), petCommand.vaccines, pet)
+    }
+
+    @Test
+    fun `should not update vaccinations if schedule date is six months or older`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+
+        whenever(vaccinationRepository.findAllByPetId(1L)).thenReturn(emptyList())
+        whenever(vaccinationHelper.validateVaccinationDate(any()))
+            .thenThrow(BusinessException("We can not update a vaccine if schedule date is six months or older"))
+
+        val petCommand =
+            getPetCommand().apply {
+                vaccines =
+                    listOf(
+                        Vaccination(
+                            1L,
+                            "Rabies",
+                            LocalDate.now().plusMonths(6),
+                            VaccinationStatus.APPLIED,
+                            pet,
+                        ),
+                    )
+            }
+
+        assertThrows<BusinessException> {
+            vaccinationService.updateVaccinations(petCommand, pet)
+        }
+
+        verify(vaccinationRepository, never()).findAllByPetId(1L)
     }
 
     private fun getPetCommand() =
