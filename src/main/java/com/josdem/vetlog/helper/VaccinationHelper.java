@@ -23,10 +23,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class VaccinationHelper {
@@ -36,9 +34,6 @@ public class VaccinationHelper {
 
     public void validateVaccinationDate(List<Vaccination> newVaccines) {
         for (Vaccination newVaccine : newVaccines) {
-            log.info(
-                    "Validating vaccination date for vaccine: {}",
-                    Period.between(LocalDate.now(), newVaccine.getDate()).toTotalMonths());
             if (newVaccine.getStatus() == VaccinationStatus.APPLIED
                     && Period.between(LocalDate.now(), newVaccine.getDate()).toTotalMonths()
                             >= MAX_MONTHS_TO_APPLY_VACCINE) {
