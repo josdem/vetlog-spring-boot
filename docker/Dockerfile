@@ -28,12 +28,16 @@ RUN gradle --no-daemon spotlessApply
 # Build the Spring Boot app (skip tests for speed)
 RUN gradle --no-daemon clean build -x test
 
+# The Gradle `jar` task emits a `-plain` jar alongside the executable boot jar,
+# so pin the boot jar to a fixed name for the runtime stage to copy.
+RUN rm -f build/libs/*-plain.jar && mv build/libs/*.jar build/libs/app.jar
+
 # --- Runtime Stage ---
 FROM eclipse-temurin:21-jre AS runtime
 WORKDIR /app
 
 # COPY the built jar to the runtime stage
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/app.jar app.jar
 
 # Create a non-root user for security
 RUN useradd -ms /bin/bash appuser
