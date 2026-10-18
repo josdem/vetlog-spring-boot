@@ -133,6 +133,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/aLTttY"><img src="https://avatars.githubusercontent.com/u/186583953?v=4?s=100" width="100px;" alt="alttt"/><br /><sub><b>alttt</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=aLTttY" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/yjinlee99"><img src="https://avatars.githubusercontent.com/u/73848116?v=4?s=100" width="100px;" alt="Yeongjin Lee"/><br /><sub><b>Yeongjin Lee</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=yjinlee99" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ranjitaatwork"><img src="https://avatars.githubusercontent.com/u/331392443?v=4?s=100" width="100px;" alt="ranjitaatwork"/><br /><sub><b>ranjitaatwork</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=ranjitaatwork" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/GanaJadhav30"><img src="https://avatars.githubusercontent.com/u/174084452?v=4?s=100" width="100px;" alt="GanaJadhav30"/><br /><sub><b>GanaJadhav30</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=GanaJadhav30" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
