@@ -30,6 +30,7 @@ import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -43,12 +44,22 @@ public class PetLogServiceImpl implements PetLogService {
 
     private final PetPrescriptionService petPrescriptionService;
 
+    private static final Pattern URL_PATTERN = Pattern.compile("(?i)(https?://\\S+|www\\.\\S+)");
+
+    private void validateMedicine(String medicine) {
+        if (medicine != null && URL_PATTERN.matcher(medicine).find()) {
+            throw new BusinessException("Links are not allowed in the medicine section");
+        }
+    }
+
     @Override
     @Transactional
     public PetLog save(Command command, String username) throws IOException {
         var petLogCommand = (PetLogCommand) command;
         var petLog = petLogBinder.bind(petLogCommand);
+        validateMedicine(petLog.getMedicine());
         var pet = petRepository.findById(petLogCommand.getPet());
+
         if (pet.isEmpty()) {
             throw new BusinessException("No pet was found under id: " + petLogCommand.getPet());
         }
