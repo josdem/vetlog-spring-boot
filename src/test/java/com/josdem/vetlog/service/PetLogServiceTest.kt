@@ -179,6 +179,73 @@ internal class PetLogServiceTest {
         assertEquals(petLog, result.get())
     }
 
+    @Test
+    fun `Should reject URL in medicine when saving pet log`() {
+        val petLogCommand =
+            PetLogCommand().apply {
+                pet = 1L
+            }
+        val petLog =
+            getPetLog().apply {
+                medicine = "https://example.com/medicine"
+            }
+
+        whenever(petLogBinder.bind(petLogCommand)).thenReturn(petLog)
+
+        val exception =
+            assertThrows<BusinessException> {
+                service.save(petLogCommand, "test_user")
+            }
+
+        assertEquals(
+            "Links are not allowed in the medicine section",
+            exception.message,
+        )
+    }
+
+    @Test
+    fun `Should reject URL embedded in medicine text`() {
+        val petLogCommand =
+            PetLogCommand().apply {
+                pet = 1L
+            }
+        val petLog =
+            getPetLog().apply {
+                medicine = "Take medicine daily https://example.com"
+            }
+
+        whenever(petLogBinder.bind(petLogCommand)).thenReturn(petLog)
+
+        val exception =
+            assertThrows<BusinessException> {
+                service.save(petLogCommand, "test_user")
+            }
+
+        assertEquals(
+            "Links are not allowed in the medicine section",
+            exception.message,
+        )
+    }
+
+    @Test
+    fun `Should accept normal medicine text`() {
+        val petLogCommand =
+            PetLogCommand().apply {
+                pet = 1L
+            }
+        val petLog =
+            getPetLog().apply {
+                medicine = "Take medicine twice daily"
+            }
+
+        whenever(petLogBinder.bind(petLogCommand)).thenReturn(petLog)
+        whenever(petRepository.findById(1L)).thenReturn(Optional.of(pet))
+
+        service.save(petLogCommand, "test_user")
+
+        verify(petLogRepository).save(petLog)
+    }
+
     private fun getPetLog(): PetLog =
         PetLog().apply {
             id = 1L
