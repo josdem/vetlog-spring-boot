@@ -39,8 +39,8 @@ public class VaccinationController {
     @GetMapping("/list")
     public ModelAndView list(@RequestParam("uuid") String petUuid) {
         log.info("Listing applied vaccination for pet: {}", petUuid);
-        final var pet = this.petService.getPetByUuid(petUuid);
-        final var vaccinations = this.vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.APPLIED);
+        final var pet = petService.getPetByUuid(petUuid);
+        final var vaccinations = vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.APPLIED);
         final var modelAndView = new ModelAndView("vaccination/list");
         modelAndView.addObject("vaccinations", vaccinations);
         modelAndView.addObject("uuid", petUuid);
