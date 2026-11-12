@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Vaccines Log</title>
+    <head th:insert="~{fragments/include}"/>
+    <style>
+        table {
+            width: 100%;
+        }
+
+        th {
+            text-align: center;
+        }
+
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div th:insert="~{fragments/header}"/>
+
+<br/><br/>
+<br/><br/>
+<br/><br/>
+
+<div class="container">
+
+    <div class="row">
+
+        <div align="center">
+            <h3>VACCINES LOG</h3>
+        </div>
+
+        <div th:if="${vaccinations.isEmpty()}" align="center">
+            <p>No applied vaccinations found.</p>
+        </div>
+
+        <table th:if="${!vaccinations.isEmpty()}"
+               class="table table-striped">
+
+            <thead>
+            <tr>
+                <th th:text="#{pet.table.header.vaccines}"></th>
+                <th th:text="#{pet.table.header.status}"></th>
+                <th th:text="#{pet.table.header.date}"></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="vaccination : ${vaccinations}">
+
+                <td th:text="${@vaccineFormatter.format(vaccination.name, #locale)}">
+                </td>
+
+                <td th:text="${@vaccineFormatter.formatStatus(vaccination.status, #locale)}">
+                </td>
+
+                <td th:text="${@dateFormatter.formatToDate(vaccination.date, #locale)}">
+                </td>
+
+            </tr>
+            </tbody>
+
+        </table>
+
+        <br/><br/>
+
+        <div align="center">
+            <a th:href="@{/petlog/list(uuid=${uuid})}"
+               class="btn btn-primary">
+                BACK TO PET LOGS
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<div th:insert="~{fragments/footer}"/>
+
+</body>
+</html>
