@@ -25,8 +25,6 @@ import com.josdem.vetlog.enums.WeightUnits
 import com.josdem.vetlog.model.Vaccination
 import com.josdem.vetlog.repository.PetRepository
 import com.josdem.vetlog.repository.VaccinationRepository
-import jakarta.servlet.http.HttpServletRequest
-import jakarta.servlet.http.HttpServletResponse
 import jakarta.transaction.Transactional
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -47,20 +45,13 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.view
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
-import org.springframework.web.servlet.ViewResolver
-import org.springframework.web.servlet.view.AbstractView
 import java.time.LocalDate
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class VaccinationControllerTest {
     @Autowired
-    private lateinit var applicationMockMvc: MockMvc
-
     private lateinit var mockMvc: MockMvc
-
-    @Autowired
-    private lateinit var vaccinationController: VaccinationController
 
     @Autowired
     private lateinit var petRepository: PetRepository
@@ -83,29 +74,10 @@ class VaccinationControllerTest {
 
     @BeforeEach
     fun setUp() {
-        applicationMockMvc =
+        mockMvc =
             MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
                 .apply { springSecurity() }
-                .build()
-
-        val viewResolver =
-            ViewResolver { _, _ ->
-                object : AbstractView() {
-                    override fun renderMergedOutputModel(
-                        model: MutableMap<String, Any>,
-                        request: HttpServletRequest,
-                        response: HttpServletResponse,
-                    ) {
-                        // Deliberately skip template rendering in backend controller tests.
-                    }
-                }
-            }
-
-        mockMvc =
-            MockMvcBuilders
-                .standaloneSetup(vaccinationController)
-                .setViewResolvers(viewResolver)
                 .build()
     }
 
@@ -213,7 +185,7 @@ class VaccinationControllerTest {
                 .param("status", PetStatus.OWNED.toString())
                 .param("type", PetType.DOG.toString())
 
-        applicationMockMvc
+        mockMvc
             .perform(request)
             .andExpect(status().isOk())
             .andExpect(view().name("pet/create"))
