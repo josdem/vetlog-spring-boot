@@ -137,6 +137,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/BadalSoni03"><img src="https://avatars.githubusercontent.com/u/111721917?v=4&size=100" width="100px" height="100px" alt="Badal Soni"/><br /><sub><b>Badal Soni</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=BadalSoni03" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/tnalbant"><img src="https://avatars.githubusercontent.com/u/182372382?v=4&size=100" width="100px" height="100px" alt="tnalbant - timtim"/><br /><sub><b>tnalbant - timtim</b></sub></a><br /><a href="#infra-tnalbant" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/skavade00"><img src="https://avatars.githubusercontent.com/u/342474362?v=4&size=100" width="100px" height="100px" alt="Sachin Kavade"/><br /><sub><b>Sachin Kavade</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=skavade00" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
