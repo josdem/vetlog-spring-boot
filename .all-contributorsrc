@@ -725,6 +725,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "skavade00",
+      "name": "Sachin Kavade",
+      "avatar_url": "https://avatars.githubusercontent.com/u/342474362?v=4",
+      "profile": "https://github.com/skavade00",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
