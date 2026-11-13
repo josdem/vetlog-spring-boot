@@ -4,7 +4,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Vaccines Log</title>
+    <title th:text="#{vaccination.list.title}">Vaccines Log</title>
     <head th:insert="~{fragments/include}"/>
     <style>
         table {
@@ -34,11 +34,11 @@
     <div class="row">
 
         <div align="center">
-            <h3>VACCINES LOG</h3>
+            <h3 th:text="#{vaccination.list.heading}">VACCINES LOG</h3>
         </div>
 
         <div th:if="${vaccinations.isEmpty()}" align="center">
-            <p>No applied vaccinations found.</p>
+            <p th:text="#{vaccination.list.empty}">No applied vaccinations found.</p>
         </div>
 
         <table th:if="${!vaccinations.isEmpty()}"
@@ -72,7 +72,7 @@
         <div align="center">
             <a th:href="@{/petlog/list(uuid=${uuid})}"
                class="btn btn-primary">
-                BACK TO PET LOGS
+                <p th:text="#{vaccination.list.back}">Back to Pet Logs</p>
             </a>
         </div>
 
