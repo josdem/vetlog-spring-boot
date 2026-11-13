@@ -26,6 +26,7 @@ import com.josdem.vetlog.model.Vaccination;
 import com.josdem.vetlog.repository.VaccinationRepository;
 import com.josdem.vetlog.service.VaccinationService;
 import com.josdem.vetlog.strategy.vaccination.VaccinationStrategy;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -62,6 +63,7 @@ public class VaccinationServiceImpl implements VaccinationService {
     public List<Vaccination> getVaccinesByStatus(Pet pet, VaccinationStatus status) {
         return getVaccinationsByPet(pet).stream()
                 .filter(vaccination -> vaccination.getStatus().equals(status))
+                .sorted(Comparator.comparing(Vaccination::getDate))
                 .toList();
     }
 
