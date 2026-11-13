@@ -122,6 +122,21 @@ internal class VaccinationServiceTest {
     }
 
     @Test
+    fun `should return applied vaccines from oldest to newest`(testInfo: TestInfo) {
+        log.info(testInfo.displayName)
+        whenever(vaccinationRepository.findAllByPet(pet)).thenReturn(
+            listOf(
+                Vaccination(1L, "Rabies", LocalDate.of(2026, 5, 10), VaccinationStatus.APPLIED, pet),
+                Vaccination(2L, "C6CV", LocalDate.of(2025, 1, 15), VaccinationStatus.APPLIED, pet),
+                Vaccination(3L, "Deworming", LocalDate.of(2026, 1, 1), VaccinationStatus.APPLIED, pet),
+                Vaccination(4L, "Bordetella", LocalDate.of(2024, 1, 1), VaccinationStatus.PENDING, pet),
+            ),
+        )
+        val result = vaccinationService.getVaccinesByStatus(pet, VaccinationStatus.APPLIED)
+        assertEquals(listOf("C6CV", "Deworming", "Rabies"), result.map { it.name })
+    }
+
+    @Test
     fun `Getting vaccines in Pending status`(testInfo: TestInfo) {
         log.info(testInfo.displayName)
         whenever(vaccinationRepository.findAllByPet(pet)).thenReturn(
