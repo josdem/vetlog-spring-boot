@@ -139,6 +139,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/skavade00"><img src="https://avatars.githubusercontent.com/u/342474362?v=4&size=100" width="100px" height="100px" alt="Sachin Kavade"/><br /><sub><b>Sachin Kavade</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=skavade00" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/TianHengZhuang"><img src="https://avatars.githubusercontent.com/u/39034691?v=4&size=100" width="100px" height="100px" alt="TianHengZhuang"/><br /><sub><b>TianHengZhuang</b></sub></a><br /><a href="https://github.com/josdem/vetlog-spring-boot/commits?author=TianHengZhuang" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
