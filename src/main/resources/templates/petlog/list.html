@@ -19,7 +19,7 @@
         </div>
         <div align="center">
             <a th:href="@{/petlog/create(uuid=${uuid})}" class="btn btn-success"><p th:text="#{petlog.register}"/></a>
-            <a th:href="@{/vaccination/list(uuid=${uuid})}" class="btn btn-success">VACCINES LOG</a>
+            <a th:href="@{/vaccination/list(uuid=${uuid})}" class="btn btn-success"><p th:text="#{petlog.vaccines.log}">Vaccines Log</p></a>
         </div>
         <br/><br/>
         <div th:each="log : ${petLogs}">
